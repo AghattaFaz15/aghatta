@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intimação Celestial - 15 anos</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', serif;
+      color: white;
+      background: url('Aghatta.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2em 1em 4em 1em;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 0.2em;
+      color: #ffc107;
+    }
+    .verso {
+      font-style: italic;
+      margin: 0.5em auto 1.5em;
+      max-width: 700px;
+      font-size: 1em;
+      opacity: 0;
+      animation: fadeIn 4s forwards;
+    }
+    .convite {
+      margin: auto;
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 1.5em;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(255, 193, 7, 0.4);
+      opacity: 0;
+      animation: slideIn 2s ease-in-out 2s forwards;
+    }
+    .convite h2 {
+      color: #ffeb3b;
+    }
+    .convite p {
+      font-size: 1em;
+      margin: 0.5em 0;
+    }
+    .buttons {
+      margin-top: 1em;
+      display: flex;
+      justify-content: center;
+      gap: 0.7em;
+      flex-wrap: wrap;
+    }
+    .button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(45deg, #2196F3, #03A9F4);
+      border: none;
+      padding: 0.6em 0.8em;
+      border-radius: 50px;
+      color: white;
+      text-decoration: none;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .button:hover {
+      transform: scale(1.1);
+    }
+    .button i {
+      margin-right: 0.4em;
+    }
+    .contador {
+      font-size: 1.2em;
+      margin-bottom: 1em;
+      color: #ffffff;
+      background: rgba(33, 150, 243, 0.3);
+      padding: 0.8em 1.2em;
+      border-radius: 30px;
+      display: inline-block;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .slideshow {
+      max-width: 100%;
+      margin: 1em auto;
+    }
+    .slideshow img {
+      width: 90%;
+      max-height: 300px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+  </style>
+  <script>
+    const eventoData = new Date("2025-09-12T19:00:00").getTime();
+    setInterval(() => {
+      const agora = new Date().getTime();
+      const distancia = eventoData - agora;
+      const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+      document.getElementById("contador").innerHTML = `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
+    }, 1000);
+
+    let slideIndex = 0;
+    const totalSlides = 15;
+    setInterval(() => {
+      slideIndex = (slideIndex % totalSlides) + 1;
+      document.getElementById("slide-img").src = `imagem${slideIndex}.jpeg`;
+    }, 3000);
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="overlay">
+    <h1>🔥 Intimação Celestial – 15 Anos 🔥</h1>
+    <div class="verso">
+      "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto. "<br>— Isaías 41:20
+    </div>
+    <div class="contador" id="contador"></div>
+
+    <div class="slideshow">
+      <img id="slide-img" src="imagem1.jpeg" alt="Fotos do evento">
+    </div>
+
+    <div class="convite">
+      <h2>Você é nosso(a) convidado(a) especial!</h2>
+      <p>Essa festa não será a mesma sem a sua presença.</p>
+      <p><strong>🗓 Data:</strong> 12 de Setembro de 2025<br>
+         <strong>⏰ Hora:</strong> 19h<br>
+         
+
+      <div class="buttons">
+        <a class="button" href="https://www.google.com/maps/place/Ch%C3%A1cara+das+Paineiras/@-23.6241921,-47.0673401,17z" target="_blank">
+          <i class="fas fa-map-marker-alt"></i>
+        </a>
+        <a class="button" href="https://forms.gle/confirmacao-de-presenca" target="_blank">
+          <i class="fas fa-user-check"></i>
+        </a>
+        <a class="button" href="https://docs.google.com/forms/d/e/1FAIpQLSej_K2Pf-t5h_VjIh7PbyUjzlDBGAnqpBDRQadxFTpiaxb9Uw/viewform?usp=sharing" target="_blank">
+          <i class="fas fa-camera"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

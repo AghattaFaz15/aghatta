@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intimação Celestial - 15 anos</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Parisienne&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', serif;
+      color: white;
+      background: url('Aghatta.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2em 1em 4em 1em;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 0.2em;
+      color: #ffc107;
+    }
+    .titulo-extra {
+      font-family: 'Parisienne', cursive;
+      font-size: 2.2em;
+      margin-top: 0.2em;
+      color: #8ecaff;
+      text-shadow: 0 0 8px #5ab3ff;
+    }
+    .verso {
+      font-style: italic;
+      margin: 0.5em auto 1.5em;
+      max-width: 700px;
+      font-size: 1em;
+      opacity: 0;
+      animation: fadeIn 4s forwards;
+    }
+    .frase-profetica {
+      font-family: 'Parisienne', cursive;
+      font-size: 1.4em;
+      color: #ffffff;
+      text-shadow: 0 0 12px rgba(0,191,255,0.8);
+      margin-top: 1em;
+    }
+    .convite {
+      margin: auto;
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 1.5em;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(255, 193, 7, 0.4);
+      opacity: 0;
+      animation: slideIn 2s ease-in-out 2s forwards;
+    }
+    .convite h2 {
+      color: #8ecaff;
+      font-family: 'Parisienne', cursive;
+      font-size: 1.8em;
+    }
+    .convite p {
+      font-size: 1em;
+      margin: 0.5em 0;
+    }
+    .buttons {
+      margin-top: 1em;
+      display: flex;
+      justify-content: center;
+      gap: 2em;
+      flex-wrap: wrap;
+    }
+    .button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .button img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+      transition: transform 0.3s;
+    }
+    .button:hover img {
+      transform: scale(1.2);
+    }
+    .contador {
+      font-size: 1.2em;
+      margin-bottom: 1em;
+      color: #ffffff;
+      background: rgba(33, 150, 243, 0.3);
+      padding: 0.8em 1.2em;
+      border-radius: 30px;
+      display: inline-block;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .slideshow {
+      max-width: 100%;
+      margin: 1em auto;
+    }
+    .slideshow img {
+      width: 90%;
+      max-height: 300px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+  </style>
+  <script>
+    const eventoData = new Date("2025-09-12T19:00:00").getTime();
+    setInterval(() => {
+      const agora = new Date().getTime();
+      const distancia = eventoData - agora;
+      const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+      document.getElementById("contador").innerHTML = `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
+    }, 1000);
+
+    let slideIndex = 0;
+    const totalSlides = 15;
+    setInterval(() => {
+      slideIndex = (slideIndex % totalSlides) + 1;
+      document.getElementById("slide-img").src = `imagem${slideIndex}.jpeg`;
+    }, 3000);
+  </script>
+</head>
+<body>
+  <div class="overlay">
+    <h1>📜 Intimação Celestial 📜</h1>
+    <div class="titulo-extra">Aghatta XV</div>
+
+    <div class="verso">
+      "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou."<br>— Isaías 41:20
+    </div>
+
+    <div class="contador" id="contador"></div>
+
+    <div class="slideshow">
+      <img id="slide-img" src="imagem1.jpeg" alt="Fotos do evento">
+    </div>
+
+    <div class="convite">
+      <h2>Essa festa não será a mesma sem a sua presença.
+        Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
+      </h2>
+      <p><strong>🗓 Data:</strong> 12 de Setembro de 2025<br>
+         <strong>⏰ Hora:</strong> 19h<br>
+         <strong>📍 Local:</strong> Chácara das Paineiras</p>
+
+      
+      </div>
+
+      <div class="buttons">
+        <a class="button" href="https://www.google.com/maps/place/Ch%C3%A1cara+das+Paineiras/@-23.6241921,-47.0673401,17z" target="_blank">
+          <img src="https://img.icons8.com/color/96/marker.png" alt="Localização" title="Ver Localização" />
+        </a>
+        <a class="button" href="https://forms.gle/confirmacao-de-presenca" target="_blank">
+          <img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirmar Presença" title="Confirmar Presença" />
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

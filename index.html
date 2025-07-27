@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Top Labareda - 15 anos</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', serif;
+      color: white;
+      text-align: center;
+      background: url('https://images.unsplash.com/photo-1509228627152-72ae9ae6848c?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      min-height: 100vh;
+      padding: 3em 1em;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0.2em;
+      color: #ffc107;
+    }
+    .verso {
+      font-style: italic;
+      margin: 1em auto 2em;
+      max-width: 700px;
+      font-size: 1.2em;
+      opacity: 0;
+      animation: fadeIn 4s forwards;
+    }
+    .convite {
+      margin: auto;
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2em;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(255, 193, 7, 0.4);
+      opacity: 0;
+      animation: slideIn 2s ease-in-out 2s forwards;
+    }
+    .convite h2 {
+      color: #ffeb3b;
+    }
+    .convite p {
+      font-size: 1.1em;
+    }
+    button {
+      margin: 1em 0.5em 0 0.5em;
+      padding: 0.8em 1.5em;
+      font-size: 1em;
+      color: white;
+      background-color: #ff5722;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #e64a19;
+    }
+    a.button-link {
+      text-decoration: none;
+      color: white;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <h1>🔥 Top Labareda – 15 Anos 🔥</h1>
+    <div class="verso">
+      “O fogo arderá continuamente sobre o altar; não se apagará.”  
+      <br>— Levítico 6:13
+    </div>
+
+    <div class="convite">
+      <h2>Você é nosso(a) convidado(a) especial!</h2>
+      <p>Junte-se a nós para uma noite de celebração, adoração e gratidão pelo aniversário de 15 anos de <strong>[Seu Nome Aqui]</strong>.</p>
+      <p><strong>🗓 Data:</strong> 14 de Setembro de 2025<br>
+         <strong>⏰ Hora:</strong> 18h<br>
+         <strong>📍 Local:</strong> Espaço Ágape - Av. Promessa, 777 - Jardim da Glória</p>
+      <div>
+        <a class="button-link" href="https://www.google.com/maps?q=Espaço+Ágape+Jardim+da+Glória" target="_blank">
+          <button>Ver Localização</button>
+        </a>
+        <button onclick="alert('Presença confirmada! Que o fogo do Espírito te acompanhe! 🔥')">
+          Eis-me aqui!
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

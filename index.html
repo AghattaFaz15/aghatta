@@ -35,6 +35,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 10px;
     }
 
     .pergaminho {
@@ -56,6 +57,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 10px;
     }
 
     .verso {
@@ -67,7 +69,7 @@
 
     .calendar {
       position: relative;
-      margin-bottom: 0.5em;
+      margin-bottom: 3em;
     }
 
     .calendar img {
@@ -78,7 +80,7 @@
 
     .calendar .baloon {
       position: absolute;
-      bottom: -30px;
+      top: -40px;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(0, 0, 0, 0.5);
@@ -87,6 +89,7 @@
       color: white;
       font-family: 'Parisienne', cursive;
       font-size: 1em;
+      z-index: 2;
     }
 
     .butterfly {
@@ -179,7 +182,6 @@
 
     .coroa {
       width: 40px;
-      margin: 0 10px;
       animation: brilho 1.5s infinite alternate;
     }
 
@@ -208,9 +210,8 @@
     </div>
 
     <div class="calendar">
-      <img src="Aniversario.png" alt="Calendário">
       <div class="baloon">Um pouco da minha história</div>
-      <!-- 15 borboletas saindo do mesmo ponto -->
+      <img src="Aniversario.png" alt="Calendário">
       <script>
         for (let i = 0; i < 15; i++) {
           document.write(`<div class='butterfly' style='left: 60.5%; top: 50%; animation-delay: ${i * 0.5}s;'>

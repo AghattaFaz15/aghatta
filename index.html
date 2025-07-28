@@ -15,8 +15,8 @@
     body {
       font-family: 'Georgia', serif;
       overflow: hidden;
-      transition: background 1s ease-in-out;
       background-color: #002366;
+      transition: background 1.2s ease-in-out;
     }
 
     body.opened {
@@ -47,18 +47,18 @@
     }
 
     .coroa-topo {
-      width: 120px;
-      margin-bottom: 40px;
+      width: 200px;
+      margin-bottom: 30px;
     }
 
     .envelope-img {
-      width: 220px;
-      transition: transform 1.5s ease-in-out;
-      transform-origin: center top;
+      width: 260px;
+      transition: transform 1.5s ease-in-out, opacity 1.5s ease;
+      transform-origin: top center;
     }
 
     .envelope-img.aberto {
-      transform: rotateX(120deg) scale(1.1);
+      transform: rotateX(100deg) scale(1.05);
       opacity: 0;
     }
 
@@ -89,7 +89,7 @@
       justify-content: center;
       gap: 1em;
       flex-wrap: wrap;
-      margin-bottom: 0.5em;
+      margin-bottom: 1em;
     }
 
     .title-text {
@@ -127,7 +127,6 @@
     }
 
     .calendar {
-      position: relative;
       margin-bottom: 1em;
     }
 
@@ -155,9 +154,8 @@
       background: rgba(0,0,0,0.4);
       padding: 0.6em 1.2em;
       border-radius: 25px;
-      box-shadow: 0 0 8px rgba(255,255,255,0.3);
+      margin: 1em auto;
       width: fit-content;
-      margin: 0.5em auto;
     }
 
     .slideshow-container {
@@ -205,6 +203,11 @@
     .buttons img:hover {
       transform: scale(1.2);
     }
+
+    .coroa-segunda {
+      width: 70px;
+      height: 70px;
+    }
   </style>
 </head>
 <body>
@@ -222,9 +225,9 @@
       </div>
 
       <div class="decor-wrap">
-        <img src="coroa.png" alt="Coroa" style="width: 50px; height: 50px;" />
+        <img src="coroa.png" alt="Coroa" class="coroa-segunda" />
         <span class="subtitle-text">Aghatta XV</span>
-        <img src="coroa.png" alt="Coroa" style="width: 50px; height: 50px;" />
+        <img src="coroa.png" alt="Coroa" class="coroa-segunda" />
       </div>
 
       <div class="verso">
@@ -262,10 +265,25 @@
   <audio id="background-audio" src="audio.mp3" preload="auto" loop></audio>
 
   <script>
+    let aberto = false;
+
+    function abrirEnvelope() {
+      if (aberto) return;
+      aberto = true;
+      document.getElementById("envelope").classList.add("aberto");
+      document.querySelector(".envelope-screen").classList.add("hidden");
+      document.body.classList.add("opened");
+      document.getElementById("background-audio").play().catch(() => {});
+    }
+
     const evento = new Date("2025-09-12T19:00:00").getTime();
     setInterval(() => {
       const agora = new Date().getTime();
       const restante = evento - agora;
+      if (restante < 0) {
+        document.getElementById("contador").textContent = "O evento já aconteceu!";
+        return;
+      }
       const dias = Math.floor(restante / 864e5);
       const horas = Math.floor((restante % 864e5) / 36e5);
       const minutos = Math.floor((restante % 36e5) / 6e4);
@@ -275,18 +293,12 @@
     }, 1000);
 
     const imagensSlide = [
-      "imagem1.jpeg", "imagem2.jpeg", "imagem3.jpeg", "imagem4.jpeg", "imagem5.jpeg",
-      "imagem6.jpeg", "imagem7.jpeg", "imagem8.jpeg", "imagem9.jpeg", "imagem10.jpeg",
-      "imagem11.jpeg", "imagem12.jpeg", "imagem13.jpeg", "imagem14.jpeg", "imagem15.jpeg"
+      "imagem1.jpeg", "imagem2.jpeg", "imagem3.jpeg",
+      "imagem4.jpeg", "imagem5.jpeg", "imagem6.jpeg",
+      "imagem7.jpeg", "imagem8.jpeg", "imagem9.jpeg",
+      "imagem10.jpeg", "imagem11.jpeg", "imagem12.jpeg",
+      "imagem13.jpeg", "imagem14.jpeg", "imagem15.jpeg"
     ];
-
-    function abrirEnvelope() {
-      document.getElementById("envelope").classList.add("aberto");
-      document.getElementById("background-audio").play();
-      document.querySelector(".envelope-screen").classList.add("hidden");
-      document.body.classList.add("opened");
-    }
-
     let idx = 0;
     setInterval(() => {
       const slideImg = document.getElementById("slide-img");
@@ -296,6 +308,7 @@
   </script>
 </body>
 </html>
+
 
 
 

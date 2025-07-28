@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -33,8 +32,9 @@
       position: fixed;
       inset: 0;
       z-index: 10;
-      transition: opacity 1.2s ease;
+      transition: opacity 1.2s ease, visibility 1.2s ease;
       opacity: 1;
+      visibility: visible;
     }
 
     .tela-envelope::before {
@@ -48,6 +48,7 @@
 
     .tela-envelope.oculta {
       opacity: 0;
+      visibility: hidden;
       pointer-events: none;
     }
 
@@ -94,12 +95,14 @@
 
     .coroa-topo {
       position: absolute;
-      top: -60px;
+      top: -80px;
       left: 50%;
       transform: translateX(-50%);
-      width: 100px;
+      width: 140px;
       z-index: 3;
       user-select: none;
+      filter: drop-shadow(0 0 15px gold);
+      transition: transform 0.5s ease;
     }
 
     .envelope {
@@ -116,7 +119,7 @@
       width: 100%;
       height: 110px;
       transform-origin: top center;
-      transition: transform 1.2s ease-in-out;
+      transition: transform 1.4s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 2;
       cursor: pointer;
       user-select: none;
@@ -156,20 +159,26 @@
     .conteudo {
       opacity: 0;
       pointer-events: none;
-      transition: opacity 1.2s ease;
+      transform: translateY(40px);
+      transition: opacity 1.5s ease, transform 1.5s ease;
       position: relative;
       z-index: 1;
       min-height: 100vh;
-      padding: 2em 1em;
-      background: rgba(0, 0, 0, 0.75);
+      padding: 3em 1.5em;
+      background: linear-gradient(135deg, rgba(0,0,30,0.8), rgba(0,0,60,0.8));
       overflow-y: auto;
       box-sizing: border-box;
-      color: white;
+      color: #f0f8ff;
+      border-radius: 12px;
+      margin: 0 auto;
+      max-width: 900px;
+      box-shadow: 0 0 40px rgba(72, 133, 237, 0.6);
     }
 
     body.aberto .conteudo {
       opacity: 1;
       pointer-events: auto;
+      transform: translateY(0);
     }
 
     .overlay {
@@ -197,10 +206,11 @@
     }
 
     .coroa-segunda {
-      width: 90px;
-      height: 90px;
+      width: 120px;
+      height: 120px;
       flex-shrink: 0;
       user-select: none;
+      filter: drop-shadow(0 0 12px #8ecaff);
     }
 
     .versiculo {
@@ -295,6 +305,28 @@
     .tocha, .flecha {
       display: none;
     }
+
+    /* Responsividade */
+    @media (max-width: 600px) {
+      .coroa-topo {
+        width: 100px;
+        top: -60px;
+      }
+
+      .coroa-segunda {
+        width: 80px;
+        height: 80px;
+      }
+
+      .envelope-container {
+        width: 260px;
+        height: 190px;
+      }
+
+      .texto-inicial span {
+        font-size: 1.8em;
+      }
+    }
   </style>
 </head>
 <body>
@@ -352,69 +384,75 @@
 
       <div class="botoes">
         <a href="#" title="Localização"><img src="https://img.icons8.com/color/96/marker.png" alt="Localização" /></a>
-        <a href="#" title="Confirme presença"><img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirme" /></a>
+        <a href="#" title="Confirme presença"><img src="https://img.icons8.com/color/96/checkmark.png" alt="Confirme presença" /></a>
       </div>
     </div>
   </div>
 
-  <audio id="audio" src="audio.mp3" preload="auto" loop></audio>
+  <audio id="audio" src="sfx1.mp3" preload="auto"></audio>
 
   <script>
+    let aberto = false;
     const flap = document.getElementById("flap");
     const telaEnvelope = document.querySelector(".tela-envelope");
-    let aberto = false;
 
     function abrirEnvelope() {
       if (aberto) return;
       aberto = true;
+
       flap.classList.add("aberto");
-      telaEnvelope.classList.add("oculta");
-      document.body.classList.add("aberto");
-      document.getElementById("audio").play().catch(() => {});
+
+      setTimeout(() => {
+        telaEnvelope.classList.add("oculta");
+        document.body.classList.add("aberto");
+
+        const audio = document.getElementById("audio");
+        if(audio) {
+          audio.play().catch(() => {
+            // Som pode não tocar por autoplay restrictions
+          });
+        }
+      }, 1400);
     }
 
-    telaEnvelope.addEventListener("keydown", (e) => {
-      if(e.key === "Enter" || e.key === " ") {
-        abrirEnvelope();
-      }
-    });
+    // Slideshow simples para galeria
+    const imagens = ["imagem1.jpeg", "imagem2.jpeg", "imagem3.jpeg"];
+    let indice = 0;
+    const slideImg = document.getElementById("slide-img");
 
-    const evento = new Date("2025-09-12T19:00:00").getTime();
     setInterval(() => {
-      const agora = new Date().getTime();
-      const restante = evento - agora;
-      if (restante < 0) {
-        document.getElementById("contador").textContent = "O evento já aconteceu!";
+      indice = (indice + 1) % imagens.length;
+      slideImg.style.opacity = 0;
+      setTimeout(() => {
+        slideImg.src = imagens[indice];
+        slideImg.style.opacity = 1;
+      }, 600);
+    }, 4500);
+
+    // Contador regressivo simples (exemplo)
+    const contadorEl = document.getElementById("contador");
+    const dataEvento = new Date("2025-09-12T19:00:00");
+
+    function atualizarContador() {
+      const agora = new Date();
+      const diff = dataEvento - agora;
+
+      if(diff <= 0) {
+        contadorEl.textContent = "O evento já começou!";
         return;
       }
-      const dias = Math.floor(restante / 86400000);
-      const horas = Math.floor((restante % 86400000) / 3600000);
-      const minutos = Math.floor((restante % 3600000) / 60000);
-      const segundos = Math.floor((restante % 60000) / 1000);
-      document.getElementById("contador").textContent =
-        `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
-    }, 1000);
 
-    const imagens = [
-      "imagem1.jpeg", "imagem2.jpeg", "imagem3.jpeg",
-      "imagem4.jpeg", "imagem5.jpeg", "imagem6.jpeg",
-      "imagem7.jpeg", "imagem8.jpeg", "imagem9.jpeg",
-      "imagem10.jpeg", "imagem11.jpeg", "imagem12.jpeg",
-      "imagem13.jpeg", "imagem14.jpeg", "imagem15.jpeg"
-    ];
-    let idx = 0;
-    const slide = document.getElementById("slide-img");
-    slide.style.opacity = 1;
-    slide.style.transition = "opacity 1.2s ease-in-out";
+      const dias = Math.floor(diff / (1000*60*60*24));
+      const horas = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      const minutos = Math.floor((diff % (1000*60*60)) / (1000*60));
+      const segundos = Math.floor((diff % (1000*60)) / 1000);
 
-    setInterval(() => {
-      slide.style.opacity = 0;
-      setTimeout(() => {
-        idx = (idx + 1) % imagens.length;
-        slide.src = imagens[idx];
-        slide.style.opacity = 1;
-      }, 1000);
-    }, 6000);
+      contadorEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s para o evento`;
+    }
+
+    setInterval(atualizarContador, 1000);
+    atualizarContador();
+
   </script>
 
 </body>

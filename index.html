@@ -13,10 +13,12 @@
       background-color: #002366;
       overflow: hidden;
       transition: background 1.2s ease-in-out;
+      color: white;
     }
 
     body.aberto {
       overflow-y: auto;
+      background-color: #000; /* fundo preto para o conteúdo aberto */
     }
 
     .tela-envelope {
@@ -27,7 +29,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      position: absolute;
+      position: fixed; /* fixar para ficar sobre tudo */
       inset: 0;
       z-index: 10;
       transition: opacity 1.2s ease;
@@ -71,6 +73,7 @@
       width: 300px;
       height: 220px;
       margin-top: 20px;
+      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.7));
     }
 
     .coroa-topo {
@@ -98,6 +101,7 @@
       transform-origin: top center;
       transition: transform 1.2s ease-in-out;
       z-index: 2;
+      cursor: pointer;
     }
 
     .flap img {
@@ -105,10 +109,13 @@
       height: 100%;
       object-fit: cover;
       border-radius: 10px 10px 0 0;
+      user-select: none;
+      pointer-events: none;
     }
 
     .flap.aberto {
       transform: rotateX(160deg);
+      pointer-events: none;
     }
 
     .envelope-base {
@@ -116,6 +123,8 @@
       height: 100%;
       border-radius: 0 0 10px 10px;
       overflow: hidden;
+      user-select: none;
+      pointer-events: none;
     }
 
     .envelope-base img {
@@ -129,6 +138,13 @@
       opacity: 0;
       pointer-events: none;
       transition: opacity 1.2s ease;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 2em 1em;
+      background: rgba(0, 0, 0, 0.75); /* fundo preto translúcido */
+      overflow-y: auto;
+      box-sizing: border-box;
     }
 
     body.aberto .conteudo {
@@ -137,11 +153,8 @@
     }
 
     .overlay {
-      background: url('Aghatta.png') no-repeat center center fixed;
-      background-size: cover;
-      background-color: rgba(0,0,0,0.7);
-      min-height: 100vh;
-      padding: 2em 1em;
+      max-width: 800px;
+      margin: 0 auto;
       text-align: center;
       color: white;
     }
@@ -162,16 +175,19 @@
       margin-bottom: 1em;
     }
 
-    .subtitulo {
+    .linha-coroa .subtitulo {
       font-family: 'Parisienne', cursive;
       font-size: 2.4em;
       color: #8ecaff;
       text-shadow: 0 0 8px #5ab3ff;
+      flex-shrink: 0;
+      line-height: 1;
     }
 
     .coroa-segunda {
       width: 90px;
       height: 90px;
+      flex-shrink: 0;
     }
 
     .versiculo {
@@ -179,6 +195,7 @@
       font-size: 1.1em;
       margin: 1.5em auto;
       max-width: 700px;
+      line-height: 1.4em;
     }
 
     .contador {
@@ -197,6 +214,8 @@
       margin: 1.5em auto;
       aspect-ratio: 3/4;
       overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 0 12px rgba(255,255,255,0.4);
     }
 
     .galeria img {
@@ -204,7 +223,6 @@
       height: 100%;
       object-fit: cover;
       border-radius: 20px;
-      box-shadow: 0 0 12px rgba(255,255,255,0.4);
     }
 
     .convite {
@@ -217,6 +235,8 @@
     .info {
       font-size: 1.1em;
       line-height: 1.6em;
+      max-width: 400px;
+      margin: 0 auto 2em;
     }
 
     .botoes {
@@ -226,15 +246,50 @@
       margin: 2em 0;
     }
 
-    .botoes img {
+    .botoes a {
+      display: inline-block;
       width: 48px;
       height: 48px;
       transition: transform 0.3s;
     }
 
-    .botoes img:hover {
+    .botoes img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .botoes a:hover {
       transform: scale(1.2);
     }
+
+    /* Tocha e Flecha estilos simples */
+    .tocha {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 50px;
+      height: 50px;
+      background: url('https://img.icons8.com/fluency/48/torch.png') no-repeat center;
+      background-size: contain;
+      cursor: pointer;
+      z-index: 20;
+      filter: drop-shadow(0 0 5px orange);
+    }
+
+    .flecha {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: url('https://img.icons8.com/fluency/48/arrow.png') no-repeat center;
+      background-size: contain;
+      cursor: pointer;
+      z-index: 20;
+      filter: drop-shadow(0 0 5px #8ecaff);
+    }
+
   </style>
 </head>
 <body>
@@ -248,7 +303,7 @@
     <div class="envelope-container">
       <img src="coroa.png" alt="Coroa" class="coroa-topo" />
       <div class="envelope">
-        <div class="flap" id="flap">
+        <div class="flap" id="flap" role="button" tabindex="0" aria-label="Abrir envelope">
           <img src="envelope-flap.png" alt="Flap do envelope" />
         </div>
         <div class="envelope-base">
@@ -258,15 +313,15 @@
     </div>
   </div>
 
-  <div class="conteudo">
+  <div class="conteudo" aria-live="polite">
     <div class="overlay">
-      <div class="linha-coroa">
+      <div class="linha-coroa" role="banner">
         <img src="coroa.png" alt="Coroa" class="coroa-segunda" />
         <div class="subtitulo">Aghatta XV</div>
         <img src="coroa.png" alt="Coroa" class="coroa-segunda" />
       </div>
 
-      <div class="versiculo">
+      <div class="versiculo" role="contentinfo">
         "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou." — Isaías 41:20
       </div>
 
@@ -291,11 +346,14 @@
       </div>
 
       <div class="botoes">
-        <a href="#"><img src="https://img.icons8.com/color/96/marker.png" alt="Localização" /></a>
-        <a href="#"><img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirme" /></a>
+        <a href="#" title="Localização"><img src="https://img.icons8.com/color/96/marker.png" alt="Localização" /></a>
+        <a href="#" title="Confirme presença"><img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirme" /></a>
       </div>
     </div>
   </div>
+
+  <div class="tocha" title="Tocha"></div>
+  <div class="flecha" title="Flecha"></div>
 
   <audio id="audio" src="audio.mp3" preload="auto" loop></audio>
 
@@ -311,6 +369,13 @@
       document.body.classList.add("aberto");
       document.getElementById("audio").play().catch(() => {});
     }
+
+    // Permitir abrir com teclado Enter ou Space para acessibilidade
+    flap.addEventListener("keydown", (e) => {
+      if(e.key === "Enter" || e.key === " ") {
+        abrirEnvelope();
+      }
+    });
 
     const evento = new Date("2025-09-12T19:00:00").getTime();
     setInterval(() => {
@@ -345,6 +410,8 @@
 
 </body>
 </html>
+
+
 
 
 

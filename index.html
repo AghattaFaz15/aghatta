@@ -15,9 +15,8 @@
       background-size: cover;
       color: white;
     }
-
     .overlay {
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0,0,0,0.6);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -37,54 +36,32 @@
 
     .titulo-texto {
       font-family: 'Parisienne', cursive;
-      font-size: 2.6em;
       color: gold;
       text-shadow: 0 0 10px rgba(255,215,0,0.7);
     }
+    .titulo-texto.principal { font-size: 2.6em; }
+    .titulo-texto.sub { font-size: 2.2em; color: #8ecaff; text-shadow: 0 0 8px #5ab3ff; }
 
-    .titulo-extra .titulo-texto {
-      font-size: 2.2em;
-      color: #8ecaff;
-      text-shadow: 0 0 8px #5ab3ff;
-    }
-
-    .pergaminho {
-      width: 70px;
+    .pergaminho, .coroa {
+      position: relative;
       opacity: 0;
     }
-
-    .coroa {
-      width: 50px;
-      opacity: 0;
-    }
-
     @keyframes slideInLeft {
-      0% { transform: translateX(-50px); opacity: 0; }
+      0% { transform: translateX(-60px); opacity: 0; }
       100% { transform: translateX(0); opacity: 1; }
     }
-
     @keyframes slideInRight {
-      0% { transform: translateX(50px); opacity: 0; }
+      0% { transform: translateX(60px); opacity: 0; }
       100% { transform: translateX(0); opacity: 1; }
     }
-
     @keyframes bounceIn {
       0% { transform: scale(0.5); opacity: 0; }
       50% { transform: scale(1.2); opacity: 1; }
       100% { transform: scale(1); }
     }
-
-    .animate-esquerda {
-      animation: slideInLeft 1.5s forwards;
-    }
-
-    .animate-direita {
-      animation: slideInRight 1.5s forwards;
-    }
-
-    .animate-coroa {
-      animation: bounceIn 1.8s forwards;
-    }
+    .animate-left { animation: slideInLeft 1.5s forwards; }
+    .animate-right { animation: slideInRight 1.5s forwards; }
+    .animate-coroa { animation: bounceIn 1.8s forwards; }
 
     .verso {
       font-style: italic;
@@ -97,7 +74,6 @@
       position: relative;
       margin-bottom: 3em;
     }
-
     .calendar img {
       width: 80%;
       max-width: 400px;
@@ -109,28 +85,26 @@
     .butterfly {
       position: absolute;
       width: 40px;
-      animation: fly 10s infinite ease-in-out;
       z-index: 2;
+      animation: freeFly 12s infinite ease-in-out;
     }
-
-    .butterfly img {
-      animation: flap 1s infinite alternate;
-    }
+    .butterfly img { animation: flap 1s infinite alternate; }
 
     @keyframes flap {
       0% { transform: rotateZ(-5deg); }
       100% { transform: rotateZ(5deg); }
     }
-
-    @keyframes fly {
-      0% { transform: translateY(0); opacity: 1; }
-      50% { transform: translateY(-150px); opacity: 0.6; }
-      100% { transform: translateY(-350px); opacity: 0; }
+    @keyframes freeFly {
+      0%   { transform: translate(0, 0); opacity: 1; }
+      25%  { transform: translate(50px, -80px); opacity: 0.8; }
+      50%  { transform: translate(-40px, -160px); opacity: 0.6; }
+      75%  { transform: translate(60px, -220px); opacity: 0.4; }
+      100% { transform: translate(-30px, -300px); opacity: 0; }
     }
 
     .contador {
       font-size: 1.3em;
-      background: rgba(33, 150, 243, 0.3);
+      background: rgba(33,150,243,0.3);
       padding: 0.8em 1.2em;
       border-radius: 30px;
       margin-bottom: 2em;
@@ -144,13 +118,11 @@
       max-width: 800px;
       margin-bottom: 1.5em;
     }
-
     .slideshow-container img {
       width: 100%;
       border-radius: 20px;
       box-shadow: 0 0 12px rgba(255,255,255,0.4);
     }
-
     .slide-title {
       position: absolute;
       top: -30px;
@@ -169,44 +141,32 @@
 
     .convite {
       max-width: 600px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255,255,255,0.1);
       border-radius: 20px;
       padding: 1.5em;
       backdrop-filter: blur(10px);
-      box-shadow: 0 0 20px rgba(255, 193, 7, 0.4);
+      box-shadow: 0 0 20px rgba(255,193,7,0.4);
       margin-bottom: 2em;
     }
 
     .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 2em;
-      flex-wrap: wrap;
-      margin-bottom: 2em;
+      display: flex; justify-content: center; gap: 2em; flex-wrap: wrap; margin-bottom:2em;
     }
-
-    .buttons img {
-      width: 48px;
-      height: 48px;
-      transition: transform 0.3s;
-    }
-
-    .buttons img:hover {
-      transform: scale(1.2);
-    }
+    .buttons img { width:48px; height:48px; transition: transform 0.3s; }
+    .buttons img:hover { transform: scale(1.2); }
   </style>
 </head>
 <body>
   <div class="overlay" onclick="tocarMusica()">
     <h1 class="titulo-principal">
-      <img class="pergaminho animate-esquerda" src="https://i.imgur.com/bXLRgLM.png" alt="Pergaminho Esquerdo">
-      <span class="titulo-texto">Intimação Celestial</span>
-      <img class="pergaminho animate-direita" src="https://i.imgur.com/bXLRgLM.png" alt="Pergaminho Direito">
+      <img class="pergaminho animate-left" src="https://i.imgur.com/bXLRgLM.png" alt="Pergaminho Esquerdo">
+      <span class="titulo-texto principal">Intimação Celestial</span>
+      <img class="pergaminho animate-right" src="https://i.imgur.com/bXLRgLM.png" alt="Pergaminho Direito">
     </h1>
 
     <div class="titulo-extra">
       <img class="coroa animate-coroa" src="https://i.imgur.com/1m8dW3B.png" alt="Coroa Esquerda">
-      <span class="titulo-texto">Aghatta XV</span>
+      <span class="titulo-texto sub">Aghatta XV</span>
       <img class="coroa animate-coroa" src="https://i.imgur.com/1m8dW3B.png" alt="Coroa Direita">
     </div>
 
@@ -217,8 +177,11 @@
     <div class="calendar">
       <img src="Aniversário Aghatta XV.png" alt="Calendário Aghatta">
       <script>
+        const colors = [];
         for (let i = 0; i < 15; i++) {
-          document.write(`<div class='butterfly' style='left: 50%; top: 60%; animation-delay: ${i * 0.5}s;'>
+          const x = 50 + (Math.random()*160 - 80);
+          const y = 60 + (Math.random()*40);
+          document.write(`<div class='butterfly' style='left:${x}%; top:${y}%; animation-delay:${i*0.4}s'>
             <img src='https://img.icons8.com/color/48/000000/butterfly.png'/>
           </div>`);
         }
@@ -252,21 +215,13 @@
     setInterval(() => {
       const agora = new Date().getTime();
       const distancia = eventoData - agora;
-      const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
-      const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
-      document.getElementById("contador").innerHTML = `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
-    }, 1000);
-
-    const totalSlides = 15;
-    let indices = Array.from({length: totalSlides}, (_, i) => i + 1);
-    indices = indices.sort(() => Math.random() - 0.5);
-    let slideIndex = 0;
-    setInterval(() => {
-      document.getElementById("slide-img").src = `imagem${indices[slideIndex % totalSlides]}.jpeg`;
-      slideIndex++;
-    }, 3500);
+      const dias = Math.floor(distancia/(1000*60*60*24));
+      const horas = Math.floor((distancia%(1000*60*60*24))/(1000*60*60));
+      const minutos = Math.floor((distancia%(1000*60*60))/(1000*60));
+      const segundos = Math.floor((distancia%(1000*60))/1000);
+      document.getElementById("contador").innerHTML =
+        `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
+    },1000);
 
     const audio = document.getElementById("background-audio");
     function tocarMusica() {
@@ -277,6 +232,7 @@
   </script>
 </body>
 </html>
+
 
 
 

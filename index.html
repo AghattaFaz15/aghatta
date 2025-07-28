@@ -10,11 +10,9 @@
       margin: 0;
       padding: 0;
       font-family: 'Georgia', serif;
-      background: url('Aghatta.png') no-repeat center top fixed;
+      background: url('Aghatta.png') no-repeat center center fixed;
       background-size: cover;
-      background-attachment: fixed;
       color: white;
-      overflow-x: hidden;
     }
 
     .overlay {
@@ -27,14 +25,12 @@
       text-align: center;
     }
 
-    .title, .subtitle {
+    .title {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 1em;
       flex-wrap: wrap;
-      margin-bottom: 1em;
-      position: relative;
     }
 
     .title-text {
@@ -42,7 +38,15 @@
       font-size: 2.8em;
       color: gold;
       text-shadow: 0 0 10px rgba(255,215,0,0.7);
-      z-index: 2;
+    }
+
+    .subtitle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1em;
+      flex-wrap: wrap;
+      margin-top: 1em;
     }
 
     .subtitle-text {
@@ -50,18 +54,17 @@
       font-size: 2.4em;
       color: #8ecaff;
       text-shadow: 0 0 8px #5ab3ff;
-      z-index: 2;
     }
 
-    .floating-icon {
-      position: absolute;
-      width: 60px;
-      animation: pulse 2s infinite ease-in-out;
+    .icon-img {
+      width: 48px;
+      height: 48px;
+      animation: fadeInScale 2s forwards;
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.8; }
-      50% { transform: scale(1.2); opacity: 1; }
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
     }
 
     .verso {
@@ -74,24 +77,23 @@
     .calendar {
       position: relative;
       margin-bottom: 1em;
-      text-align: center;
     }
 
     .calendar img {
-      width: 80%;
+      width: 90vw;
       max-width: 400px;
       border-radius: 15px;
     }
 
     .butterfly {
       position: absolute;
-      width: 70px;
-      animation: flyRandom 9s forwards ease-in-out;
+      width: 50px;
+      animation: freeFly 10s infinite ease-in-out;
     }
 
     .butterfly img {
-      width: 100%;
       animation: flap 1s infinite alternate;
+      width: 100%;
     }
 
     @keyframes flap {
@@ -99,53 +101,54 @@
       100% { transform: rotateZ(5deg); }
     }
 
-    @keyframes flyRandom {
+    @keyframes freeFly {
       0% { transform: translate(0, 0); opacity: 1; }
-      100% {
-        transform:
-          translate(
-            calc(-180px + 360px * var(--rand-x)),
-            calc(-450px + -200px * var(--rand-y))
-          );
-        opacity: 0;
-      }
+      25% { transform: translate(40px, -60px); opacity: 0.8; }
+      50% { transform: translate(-50px, -120px); opacity: 0.6; }
+      75% { transform: translate(60px, -180px); opacity: 0.4; }
+      100% { transform: translate(-30px, -250px); opacity: 0; }
     }
 
     .contador {
-      font-size: 1.2em;
-      background: rgba(33,150,243,0.25);
-      padding: 0.7em 1em;
-      border-radius: 25px;
-      margin-top: 0.6em;
-      max-width: 360px;
-      margin-left: auto;
-      margin-right: auto;
+      font-size: 1.3em;
+      background: rgba(33,150,243,0.3);
+      padding: 0.8em 1.2em;
+      border-radius: 30px;
+      margin: 1em auto;
+      width: 80%;
+      max-width: 400px;
     }
 
     .slideshow-container {
       position: relative;
       width: 90%;
-      max-width: 800px;
+      max-width: 400px;
       margin-bottom: 1.5em;
-    }
-
-    .slide-title {
-      font-size: 1.4em;
-      color: gold;
-      font-family: 'Parisienne', cursive;
-      margin-bottom: 0.5em;
     }
 
     .slideshow-container img {
       width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
       border-radius: 20px;
       box-shadow: 0 0 12px rgba(255,255,255,0.4);
+    }
+
+    .slide-title {
+      margin-bottom: 0.5em;
+      background: rgba(0,0,0,0.4);
+      padding: 0.6em 1.2em;
+      border-radius: 25px;
+      font-size: 1.2em;
+      color: gold;
+      font-family: 'Parisienne', cursive;
+      box-shadow: 0 0 8px rgba(255,255,255,0.3);
     }
 
     .invite-text {
       font-family: 'Great Vibes', cursive;
       font-size: 2em;
-      margin: 1.5em 0;
+      margin-bottom: 2em;
       max-width: 600px;
     }
 
@@ -175,55 +178,44 @@
 </head>
 <body>
   <div class="overlay" onclick="tocarMusica()">
-
-    <!-- TÍTULO COM PERGAMINHOS -->
     <div class="title">
-      <img class="floating-icon" src="https://img.icons8.com/ios-filled/100/ffffff/parchment.png" style="left: -70px; top: -10px;" />
+      <img class="icon-img" src="https://img.icons8.com/ios-filled/100/parchment.png" alt="Pergaminho">
       <span class="title-text">Intimação Celestial</span>
-      <img class="floating-icon" src="https://img.icons8.com/ios-filled/100/ffffff/parchment.png" style="right: -70px; top: -10px;" />
+      <img class="icon-img" src="https://img.icons8.com/ios-filled/100/parchment.png" alt="Pergaminho">
     </div>
 
-    <!-- SUBTÍTULO COM COROA REALISTA -->
     <div class="subtitle">
-      <img class="floating-icon" src="https://img.icons8.com/3d-fluency/94/crown.png" style="left: -80px; top: -10px;" />
+      <img class="icon-img" src="https://img.icons8.com/3d-fluency/94/real-crown.png" alt="Coroa">
       <span class="subtitle-text">Aghatta XV</span>
-      <img class="floating-icon" src="https://img.icons8.com/3d-fluency/94/crown.png" style="right: -80px; top: -10px;" />
+      <img class="icon-img" src="https://img.icons8.com/3d-fluency/94/real-crown.png" alt="Coroa">
     </div>
 
     <div class="verso">
       "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou." — Isaías 41:20
     </div>
 
-    <!-- CALENDÁRIO E BORBOLETAS -->
     <div class="calendar">
-      <img src="Aniversário Aghatta XV.png" alt="Calendário" />
-
+      <img src="Aniversário Aghatta XV.png" alt="Calendário">
+      <div id="contador" class="contador"></div>
       <script>
-        for (let i = 0; i < 10; i++) {
-          setTimeout(() => {
-            const butterfly = document.createElement("div");
-            butterfly.className = "butterfly";
-            butterfly.style.left = "50.5%"; // Exato para o dia 12
-            butterfly.style.top = "38%";
-            butterfly.style.setProperty("--rand-x", Math.random().toFixed(2));
-            butterfly.style.setProperty("--rand-y", Math.random().toFixed(2));
-            butterfly.innerHTML = `<img src="https://img.icons8.com/color/96/000000/butterfly.png"/>`;
-            document.querySelector(".calendar").appendChild(butterfly);
-          }, i * 500);
+        for(let i = 0; i < 15; i++) {
+          const butterfly = document.createElement('div');
+          butterfly.className = 'butterfly';
+          butterfly.style.left = '52.5%';
+          butterfly.style.top = '59%';
+          butterfly.style.animationDelay = `${i * 0.5}s`;
+          butterfly.innerHTML = '<img src="https://img.icons8.com/color/48/000000/butterfly.png"/>';
+          document.querySelector('.calendar').appendChild(butterfly);
         }
       </script>
-
-      <!-- CONTADOR DENTRO DO CALENDÁRIO -->
-      <div class="contador" id="contador"></div>
     </div>
 
     <div class="invite-text">
       Essa festa não será a mesma sem a sua presença.<br>Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
     </div>
 
-    <!-- SLIDES -->
+    <div class="slide-title">Um pouco da minha história</div>
     <div class="slideshow-container">
-      <div class="slide-title">Um pouco da minha história</div>
       <img id="slide-img" src="imagem1.jpeg" alt="Slideshow" />
     </div>
 
@@ -259,6 +251,26 @@
       document.body.removeEventListener("click", tocarMusica);
     }
     document.body.addEventListener("click", tocarMusica);
+
+    const imagensSlide = [
+      "imagem1.jpeg", "imagem2.jpeg", "imagem3.jpeg", "imagem4.jpeg", "imagem5.jpeg",
+      "imagem6.jpeg", "imagem7.jpeg", "imagem8.jpeg", "imagem9.jpeg", "imagem10.jpeg",
+      "imagem11.jpeg", "imagem12.jpeg", "imagem13.jpeg", "imagem14.jpeg", "imagem15.jpeg"
+    ];
+
+    function embaralhar(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    const imagensAleatorias = embaralhar(imagensSlide);
+    let indexAtual = 0;
+
+    function trocarImagem() {
+      document.getElementById("slide-img").src = imagensAleatorias[indexAtual];
+      indexAtual = (indexAtual + 1) % imagensAleatorias.length;
+    }
+
+    setInterval(trocarImagem, 4000);
   </script>
 </body>
 </html>

@@ -14,7 +14,6 @@
       background: url('Aghatta.png') no-repeat center center fixed;
       background-size: cover;
       color: white;
-      overflow-x: hidden;
     }
 
     .overlay {
@@ -27,53 +26,37 @@
       text-align: center;
     }
 
-    .intimacao-completa {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1em;
-      gap: 10px;
-    }
-
-    .pergaminho {
-      width: 60px;
-      height: 60px;
-      animation: abrirPergaminho 2s ease forwards;
-    }
-
-    @keyframes abrirPergaminho {
-      0% { transform: scaleX(0); opacity: 0; }
-      100% { transform: scaleX(1); opacity: 1; }
-    }
-
     h1 {
       font-family: 'Parisienne', cursive;
       font-size: 2.6em;
+      margin-bottom: 0.5em;
       color: gold;
       text-shadow: 0 0 10px rgba(255,215,0,0.7);
-      margin: 0;
     }
 
     .titulo-extra {
-      font-family: 'Parisienne', cursive;
-      font-size: 2.2em;
-      color: #8ecaff;
-      text-shadow: 0 0 8px #5ab3ff;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      margin-bottom: 1.5em;
+      font-family: 'Parisienne', cursive;
+      font-size: 2.2em;
+      margin-bottom: 1em;
+      color: #8ecaff;
+      text-shadow: 0 0 8px #5ab3ff;
+      position: relative;
     }
 
-    .coroa {
-      width: 30px;
-      animation: brilhar 1s infinite alternate;
+    .titulo-extra::before,
+    .titulo-extra::after {
+      content: url('https://img.icons8.com/color/48/000000/crown.png');
+      display: inline-block;
+      margin: 0 0.4em;
+      animation: brilho 2s infinite alternate;
     }
 
-    @keyframes brilhar {
+    @keyframes brilho {
       0% { filter: brightness(1); }
-      100% { filter: brightness(1.8); }
+      100% { filter: brightness(2); }
     }
 
     .verso {
@@ -96,32 +79,22 @@
 
     .butterfly {
       position: absolute;
-      width: 40px;
-      animation: fly 8s infinite ease-in-out;
+      width: 50px;
+      height: 50px;
+      animation: flap 1s infinite, fly 8s infinite ease-in-out;
+      top: 43%; /* Mais alto */
+      left: 60.5%;
     }
 
-    .butterfly:nth-child(n) img {
-      animation: flap 1s infinite;
+    @keyframes flap {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(5deg); }
     }
-
-    .butterfly:nth-child(1) { left: 60.5%; top: 48%; animation-delay: 0s; }
-    .butterfly:nth-child(2) { left: 60.5%; top: 48%; animation-delay: 1s; }
-    .butterfly:nth-child(3) { left: 60.5%; top: 48%; animation-delay: 2s; }
-    .butterfly:nth-child(4) { left: 60.5%; top: 48%; animation-delay: 3s; }
-    .butterfly:nth-child(5) { left: 60.5%; top: 48%; animation-delay: 4s; }
-    .butterfly:nth-child(6) { left: 60.5%; top: 48%; animation-delay: 5s; }
-    .butterfly:nth-child(7) { left: 60.5%; top: 48%; animation-delay: 6s; }
-    .butterfly:nth-child(8) { left: 60.5%; top: 48%; animation-delay: 7s; }
 
     @keyframes fly {
       0% { transform: translateY(0) scale(1); opacity: 1; }
       50% { transform: translate(-40px, -150px) scale(1.2); opacity: 0.6; }
       100% { transform: translate(40px, -300px) scale(0.9); opacity: 0; }
-    }
-
-    @keyframes flap {
-      0%, 100% { transform: rotateZ(0deg); }
-      50% { transform: rotateZ(10deg); }
     }
 
     .contador {
@@ -149,7 +122,7 @@
 
     .slide-title {
       position: absolute;
-      top: 5%;
+      top: -10%;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(0,0,0,0.4);
@@ -198,50 +171,28 @@
       transform: scale(1.2);
     }
 
-    .audio-control {
-      position: fixed;
-      bottom: 15px;
-      right: 15px;
-      z-index: 999;
-      cursor: pointer;
+    .scroll-animado {
+      width: 48px;
+      height: 48px;
+      animation: abrirPergaminho 1.2s ease-in-out forwards;
+      transform-origin: center;
     }
 
-    .audio-control img {
-      width: 40px;
-      height: 40px;
-      opacity: 0.8;
-    }
-
-    @media (max-width: 600px) {
-      h1, .titulo-extra {
-        font-size: 1.8em;
-      }
-      .pergaminho {
-        width: 40px;
-        height: 40px;
-      }
-      .coroa {
-        width: 24px;
-      }
+    @keyframes abrirPergaminho {
+      0% { transform: scaleY(0.1); opacity: 0; }
+      100% { transform: scaleY(1); opacity: 1; }
     }
   </style>
 </head>
 <body>
   <div class="overlay" onclick="tocarMusica()">
-    
-    <!-- Intimação com pergaminhos -->
-    <div class="intimacao-completa">
-      <img class="pergaminho" src="https://img.icons8.com/emoji/48/scroll-emoji.png" alt="Pergaminho esquerdo">
-      <h1>📜 Intimação Celestial 📜</h1>
-      <img class="pergaminho" src="https://img.icons8.com/emoji/48/scroll-emoji.png" alt="Pergaminho direito">
-    </div>
+    <h1>
+      <img src="https://img.icons8.com/emoji/48/scroll-emoji.png" class="scroll-animado" />
+      Intimação Celestial
+      <img src="https://img.icons8.com/emoji/48/scroll-emoji.png" class="scroll-animado" />
+    </h1>
 
-    <!-- Aghatta XV com 2 coroas -->
-    <div class="titulo-extra">
-      <img class="coroa" src="https://img.icons8.com/emoji/48/crown-emoji.png" alt="Coroa"/>
-      Aghatta XV
-      <img class="coroa" src="https://img.icons8.com/emoji/48/crown-emoji.png" alt="Coroa"/>
-    </div>
+    <div class="titulo-extra">Aghatta XV</div>
 
     <div class="verso">
       "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou." — Isaías 41:20
@@ -286,9 +237,6 @@
 
   <!-- Música -->
   <audio id="background-audio" src="audio.mp3" preload="auto" loop></audio>
-  <div class="audio-control" onclick="toggleAudio()">
-    <img id="audio-icon" src="https://img.icons8.com/fluency/48/play.png" alt="Play/Pause"/>
-  </div>
 
   <script>
     // Contador
@@ -313,32 +261,19 @@
       slideIndex++;
     }, 3500);
 
-    // Controle de áudio
+    // Música inicia ao tocar na tela
     const audio = document.getElementById("background-audio");
-    const icon = document.getElementById("audio-icon");
-
-    function toggleAudio() {
-      if (audio.paused) {
-        audio.play();
-        icon.src = "https://img.icons8.com/fluency/48/pause.png";
-      } else {
-        audio.pause();
-        icon.src = "https://img.icons8.com/fluency/48/play.png";
-      }
-    }
-
     function tocarMusica() {
       if (audio.paused) {
         audio.play();
-        icon.src = "https://img.icons8.com/fluency/48/pause.png";
       }
-      document.body.removeEventListener('click', tocarMusica);
+      document.removeEventListener('click', tocarMusica);
     }
-
-    document.body.addEventListener('click', tocarMusica);
+    document.addEventListener('click', tocarMusica);
   </script>
 </body>
 </html>
+
 
 
 

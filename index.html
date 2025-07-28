@@ -23,187 +23,275 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2em 1em 4em 1em;
+      padding: 2em 1em;
       text-align: center;
     }
 
-    h1 {
-      font-family: 'Parisienne', cursive;
-      font-size: 2.8em;
-      color: gold;
-      text-shadow: 0 0 15px gold;
+    .intimacao-completa {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5em;
-    }
-
-    .coroa {
-      width: 40px;
-      animation: coroaBrilho 2s infinite alternate;
-    }
-
-    @keyframes coroaBrilho {
-      0% { filter: brightness(1); transform: scale(1); }
-      100% { filter: brightness(1.5); transform: scale(1.1); }
-    }
-
-    .pergaminhos {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1em;
-      margin-top: 1em;
-      animation: abrirPergaminho 2s ease-in-out;
+      margin-bottom: 1em;
+      gap: 10px;
     }
 
     .pergaminho {
       width: 60px;
-      animation: pergaminhoRolando 1.5s ease-out;
+      height: 60px;
+      animation: abrirPergaminho 2s ease forwards;
     }
 
-    @keyframes pergaminhoRolando {
+    @keyframes abrirPergaminho {
       0% { transform: scaleX(0); opacity: 0; }
       100% { transform: scaleX(1); opacity: 1; }
     }
 
-    .frase-centro {
-      font-size: 1.3em;
-      color: gold;
+    h1 {
       font-family: 'Parisienne', cursive;
-      text-shadow: 0 0 10px gold;
-      max-width: 90%;
+      font-size: 2.6em;
+      color: gold;
+      text-shadow: 0 0 10px rgba(255,215,0,0.7);
+      margin: 0;
     }
 
-    .contador-area {
-      margin-top: 2em;
-      position: relative;
+    .titulo-extra {
+      font-family: 'Parisienne', cursive;
+      font-size: 2.2em;
+      color: #8ecaff;
+      text-shadow: 0 0 8px #5ab3ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 1.5em;
     }
 
-    .contador {
-      font-size: 1.3em;
-      color: #fff;
-      background: rgba(33, 150, 243, 0.3);
-      padding: 1em 2em;
-      border-radius: 30px;
-      display: inline-block;
-      width: 90vw;
-      max-width: 400px;
-    }
-
-    .borboleta {
-      position: absolute;
+    .coroa {
       width: 30px;
-      animation: voar 6s ease-in-out forwards, baterAsa 1s infinite alternate;
-      opacity: 0;
+      animation: brilhar 1s infinite alternate;
     }
 
-    @keyframes voar {
-      0% { bottom: 0px; left: 50%; opacity: 1; }
-      50% { transform: translateX(-30px); opacity: 1; }
-      100% { bottom: 300px; left: 70%; opacity: 0; }
-    }
-
-    @keyframes baterAsa {
-      0% { transform: rotate(-10deg); }
-      100% { transform: rotate(10deg); }
-    }
-
-    .slideshow-area {
-      position: relative;
-      margin-top: 3em;
-      width: 90vw;
-      max-width: 500px;
-    }
-
-    .slide-img {
-      width: 100%;
-      border-radius: 20px;
-      box-shadow: 0 0 12px rgba(255,255,255,0.3);
-    }
-
-    .historia-balao {
-      background: rgba(0, 0, 0, 0.4);
-      padding: 0.8em;
-      border-radius: 20px;
-      font-size: 1.2em;
-      color: gold;
-      font-family: 'Parisienne', cursive;
-      position: absolute;
-      top: -50px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+    @keyframes brilhar {
+      0% { filter: brightness(1); }
+      100% { filter: brightness(1.8); }
     }
 
     .verso {
       font-style: italic;
-      margin-top: 1.5em;
-      font-size: 1em;
-      max-width: 90%;
+      font-size: 1.1em;
+      margin-bottom: 1.5em;
+      max-width: 700px;
     }
 
-    @media screen and (max-width: 500px) {
-      h1 {
-        font-size: 2em;
+    .calendar {
+      position: relative;
+      margin-bottom: 1.5em;
+    }
+
+    .calendar img {
+      width: 80%;
+      max-width: 400px;
+      border-radius: 15px;
+    }
+
+    .butterfly {
+      position: absolute;
+      width: 40px;
+      animation: fly 8s infinite ease-in-out;
+    }
+
+    .butterfly:nth-child(n) img {
+      animation: flap 1s infinite;
+    }
+
+    .butterfly:nth-child(1) { left: 60.5%; top: 48%; animation-delay: 0s; }
+    .butterfly:nth-child(2) { left: 60.5%; top: 48%; animation-delay: 1s; }
+    .butterfly:nth-child(3) { left: 60.5%; top: 48%; animation-delay: 2s; }
+    .butterfly:nth-child(4) { left: 60.5%; top: 48%; animation-delay: 3s; }
+    .butterfly:nth-child(5) { left: 60.5%; top: 48%; animation-delay: 4s; }
+    .butterfly:nth-child(6) { left: 60.5%; top: 48%; animation-delay: 5s; }
+    .butterfly:nth-child(7) { left: 60.5%; top: 48%; animation-delay: 6s; }
+    .butterfly:nth-child(8) { left: 60.5%; top: 48%; animation-delay: 7s; }
+
+    @keyframes fly {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      50% { transform: translate(-40px, -150px) scale(1.2); opacity: 0.6; }
+      100% { transform: translate(40px, -300px) scale(0.9); opacity: 0; }
+    }
+
+    @keyframes flap {
+      0%, 100% { transform: rotateZ(0deg); }
+      50% { transform: rotateZ(10deg); }
+    }
+
+    .contador {
+      font-size: 1.3em;
+      background: rgba(33, 150, 243, 0.3);
+      padding: 0.8em 1.2em;
+      border-radius: 30px;
+      margin-bottom: 2em;
+      width: 80%;
+      max-width: 400px;
+    }
+
+    .slideshow-container {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+      margin-bottom: 2em;
+    }
+
+    .slideshow-container img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 0 12px rgba(255,255,255,0.4);
+    }
+
+    .slide-title {
+      position: absolute;
+      top: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.4);
+      padding: 0.6em 1.2em;
+      border-radius: 25px;
+      font-size: 1.2em;
+      color: gold;
+      font-family: 'Parisienne', cursive;
+      box-shadow: 0 0 8px rgba(255,255,255,0.3);
+      width: 80%;
+      max-width: 500px;
+    }
+
+    .convite {
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 1.5em;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(255, 193, 7, 0.4);
+      margin-bottom: 2em;
+    }
+
+    .convite h2 {
+      font-family: 'Parisienne', cursive;
+      font-size: 1.4em;
+      color: gold;
+      text-shadow: 0 0 8px rgba(255,215,0,0.5);
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 2em;
+      flex-wrap: wrap;
+      margin-bottom: 2em;
+    }
+
+    .button img {
+      width: 48px;
+      height: 48px;
+      transition: transform 0.3s;
+    }
+
+    .button:hover img {
+      transform: scale(1.2);
+    }
+
+    .audio-control {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      z-index: 999;
+      cursor: pointer;
+    }
+
+    .audio-control img {
+      width: 40px;
+      height: 40px;
+      opacity: 0.8;
+    }
+
+    @media (max-width: 600px) {
+      h1, .titulo-extra {
+        font-size: 1.8em;
       }
-      .frase-centro {
-        font-size: 1.1em;
+      .pergaminho {
+        width: 40px;
+        height: 40px;
       }
-      .historia-balao {
-        font-size: 1em;
+      .coroa {
+        width: 24px;
       }
     }
   </style>
 </head>
-<body ontouchstart="startAudio()">
-  <div class="overlay">
-    <h1>
-      <img src="https://img.icons8.com/emoji/48/000000/crown-emoji.png" class="coroa" alt="Coroa"/>
-      Intimação Celestial
-      <img src="https://img.icons8.com/emoji/48/000000/crown-emoji.png" class="coroa" alt="Coroa"/>
-    </h1>
-
-    <div class="pergaminhos">
-      <img src="https://cdn-icons-png.flaticon.com/512/863/863684.png" class="pergaminho" alt="Pergaminho Esquerdo">
-      <div class="frase-centro">Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.</div>
-      <img src="https://cdn-icons-png.flaticon.com/512/863/863684.png" class="pergaminho" alt="Pergaminho Direito">
+<body>
+  <div class="overlay" onclick="tocarMusica()">
+    
+    <!-- Intimação com pergaminhos -->
+    <div class="intimacao-completa">
+      <img class="pergaminho" src="https://img.icons8.com/emoji/48/scroll-emoji.png" alt="Pergaminho esquerdo">
+      <h1>📜 Intimação Celestial 📜</h1>
+      <img class="pergaminho" src="https://img.icons8.com/emoji/48/scroll-emoji.png" alt="Pergaminho direito">
     </div>
 
-    <div class="contador-area">
-      <div class="contador" id="contador"></div>
-      <!-- Borboletas -->
-      <img class="borboleta" src="https://img.icons8.com/emoji/48/blue-butterfly.png" style="animation-delay: 0s"/>
-      <img class="borboleta" src="https://img.icons8.com/emoji/48/blue-butterfly.png" style="animation-delay: 1s"/>
-      <img class="borboleta" src="https://img.icons8.com/emoji/48/blue-butterfly.png" style="animation-delay: 2s"/>
-      <img class="borboleta" src="https://img.icons8.com/emoji/48/blue-butterfly.png" style="animation-delay: 3s"/>
-      <img class="borboleta" src="https://img.icons8.com/emoji/48/blue-butterfly.png" style="animation-delay: 4s"/>
-    </div>
-
-    <div class="slideshow-area">
-      <div class="historia-balao">Um pouco da minha história</div>
-      <img id="slide-img" class="slide-img" src="imagem1.jpeg" alt="Slide">
+    <!-- Aghatta XV com 2 coroas -->
+    <div class="titulo-extra">
+      <img class="coroa" src="https://img.icons8.com/emoji/48/crown-emoji.png" alt="Coroa"/>
+      Aghatta XV
+      <img class="coroa" src="https://img.icons8.com/emoji/48/crown-emoji.png" alt="Coroa"/>
     </div>
 
     <div class="verso">
-      “Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto.”<br>— Isaías 41:20
+      "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou." — Isaías 41:20
+    </div>
+
+    <div class="calendar">
+      <img src="Aniversário Aghatta XV.png" alt="Calendário">
+      <!-- Borboletas -->
+      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
+      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
+      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
+      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
+      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
+      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
+      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
+      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
+    </div>
+
+    <div class="contador" id="contador"></div>
+
+    <div class="slideshow-container">
+      <div class="slide-title">Um pouco da minha história</div>
+      <img id="slide-img" src="imagem1.jpeg" alt="Slideshow" />
+    </div>
+
+    <div class="convite">
+      <h2>Essa festa não será a mesma sem a sua presença.<br>Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.</h2>
+      <p><strong>🗓 Data:</strong> 12 de Setembro de 2025<br>
+         <strong>⏰ Hora:</strong> 19h<br>
+         <strong>📍 Local:</strong> Chácara das Paineiras</p>
+    </div>
+
+    <div class="buttons">
+      <a class="button" href="https://www.google.com/maps/place/Chácara+das+Paineiras" target="_blank">
+        <img src="https://img.icons8.com/color/96/marker.png" alt="Localização" title="Ver Localização" />
+      </a>
+      <a class="button" href="https://forms.gle/confirmacao-de-presenca" target="_blank">
+        <img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirmar Presença" title="Confirmar Presença" />
+      </a>
     </div>
   </div>
 
-  <!-- Áudio (será ativado ao toque) -->
-  <audio id="audio" src="louvor.mp3" autoplay></audio>
+  <!-- Música -->
+  <audio id="background-audio" src="audio.mp3" preload="auto" loop></audio>
+  <div class="audio-control" onclick="toggleAudio()">
+    <img id="audio-icon" src="https://img.icons8.com/fluency/48/play.png" alt="Play/Pause"/>
+  </div>
 
   <script>
-    let audioIniciado = false;
-    function startAudio() {
-      if (!audioIniciado) {
-        document.getElementById("audio").play();
-        audioIniciado = true;
-      }
-    }
-
+    // Contador
     const eventoData = new Date("2025-09-12T19:00:00").getTime();
     setInterval(() => {
       const agora = new Date().getTime();
@@ -215,16 +303,43 @@
       document.getElementById("contador").innerHTML = `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
     }, 1000);
 
-    // Slide aleatório com 15 imagens
-    let slideIndex = 1;
-    function mudarSlide() {
-      slideIndex = Math.floor(Math.random() * 15) + 1;
-      document.getElementById("slide-img").src = `imagem${slideIndex}.jpeg`;
+    // Slide aleatório
+    const totalSlides = 15;
+    let indices = Array.from({length: totalSlides}, (_, i) => i + 1);
+    indices = indices.sort(() => Math.random() - 0.5);
+    let slideIndex = 0;
+    setInterval(() => {
+      document.getElementById("slide-img").src = `imagem${indices[slideIndex % totalSlides]}.jpeg`;
+      slideIndex++;
+    }, 3500);
+
+    // Controle de áudio
+    const audio = document.getElementById("background-audio");
+    const icon = document.getElementById("audio-icon");
+
+    function toggleAudio() {
+      if (audio.paused) {
+        audio.play();
+        icon.src = "https://img.icons8.com/fluency/48/pause.png";
+      } else {
+        audio.pause();
+        icon.src = "https://img.icons8.com/fluency/48/play.png";
+      }
     }
-    setInterval(mudarSlide, 3000);
+
+    function tocarMusica() {
+      if (audio.paused) {
+        audio.play();
+        icon.src = "https://img.icons8.com/fluency/48/pause.png";
+      }
+      document.body.removeEventListener('click', tocarMusica);
+    }
+
+    document.body.addEventListener('click', tocarMusica);
   </script>
 </body>
 </html>
+
 
 
 

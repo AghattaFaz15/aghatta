@@ -1,249 +1,252 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Intimação Celestial - Aghatta XV</title>
-  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Great+Vibes&display=swap" rel="stylesheet" />
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: 'Georgia', serif;
-      background: black;
-      overflow: hidden;
-      color: white;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Intimação Celestial - Aghatta XV</title>
+<link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+  /* --- Tela inicial --- */
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'Georgia', serif;
+    background-color: #4169E1; /* azul royal */
+    overflow: hidden;
+  }
+  #first-screen {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    background-color: #4169E1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Coroa no topo */
+  #crown-top {
+    position: absolute;
+    top: 30px;
+    width: 80px;
+    height: 80px;
+    background: url('https://cdn-icons-png.flaticon.com/512/4205/4205353.png') no-repeat center;
+    background-size: contain;
+    animation: shine 3s infinite ease-in-out;
+  }
+  @keyframes shine {
+    0%, 100% { filter: brightness(1); box-shadow: 0 0 5px gold; }
+    50% { filter: brightness(1.6); box-shadow: 0 0 15px gold; }
+  }
 
-    /* Primeira tela (envelope fechado) */
-    #envelope-screen {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: #111;
-      cursor: pointer;
-      flex-direction: column;
-      user-select: none;
-      transition: opacity 0.8s ease;
-    }
+  /* Envelope branco */
+  #envelope {
+    width: 180px;
+    height: 120px;
+    background: white;
+    border-radius: 12px 12px 16px 16px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    cursor: pointer;
+    position: relative;
+    overflow: visible;
+  }
+  /* Tampa do envelope */
+  #envelope-flap {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 80px;
+    background: white;
+    border-radius: 12px 12px 0 0;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.1);
+    border-bottom: 1px solid #ddd;
+    transform-origin: bottom center;
+    transition: transform 1s ease;
+    z-index: 2;
+  }
 
-    #envelope-screen img {
-      width: 200px;
-      max-width: 80vw;
-      transition: transform 0.3s ease;
-    }
+  /* Envelope aberto */
+  #envelope.open #envelope-flap {
+    transform: rotateX(-130deg);
+    box-shadow: none;
+  }
 
-    #envelope-screen:hover img {
-      transform: scale(1.05);
-    }
+  /* Conteúdo escondido inicialmente */
+  #second-screen {
+    display: none;
+  }
 
-    #envelope-text {
-      margin-top: 20px;
-      font-family: 'Parisienne', cursive;
-      font-size: 2em;
-      color: gold;
-      text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
-    }
+  /* Quando aberto, esconde first-screen e mostra second */
+  body.opened #first-screen {
+    display: none;
+  }
+  body.opened #second-screen {
+    display: block;
+  }
 
-    /* Segunda tela (seu conteúdo original) */
-    #content-screen {
-      display: none;
-      height: 100vh;
-      overflow-y: auto;
-      background: url('Aghatta.png') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-    }
-
-    /* Copiado seu CSS original para .overlay */
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.6);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2em 1em;
-      text-align: center;
-    }
-
-    /* Demais estilos do seu original abaixo (copiados para manter o visual) */
-    .decor-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1em;
-      flex-wrap: wrap;
-      margin-bottom: 0.5em;
-    }
-
-    .title-text {
-      font-family: 'Parisienne', cursive;
-      font-size: 2.4em;
-      color: gold;
-      text-shadow: 0 0 10px rgba(255,215,0,0.7);
-    }
-
-    .subtitle-text {
-      font-family: 'Parisienne', cursive;
-      font-size: 2.4em;
-      color: #8ecaff;
-      text-shadow: 0 0 8px #5ab3ff;
-    }
-
-    .crown {
-      width: 50px;
-      height: 50px;
-      background: url('https://cdn-icons-png.flaticon.com/512/4205/4205353.png') no-repeat center;
-      background-size: contain;
-      animation: shine 3s infinite ease-in-out;
-    }
-
-    .scroll {
-      width: 40px;
-      height: 40px;
-      background: url('https://img.icons8.com/emoji/48/scroll-emoji.png') no-repeat center;
-      background-size: contain;
-      animation: scrollRoll 4s ease-in-out infinite;
-      transform-origin: center top;
-    }
-
-    @keyframes shine {
-      0%, 100% { filter: brightness(1); box-shadow: 0 0 5px gold; }
-      50% { filter: brightness(1.6); box-shadow: 0 0 15px gold; }
-    }
-
-    @keyframes scrollRoll {
-      0%, 100% { transform: scaleY(0.6); opacity: 0.8; }
-      50% { transform: scaleY(1); opacity: 1; }
-    }
-
-    .verso {
-      font-style: italic;
-      font-size: 1.1em;
-      margin: 1.5em 0;
-      max-width: 700px;
-    }
-
-    .calendar {
-      position: relative;
-      margin-bottom: 1em;
-    }
-
-    .calendar img {
-      width: 90vw;
-      max-width: 400px;
-      border-radius: 15px;
-    }
-
-    .butterfly {
-      position: absolute;
-      width: 32px;
-      animation: flap 1.2s infinite alternate, flyRandom 12s infinite ease-in-out;
-    }
-
-    .butterfly img {
-      width: 100%;
-    }
-
-    @keyframes flap {
-      0% { transform: rotateZ(-10deg); }
-      100% { transform: rotateZ(10deg); }
-    }
-
-    @keyframes flyRandom {
-      0% { transform: translate(0, 0); opacity: 1; }
-      25% { transform: translate(20px, -50px); opacity: 0.9; }
-      50% { transform: translate(-30px, -100px); opacity: 0.7; }
-      75% { transform: translate(40px, -160px); opacity: 0.5; }
-      100% { transform: translate(-20px, -220px); opacity: 0; }
-    }
-
-    .contador {
-      font-size: 1.2em;
-      background: rgba(0,0,0,0.8);
-      padding: 0.8em 1.2em;
-      border-radius: 20px;
-      margin-top: -1.2em;
-      margin-bottom: 1.2em;
-      width: 90vw;
-      max-width: 400px;
-    }
-
-    .slideshow-container {
-      position: relative;
-      width: 90vw;
-      max-width: 400px;
-      margin: 1.5em auto;
-      aspect-ratio: 3/4;
-      overflow: hidden;
-    }
-
-    .slideshow-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 20px;
-      box-shadow: 0 0 12px rgba(255,255,255,0.4);
-    }
-
-    .slide-title {
-      margin-top: -0.5em;
-      font-size: 1.4em;
-      color: gold;
-      font-family: 'Parisienne', cursive;
-      background: rgba(0,0,0,0.4);
-      padding: 0.6em 1.2em;
-      border-radius: 25px;
-      box-shadow: 0 0 8px rgba(255,255,255,0.3);
-      width: fit-content;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .invite-text {
-      font-family: 'Great Vibes', cursive;
-      font-size: 2em;
-      margin-bottom: 2em;
-      max-width: 600px;
-    }
-
-    .convite p {
-      font-size: 1.1em;
-      line-height: 1.6em;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 2em;
-      flex-wrap: wrap;
-      margin-bottom: 2em;
-    }
-
-    .buttons img {
-      width: 48px;
-      height: 48px;
-      transition: transform 0.3s;
-    }
-
-    .buttons img:hover {
-      transform: scale(1.2);
-    }
-  </style>
+  /* --- Segunda tela (seu conteúdo original) --- */
+  #second-screen {
+    min-height: 100vh;
+    background: url('Aghatta.png') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+  }
+  .overlay {
+    background-color: rgba(0,0,0,0.6);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2em 1em;
+    text-align: center;
+    font-family: 'Georgia', serif;
+  }
+  .decor-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    flex-wrap: wrap;
+    margin-bottom: 0.5em;
+  }
+  .title-text {
+    font-family: 'Parisienne', cursive;
+    font-size: 2.4em;
+    color: gold;
+    text-shadow: 0 0 10px rgba(255,215,0,0.7);
+  }
+  .subtitle-text {
+    font-family: 'Parisienne', cursive;
+    font-size: 2.4em;
+    color: #8ecaff;
+    text-shadow: 0 0 8px #5ab3ff;
+  }
+  .crown {
+    width: 50px;
+    height: 50px;
+    background: url('https://cdn-icons-png.flaticon.com/512/4205/4205353.png') no-repeat center;
+    background-size: contain;
+    animation: shine 3s infinite ease-in-out;
+  }
+  .scroll {
+    width: 40px;
+    height: 40px;
+    background: url('https://img.icons8.com/emoji/48/scroll-emoji.png') no-repeat center;
+    background-size: contain;
+    animation: scrollRoll 4s ease-in-out infinite;
+    transform-origin: center top;
+  }
+  @keyframes scrollRoll {
+    0%, 100% { transform: scaleY(0.6); opacity: 0.8; }
+    50% { transform: scaleY(1); opacity: 1; }
+  }
+  .verso {
+    font-style: italic;
+    font-size: 1.1em;
+    margin: 1.5em 0;
+    max-width: 700px;
+  }
+  .calendar {
+    position: relative;
+    margin-bottom: 1em;
+  }
+  .calendar img {
+    width: 90vw;
+    max-width: 400px;
+    border-radius: 15px;
+  }
+  .butterfly {
+    position: absolute;
+    width: 32px;
+    animation: flap 1.2s infinite alternate, flyRandom 12s infinite ease-in-out;
+  }
+  .butterfly img {
+    width: 100%;
+  }
+  @keyframes flap {
+    0% { transform: rotateZ(-10deg); }
+    100% { transform: rotateZ(10deg); }
+  }
+  @keyframes flyRandom {
+    0% { transform: translate(0, 0); opacity: 1; }
+    25% { transform: translate(20px, -50px); opacity: 0.9; }
+    50% { transform: translate(-30px, -100px); opacity: 0.7; }
+    75% { transform: translate(40px, -160px); opacity: 0.5; }
+    100% { transform: translate(-20px, -220px); opacity: 0; }
+  }
+  .contador {
+    font-size: 1.2em;
+    background: rgba(0,0,0,0.8);
+    padding: 0.8em 1.2em;
+    border-radius: 20px;
+    margin-top: -1.2em;
+    margin-bottom: 1.2em;
+    width: 90vw;
+    max-width: 400px;
+  }
+  .slideshow-container {
+    position: relative;
+    width: 90vw;
+    max-width: 400px;
+    margin: 1.5em auto;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+  }
+  .slideshow-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 0 12px rgba(255,255,255,0.4);
+  }
+  .slide-title {
+    margin-top: -0.5em;
+    font-size: 1.4em;
+    color: gold;
+    font-family: 'Parisienne', cursive;
+    background: rgba(0,0,0,0.4);
+    padding: 0.6em 1.2em;
+    border-radius: 25px;
+    box-shadow: 0 0 8px rgba(255,255,255,0.3);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .invite-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2em;
+    margin-bottom: 2em;
+    max-width: 600px;
+  }
+  .convite p {
+    font-size: 1.1em;
+    line-height: 1.6em;
+  }
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    flex-wrap: wrap;
+    margin-bottom: 2em;
+  }
+  .buttons img {
+    width: 48px;
+    height: 48px;
+    transition: transform 0.3s;
+  }
+  .buttons img:hover {
+    transform: scale(1.2);
+  }
+</style>
 </head>
 <body>
-  <!-- Tela 1: Envelope fechado -->
-  <div id="envelope-screen" title="Toque para abrir o convite">
-    <img src="https://cdn-icons-png.flaticon.com/512/561/561127.png" alt="Envelope fechado" />
-    <div id="envelope-text">Toque para abrir o convite</div>
+  <div id="first-screen">
+    <div id="crown-top"></div>
+    <div id="envelope" aria-label="Clique para abrir o envelope" role="button" tabindex="0">
+      <div id="envelope-flap"></div>
+    </div>
   </div>
 
-  <!-- Tela 2: Conteúdo original -->
-  <div id="content-screen">
+  <div id="second-screen">
     <div class="overlay">
-
       <div class="decor-wrap">
         <div class="scroll"></div>
         <span class="title-text">Intimação Celestial</span>
@@ -276,11 +279,9 @@
       </div>
 
       <div class="convite">
-        <p>
-          <strong>🗓 Data:</strong> 12 de Setembro de 2025<br />
-          <strong>⏰ Hora:</strong> 19h<br />
-          <strong>📍 Local:</strong> Chácara das Paineiras
-        </p>
+        <p><strong>🗓 Data:</strong> 12 de Setembro de 2025<br />
+           <strong>⏰ Hora:</strong> 19h<br />
+           <strong>📍 Local:</strong> Chácara das Paineiras</p>
       </div>
 
       <div class="buttons">
@@ -292,69 +293,71 @@
 
   <audio id="background-audio" src="audio.mp3" preload="auto" loop></audio>
 
-  <script>
-    // Função para abrir o convite e tocar a música
-    document.getElementById('envelope-screen').addEventListener('click', () => {
-      // Esconde a primeira tela
-      const envelope = document.getElementById('envelope-screen');
-      envelope.style.opacity = '0';
-      setTimeout(() => {
-        envelope.style.display = 'none';
-        // Mostra a segunda tela
-        const content = document.getElementById('content-screen');
-        content.style.display = 'block';
-        // Tocar o áudio
-        const audio = document.getElementById('background-audio');
-        audio.play().catch(() => {
-          // Se autoplay bloqueado, espere interação do usuário na segunda tela
-          console.log('A reprodução automática foi bloqueada. Clique para iniciar o áudio.');
-        });
-      }, 800);
-    });
+<script>
+  const envelope = document.getElementById('envelope');
+  const audio = document.getElementById('background-audio');
 
-    // Contador regressivo
-    const evento = new Date('2025-09-12T19:00:00').getTime();
-    setInterval(() => {
-      const agora = new Date().getTime();
-      const restante = evento - agora;
-      const dias = Math.floor(restante / 864e5);
-      const horas = Math.floor((restante % 864e5) / 36e5);
-      const minutos = Math.floor((restante % 36e5) / 6e4);
-      const segundos = Math.floor((restante % 6e4) / 1000);
-      document.getElementById('contador').textContent =
-        `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
+  envelope.addEventListener('click', () => {
+    // anima envelope aberto
+    envelope.classList.add('open');
+    // depois de 1s, troca de tela
+    setTimeout(() => {
+      document.body.classList.add('opened');
+      // toca música
+      audio.play().catch(() => {
+        // pode falhar em alguns browsers se não houver interação
+        console.log("Autoplay falhou, esperando interação");
+      });
     }, 1000);
+  });
 
-    // Slideshow das imagens
-    const imagensSlide = [
-      'imagem1.jpeg', 'imagem2.jpeg', 'imagem3.jpeg', 'imagem4.jpeg', 'imagem5.jpeg',
-      'imagem6.jpeg', 'imagem7.jpeg', 'imagem8.jpeg', 'imagem9.jpeg', 'imagem10.jpeg',
-      'imagem11.jpeg', 'imagem12.jpeg', 'imagem13.jpeg', 'imagem14.jpeg', 'imagem15.jpeg'
-    ];
-
-    function embaralhar(array) {
-      return array.sort(() => Math.random() - 0.5);
+  // Contador regressivo
+  const evento = new Date("2025-09-12T19:00:00").getTime();
+  setInterval(() => {
+    const agora = new Date().getTime();
+    const restante = evento - agora;
+    if(restante < 0) {
+      document.getElementById("contador").textContent = "O evento já aconteceu!";
+      return;
     }
+    const dias = Math.floor(restante / 864e5);
+    const horas = Math.floor((restante % 864e5) / 36e5);
+    const minutos = Math.floor((restante % 36e5) / 6e4);
+    const segundos = Math.floor((restante % 6e4) / 1000);
+    document.getElementById("contador").textContent =
+      `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
+  }, 1000);
 
-    const imagensAleatorias = embaralhar(imagensSlide);
-    let indexAtual = 0;
-    function trocarImagem() {
-      document.getElementById('slide-img').src = imagensAleatorias[indexAtual];
-      indexAtual = (indexAtual + 1) % imagensAleatorias.length;
-    }
-    setInterval(trocarImagem, 4000);
+  // Slideshow
+  const imagensSlide = [
+    "imagem1.jpeg", "imagem2.jpeg", "imagem3.jpeg", "imagem4.jpeg", "imagem5.jpeg",
+    "imagem6.jpeg", "imagem7.jpeg", "imagem8.jpeg", "imagem9.jpeg", "imagem10.jpeg",
+    "imagem11.jpeg", "imagem12.jpeg", "imagem13.jpeg", "imagem14.jpeg", "imagem15.jpeg"
+  ];
 
-    // Borboletas no dia 12
-    for (let i = 0; i < 15; i++) {
-      const butterfly = document.createElement('div');
-      butterfly.className = 'butterfly';
-      butterfly.style.left = '56%';
-      butterfly.style.top = '44%'; // ajustado mais abaixo
-      butterfly.style.animationDelay = `${i * 0.6}s`;
-      butterfly.innerHTML = '<img src="https://img.icons8.com/color/48/000000/butterfly.png" />';
-      document.querySelector('.calendar').appendChild(butterfly);
-    }
-  </script>
+  function embaralhar(array) {
+    return array.sort(() => Math.random() - 0.5);
+  }
+
+  const imagensAleatorias = embaralhar(imagensSlide);
+  let indexAtual = 0;
+  function trocarImagem() {
+    document.getElementById("slide-img").src = imagensAleatorias[indexAtual];
+    indexAtual = (indexAtual + 1) % imagensAleatorias.length;
+  }
+  setInterval(trocarImagem, 4000);
+
+  // Borboletas no dia 12
+  for (let i = 0; i < 15; i++) {
+    const butterfly = document.createElement('div');
+    butterfly.className = 'butterfly';
+    butterfly.style.left = '56%';
+    butterfly.style.top = '44%';
+    butterfly.style.animationDelay = `${i * 0.6}s`;
+    butterfly.innerHTML = '<img src="https://img.icons8.com/color/48/000000/butterfly.png" />';
+    document.querySelector('.calendar').appendChild(butterfly);
+  }
+</script>
 </body>
 </html>
 

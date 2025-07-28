@@ -31,6 +31,7 @@
       justify-content: center;
       gap: 1em;
       flex-wrap: wrap;
+      margin-bottom: 1em;
     }
 
     .title-text {
@@ -47,24 +48,20 @@
       text-shadow: 0 0 8px #5ab3ff;
     }
 
-    img.pergaminho {
+    .icon-float {
+      position: relative;
+      display: inline-block;
+    }
+
+    .icon-animated {
+      position: absolute;
       width: 60px;
-      animation: desenrolar 2.5s infinite alternate ease-in-out;
+      animation: pulse 2s infinite ease-in-out;
     }
 
-    img.coroa {
-      width: 60px;
-      animation: brilhar 2s infinite alternate;
-    }
-
-    @keyframes desenrolar {
-      0% { transform: rotateZ(-10deg) scaleY(0.8); opacity: 0.7; }
-      100% { transform: rotateZ(10deg) scaleY(1); opacity: 1; }
-    }
-
-    @keyframes brilhar {
-      0% { filter: drop-shadow(0 0 5px gold); transform: scale(1); }
-      100% { filter: drop-shadow(0 0 15px #ffd700); transform: scale(1.1); }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.2); opacity: 1; }
     }
 
     .verso {
@@ -76,7 +73,8 @@
 
     .calendar {
       position: relative;
-      margin-bottom: 1em;
+      margin-bottom: 2em;
+      text-align: center;
     }
 
     .calendar img {
@@ -87,11 +85,12 @@
 
     .butterfly {
       position: absolute;
-      width: 40px;
-      animation: flyUp 10s forwards ease-in;
+      width: 60px;
+      animation: flyRandom 8s forwards ease-in-out;
     }
 
     .butterfly img {
+      width: 100%;
       animation: flap 1s infinite alternate;
     }
 
@@ -100,9 +99,16 @@
       100% { transform: rotateZ(5deg); }
     }
 
-    @keyframes flyUp {
+    @keyframes flyRandom {
       0% { transform: translate(0, 0); opacity: 1; }
-      100% { transform: translate(0, -350px); opacity: 0; }
+      100% {
+        transform:
+          translate(
+            calc(-150px + 300px * var(--rand-x)),
+            calc(-300px + -200px * var(--rand-y))
+          );
+        opacity: 0;
+      }
     }
 
     .contador {
@@ -110,9 +116,10 @@
       background: rgba(33,150,243,0.3);
       padding: 0.8em 1.2em;
       border-radius: 30px;
-      margin-bottom: 2em;
+      margin-top: 1em;
       width: 80%;
       max-width: 400px;
+      margin-inline: auto;
     }
 
     .slideshow-container {
@@ -177,16 +184,21 @@
 </head>
 <body>
   <div class="overlay" onclick="tocarMusica()">
-    <h1 class="title">
-      <img class="pergaminho" src="https://i.imgur.com/5BM1pMz.gif" alt="Pergaminho animado esquerdo">
-      <span class="title-text">Intimação Celestial</span>
-      <img class="pergaminho" src="https://i.imgur.com/5BM1pMz.gif" alt="Pergaminho animado direito">
-    </h1>
+
+    <div class="title">
+      <div class="icon-float">
+        <img class="icon-animated" src="https://img.icons8.com/emoji/96/old-scroll.png" style="left:-70px; top:-10px;" />
+        <span class="title-text">Intimação Celestial</span>
+        <img class="icon-animated" src="https://img.icons8.com/emoji/96/old-scroll.png" style="left:120px; top:-10px;" />
+      </div>
+    </div>
 
     <div class="subtitle">
-      <img class="coroa" src="https://i.imgur.com/fA7N7PU.gif" alt="Coroa animada esquerda">
-      <span class="subtitle-text">Aghatta XV</span>
-      <img class="coroa" src="https://i.imgur.com/fA7N7PU.gif" alt="Coroa animada direita">
+      <div class="icon-float">
+        <img class="icon-animated" src="https://img.icons8.com/emoji/96/crown-emoji.png" style="left:-70px; top:-10px;" />
+        <span class="subtitle-text">Aghatta XV</span>
+        <img class="icon-animated" src="https://img.icons8.com/emoji/96/crown-emoji.png" style="left:120px; top:-10px;" />
+      </div>
     </div>
 
     <div class="verso">
@@ -194,24 +206,26 @@
     </div>
 
     <div class="calendar">
-      <img src="Aniversário Aghatta XV.png" alt="Calendário">
+      <img src="Aniversário Aghatta XV.png" alt="Calendário" />
+
+      <!-- Script das borboletas -->
       <script>
-        for(let i = 0; i < 12; i++) {
+        for (let i = 0; i < 12; i++) {
           setTimeout(() => {
-            const x = 52; // Posição horizontal aproximada do número 12
-            const y = 39; // Posição vertical aproximada do número 12
             const butterfly = document.createElement("div");
             butterfly.className = "butterfly";
-            butterfly.style.left = `${x}%`;
-            butterfly.style.top = `${y}%`;
-            butterfly.innerHTML = `<img src="https://img.icons8.com/color/48/000000/butterfly.png"/>`;
+            butterfly.style.left = "57%";  // Ajustado mais para a direita — dia 12
+            butterfly.style.top = "39%";
+            butterfly.style.setProperty("--rand-x", Math.random().toFixed(2));
+            butterfly.style.setProperty("--rand-y", Math.random().toFixed(2));
+            butterfly.innerHTML = `<img src="https://img.icons8.com/color/96/000000/butterfly.png"/>`;
             document.querySelector(".calendar").appendChild(butterfly);
-          }, i * 600); // atraso entre saídas
+          }, i * 700); // Cada borboleta com atraso individual
         }
       </script>
-    </div>
 
-    <div class="contador" id="contador"></div>
+      <div class="contador" id="contador"></div>
+    </div>
 
     <div class="invite-text">
       Essa festa não será a mesma sem a sua presença.<br>Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
@@ -257,6 +271,7 @@
   </script>
 </body>
 </html>
+
 
 
 

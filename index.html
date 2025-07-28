@@ -10,9 +10,11 @@
       margin: 0;
       padding: 0;
       font-family: 'Georgia', serif;
-      background: url('Aghatta.png') no-repeat center center fixed;
+      background: url('Aghatta.png') no-repeat center top fixed;
       background-size: cover;
+      background-attachment: fixed;
       color: white;
+      overflow-x: hidden;
     }
 
     .overlay {
@@ -71,7 +73,7 @@
 
     .calendar {
       position: relative;
-      margin-bottom: 0.5em;
+      margin-bottom: 1em;
       text-align: center;
     }
 
@@ -102,7 +104,7 @@
       100% {
         transform:
           translate(
-            calc(-150px + 300px * var(--rand-x)),
+            calc(-180px + 360px * var(--rand-x)),
             calc(-450px + -200px * var(--rand-y))
           );
         opacity: 0;
@@ -110,13 +112,14 @@
     }
 
     .contador {
-      font-size: 1.3em;
-      background: rgba(33,150,243,0.3);
-      padding: 0.8em 1.2em;
-      border-radius: 30px;
-      margin: 0.5em auto 2em;
-      width: 80%;
-      max-width: 400px;
+      font-size: 1.2em;
+      background: rgba(33,150,243,0.25);
+      padding: 0.7em 1em;
+      border-radius: 25px;
+      margin-top: 0.6em;
+      max-width: 360px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .slideshow-container {
@@ -142,7 +145,7 @@
     .invite-text {
       font-family: 'Great Vibes', cursive;
       font-size: 2em;
-      margin-bottom: 2em;
+      margin: 1.5em 0;
       max-width: 600px;
     }
 
@@ -175,16 +178,16 @@
 
     <!-- TÍTULO COM PERGAMINHOS -->
     <div class="title">
-      <img class="floating-icon" src="https://img.icons8.com/emoji/96/old-scroll.png" style="left: -70px; top: -10px;" />
+      <img class="floating-icon" src="https://img.icons8.com/ios-filled/100/ffffff/parchment.png" style="left: -70px; top: -10px;" />
       <span class="title-text">Intimação Celestial</span>
-      <img class="floating-icon" src="https://img.icons8.com/emoji/96/old-scroll.png" style="right: -70px; top: -10px;" />
+      <img class="floating-icon" src="https://img.icons8.com/ios-filled/100/ffffff/parchment.png" style="right: -70px; top: -10px;" />
     </div>
 
-    <!-- SUBTÍTULO COM COROAS PRINCESA -->
+    <!-- SUBTÍTULO COM COROA REALISTA -->
     <div class="subtitle">
-      <img class="floating-icon" src="https://img.icons8.com/color/96/tiara.png" style="left: -80px; top: -10px;" />
+      <img class="floating-icon" src="https://img.icons8.com/3d-fluency/94/crown.png" style="left: -80px; top: -10px;" />
       <span class="subtitle-text">Aghatta XV</span>
-      <img class="floating-icon" src="https://img.icons8.com/color/96/tiara.png" style="right: -80px; top: -10px;" />
+      <img class="floating-icon" src="https://img.icons8.com/3d-fluency/94/crown.png" style="right: -80px; top: -10px;" />
     </div>
 
     <div class="verso">
@@ -196,20 +199,21 @@
       <img src="Aniversário Aghatta XV.png" alt="Calendário" />
 
       <script>
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < 10; i++) {
           setTimeout(() => {
             const butterfly = document.createElement("div");
             butterfly.className = "butterfly";
-            butterfly.style.left = "58%"; // posição ajustada mais para direita — dia 12
-            butterfly.style.top = "39%";
+            butterfly.style.left = "50.5%"; // Exato para o dia 12
+            butterfly.style.top = "38%";
             butterfly.style.setProperty("--rand-x", Math.random().toFixed(2));
             butterfly.style.setProperty("--rand-y", Math.random().toFixed(2));
             butterfly.innerHTML = `<img src="https://img.icons8.com/color/96/000000/butterfly.png"/>`;
             document.querySelector(".calendar").appendChild(butterfly);
-          }, i * 600);
+          }, i * 500);
         }
       </script>
 
+      <!-- CONTADOR DENTRO DO CALENDÁRIO -->
       <div class="contador" id="contador"></div>
     </div>
 
@@ -217,7 +221,7 @@
       Essa festa não será a mesma sem a sua presença.<br>Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
     </div>
 
-    <!-- SLIDESHOW -->
+    <!-- SLIDES -->
     <div class="slideshow-container">
       <div class="slide-title">Um pouco da minha história</div>
       <img id="slide-img" src="imagem1.jpeg" alt="Slideshow" />

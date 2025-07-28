@@ -38,50 +38,6 @@
       pointer-events: none;
     }
 
-    .envelope {
-      position: relative;
-      width: 300px;
-      height: 200px;
-      margin-top: 40px;
-      perspective: 1000px;
-    }
-
-    .envelope-base {
-      width: 100%;
-      height: 100%;
-      border: 2px solid #fff;
-      background-color: white;
-      border-radius: 0 0 10px 10px;
-    }
-
-    .flap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100px;
-      background-color: white;
-      border: 2px solid #fff;
-      border-bottom: none;
-      border-radius: 10px 10px 0 0;
-      transform-origin: top center;
-      transition: transform 1.2s ease-in-out;
-      z-index: 2;
-    }
-
-    .flap.aberto {
-      transform: rotateX(160deg);
-    }
-
-    .coroa-topo {
-      position: absolute;
-      top: -60px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      z-index: 3;
-    }
-
     .texto-inicial {
       display: flex;
       align-items: center;
@@ -108,6 +64,65 @@
     @keyframes rolarPergaminho {
       0%, 100% { transform: scaleY(0.7); opacity: 0.8; }
       50% { transform: scaleY(1); opacity: 1; }
+    }
+
+    .envelope-container {
+      position: relative;
+      width: 300px;
+      height: 220px;
+      margin-top: 20px;
+    }
+
+    .coroa-topo {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      z-index: 3;
+    }
+
+    .envelope {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      perspective: 1000px;
+    }
+
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 110px;
+      transform-origin: top center;
+      transition: transform 1.2s ease-in-out;
+      z-index: 2;
+    }
+
+    .flap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .flap.aberto {
+      transform: rotateX(160deg);
+    }
+
+    .envelope-base {
+      width: 100%;
+      height: 100%;
+      border-radius: 0 0 10px 10px;
+      overflow: hidden;
+    }
+
+    .envelope-base img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0 0 10px 10px;
     }
 
     .conteudo {
@@ -137,6 +152,14 @@
       color: gold;
       text-shadow: 0 0 10px rgba(255,215,0,0.7);
       margin-top: 0.5em;
+    }
+
+    .linha-coroa {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1em;
+      margin-bottom: 1em;
     }
 
     .subtitulo {
@@ -222,16 +245,22 @@
       <span>Intimação Celestial</span>
       <div class="scroll"></div>
     </div>
-    <div class="envelope">
+    <div class="envelope-container">
       <img src="coroa.png" alt="Coroa" class="coroa-topo" />
-      <div class="flap" id="flap"></div>
-      <div class="envelope-base"></div>
+      <div class="envelope">
+        <div class="flap" id="flap">
+          <img src="envelope-flap.png" alt="Flap do envelope" />
+        </div>
+        <div class="envelope-base">
+          <img src="envelope-base.png" alt="Base do envelope" />
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="conteudo">
     <div class="overlay">
-      <div>
+      <div class="linha-coroa">
         <img src="coroa.png" alt="Coroa" class="coroa-segunda" />
         <div class="subtitulo">Aghatta XV</div>
         <img src="coroa.png" alt="Coroa" class="coroa-segunda" />

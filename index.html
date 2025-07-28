@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -24,7 +25,7 @@
     .tela-envelope {
       width: 100vw;
       height: 100vh;
-      background-color: #002366;
+      background: url("Aghatta.png") center center / cover no-repeat;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -33,27 +34,16 @@
       inset: 0;
       z-index: 10;
       transition: opacity 1.2s ease;
-
-      opacity: 1;
-
-      /* Fundo realeza translúcido */
-      background-image: url('https://www.transparenttextures.com/patterns/gold-fabric.png');
-      background-repeat: repeat;
-      background-size: auto;
-      background-position: center;
-      background-blend-mode: overlay;
       opacity: 1;
     }
 
-    /* Para deixar o fundo translúcido e não tirar o destaque do envelope */
     .tela-envelope::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: url('https://www.transparenttextures.com/patterns/gold-fabric.png') repeat;
-      opacity: 0.12; /* baixa opacidade para efeito translúcido */
+      background-color: rgba(0,0,0,0.5);
+      backdrop-filter: blur(2px);
       z-index: -1;
-      pointer-events: none;
     }
 
     .tela-envelope.oculta {
@@ -189,14 +179,6 @@
       color: white;
     }
 
-    .titulo {
-      font-family: 'Parisienne', cursive;
-      font-size: 2.4em;
-      color: gold;
-      text-shadow: 0 0 10px rgba(255,215,0,0.7);
-      margin-top: 0.5em;
-    }
-
     .linha-coroa {
       display: flex;
       align-items: center;
@@ -242,11 +224,24 @@
     .galeria {
       width: 90vw;
       max-width: 400px;
-      margin: 1.5em auto;
+      margin: 2em auto;
       aspect-ratio: 3/4;
       overflow: hidden;
       border-radius: 20px;
       box-shadow: 0 0 12px rgba(255,255,255,0.4);
+      position: relative;
+    }
+
+    .galeria::before {
+      content: "Um pouco da minha história";
+      position: absolute;
+      top: -1.8em;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Parisienne', cursive;
+      font-size: 1.6em;
+      color: gold;
+      text-shadow: 0 0 8px rgba(255,215,0,0.8);
     }
 
     .galeria img {
@@ -255,6 +250,8 @@
       object-fit: cover;
       border-radius: 20px;
       user-select: none;
+      transition: opacity 1s ease-in-out;
+      opacity: 1;
     }
 
     .convite {
@@ -295,35 +292,9 @@
       transform: scale(1.2);
     }
 
-    /* Tocha e Flecha estilos simples */
-    .tocha {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      width: 50px;
-      height: 50px;
-      background: url('https://img.icons8.com/fluency/48/torch.png') no-repeat center;
-      background-size: contain;
-      cursor: pointer;
-      z-index: 20;
-      filter: drop-shadow(0 0 5px orange);
-      user-select: none;
+    .tocha, .flecha {
+      display: none;
     }
-
-    .flecha {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 50px;
-      height: 50px;
-      background: url('https://img.icons8.com/fluency/48/arrow.png') no-repeat center;
-      background-size: contain;
-      cursor: pointer;
-      z-index: 20;
-      filter: drop-shadow(0 0 5px #8ecaff);
-      user-select: none;
-    }
-
   </style>
 </head>
 <body>
@@ -355,7 +326,7 @@
         <img src="coroa.png" alt="Coroa" class="coroa-segunda" />
       </div>
 
-      <div class="versiculo" role="contentinfo">
+      <div class="versiculo">
         "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou." — Isaías 41:20
       </div>
 
@@ -386,14 +357,11 @@
     </div>
   </div>
 
-  <div class="tocha" title="Tocha"></div>
-  <div class="flecha" title="Flecha"></div>
-
   <audio id="audio" src="audio.mp3" preload="auto" loop></audio>
 
   <script>
-    const telaEnvelope = document.querySelector(".tela-envelope");
     const flap = document.getElementById("flap");
+    const telaEnvelope = document.querySelector(".tela-envelope");
     let aberto = false;
 
     function abrirEnvelope() {
@@ -405,7 +373,6 @@
       document.getElementById("audio").play().catch(() => {});
     }
 
-    // Permitir abrir com teclado Enter ou Space para acessibilidade
     telaEnvelope.addEventListener("keydown", (e) => {
       if(e.key === "Enter" || e.key === " ") {
         abrirEnvelope();
@@ -420,10 +387,10 @@
         document.getElementById("contador").textContent = "O evento já aconteceu!";
         return;
       }
-      const dias = Math.floor(restante / 864e5);
-      const horas = Math.floor((restante % 864e5) / 36e5);
-      const minutos = Math.floor((restante % 36e5) / 6e4);
-      const segundos = Math.floor((restante % 6e4) / 1000);
+      const dias = Math.floor(restante / 86400000);
+      const horas = Math.floor((restante % 86400000) / 3600000);
+      const minutos = Math.floor((restante % 3600000) / 60000);
+      const segundos = Math.floor((restante % 60000) / 1000);
       document.getElementById("contador").textContent =
         `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
     }, 1000);
@@ -436,15 +403,23 @@
       "imagem13.jpeg", "imagem14.jpeg", "imagem15.jpeg"
     ];
     let idx = 0;
+    const slide = document.getElementById("slide-img");
+    slide.style.opacity = 1;
+    slide.style.transition = "opacity 1.2s ease-in-out";
+
     setInterval(() => {
-      const slide = document.getElementById("slide-img");
-      idx = (idx + 1) % imagens.length;
-      slide.src = imagens[idx];
-    }, 4000);
+      slide.style.opacity = 0;
+      setTimeout(() => {
+        idx = (idx + 1) % imagens.length;
+        slide.src = imagens[idx];
+        slide.style.opacity = 1;
+      }, 1000);
+    }, 6000);
   </script>
 
 </body>
 </html>
+
 
 
 

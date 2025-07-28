@@ -4,9 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Intimação Celestial - Aghatta XV</title>
+  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
-
     body {
       margin: 0;
       padding: 0;
@@ -15,8 +14,9 @@
       background-size: cover;
       color: white;
     }
+
     .overlay {
-      background-color: rgba(0,0,0,0.6);
+      background-color: rgba(0, 0, 0, 0.6);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -25,81 +25,81 @@
       text-align: center;
     }
 
-    h1.titulo-principal,
-    .titulo-extra {
+    h1.title, .subtitle {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 1em;
       flex-wrap: wrap;
     }
 
-    .titulo-texto {
+    .title-text {
       font-family: 'Parisienne', cursive;
+      font-size: 2.8em;
       color: gold;
       text-shadow: 0 0 10px rgba(255,215,0,0.7);
     }
-    .titulo-texto.principal { font-size: 2.6em; }
-    .titulo-texto.sub { font-size: 2.2em; color: #8ecaff; text-shadow: 0 0 8px #5ab3ff; }
 
-    .pergaminho, .coroa {
-      position: relative;
+    .subtitle-text {
+      font-family: 'Parisienne', cursive;
+      font-size: 2.4em;
+      color: #8ecaff;
+      text-shadow: 0 0 8px #5ab3ff;
+    }
+
+    img.crown, img.scroll {
       opacity: 0;
+      animation: fadeInScale 2s forwards;
     }
-    @keyframes slideInLeft {
-      0% { transform: translateX(-60px); opacity: 0; }
-      100% { transform: translateX(0); opacity: 1; }
+
+    .subtitle img.crown {
+      animation-delay: 0.7s;
     }
-    @keyframes slideInRight {
-      0% { transform: translateX(60px); opacity: 0; }
-      100% { transform: translateX(0); opacity: 1; }
+
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
     }
-    @keyframes bounceIn {
-      0% { transform: scale(0.5); opacity: 0; }
-      50% { transform: scale(1.2); opacity: 1; }
-      100% { transform: scale(1); }
-    }
-    .animate-left { animation: slideInLeft 1.5s forwards; }
-    .animate-right { animation: slideInRight 1.5s forwards; }
-    .animate-coroa { animation: bounceIn 1.8s forwards; }
 
     .verso {
       font-style: italic;
       font-size: 1.1em;
-      margin-bottom: 1.5em;
+      margin: 1.5em 0;
       max-width: 700px;
     }
 
     .calendar {
       position: relative;
-      margin-bottom: 3em;
+      margin-bottom: 2em;
     }
+
     .calendar img {
       width: 80%;
       max-width: 400px;
       border-radius: 15px;
-      position: relative;
-      z-index: 1;
     }
 
     .butterfly {
       position: absolute;
       width: 40px;
-      z-index: 2;
       animation: freeFly 12s infinite ease-in-out;
     }
-    .butterfly img { animation: flap 1s infinite alternate; }
+
+    .butterfly img {
+      animation: flap 1s infinite alternate;
+    }
 
     @keyframes flap {
       0% { transform: rotateZ(-5deg); }
       100% { transform: rotateZ(5deg); }
     }
+
     @keyframes freeFly {
-      0%   { transform: translate(0, 0); opacity: 1; }
-      25%  { transform: translate(50px, -80px); opacity: 0.8; }
-      50%  { transform: translate(-40px, -160px); opacity: 0.6; }
-      75%  { transform: translate(60px, -220px); opacity: 0.4; }
-      100% { transform: translate(-30px, -300px); opacity: 0; }
+      0% { transform: translate(0, 0); opacity: 1; }
+      25% { transform: translate(50px, -80px); opacity: 0.8; }
+      50% { transform: translate(-60px, -160px); opacity: 0.6; }
+      75% { transform: translate(60px, -240px); opacity: 0.4; }
+      100% { transform: translate(-30px, -320px); opacity: 0; }
     }
 
     .contador {
@@ -118,11 +118,13 @@
       max-width: 800px;
       margin-bottom: 1.5em;
     }
+
     .slideshow-container img {
       width: 100%;
       border-radius: 20px;
       box-shadow: 0 0 12px rgba(255,255,255,0.4);
     }
+
     .slide-title {
       position: absolute;
       top: -30px;
@@ -139,35 +141,49 @@
       max-width: 500px;
     }
 
-    .convite {
-      max-width: 600px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 20px;
-      padding: 1.5em;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 20px rgba(255,193,7,0.4);
+    .invite-text {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2em;
       margin-bottom: 2em;
+      max-width: 600px;
+    }
+
+    .convite p {
+      font-size: 1.1em;
+      line-height: 1.6em;
     }
 
     .buttons {
-      display: flex; justify-content: center; gap: 2em; flex-wrap: wrap; margin-bottom:2em;
+      display: flex;
+      justify-content: center;
+      gap: 2em;
+      flex-wrap: wrap;
+      margin-bottom: 2em;
     }
-    .buttons img { width:48px; height:48px; transition: transform 0.3s; }
-    .buttons img:hover { transform: scale(1.2); }
+
+    .buttons img {
+      width: 48px;
+      height: 48px;
+      transition: transform 0.3s;
+    }
+
+    .buttons img:hover {
+      transform: scale(1.2);
+    }
   </style>
 </head>
 <body>
   <div class="overlay" onclick="tocarMusica()">
-    <h1 class="titulo-principal">
-      <img class="pergaminho animate-left" src="https://i.imgur.com/bXLRgLM.png" alt="Pergaminho Esquerdo">
-      <span class="titulo-texto principal">Intimação Celestial</span>
-      <img class="pergaminho animate-right" src="https://i.imgur.com/bXLRgLM.png" alt="Pergaminho Direito">
+    <h1 class="title">
+      <img class="scroll" src="https://i.imgur.com/bXLRgLM.gif" alt="Pergaminho animado">
+      <span class="title-text">Intimação Celestial</span>
+      <img class="scroll" src="https://i.imgur.com/bXLRgLM.gif" alt="Pergaminho animado">
     </h1>
 
-    <div class="titulo-extra">
-      <img class="coroa animate-coroa" src="https://i.imgur.com/1m8dW3B.png" alt="Coroa Esquerda">
-      <span class="titulo-texto sub">Aghatta XV</span>
-      <img class="coroa animate-coroa" src="https://i.imgur.com/1m8dW3B.png" alt="Coroa Direita">
+    <div class="subtitle">
+      <img class="crown" src="https://i.imgur.com/1m8dW3B.gif" alt="Coroa animada">
+      <span class="subtitle-text">Aghatta XV</span>
+      <img class="crown" src="https://i.imgur.com/1m8dW3B.gif" alt="Coroa animada">
     </div>
 
     <div class="verso">
@@ -175,17 +191,20 @@
     </div>
 
     <div class="calendar">
-      <img src="Aniversário Aghatta XV.png" alt="Calendário Aghatta">
+      <img src="Aniversário Aghatta XV.png" alt="Calendário">
       <script>
-        const colors = [];
-        for (let i = 0; i < 15; i++) {
-          const x = 50 + (Math.random()*160 - 80);
-          const y = 60 + (Math.random()*40);
-          document.write(`<div class='butterfly' style='left:${x}%; top:${y}%; animation-delay:${i*0.4}s'>
-            <img src='https://img.icons8.com/color/48/000000/butterfly.png'/>
+        for(let i = 0; i < 15; i++) {
+          const x = 50 + Math.random()*100 - 50;
+          const y = 60 + Math.random()*20;
+          document.write(`<div class="butterfly" style="left:${x}%; top:${y}%; animation-delay:${i*0.3}s;">
+            <img src="https://img.icons8.com/color/48/000000/butterfly.png"/>
           </div>`);
         }
       </script>
+    </div>
+
+    <div class="invite-text">
+      Essa festa não será a mesma sem a sua presença.<br>Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
     </div>
 
     <div class="contador" id="contador"></div>
@@ -196,7 +215,6 @@
     </div>
 
     <div class="convite">
-      <h2>Essa festa não será a mesma sem a sua presença.<br>Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.</h2>
       <p><strong>🗓 Data:</strong> 12 de Setembro de 2025<br>
          <strong>⏰ Hora:</strong> 19h<br>
          <strong>📍 Local:</strong> Chácara das Paineiras</p>
@@ -211,27 +229,27 @@
   <audio id="background-audio" src="audio.mp3" preload="auto" loop></audio>
 
   <script>
-    const eventoData = new Date("2025-09-12T19:00:00").getTime();
+    const evento = new Date("2025-09-12T19:00:00").getTime();
     setInterval(() => {
       const agora = new Date().getTime();
-      const distancia = eventoData - agora;
-      const dias = Math.floor(distancia/(1000*60*60*24));
-      const horas = Math.floor((distancia%(1000*60*60*24))/(1000*60*60));
-      const minutos = Math.floor((distancia%(1000*60*60))/(1000*60));
-      const segundos = Math.floor((distancia%(1000*60))/1000);
-      document.getElementById("contador").innerHTML =
+      const restante = evento - agora;
+      const dias = Math.floor(restante / 864e5);
+      const horas = Math.floor((restante % 864e5) / 36e5);
+      const minutos = Math.floor((restante % 36e5) / 6e4);
+      const segundos = Math.floor((restante % 6e4) / 1000);
+      document.getElementById("contador").textContent =
         `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
-    },1000);
+    }, 1000);
 
-    const audio = document.getElementById("background-audio");
     function tocarMusica() {
-      audio.play();
+      document.getElementById("background-audio").play();
       document.body.removeEventListener("click", tocarMusica);
     }
     document.body.addEventListener("click", tocarMusica);
   </script>
 </body>
 </html>
+
 
 
 

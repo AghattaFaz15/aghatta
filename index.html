@@ -31,6 +31,7 @@
       justify-content: center;
       gap: 1em;
       flex-wrap: wrap;
+      margin-bottom: 0.5em;
     }
 
     .title-text {
@@ -47,24 +48,19 @@
       text-shadow: 0 0 8px #5ab3ff;
     }
 
-    .crown, .scroll {
-      font-size: 2.5em;
-      display: inline-block;
-    }
-
     .crown {
-      background: url('https://img.icons8.com/emoji/48/princess-emoji.png') no-repeat center;
+      width: 48px;
+      height: 48px;
+      background: url('https://img.icons8.com/emoji/48/crown-emoji.png') no-repeat center;
       background-size: contain;
-      width: 40px;
-      height: 40px;
       animation: shine 3s infinite ease-in-out;
     }
 
     .scroll {
-      background: url('https://img.icons8.com/emoji/48/scroll-emoji.png') no-repeat center;
-      background-size: contain;
       width: 40px;
       height: 40px;
+      background: url('https://img.icons8.com/emoji/48/scroll-emoji.png') no-repeat center;
+      background-size: contain;
       animation: scrollRoll 4s ease-in-out infinite;
       transform-origin: center top;
     }
@@ -99,26 +95,25 @@
 
     .butterfly {
       position: absolute;
-      width: 40px;
-      animation: freeFly 10s infinite ease-in-out;
+      width: 32px;
+      animation: flap 1.2s infinite alternate, flyRandom 12s infinite ease-in-out;
     }
 
     .butterfly img {
-      animation: flap 1s infinite alternate;
       width: 100%;
     }
 
     @keyframes flap {
-      0% { transform: rotateZ(-5deg); }
-      100% { transform: rotateZ(5deg); }
+      0% { transform: rotateZ(-10deg); }
+      100% { transform: rotateZ(10deg); }
     }
 
-    @keyframes freeFly {
+    @keyframes flyRandom {
       0% { transform: translate(0, 0); opacity: 1; }
-      25% { transform: translate(30px, -60px); opacity: 0.8; }
-      50% { transform: translate(-40px, -120px); opacity: 0.6; }
-      75% { transform: translate(50px, -180px); opacity: 0.4; }
-      100% { transform: translate(-20px, -240px); opacity: 0; }
+      25% { transform: translate(20px, -50px); opacity: 0.9; }
+      50% { transform: translate(-30px, -100px); opacity: 0.7; }
+      75% { transform: translate(40px, -160px); opacity: 0.5; }
+      100% { transform: translate(-20px, -220px); opacity: 0; }
     }
 
     .contador {
@@ -126,7 +121,7 @@
       background: rgba(0,0,0,0.8);
       padding: 0.8em 1.2em;
       border-radius: 20px;
-      margin-top: -1em;
+      margin-top: -1.5em;
       margin-bottom: 1em;
       width: 90vw;
       max-width: 400px;
@@ -196,6 +191,7 @@
 </head>
 <body>
   <div class="overlay" onclick="tocarMusica()">
+
     <div class="decor-wrap">
       <div class="scroll"></div>
       <span class="title-text">Intimação Celestial</span>
@@ -215,21 +211,11 @@
     <div class="calendar">
       <img src="Aniversário Aghatta XV.png" alt="Calendário">
       <div id="contador" class="contador"></div>
-      <script>
-        for(let i = 0; i < 15; i++) {
-          const butterfly = document.createElement('div');
-          butterfly.className = 'butterfly';
-          butterfly.style.left = `56%`;
-          butterfly.style.top = `36%`;
-          butterfly.style.animationDelay = `${i * 0.8}s`;
-          butterfly.innerHTML = '<img src="https://img.icons8.com/color/48/000000/butterfly.png" />';
-          document.querySelector('.calendar').appendChild(butterfly);
-        }
-      </script>
     </div>
 
     <div class="invite-text">
-      Essa festa não será a mesma sem a sua presença.<br>Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
+      Essa festa não será a mesma sem a sua presença.<br>
+      Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
     </div>
 
     <div class="slide-title">Um pouco da minha história</div>
@@ -275,9 +261,11 @@
       "imagem6.jpeg", "imagem7.jpeg", "imagem8.jpeg", "imagem9.jpeg", "imagem10.jpeg",
       "imagem11.jpeg", "imagem12.jpeg", "imagem13.jpeg", "imagem14.jpeg", "imagem15.jpeg"
     ];
+
     function embaralhar(array) {
       return array.sort(() => Math.random() - 0.5);
     }
+
     const imagensAleatorias = embaralhar(imagensSlide);
     let indexAtual = 0;
     function trocarImagem() {
@@ -285,9 +273,21 @@
       indexAtual = (indexAtual + 1) % imagensAleatorias.length;
     }
     setInterval(trocarImagem, 4000);
+
+    // Borboletas
+    for (let i = 0; i < 15; i++) {
+      const butterfly = document.createElement('div');
+      butterfly.className = 'butterfly';
+      butterfly.style.left = '56%';
+      butterfly.style.top = '36%';
+      butterfly.style.animationDelay = `${i * 0.6}s`;
+      butterfly.innerHTML = '<img src="https://img.icons8.com/color/48/000000/butterfly.png" />';
+      document.querySelector('.calendar').appendChild(butterfly);
+    }
   </script>
 </body>
 </html>
+
 
 
 

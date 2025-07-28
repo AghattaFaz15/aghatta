@@ -49,24 +49,29 @@
 
     .crown, .scroll {
       font-size: 2.5em;
+      display: inline-block;
     }
 
-    .crown::before {
-      content: "👑";
-      display: inline-block;
+    .crown {
+      background: url('https://img.icons8.com/emoji/48/princess-emoji.png') no-repeat center;
+      background-size: contain;
+      width: 40px;
+      height: 40px;
       animation: shine 3s infinite ease-in-out;
     }
 
-    .scroll::before {
-      content: "📜";
-      display: inline-block;
+    .scroll {
+      background: url('https://img.icons8.com/emoji/48/scroll-emoji.png') no-repeat center;
+      background-size: contain;
+      width: 40px;
+      height: 40px;
       animation: scrollRoll 4s ease-in-out infinite;
       transform-origin: center top;
     }
 
     @keyframes shine {
-      0%, 100% { filter: brightness(1); text-shadow: 0 0 5px gold; }
-      50% { filter: brightness(1.6); text-shadow: 0 0 15px gold; }
+      0%, 100% { filter: brightness(1); box-shadow: 0 0 5px gold; }
+      50% { filter: brightness(1.6); box-shadow: 0 0 15px gold; }
     }
 
     @keyframes scrollRoll {
@@ -94,7 +99,7 @@
 
     .butterfly {
       position: absolute;
-      width: 60px;
+      width: 40px;
       animation: freeFly 10s infinite ease-in-out;
     }
 
@@ -121,7 +126,7 @@
       background: rgba(0,0,0,0.8);
       padding: 0.8em 1.2em;
       border-radius: 20px;
-      margin-top: -1.5em;
+      margin-top: -1em;
       margin-bottom: 1em;
       width: 90vw;
       max-width: 400px;
@@ -214,8 +219,8 @@
         for(let i = 0; i < 15; i++) {
           const butterfly = document.createElement('div');
           butterfly.className = 'butterfly';
-          butterfly.style.left = `57%`;
-          butterfly.style.top = `32%`;
+          butterfly.style.left = `56%`;
+          butterfly.style.top = `36%`;
           butterfly.style.animationDelay = `${i * 0.8}s`;
           butterfly.innerHTML = '<img src="https://img.icons8.com/color/48/000000/butterfly.png" />';
           document.querySelector('.calendar').appendChild(butterfly);
@@ -283,6 +288,7 @@
   </script>
 </body>
 </html>
+
 
 
 

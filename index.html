@@ -14,6 +14,7 @@
       color: white;
       background: url('Aghatta.png') no-repeat center center fixed;
       background-size: cover;
+      overflow-x: hidden;
     }
 
     .overlay {
@@ -28,105 +29,103 @@
 
     h1 {
       font-family: 'Parisienne', cursive;
-      font-size: 3em;
+      font-size: 2.8em;
+      margin-bottom: 0.3em;
       color: gold;
       text-shadow: 0 0 12px rgba(255,215,0,0.8);
       white-space: nowrap;
-      margin: 0.5em 0;
     }
 
     .titulo-extra {
       font-family: 'Parisienne', cursive;
-      font-size: 2em;
+      font-size: 2.2em;
+      margin-top: 0.2em;
       color: #8ecaff;
       text-shadow: 0 0 8px #5ab3ff;
-      margin-bottom: 1em;
     }
 
     .verso {
       font-style: italic;
-      margin-bottom: 2em;
+      margin: 0.5em auto 1.5em;
       max-width: 700px;
-      font-size: 1.2em;
+      font-size: 1em;
+      opacity: 0;
+      animation: fadeIn 4s forwards;
     }
 
-    .calendario-container {
+    .contador-container {
+      width: 300px;
+      max-width: 90%;
+      margin: 1em auto 1em;
       position: relative;
-      width: 100%;
-      max-width: 400px;
     }
 
-    .calendario-container img {
+    .calendar-image {
       width: 100%;
       border-radius: 20px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
     }
 
     .contador {
+      font-size: 1.2em;
+      color: white;
+      background: rgba(33, 150, 243, 0.6);
+      padding: 0.6em;
+      border-radius: 20px;
       position: absolute;
-      bottom: 5%;
+      bottom: 15px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 1em;
-      background: rgba(0, 123, 255, 0.8);
-      padding: 0.5em 1em;
-      border-radius: 30px;
-      color: white;
-      box-shadow: 0 0 12px rgba(0, 123, 255, 0.6);
+      width: 85%;
     }
 
     .borboleta {
       position: absolute;
-      width: 32px;
-      height: 32px;
-      background-image: url('https://img.icons8.com/color/48/blue-butterfly.png');
-      background-size: contain;
-      background-repeat: no-repeat;
-      animation: voar 6s infinite ease-in;
+      width: 24px;
+      animation: subir 6s linear infinite;
     }
 
-    .borboleta:nth-child(1) { left: 45%; animation-delay: 0s; }
-    .borboleta:nth-child(2) { left: 50%; animation-delay: 1s; }
-    .borboleta:nth-child(3) { left: 55%; animation-delay: 2s; }
-
-    @keyframes voar {
-      0% { bottom: 0; opacity: 0; transform: translateY(0) scale(0.5) rotate(0deg); }
-      30% { opacity: 1; }
-      50% { transform: translateY(-100px) scale(1) rotate(20deg); }
-      100% { bottom: 200px; opacity: 0; transform: translateY(-200px) scale(0.8) rotate(-20deg); }
+    @keyframes subir {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-250px) scale(0.5); opacity: 0; }
     }
 
-    .balao {
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
-      padding: 1em 2em;
-      border-radius: 25px;
-      margin: 3em 0 1em;
+    .balão {
+      margin-top: 2em;
+      padding: 0.8em 2em;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
       font-family: 'Parisienne', cursive;
+      color: gold;
+      text-shadow: 0 0 8px rgba(255,215,0,0.5);
       font-size: 1.5em;
-      backdrop-filter: blur(4px);
+      max-width: 90%;
+      backdrop-filter: blur(5px);
     }
 
     .slideshow {
-      width: 100%;
-      max-width: 600px;
+      width: 90%;
+      max-width: 800px;
       margin: 1em auto;
     }
 
     .slideshow img {
       width: 100%;
+      max-height: 400px;
       border-radius: 20px;
-      box-shadow: 0 0 15px rgba(255,255,255,0.3);
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
     }
 
     .convite {
-      margin-top: 2em;
+      margin: auto;
       max-width: 600px;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 20px;
       padding: 1.5em;
       backdrop-filter: blur(10px);
       box-shadow: 0 0 20px rgba(255, 193, 7, 0.4);
+      opacity: 0;
+      animation: slideIn 2s ease-in-out 2s forwards;
     }
 
     .convite h2 {
@@ -134,14 +133,26 @@
       color: gold;
       font-size: 1.5em;
       text-shadow: 0 0 8px rgba(255,215,0,0.4);
-      margin-bottom: 1em;
+    }
+
+    .convite p {
+      font-size: 1em;
+      margin: 0.5em 0;
     }
 
     .buttons {
-      margin-top: 2em;
+      margin-top: 1em;
       display: flex;
       justify-content: center;
       gap: 2em;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s;
     }
 
     .button img {
@@ -149,27 +160,52 @@
       height: 48px;
       border-radius: 50%;
       box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+      transition: transform 0.3s;
+    }
+
+    .button:hover img {
+      transform: scale(1.2);
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    audio {
+      display: block;
+      margin: 1em auto;
     }
   </style>
 </head>
 <body>
+  <audio autoplay loop controls>
+    <source src="audio.mp3" type="audio/mp3">
+    Seu navegador não suporta áudio.
+  </audio>
+
   <div class="overlay">
-    <h1>Intimação Celestial</h1>
+    <h1>📜 Intimação Celestial 📜</h1>
     <div class="titulo-extra">Aghatta XV</div>
 
     <div class="verso">
       "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou."<br>— Isaías 41:20
     </div>
 
-    <div class="calendario-container">
-      <img src="Aniversário Aghatta XV.png" alt="Calendário">
+    <div class="contador-container">
+      <img class="calendar-image" src="Aniversário Aghatta XV.png" alt="Calendário do Evento">
       <div class="contador" id="contador"></div>
-      <div class="borboleta"></div>
-      <div class="borboleta"></div>
-      <div class="borboleta"></div>
+      <!-- Borboletas -->
+      <img class="borboleta" src="https://img.icons8.com/color/48/000000/blue-butterfly.png" style="left: 45%;" />
+      <img class="borboleta" src="https://img.icons8.com/color/48/000000/blue-butterfly.png" style="left: 50%; animation-delay: 2s;" />
+      <img class="borboleta" src="https://img.icons8.com/color/48/000000/blue-butterfly.png" style="left: 55%; animation-delay: 4s;" />
     </div>
 
-    <div class="balao">Um pouco da minha história</div>
+    <div class="balão">Um pouco da minha história</div>
 
     <div class="slideshow">
       <img id="slide-img" src="imagem1.jpeg" alt="Fotos do evento">
@@ -180,14 +216,18 @@
         Essa festa não será a mesma sem a sua presença.<br>
         Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
       </h2>
-      <p><strong>Data:</strong> 12 de Setembro de 2025<br>
-         <strong>Hora:</strong> 19h<br>
-         <strong>Local:</strong> Chácara das Paineiras</p>
+      <p><strong>🗓 Data:</strong> 12 de Setembro de 2025<br>
+         <strong>⏰ Hora:</strong> 19h<br>
+         <strong>📍 Local:</strong> Chácara das Paineiras</p>
     </div>
 
     <div class="buttons">
-      <a class="button" href="#"><img src="https://img.icons8.com/color/96/marker.png" alt="Localização" /></a>
-      <a class="button" href="#"><img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirmação" /></a>
+      <a class="button" href="https://www.google.com/maps/place/Chácara+das+Paineiras/@-23.6241921,-47.0673401,17z" target="_blank">
+        <img src="https://img.icons8.com/color/96/marker.png" alt="Localização" title="Ver Localização" />
+      </a>
+      <a class="button" href="https://forms.gle/confirmacao-de-presenca" target="_blank">
+        <img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirmar Presença" title="Confirmar Presença" />
+      </a>
     </div>
   </div>
 
@@ -200,7 +240,7 @@
       const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
       const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
-      document.getElementById("contador").innerText = `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
+      document.getElementById("contador").innerHTML = `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
     }, 1000);
 
     let slideIndex = 0;
@@ -208,10 +248,11 @@
     setInterval(() => {
       slideIndex = (slideIndex % totalSlides) + 1;
       document.getElementById("slide-img").src = `imagem${slideIndex}.jpeg`;
-    }, 4000);
+    }, 3000);
   </script>
 </body>
 </html>
+
 
 </html>
 

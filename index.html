@@ -32,31 +32,30 @@
       margin-bottom: 0.5em;
       color: gold;
       text-shadow: 0 0 10px rgba(255,215,0,0.7);
-    }
-
-    .titulo-extra {
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    .pergaminho {
+      width: 60px;
+      animation: abrirPergaminho 3s ease forwards;
+    }
+
+    @keyframes abrirPergaminho {
+      0% { transform: scaleX(0); opacity: 0; }
+      100% { transform: scaleX(1); opacity: 1; }
+    }
+
+    .titulo-extra {
       font-family: 'Parisienne', cursive;
       font-size: 2.2em;
-      margin-bottom: 1em;
+      margin: 0.5em;
       color: #8ecaff;
       text-shadow: 0 0 8px #5ab3ff;
-      position: relative;
-    }
-
-    .titulo-extra::before,
-    .titulo-extra::after {
-      content: url('https://img.icons8.com/color/48/000000/crown.png');
-      display: inline-block;
-      margin: 0 0.4em;
-      animation: brilho 2s infinite alternate;
-    }
-
-    @keyframes brilho {
-      0% { filter: brightness(1); }
-      100% { filter: brightness(2); }
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .verso {
@@ -68,7 +67,7 @@
 
     .calendar {
       position: relative;
-      margin-bottom: 1.5em;
+      margin-bottom: 0.5em;
     }
 
     .calendar img {
@@ -77,24 +76,38 @@
       border-radius: 15px;
     }
 
+    .calendar .baloon {
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0.6em 1.2em;
+      border-radius: 20px;
+      color: white;
+      font-family: 'Parisienne', cursive;
+      font-size: 1em;
+    }
+
     .butterfly {
       position: absolute;
-      width: 50px;
-      height: 50px;
-      animation: flap 1s infinite, fly 8s infinite ease-in-out;
-      top: 43%; /* Mais alto */
-      left: 60.5%;
+      width: 40px;
+      animation: fly 10s infinite ease-in-out;
+    }
+
+    .butterfly img {
+      animation: flap 1s infinite alternate;
     }
 
     @keyframes flap {
-      0%, 100% { transform: scale(1) rotate(0deg); }
-      50% { transform: scale(1.1) rotate(5deg); }
+      0% { transform: rotateZ(-5deg); }
+      100% { transform: rotateZ(5deg); }
     }
 
     @keyframes fly {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      50% { transform: translate(-40px, -150px) scale(1.2); opacity: 0.6; }
-      100% { transform: translate(40px, -300px) scale(0.9); opacity: 0; }
+      0% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(-150px); opacity: 0.6; }
+      100% { transform: translateY(-350px); opacity: 0; }
     }
 
     .contador {
@@ -111,7 +124,7 @@
       position: relative;
       width: 90%;
       max-width: 800px;
-      margin-bottom: 2em;
+      margin-bottom: 1.5em;
     }
 
     .slideshow-container img {
@@ -122,7 +135,7 @@
 
     .slide-title {
       position: absolute;
-      top: -10%;
+      top: -30px;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(0,0,0,0.4);
@@ -146,13 +159,6 @@
       margin-bottom: 2em;
     }
 
-    .convite h2 {
-      font-family: 'Parisienne', cursive;
-      font-size: 1.4em;
-      color: gold;
-      text-shadow: 0 0 8px rgba(255,215,0,0.5);
-    }
-
     .buttons {
       display: flex;
       justify-content: center;
@@ -161,54 +167,57 @@
       margin-bottom: 2em;
     }
 
-    .button img {
+    .buttons img {
       width: 48px;
       height: 48px;
       transition: transform 0.3s;
     }
 
-    .button:hover img {
+    .buttons img:hover {
       transform: scale(1.2);
     }
 
-    .scroll-animado {
-      width: 48px;
-      height: 48px;
-      animation: abrirPergaminho 1.2s ease-in-out forwards;
-      transform-origin: center;
+    .coroa {
+      width: 40px;
+      margin: 0 10px;
+      animation: brilho 1.5s infinite alternate;
     }
 
-    @keyframes abrirPergaminho {
-      0% { transform: scaleY(0.1); opacity: 0; }
-      100% { transform: scaleY(1); opacity: 1; }
+    @keyframes brilho {
+      from { filter: brightness(1); }
+      to { filter: brightness(2); }
     }
   </style>
 </head>
 <body>
   <div class="overlay" onclick="tocarMusica()">
     <h1>
-      <img src="https://img.icons8.com/emoji/48/scroll-emoji.png" class="scroll-animado" />
+      <img class="pergaminho" src="pergaminho.png" alt="Pergaminho">
       Intimação Celestial
-      <img src="https://img.icons8.com/emoji/48/scroll-emoji.png" class="scroll-animado" />
+      <img class="pergaminho" src="pergaminho.png" alt="Pergaminho">
     </h1>
 
-    <div class="titulo-extra">Aghatta XV</div>
+    <div class="titulo-extra">
+      <img class="coroa" src="coroa.png" alt="Coroa">
+      Aghatta XV
+      <img class="coroa" src="coroa.png" alt="Coroa">
+    </div>
 
     <div class="verso">
       "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou." — Isaías 41:20
     </div>
 
     <div class="calendar">
-      <img src="Aniversário Aghatta XV.png" alt="Calendário">
-      <!-- Borboletas -->
-      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
-      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
-      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
-      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
-      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
-      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
-      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
-      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
+      <img src="Aniversario.png" alt="Calendário">
+      <div class="baloon">Um pouco da minha história</div>
+      <!-- 15 borboletas saindo do mesmo ponto -->
+      <script>
+        for (let i = 0; i < 15; i++) {
+          document.write(`<div class='butterfly' style='left: 60.5%; top: 50%; animation-delay: ${i * 0.5}s;'>
+            <img src='https://img.icons8.com/color/48/000000/butterfly.png'/>
+          </div>`);
+        }
+      </script>
     </div>
 
     <div class="contador" id="contador"></div>
@@ -226,16 +235,11 @@
     </div>
 
     <div class="buttons">
-      <a class="button" href="https://www.google.com/maps/place/Chácara+das+Paineiras" target="_blank">
-        <img src="https://img.icons8.com/color/96/marker.png" alt="Localização" title="Ver Localização" />
-      </a>
-      <a class="button" href="https://forms.gle/confirmacao-de-presenca" target="_blank">
-        <img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirmar Presença" title="Confirmar Presença" />
-      </a>
+      <a href="#"><img src="https://img.icons8.com/color/96/marker.png" alt="Localização" /></a>
+      <a href="#"><img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirme" /></a>
     </div>
   </div>
 
-  <!-- Música -->
   <audio id="background-audio" src="audio.mp3" preload="auto" loop></audio>
 
   <script>
@@ -261,18 +265,17 @@
       slideIndex++;
     }, 3500);
 
-    // Música inicia ao tocar na tela
+    // Áudio auto play
     const audio = document.getElementById("background-audio");
     function tocarMusica() {
-      if (audio.paused) {
-        audio.play();
-      }
-      document.removeEventListener('click', tocarMusica);
+      audio.play();
+      document.body.removeEventListener("click", tocarMusica);
     }
-    document.addEventListener('click', tocarMusica);
+    document.body.addEventListener("click", tocarMusica);
   </script>
 </body>
 </html>
+
 
 
 

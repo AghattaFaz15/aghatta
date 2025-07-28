@@ -25,7 +25,7 @@
       text-align: center;
     }
 
-    h1.title, .subtitle {
+    .title, .subtitle {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -47,18 +47,24 @@
       text-shadow: 0 0 8px #5ab3ff;
     }
 
-    img.crown, img.scroll {
-      opacity: 0;
-      animation: fadeInScale 2s forwards;
+    img.pergaminho {
+      width: 60px;
+      animation: desenrolar 2.5s infinite alternate ease-in-out;
     }
 
-    .subtitle img.crown {
-      animation-delay: 0.7s;
+    img.coroa {
+      width: 60px;
+      animation: brilhar 2s infinite alternate;
     }
 
-    @keyframes fadeInScale {
-      from { opacity: 0; transform: scale(0.5); }
-      to { opacity: 1; transform: scale(1); }
+    @keyframes desenrolar {
+      0% { transform: rotateZ(-10deg) scaleY(0.8); opacity: 0.7; }
+      100% { transform: rotateZ(10deg) scaleY(1); opacity: 1; }
+    }
+
+    @keyframes brilhar {
+      0% { filter: drop-shadow(0 0 5px gold); transform: scale(1); }
+      100% { filter: drop-shadow(0 0 15px #ffd700); transform: scale(1.1); }
     }
 
     .verso {
@@ -175,15 +181,15 @@
 <body>
   <div class="overlay" onclick="tocarMusica()">
     <h1 class="title">
-      <img class="scroll" src="https://i.imgur.com/bXLRgLM.gif" alt="Pergaminho animado">
+      <img class="pergaminho" src="https://i.imgur.com/j7Vd3pz.gif" alt="Pergaminho animado esquerdo">
       <span class="title-text">Intimação Celestial</span>
-      <img class="scroll" src="https://i.imgur.com/bXLRgLM.gif" alt="Pergaminho animado">
+      <img class="pergaminho" src="https://i.imgur.com/j7Vd3pz.gif" alt="Pergaminho animado direito">
     </h1>
 
     <div class="subtitle">
-      <img class="crown" src="https://i.imgur.com/1m8dW3B.gif" alt="Coroa animada">
+      <img class="coroa" src="https://i.imgur.com/w1UDK3L.gif" alt="Coroa animada esquerda">
       <span class="subtitle-text">Aghatta XV</span>
-      <img class="crown" src="https://i.imgur.com/1m8dW3B.gif" alt="Coroa animada">
+      <img class="coroa" src="https://i.imgur.com/w1UDK3L.gif" alt="Coroa animada direita">
     </div>
 
     <div class="verso">
@@ -194,11 +200,13 @@
       <img src="Aniversário Aghatta XV.png" alt="Calendário">
       <script>
         for(let i = 0; i < 15; i++) {
-          const x = 50 + Math.random()*100 - 50;
-          const y = 60 + Math.random()*20;
-          document.write(`<div class="butterfly" style="left:${x}%; top:${y}%; animation-delay:${i*0.3}s;">
-            <img src="https://img.icons8.com/color/48/000000/butterfly.png"/>
-          </div>`);
+          const x = 47 + Math.random() * 6; // Posição centralizada no número 12
+          const y = 33 + Math.random() * 2; // Altura aproximada da linha do 12
+          document.write(`
+            <div class="butterfly" style="left:${x}%; top:${y}%; animation-delay:${i * 0.4}s;">
+              <img src="https://img.icons8.com/color/48/000000/butterfly.png"/>
+            </div>
+          `);
         }
       </script>
     </div>

@@ -33,7 +33,18 @@
       text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
       margin: 0.5em 0;
       position: relative;
-      animation: float 3s ease-in-out infinite;
+      animation: openPergaminho 2s ease forwards;
+    }
+
+    @keyframes openPergaminho {
+      from {
+        transform: scaleX(0);
+        opacity: 0;
+      }
+      to {
+        transform: scaleX(1);
+        opacity: 1;
+      }
     }
 
     .titulo-extra {
@@ -44,51 +55,45 @@
       text-shadow: 0 0 10px #5ab3ff;
     }
 
-    .verso {
-      font-style: italic;
-      font-size: 1em;
-      margin: 1em auto;
-      max-width: 600px;
+    .butterfly {
+      position: absolute;
+      width: 40px;
+      animation: flap 3s infinite ease-in-out, flyUp 6s infinite ease-in-out;
+      top: 52%;
+      left: 49%;
+      pointer-events: none;
     }
 
-    .contador-wrapper {
+    @keyframes flap {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(5deg); }
+    }
+
+    @keyframes flyUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-200px); opacity: 0; }
+    }
+
+    .calendario-wrapper {
       position: relative;
       display: inline-block;
-      margin: 2em 0 1em;
-    }
-
-    .contador {
-      background: rgba(33, 150, 243, 0.3);
-      border-radius: 25px;
-      padding: 1em 2em;
-      font-size: 1.2em;
-      display: inline-block;
-      min-width: 250px;
-      max-width: 90vw;
+      margin-bottom: 1em;
     }
 
     .calendario {
       width: 90vw;
       max-width: 400px;
       border-radius: 20px;
-      margin-bottom: 1em;
-      position: relative;
     }
 
-    .butterfly {
-      position: absolute;
-      width: 40px;
-      animation: flyUp 6s ease-in-out infinite;
-      top: 58%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-
-    @keyframes flyUp {
-      0% { transform: translate(-50%, 0) scale(1); opacity: 1; }
-      50% { transform: translate(-50%, -150px) scale(1.1); opacity: 0.7; }
-      100% { transform: translate(-50%, -300px) scale(1); opacity: 0; }
+    .contador-wrapper {
+      width: 90vw;
+      max-width: 400px;
+      background: rgba(33, 150, 243, 0.3);
+      border-radius: 25px;
+      padding: 1em;
+      font-size: 1.2em;
+      margin: 1em auto;
     }
 
     .slideshow-wrapper {
@@ -115,7 +120,6 @@
     .slideshow img {
       width: 100%;
       border-radius: 20px;
-      box-shadow: 0 0 10px rgba(255,255,255,0.3);
     }
 
     .convite {
@@ -124,7 +128,6 @@
       padding: 1.5em;
       border-radius: 20px;
       backdrop-filter: blur(10px);
-      box-shadow: 0 0 15px rgba(255, 193, 7, 0.3);
       margin-top: 2em;
     }
 
@@ -133,11 +136,6 @@
       color: gold;
       font-size: 1.4em;
       margin-bottom: 1em;
-    }
-
-    .convite p {
-      font-size: 1em;
-      margin: 0.5em 0;
     }
 
     .buttons {
@@ -160,42 +158,28 @@
       transform: scale(1.2);
     }
 
-    .scroll {
-      animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
     audio {
       display: none;
     }
   </style>
 </head>
-<body>
+<body onclick="tocarAudio()">
 
-<audio id="audio" src="audio.mp3"></audio>
+<audio id="audio" src="louvor.mp3"></audio>
 
-<div class="overlay" onclick="tocarAudio()">
+<div class="overlay">
   <h1>📜 Intimação Celestial 📜</h1>
   <div class="titulo-extra">👑 Aghatta XV 👑</div>
 
-  <div class="verso">
-    “Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto...”<br>— Isaías 41:20
-  </div>
-
   <div class="calendario-wrapper">
     <img class="calendario" src="Aniversário Aghatta XV.png" alt="Calendário">
-    <!-- Borboletas -->
-    <img class="butterfly" src="https://i.postimg.cc/5yPbFqQF/borboleta.png" style="left:47%;" />
-    <img class="butterfly" src="https://i.postimg.cc/5yPbFqQF/borboleta.png" style="left:50%;" />
-    <img class="butterfly" src="https://i.postimg.cc/5yPbFqQF/borboleta.png" style="left:53%;" />
+    <img class="butterfly" src="https://i.postimg.cc/HxKrDprY/borboleta-azul.gif" />
+    <img class="butterfly" src="https://i.postimg.cc/HxKrDprY/borboleta-azul.gif" style="left:51%; animation-delay: 1s;" />
+    <img class="butterfly" src="https://i.postimg.cc/HxKrDprY/borboleta-azul.gif" style="left:47%; animation-delay: 2s;" />
   </div>
 
   <div class="contador-wrapper">
-    <div class="contador" id="contador"></div>
+    <div id="contador"></div>
   </div>
 
   <div class="slideshow-wrapper">
@@ -205,7 +189,8 @@
   </div>
 
   <div class="convite">
-    <h2>Essa festa não será a mesma sem a sua presença.<br>Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.</h2>
+    <h2>Essa festa não será a mesma sem a sua presença.<br>
+    Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.</h2>
     <p><strong>🗓 Data:</strong> 12 de Setembro de 2025<br>
        <strong>⏰ Hora:</strong> 19h<br>
        <strong>📍 Local:</strong> Chácara das Paineiras</p>
@@ -235,7 +220,6 @@
 
   let index = 1;
   const totalSlides = 15;
-
   function shuffleImages() {
     const used = [];
     return function () {
@@ -248,7 +232,6 @@
       return r;
     };
   }
-
   const getRandomImage = shuffleImages();
   setInterval(() => {
     document.getElementById("slide-img").src = `imagem${getRandomImage()}.jpeg`;
@@ -256,11 +239,12 @@
 
   function tocarAudio() {
     const audio = document.getElementById("audio");
-    audio.play();
+    if (audio.paused) audio.play();
   }
 </script>
 </body>
 </html>
+
 
 
 

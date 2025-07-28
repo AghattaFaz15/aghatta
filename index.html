@@ -47,22 +47,17 @@
       text-shadow: 0 0 8px #5ab3ff;
     }
 
-    .crown::before, .scroll::before {
-      content: "";
-      display: inline-block;
-      width: 48px;
-      height: 48px;
-      background-size: contain;
-      background-repeat: no-repeat;
+    .crown, .scroll {
+      font-size: 2.5em;
       animation: pulse 2s infinite;
     }
 
     .crown::before {
-      background-image: url('https://img.icons8.com/3d-fluency/94/real-crown.png');
+      content: "👑";
     }
 
     .scroll::before {
-      background-image: url('https://img.icons8.com/ios-filled/100/parchment.png');
+      content: "📜";
     }
 
     @keyframes pulse {
@@ -114,7 +109,7 @@
 
     .contador {
       font-size: 1.2em;
-      background: rgba(33,150,243,0.3);
+      background: rgba(0,0,0,0.8);
       padding: 0.8em 1.2em;
       border-radius: 20px;
       margin-top: -1.5em;
@@ -125,10 +120,10 @@
 
     .slideshow-container {
       position: relative;
-      width: 95vw;
-      max-width: 900px;
+      width: 90vw;
+      max-width: 400px;
       margin: 1.5em auto;
-      aspect-ratio: 16/9;
+      aspect-ratio: 3/4;
       overflow: hidden;
     }
 
@@ -210,8 +205,8 @@
         for(let i = 0; i < 15; i++) {
           const butterfly = document.createElement('div');
           butterfly.className = 'butterfly';
-          butterfly.style.left = `47%`;
-          butterfly.style.top = `47%`;
+          butterfly.style.left = `52%`;
+          butterfly.style.top = `38%`;
           butterfly.style.animationDelay = `${i * 0.8}s`;
           butterfly.innerHTML = '<img src="https://img.icons8.com/color/48/000000/butterfly.png" />';
           document.querySelector('.calendar').appendChild(butterfly);
@@ -279,6 +274,7 @@
   </script>
 </body>
 </html>
+
 
 
 

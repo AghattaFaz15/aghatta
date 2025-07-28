@@ -4,61 +4,71 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Intimação Celestial - Aghatta XV</title>
-  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Great+Vibes&display=swap" rel="stylesheet" />
   <style>
-    body {
+    body, html {
       margin: 0;
       padding: 0;
+      height: 100%;
       font-family: 'Georgia', serif;
-      background-color: #fff;
-      color: #000;
+      background: black;
+      overflow: hidden;
+      color: white;
     }
 
-    /* Tela Inicial */
-    #envelope-tela {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background-color: #ffffff;
+    /* Primeira tela (envelope fechado) */
+    #envelope-screen {
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 9999;
+      height: 100vh;
+      background: #111;
+      cursor: pointer;
       flex-direction: column;
-      transition: opacity 1s ease;
-      text-align: center;
+      user-select: none;
+      transition: opacity 0.8s ease;
     }
 
-    #envelope-img {
-      width: 140px;
-      animation: abrirEnvelope 2s ease-in-out infinite alternate;
+    #envelope-screen img {
+      width: 200px;
+      max-width: 80vw;
+      transition: transform 0.3s ease;
     }
 
-    @keyframes abrirEnvelope {
-      0% { transform: scale(1) rotate(0deg); }
-      100% { transform: scale(1.05) rotate(1deg); }
+    #envelope-screen:hover img {
+      transform: scale(1.05);
     }
 
-    #envelope-tela p {
-      color: #333;
+    #envelope-text {
+      margin-top: 20px;
       font-family: 'Parisienne', cursive;
-      font-size: 1.5em;
-      margin-top: 1em;
+      font-size: 2em;
+      color: gold;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
     }
 
-    /* Conteúdo do convite */
-    .overlay {
+    /* Segunda tela (seu conteúdo original) */
+    #content-screen {
       display: none;
+      height: 100vh;
+      overflow-y: auto;
+      background: url('Aghatta.png') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+
+    /* Copiado seu CSS original para .overlay */
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      min-height: 100vh;
+      display: flex;
       flex-direction: column;
       align-items: center;
       padding: 2em 1em;
       text-align: center;
-      background: url('Aghatta.png') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-      min-height: 100vh;
     }
 
+    /* Demais estilos do seu original abaixo (copiados para manter o visual) */
     .decor-wrap {
       display: flex;
       align-items: center;
@@ -224,51 +234,86 @@
   </style>
 </head>
 <body>
-  <div id="envelope-tela">
-    <img id="envelope-img" src="https://cdn-icons-png.flaticon.com/512/561/561127.png" alt="Envelope">
-    <p>Toque para abrir o convite</p>
+  <!-- Tela 1: Envelope fechado -->
+  <div id="envelope-screen" title="Toque para abrir o convite">
+    <img src="https://cdn-icons-png.flaticon.com/512/561/561127.png" alt="Envelope fechado" />
+    <div id="envelope-text">Toque para abrir o convite</div>
   </div>
 
-  <div class="overlay">
-    <div class="decor-wrap">
-      <div class="scroll"></div>
-      <span class="title-text">Intimação Celestial</span>
-      <div class="scroll"></div>
-    </div>
-    <div class="decor-wrap">
-      <div class="crown"></div>
-      <span class="subtitle-text">Aghatta XV</span>
-      <div class="crown"></div>
-    </div>
-    <div class="verso">
-      "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou." — Isaías 41:20
-    </div>
-    <div class="calendar">
-      <img src="Aniversário Aghatta XV.png" alt="Calendário">
-      <div id="contador" class="contador"></div>
-    </div>
-    <div class="invite-text">
-      Essa festa não será a mesma sem a sua presença.<br>
-      Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
-    </div>
-    <div class="slide-title">Um pouco da minha história</div>
-    <div class="slideshow-container">
-      <img id="slide-img" src="imagem1.jpeg" alt="Slideshow" />
-    </div>
-    <div class="convite">
-      <p><strong>🗓 Data:</strong> 12 de Setembro de 2025<br>
-         <strong>⏰ Hora:</strong> 19h<br>
-         <strong>📍 Local:</strong> Chácara das Paineiras</p>
-    </div>
-    <div class="buttons">
-      <a href="#"><img src="https://img.icons8.com/color/96/marker.png" alt="Localização" /></a>
-      <a href="#"><img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirme" /></a>
+  <!-- Tela 2: Conteúdo original -->
+  <div id="content-screen">
+    <div class="overlay">
+
+      <div class="decor-wrap">
+        <div class="scroll"></div>
+        <span class="title-text">Intimação Celestial</span>
+        <div class="scroll"></div>
+      </div>
+
+      <div class="decor-wrap">
+        <div class="crown"></div>
+        <span class="subtitle-text">Aghatta XV</span>
+        <div class="crown"></div>
+      </div>
+
+      <div class="verso">
+        "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou." — Isaías 41:20
+      </div>
+
+      <div class="calendar">
+        <img src="Aniversário Aghatta XV.png" alt="Calendário" />
+        <div id="contador" class="contador"></div>
+      </div>
+
+      <div class="invite-text">
+        Essa festa não será a mesma sem a sua presença.<br />
+        Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
+      </div>
+
+      <div class="slide-title">Um pouco da minha história</div>
+      <div class="slideshow-container">
+        <img id="slide-img" src="imagem1.jpeg" alt="Slideshow" />
+      </div>
+
+      <div class="convite">
+        <p>
+          <strong>🗓 Data:</strong> 12 de Setembro de 2025<br />
+          <strong>⏰ Hora:</strong> 19h<br />
+          <strong>📍 Local:</strong> Chácara das Paineiras
+        </p>
+      </div>
+
+      <div class="buttons">
+        <a href="#"><img src="https://img.icons8.com/color/96/marker.png" alt="Localização" /></a>
+        <a href="#"><img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirme" /></a>
+      </div>
     </div>
   </div>
 
   <audio id="background-audio" src="audio.mp3" preload="auto" loop></audio>
+
   <script>
-    const evento = new Date("2025-09-12T19:00:00").getTime();
+    // Função para abrir o convite e tocar a música
+    document.getElementById('envelope-screen').addEventListener('click', () => {
+      // Esconde a primeira tela
+      const envelope = document.getElementById('envelope-screen');
+      envelope.style.opacity = '0';
+      setTimeout(() => {
+        envelope.style.display = 'none';
+        // Mostra a segunda tela
+        const content = document.getElementById('content-screen');
+        content.style.display = 'block';
+        // Tocar o áudio
+        const audio = document.getElementById('background-audio');
+        audio.play().catch(() => {
+          // Se autoplay bloqueado, espere interação do usuário na segunda tela
+          console.log('A reprodução automática foi bloqueada. Clique para iniciar o áudio.');
+        });
+      }, 800);
+    });
+
+    // Contador regressivo
+    const evento = new Date('2025-09-12T19:00:00').getTime();
     setInterval(() => {
       const agora = new Date().getTime();
       const restante = evento - agora;
@@ -276,48 +321,43 @@
       const horas = Math.floor((restante % 864e5) / 36e5);
       const minutos = Math.floor((restante % 36e5) / 6e4);
       const segundos = Math.floor((restante % 6e4) / 1000);
-      document.getElementById("contador").textContent =
+      document.getElementById('contador').textContent =
         `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
     }, 1000);
 
+    // Slideshow das imagens
     const imagensSlide = [
-      "imagem1.jpeg", "imagem2.jpeg", "imagem3.jpeg", "imagem4.jpeg", "imagem5.jpeg",
-      "imagem6.jpeg", "imagem7.jpeg", "imagem8.jpeg", "imagem9.jpeg", "imagem10.jpeg",
-      "imagem11.jpeg", "imagem12.jpeg", "imagem13.jpeg", "imagem14.jpeg", "imagem15.jpeg"
+      'imagem1.jpeg', 'imagem2.jpeg', 'imagem3.jpeg', 'imagem4.jpeg', 'imagem5.jpeg',
+      'imagem6.jpeg', 'imagem7.jpeg', 'imagem8.jpeg', 'imagem9.jpeg', 'imagem10.jpeg',
+      'imagem11.jpeg', 'imagem12.jpeg', 'imagem13.jpeg', 'imagem14.jpeg', 'imagem15.jpeg'
     ];
 
     function embaralhar(array) {
       return array.sort(() => Math.random() - 0.5);
     }
+
     const imagensAleatorias = embaralhar(imagensSlide);
     let indexAtual = 0;
     function trocarImagem() {
-      document.getElementById("slide-img").src = imagensAleatorias[indexAtual];
+      document.getElementById('slide-img').src = imagensAleatorias[indexAtual];
       indexAtual = (indexAtual + 1) % imagensAleatorias.length;
     }
     setInterval(trocarImagem, 4000);
 
+    // Borboletas no dia 12
     for (let i = 0; i < 15; i++) {
       const butterfly = document.createElement('div');
       butterfly.className = 'butterfly';
       butterfly.style.left = '56%';
-      butterfly.style.top = '42%';
+      butterfly.style.top = '44%'; // ajustado mais abaixo
       butterfly.style.animationDelay = `${i * 0.6}s`;
       butterfly.innerHTML = '<img src="https://img.icons8.com/color/48/000000/butterfly.png" />';
       document.querySelector('.calendar').appendChild(butterfly);
     }
-
-    document.getElementById("envelope-tela").addEventListener("click", function() {
-      document.getElementById("background-audio").play();
-      document.getElementById("envelope-tela").style.opacity = "0";
-      setTimeout(() => {
-        document.getElementById("envelope-tela").style.display = "none";
-        document.querySelector(".overlay").style.display = "flex";
-      }, 1000);
-    });
   </script>
 </body>
 </html>
+
 
 
 

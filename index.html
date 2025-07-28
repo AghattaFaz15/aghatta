@@ -15,6 +15,7 @@
       background: url('Aghatta.png') no-repeat center center fixed;
       background-size: cover;
     }
+
     .overlay {
       background-color: rgba(0, 0, 0, 0.6);
       min-height: 100vh;
@@ -24,6 +25,7 @@
       padding: 2em 1em 4em 1em;
       text-align: center;
     }
+
     h1 {
       font-family: 'Parisienne', cursive;
       font-size: 2.8em;
@@ -31,6 +33,7 @@
       color: gold;
       text-shadow: 0 0 12px rgba(255,215,0,0.8);
     }
+
     .titulo-extra {
       font-family: 'Parisienne', cursive;
       font-size: 2.2em;
@@ -38,6 +41,7 @@
       color: #8ecaff;
       text-shadow: 0 0 8px #5ab3ff;
     }
+
     .verso {
       font-style: italic;
       margin: 0.5em auto 1.5em;
@@ -46,25 +50,113 @@
       opacity: 0;
       animation: fadeIn 4s forwards;
     }
-    .contador {
-      font-size: 1.2em;
-      margin-bottom: 1em;
-      color: #ffffff;
-      background: rgba(33, 150, 243, 0.3);
-      padding: 0.8em 1.2em;
-      border-radius: 30px;
+
+    .calendario-container {
+      position: relative;
       display: inline-block;
+      margin: 2em auto;
     }
+
+    .calendario-container img {
+      max-width: 100%;
+      width: 90%;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .contador {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.2em;
+      background: rgba(0, 123, 255, 0.7);
+      padding: 0.5em 1em;
+      border-radius: 30px;
+      color: white;
+      box-shadow: 0 0 10px rgba(0, 123, 255, 0.6);
+    }
+
+    .borboleta {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      background-image: url('https://img.icons8.com/color/48/blue-butterfly.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: voar 6s infinite ease-in;
+      opacity: 0.9;
+    }
+
+    .borboleta:nth-child(2) {
+      left: 45%;
+      animation-delay: 0s;
+    }
+
+    .borboleta:nth-child(3) {
+      left: 50%;
+      animation-delay: 2s;
+    }
+
+    .borboleta:nth-child(4) {
+      left: 55%;
+      animation-delay: 4s;
+    }
+
+    @keyframes voar {
+      0% {
+        bottom: 0;
+        opacity: 0;
+        transform: translateY(0) scale(0.5) rotate(0deg);
+      }
+      30% {
+        opacity: 1;
+      }
+      50% {
+        transform: translateY(-100px) scale(1) rotate(20deg);
+      }
+      100% {
+        bottom: 200px;
+        opacity: 0;
+        transform: translateY(-200px) scale(0.8) rotate(-20deg);
+      }
+    }
+
+    .balao {
+      margin: 2em auto 1em;
+      background: #fff;
+      color: #333;
+      padding: 1em 2em;
+      border-radius: 25px;
+      display: inline-block;
+      font-family: 'Parisienne', cursive;
+      font-size: 1.5em;
+      position: relative;
+      box-shadow: 0 0 12px rgba(255,255,255,0.4);
+    }
+
+    .balao::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 10px solid transparent;
+      border-top-color: #fff;
+    }
+
     .slideshow {
       max-width: 100%;
       margin: 1em auto;
     }
+
     .slideshow img {
       width: 90%;
       max-height: 300px;
       border-radius: 20px;
       box-shadow: 0 0 10px rgba(255,255,255,0.3);
     }
+
     .convite {
       margin: auto;
       max-width: 600px;
@@ -76,6 +168,7 @@
       opacity: 0;
       animation: slideIn 2s ease-in-out 2s forwards;
     }
+
     .convite h2 {
       font-family: 'Parisienne', cursive;
       color: gold;
@@ -83,6 +176,7 @@
       text-shadow: 0 0 8px rgba(255,215,0,0.4);
       margin-bottom: 1em;
     }
+
     .buttons {
       margin-top: 1.5em;
       display: flex;
@@ -90,12 +184,14 @@
       gap: 2em;
       flex-wrap: wrap;
     }
+
     .button {
       background: none;
       border: none;
       cursor: pointer;
       transition: transform 0.3s;
     }
+
     .button img {
       width: 48px;
       height: 48px;
@@ -103,6 +199,7 @@
       box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
       transition: transform 0.3s;
     }
+
     .button:hover img {
       transform: scale(1.2);
     }
@@ -110,51 +207,10 @@
     @keyframes fadeIn {
       to { opacity: 1; }
     }
+
     @keyframes slideIn {
       from { transform: translateY(30px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
-    }
-
-    .imagem-com-borboletas {
-      position: relative;
-      margin-top: 2em;
-      text-align: center;
-    }
-    .img-calendario {
-      max-width: 90%;
-      height: auto;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-      position: relative;
-      z-index: 1;
-    }
-    .borboleta {
-      position: absolute;
-      bottom: 100px;
-      width: 30px;
-      height: 30px;
-      background-image: url('https://img.icons8.com/color/48/blue-butterfly.png');
-      background-size: contain;
-      background-repeat: no-repeat;
-      z-index: 2;
-      animation: subir 5s linear infinite;
-      opacity: 0;
-    }
-    @keyframes subir {
-      0% {
-        transform: translateY(0) scale(0.8) rotate(0deg);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      50% {
-        transform: translateY(-100px) scale(1) rotate(20deg);
-      }
-      100% {
-        transform: translateY(-200px) scale(0.9) rotate(-10deg);
-        opacity: 0;
-      }
     }
   </style>
 
@@ -187,17 +243,19 @@
       "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou."<br>— Isaías 41:20
     </div>
 
-    <div class="contador" id="contador"></div>
-
-    <!-- IMAGEM COM BORBOLETAS -->
-    <div class="imagem-com-borboletas">
-      <img src="Aniversário Aghatta XV.png" alt="Calendário Aghatta XV" class="img-calendario">
-
-      <div class="borboleta" style="left: 48%; animation-delay: 0s;"></div>
-      <div class="borboleta" style="left: 52%; animation-delay: 1.5s;"></div>
-      <div class="borboleta" style="left: 50%; animation-delay: 3s;"></div>
+    <!-- Calendário + contador + borboletas -->
+    <div class="calendario-container">
+      <img src="Aniversário Aghatta XV.png" alt="Calendário">
+      <div class="contador" id="contador"></div>
+      <div class="borboleta"></div>
+      <div class="borboleta"></div>
+      <div class="borboleta"></div>
     </div>
 
+    <!-- Balão com frase -->
+    <div class="balao">Um pouco da minha história</div>
+
+    <!-- Galeria de imagens -->
     <div class="slideshow">
       <img id="slide-img" src="imagem1.jpeg" alt="Fotos do evento">
     </div>
@@ -223,4 +281,5 @@
   </div>
 </body>
 </html>
+
 

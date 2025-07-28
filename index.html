@@ -36,7 +36,7 @@
 
     .title-text {
       font-family: 'Parisienne', cursive;
-      font-size: 2.8em;
+      font-size: 2.4em;
       color: gold;
       text-shadow: 0 0 10px rgba(255,215,0,0.7);
     }
@@ -49,9 +49,9 @@
     }
 
     .crown {
-      width: 48px;
-      height: 48px;
-      background: url('https://img.icons8.com/emoji/48/crown-emoji.png') no-repeat center;
+      width: 50px;
+      height: 50px;
+      background: url('https://cdn-icons-png.flaticon.com/512/4205/4205353.png') no-repeat center;
       background-size: contain;
       animation: shine 3s infinite ease-in-out;
     }
@@ -84,7 +84,7 @@
 
     .calendar {
       position: relative;
-      margin-bottom: 0.5em;
+      margin-bottom: 1em;
     }
 
     .calendar img {
@@ -121,8 +121,8 @@
       background: rgba(0,0,0,0.8);
       padding: 0.8em 1.2em;
       border-radius: 20px;
-      margin-top: -1.5em;
-      margin-bottom: 1em;
+      margin-top: -1.2em;
+      margin-bottom: 1.2em;
       width: 90vw;
       max-width: 400px;
     }
@@ -274,12 +274,12 @@
     }
     setInterval(trocarImagem, 4000);
 
-    // Borboletas
+    // Borboletas no dia 12
     for (let i = 0; i < 15; i++) {
       const butterfly = document.createElement('div');
       butterfly.className = 'butterfly';
       butterfly.style.left = '56%';
-      butterfly.style.top = '36%';
+      butterfly.style.top = '44%'; // ajustado mais abaixo
       butterfly.style.animationDelay = `${i * 0.6}s`;
       butterfly.innerHTML = '<img src="https://img.icons8.com/color/48/000000/butterfly.png" />';
       document.querySelector('.calendar').appendChild(butterfly);
@@ -287,6 +287,7 @@
   </script>
 </body>
 </html>
+
 
 
 

@@ -26,38 +26,64 @@
       text-align: center;
     }
 
-    h1 {
-      font-family: 'Parisienne', cursive;
-      font-size: 2.6em;
-      margin-bottom: 0.5em;
-      color: gold;
-      text-shadow: 0 0 10px rgba(255,215,0,0.7);
+    h1.titulo-principal,
+    .titulo-extra {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .titulo-texto {
+      font-family: 'Parisienne', cursive;
+      font-size: 2.6em;
+      color: gold;
+      text-shadow: 0 0 10px rgba(255,215,0,0.7);
+    }
+
+    .titulo-extra .titulo-texto {
+      font-size: 2.2em;
+      color: #8ecaff;
+      text-shadow: 0 0 8px #5ab3ff;
     }
 
     .pergaminho {
       width: 60px;
-      animation: abrirPergaminho 3s ease forwards;
+      opacity: 0;
     }
 
-    @keyframes abrirPergaminho {
-      0% { transform: scaleX(0); opacity: 0; }
-      100% { transform: scaleX(1); opacity: 1; }
+    .coroa {
+      width: 40px;
+      opacity: 0;
     }
 
-    .titulo-extra {
-      font-family: 'Parisienne', cursive;
-      font-size: 2.2em;
-      margin: 0.5em;
-      color: #8ecaff;
-      text-shadow: 0 0 8px #5ab3ff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+    @keyframes slideInLeft {
+      0% { transform: translateX(-50px); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideInRight {
+      0% { transform: translateX(50px); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    .animate-esquerda {
+      animation: slideInLeft 1.5s forwards;
+    }
+
+    .animate-direita {
+      animation: slideInRight 1.5s forwards;
+    }
+
+    .animate-coroa {
+      animation: bounceIn 1.8s forwards;
     }
 
     .verso {
@@ -179,30 +205,20 @@
     .buttons img:hover {
       transform: scale(1.2);
     }
-
-    .coroa {
-      width: 40px;
-      animation: brilho 1.5s infinite alternate;
-    }
-
-    @keyframes brilho {
-      from { filter: brightness(1); }
-      to { filter: brightness(2); }
-    }
   </style>
 </head>
 <body>
   <div class="overlay" onclick="tocarMusica()">
-    <h1>
-      <img class="pergaminho" src="pergaminho.png" alt="Pergaminho">
-      Intimação Celestial
-      <img class="pergaminho" src="pergaminho.png" alt="Pergaminho">
+    <h1 class="titulo-principal">
+      <img class="pergaminho animate-esquerda" src="pergaminho.png" alt="Pergaminho Esquerdo">
+      <span class="titulo-texto">Intimação Celestial</span>
+      <img class="pergaminho animate-direita" src="pergaminho.png" alt="Pergaminho Direito">
     </h1>
 
     <div class="titulo-extra">
-      <img class="coroa" src="coroa.png" alt="Coroa">
-      Aghatta XV
-      <img class="coroa" src="coroa.png" alt="Coroa">
+      <img class="coroa animate-coroa" src="coroa.png" alt="Coroa Esquerda">
+      <span class="titulo-texto">Aghatta XV</span>
+      <img class="coroa animate-coroa" src="coroa.png" alt="Coroa Direita">
     </div>
 
     <div class="verso">
@@ -276,6 +292,7 @@
   </script>
 </body>
 </html>
+
 
 
 

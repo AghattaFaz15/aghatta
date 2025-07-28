@@ -25,9 +25,11 @@
       text-align: center;
     }
     h1 {
-      font-size: 2.5em;
-      margin-bottom: 0.2em;
-      color: #ffc107;
+      font-family: 'Parisienne', cursive;
+      font-size: 2.8em;
+      margin-bottom: 0.3em;
+      color: gold;
+      text-shadow: 0 0 12px rgba(255,215,0,0.8);
     }
     .titulo-extra {
       font-family: 'Parisienne', cursive;
@@ -44,12 +46,24 @@
       opacity: 0;
       animation: fadeIn 4s forwards;
     }
-    .frase-profetica {
-      font-family: 'Parisienne', cursive;
-      font-size: 1.4em;
+    .contador {
+      font-size: 1.2em;
+      margin-bottom: 1em;
       color: #ffffff;
-      text-shadow: 0 0 12px rgba(0,191,255,0.8);
-      margin-top: 1em;
+      background: rgba(33, 150, 243, 0.3);
+      padding: 0.8em 1.2em;
+      border-radius: 30px;
+      display: inline-block;
+    }
+    .slideshow {
+      max-width: 100%;
+      margin: 1em auto;
+    }
+    .slideshow img {
+      width: 90%;
+      max-height: 300px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
     }
     .convite {
       margin: auto;
@@ -63,16 +77,14 @@
       animation: slideIn 2s ease-in-out 2s forwards;
     }
     .convite h2 {
-      color: #8ecaff;
       font-family: 'Parisienne', cursive;
-      font-size: 1.8em;
-    }
-    .convite p {
-      font-size: 1em;
-      margin: 0.5em 0;
+      color: gold;
+      font-size: 1.5em;
+      text-shadow: 0 0 8px rgba(255,215,0,0.4);
+      margin-bottom: 1em;
     }
     .buttons {
-      margin-top: 1em;
+      margin-top: 1.5em;
       display: flex;
       justify-content: center;
       gap: 2em;
@@ -94,15 +106,7 @@
     .button:hover img {
       transform: scale(1.2);
     }
-    .contador {
-      font-size: 1.2em;
-      margin-bottom: 1em;
-      color: #ffffff;
-      background: rgba(33, 150, 243, 0.3);
-      padding: 0.8em 1.2em;
-      border-radius: 30px;
-      display: inline-block;
-    }
+
     @keyframes fadeIn {
       to { opacity: 1; }
     }
@@ -110,17 +114,50 @@
       from { transform: translateY(30px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
     }
-    .slideshow {
-      max-width: 100%;
-      margin: 1em auto;
+
+    .imagem-com-borboletas {
+      position: relative;
+      margin-top: 2em;
+      text-align: center;
     }
-    .slideshow img {
-      width: 90%;
-      max-height: 300px;
+    .img-calendario {
+      max-width: 90%;
+      height: auto;
       border-radius: 20px;
-      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      position: relative;
+      z-index: 1;
+    }
+    .borboleta {
+      position: absolute;
+      bottom: 100px;
+      width: 30px;
+      height: 30px;
+      background-image: url('https://img.icons8.com/color/48/blue-butterfly.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      z-index: 2;
+      animation: subir 5s linear infinite;
+      opacity: 0;
+    }
+    @keyframes subir {
+      0% {
+        transform: translateY(0) scale(0.8) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      50% {
+        transform: translateY(-100px) scale(1) rotate(20deg);
+      }
+      100% {
+        transform: translateY(-200px) scale(0.9) rotate(-10deg);
+        opacity: 0;
+      }
     }
   </style>
+
   <script>
     const eventoData = new Date("2025-09-12T19:00:00").getTime();
     setInterval(() => {
@@ -152,30 +189,38 @@
 
     <div class="contador" id="contador"></div>
 
+    <!-- IMAGEM COM BORBOLETAS -->
+    <div class="imagem-com-borboletas">
+      <img src="Aniversário Aghatta XV.png" alt="Calendário Aghatta XV" class="img-calendario">
+
+      <div class="borboleta" style="left: 48%; animation-delay: 0s;"></div>
+      <div class="borboleta" style="left: 52%; animation-delay: 1.5s;"></div>
+      <div class="borboleta" style="left: 50%; animation-delay: 3s;"></div>
+    </div>
+
     <div class="slideshow">
       <img id="slide-img" src="imagem1.jpeg" alt="Fotos do evento">
     </div>
 
     <div class="convite">
-      <h2>Essa festa não será a mesma sem a sua presença.
+      <h2>
+        Essa festa não será a mesma sem a sua presença.<br>
         Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
       </h2>
       <p><strong>🗓 Data:</strong> 12 de Setembro de 2025<br>
          <strong>⏰ Hora:</strong> 19h<br>
          <strong>📍 Local:</strong> Chácara das Paineiras</p>
+    </div>
 
-      
-      </div>
-
-      <div class="buttons">
-        <a class="button" href="https://www.google.com/maps/place/Ch%C3%A1cara+das+Paineiras/@-23.6241921,-47.0673401,17z" target="_blank">
-          <img src="https://img.icons8.com/color/96/marker.png" alt="Localização" title="Ver Localização" />
-        </a>
-        <a class="button" href="https://forms.gle/confirmacao-de-presenca" target="_blank">
-          <img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirmar Presença" title="Confirmar Presença" />
-        </a>
-      </div>
+    <div class="buttons">
+      <a class="button" href="https://www.google.com/maps/place/Chácara+das+Paineiras/@-23.6241921,-47.0673401,17z" target="_blank">
+        <img src="https://img.icons8.com/color/96/marker.png" alt="Localização" title="Ver Localização" />
+      </a>
+      <a class="button" href="https://forms.gle/confirmacao-de-presenca" target="_blank">
+        <img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirmar Presença" title="Confirmar Presença" />
+      </a>
     </div>
   </div>
 </body>
 </html>
+

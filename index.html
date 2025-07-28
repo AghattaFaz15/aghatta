@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Intimação Celestial - Aghatta XV</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
@@ -10,132 +10,134 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Georgia', serif;
       background: url('Aghatta.png') no-repeat center center fixed;
       background-size: cover;
+      font-family: 'Georgia', serif;
       color: white;
+      overflow-x: hidden;
     }
 
     .overlay {
-      background-color: rgba(0, 0, 0, 0.6);
-      min-height: 100vh;
+      background-color: rgba(0, 0, 0, 0.65);
+      padding: 2em 1em 5em;
+      text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2em 1em;
-      text-align: center;
     }
 
     h1 {
       font-family: 'Parisienne', cursive;
-      font-size: 2.6em;
-      margin-bottom: 0.5em;
+      font-size: 2.5em;
       color: gold;
-      text-shadow: 0 0 10px rgba(255,215,0,0.7);
+      text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+      margin: 0.5em 0;
+      position: relative;
+      animation: float 3s ease-in-out infinite;
     }
 
     .titulo-extra {
       font-family: 'Parisienne', cursive;
-      font-size: 2.2em;
-      margin-bottom: 1em;
+      font-size: 2em;
       color: #8ecaff;
-      text-shadow: 0 0 8px #5ab3ff;
+      margin-bottom: 0.5em;
+      text-shadow: 0 0 10px #5ab3ff;
     }
 
     .verso {
       font-style: italic;
-      font-size: 1.1em;
-      margin-bottom: 1.5em;
-      max-width: 700px;
+      font-size: 1em;
+      margin: 1em auto;
+      max-width: 600px;
     }
 
-    .calendar {
+    .contador-wrapper {
       position: relative;
-      margin-bottom: 1.5em;
+      display: inline-block;
+      margin: 2em 0 1em;
     }
 
-    .calendar img {
-      width: 80%;
+    .contador {
+      background: rgba(33, 150, 243, 0.3);
+      border-radius: 25px;
+      padding: 1em 2em;
+      font-size: 1.2em;
+      display: inline-block;
+      min-width: 250px;
+      max-width: 90vw;
+    }
+
+    .calendario {
+      width: 90vw;
       max-width: 400px;
-      border-radius: 15px;
+      border-radius: 20px;
+      margin-bottom: 1em;
+      position: relative;
     }
 
     .butterfly {
       position: absolute;
       width: 40px;
-      animation: fly 8s infinite ease-in-out;
+      animation: flyUp 6s ease-in-out infinite;
+      top: 58%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
     }
 
-    /* Precisão: saindo do dia 12 */
-    .butterfly:nth-child(1) { left: 60.5%; top: 53%; animation-delay: 0s; }
-    .butterfly:nth-child(2) { left: 60.5%; top: 53%; animation-delay: 1s; }
-    .butterfly:nth-child(3) { left: 60.5%; top: 53%; animation-delay: 2s; }
-    .butterfly:nth-child(4) { left: 60.5%; top: 53%; animation-delay: 3s; }
-    .butterfly:nth-child(5) { left: 60.5%; top: 53%; animation-delay: 4s; }
-    .butterfly:nth-child(6) { left: 60.5%; top: 53%; animation-delay: 5s; }
-    .butterfly:nth-child(7) { left: 60.5%; top: 53%; animation-delay: 6s; }
-    .butterfly:nth-child(8) { left: 60.5%; top: 53%; animation-delay: 7s; }
-
-    @keyframes fly {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      50% { transform: translate(-40px, -150px) scale(1.2); opacity: 0.6; }
-      100% { transform: translate(40px, -300px) scale(0.9); opacity: 0; }
+    @keyframes flyUp {
+      0% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+      50% { transform: translate(-50%, -150px) scale(1.1); opacity: 0.7; }
+      100% { transform: translate(-50%, -300px) scale(1); opacity: 0; }
     }
 
-    .contador {
-      font-size: 1.3em;
-      background: rgba(33, 150, 243, 0.3);
-      padding: 0.8em 1.2em;
-      border-radius: 30px;
-      margin-bottom: 2em;
-      width: 80%;
-      max-width: 400px;
-    }
-
-    .slideshow-container {
+    .slideshow-wrapper {
       position: relative;
-      width: 90%;
-      max-width: 800px;
-      margin-bottom: 2em;
+      width: 90vw;
+      max-width: 500px;
+      margin: 2em auto;
     }
 
-    .slideshow-container img {
-      width: 100%;
-      border-radius: 20px;
-      box-shadow: 0 0 12px rgba(255,255,255,0.4);
-    }
-
-    .slideshow-container .slide-title {
+    .slideshow-wrapper::before {
+      content: "Um pouco da minha história";
       position: absolute;
-      top: 5%;
+      top: -30px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(0,0,0,0.4);
-      padding: 0.6em 1.2em;
-      border-radius: 25px;
-      font-size: 1.2em;
-      color: gold;
-      font-family: 'Parisienne', cursive;
-      box-shadow: 0 0 8px rgba(255,255,255,0.3);
-      width: 80%;
-      max-width: 500px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.5em 1em;
+      border-radius: 20px;
+      font-size: 1em;
+      color: #fff;
+      text-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+    }
+
+    .slideshow img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
     }
 
     .convite {
       max-width: 600px;
       background: rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
       padding: 1.5em;
+      border-radius: 20px;
       backdrop-filter: blur(10px);
-      box-shadow: 0 0 20px rgba(255, 193, 7, 0.4);
-      margin-bottom: 2em;
+      box-shadow: 0 0 15px rgba(255, 193, 7, 0.3);
+      margin-top: 2em;
     }
 
     .convite h2 {
       font-family: 'Parisienne', cursive;
-      font-size: 1.4em;
       color: gold;
-      text-shadow: 0 0 8px rgba(255,215,0,0.5);
+      font-size: 1.4em;
+      margin-bottom: 1em;
+    }
+
+    .convite p {
+      font-size: 1em;
+      margin: 0.5em 0;
     }
 
     .buttons {
@@ -143,12 +145,14 @@
       justify-content: center;
       gap: 2em;
       flex-wrap: wrap;
-      margin-bottom: 2em;
+      margin-top: 1.5em;
     }
 
     .button img {
       width: 48px;
       height: 48px;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
       transition: transform 0.3s;
     }
 
@@ -156,123 +160,108 @@
       transform: scale(1.2);
     }
 
-    .audio-control {
-      position: fixed;
-      bottom: 15px;
-      right: 15px;
-      z-index: 999;
-      cursor: pointer;
+    .scroll {
+      animation: float 3s ease-in-out infinite;
     }
 
-    .audio-control img {
-      width: 40px;
-      height: 40px;
-      opacity: 0.8;
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    audio {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <div class="overlay" onclick="tocarMusica()">
-    <h1>📜 Intimação Celestial 📜</h1>
-    <div class="titulo-extra">Aghatta XV</div>
 
-    <div class="verso">
-      "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou." — Isaías 41:20
-    </div>
+<audio id="audio" src="audio.mp3"></audio>
 
-    <div class="calendar">
-      <img src="Aniversário Aghatta XV.png" alt="Calendário">
-      <!-- Borboletas -->
-      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
-      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
-      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
-      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
-      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
-      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
-      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
-      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
-    </div>
+<div class="overlay" onclick="tocarAudio()">
+  <h1>📜 Intimação Celestial 📜</h1>
+  <div class="titulo-extra">👑 Aghatta XV 👑</div>
 
+  <div class="verso">
+    “Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto...”<br>— Isaías 41:20
+  </div>
+
+  <div class="calendario-wrapper">
+    <img class="calendario" src="Aniversário Aghatta XV.png" alt="Calendário">
+    <!-- Borboletas -->
+    <img class="butterfly" src="https://i.postimg.cc/5yPbFqQF/borboleta.png" style="left:47%;" />
+    <img class="butterfly" src="https://i.postimg.cc/5yPbFqQF/borboleta.png" style="left:50%;" />
+    <img class="butterfly" src="https://i.postimg.cc/5yPbFqQF/borboleta.png" style="left:53%;" />
+  </div>
+
+  <div class="contador-wrapper">
     <div class="contador" id="contador"></div>
+  </div>
 
-    <div class="slideshow-container">
-      <div class="slide-title">Um pouco da minha história</div>
-      <img id="slide-img" src="imagem1.jpeg" alt="Slideshow" />
-    </div>
-
-    <div class="convite">
-      <h2>Essa festa não será a mesma sem a sua presença.<br>Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.</h2>
-      <p><strong>🗓 Data:</strong> 12 de Setembro de 2025<br>
-         <strong>⏰ Hora:</strong> 19h<br>
-         <strong>📍 Local:</strong> Chácara das Paineiras</p>
-    </div>
-
-    <div class="buttons">
-      <a class="button" href="https://www.google.com/maps/place/Chácara+das+Paineiras" target="_blank">
-        <img src="https://img.icons8.com/color/96/marker.png" alt="Localização" title="Ver Localização" />
-      </a>
-      <a class="button" href="https://forms.gle/confirmacao-de-presenca" target="_blank">
-        <img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirmar Presença" title="Confirmar Presença" />
-      </a>
+  <div class="slideshow-wrapper">
+    <div class="slideshow">
+      <img id="slide-img" src="imagem1.jpeg" alt="Slide Aghatta" />
     </div>
   </div>
 
-  <!-- Música -->
-  <audio id="background-audio" src="audio.mp3" preload="auto" loop></audio>
-  <div class="audio-control" onclick="toggleAudio()">
-    <img id="audio-icon" src="https://img.icons8.com/fluency/48/play.png" alt="Play/Pause"/>
+  <div class="convite">
+    <h2>Essa festa não será a mesma sem a sua presença.<br>Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.</h2>
+    <p><strong>🗓 Data:</strong> 12 de Setembro de 2025<br>
+       <strong>⏰ Hora:</strong> 19h<br>
+       <strong>📍 Local:</strong> Chácara das Paineiras</p>
   </div>
 
-  <script>
-    // Contador
-    const eventoData = new Date("2025-09-12T19:00:00").getTime();
-    setInterval(() => {
-      const agora = new Date().getTime();
-      const distancia = eventoData - agora;
-      const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
-      const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
-      document.getElementById("contador").innerHTML = `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
-    }, 1000);
+  <div class="buttons">
+    <a class="button" href="https://www.google.com/maps/place/Chácara+das+Paineiras/" target="_blank">
+      <img src="https://img.icons8.com/color/96/marker.png" alt="Localização" title="Ver Localização" />
+    </a>
+    <a class="button" href="https://forms.gle/confirmacao-de-presenca" target="_blank">
+      <img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirmar Presença" title="Confirmar Presença" />
+    </a>
+  </div>
+</div>
 
-    // Slide aleatório
-    const totalSlides = 15;
-    let indices = Array.from({length: totalSlides}, (_, i) => i + 1);
-    indices = indices.sort(() => Math.random() - 0.5);
-    let slideIndex = 0;
-    setInterval(() => {
-      document.getElementById("slide-img").src = `imagem${indices[slideIndex % totalSlides]}.jpeg`;
-      slideIndex++;
-    }, 3500);
+<script>
+  const eventoData = new Date("2025-09-12T19:00:00").getTime();
+  setInterval(() => {
+    const agora = new Date().getTime();
+    const distancia = eventoData - agora;
+    const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+    document.getElementById("contador").innerHTML = `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
+  }, 1000);
 
-    // Controle de áudio
-    const audio = document.getElementById("background-audio");
-    const icon = document.getElementById("audio-icon");
+  let index = 1;
+  const totalSlides = 15;
 
-    function toggleAudio() {
-      if (audio.paused) {
-        audio.play();
-        icon.src = "https://img.icons8.com/fluency/48/pause.png";
-      } else {
-        audio.pause();
-        icon.src = "https://img.icons8.com/fluency/48/play.png";
-      }
-    }
+  function shuffleImages() {
+    const used = [];
+    return function () {
+      if (used.length === totalSlides) used.length = 0;
+      let r;
+      do {
+        r = Math.floor(Math.random() * totalSlides) + 1;
+      } while (used.includes(r));
+      used.push(r);
+      return r;
+    };
+  }
 
-    // Tocar música no primeiro clique na tela
-    function tocarMusica() {
-      if (audio.paused) {
-        audio.play();
-        icon.src = "https://img.icons8.com/fluency/48/pause.png";
-      }
-      document.body.removeEventListener('click', tocarMusica);
-    }
+  const getRandomImage = shuffleImages();
+  setInterval(() => {
+    document.getElementById("slide-img").src = `imagem${getRandomImage()}.jpeg`;
+  }, 3000);
 
-    document.body.addEventListener('click', tocarMusica);
-  </script>
+  function tocarAudio() {
+    const audio = document.getElementById("audio");
+    audio.play();
+  }
+</script>
 </body>
 </html>
+
 
 
 

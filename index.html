@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Intimação Celestial - Aghatta XV</title>
   <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
@@ -25,7 +25,7 @@
       text-align: center;
     }
 
-    h1.title, .subtitle {
+    .decor-wrap {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -47,9 +47,26 @@
       text-shadow: 0 0 8px #5ab3ff;
     }
 
-    .icon {
-      width: 64px;
-      height: 64px;
+    .crown, .scroll {
+      width: 48px;
+      height: 48px;
+      display: inline-block;
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: pulse 2s infinite;
+    }
+
+    .crown {
+      background-image: url('https://img.icons8.com/3d-fluency/94/real-crown.png');
+    }
+
+    .scroll {
+      background-image: url('https://img.icons8.com/ios-filled/100/parchment.png');
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.8; }
     }
 
     .verso {
@@ -65,7 +82,7 @@
     }
 
     .calendar img {
-      width: 80vw;
+      width: 90vw;
       max-width: 400px;
       border-radius: 15px;
     }
@@ -73,7 +90,7 @@
     .butterfly {
       position: absolute;
       width: 60px;
-      animation: fly 12s infinite ease-in-out;
+      animation: freeFly 10s infinite ease-in-out;
     }
 
     .butterfly img {
@@ -86,48 +103,53 @@
       100% { transform: rotateZ(5deg); }
     }
 
-    @keyframes fly {
+    @keyframes freeFly {
       0% { transform: translate(0, 0); opacity: 1; }
-      100% { transform: translate(calc(-100px + 200px * var(--dir)), -300px); opacity: 0; }
+      25% { transform: translate(30px, -60px); opacity: 0.8; }
+      50% { transform: translate(-40px, -120px); opacity: 0.6; }
+      75% { transform: translate(50px, -180px); opacity: 0.4; }
+      100% { transform: translate(-20px, -240px); opacity: 0; }
     }
 
     .contador {
-      font-size: 1.3em;
+      font-size: 1.2em;
       background: rgba(33,150,243,0.3);
       padding: 0.8em 1.2em;
-      border-radius: 30px;
-      margin-bottom: 2em;
-      width: 80%;
+      border-radius: 20px;
+      margin: 1em auto;
+      width: 90vw;
       max-width: 400px;
     }
 
     .slideshow-container {
       position: relative;
-      width: 90%;
+      width: 90vw;
       max-width: 800px;
-      margin-bottom: 1.5em;
+      margin: 1.5em auto;
+      aspect-ratio: 16/9;
+      overflow: hidden;
     }
 
     .slideshow-container img {
       width: 100%;
-      height: auto;
-      max-height: 500px;
+      height: 100%;
       object-fit: cover;
       border-radius: 20px;
       box-shadow: 0 0 12px rgba(255,255,255,0.4);
     }
 
     .slide-title {
-      margin-bottom: 0.5em;
-      background: rgba(0,0,0,0.4);
-      padding: 0.6em 1.2em;
-      border-radius: 25px;
+      margin-top: -0.5em;
       font-size: 1.2em;
       color: gold;
       font-family: 'Parisienne', cursive;
+      background: rgba(0,0,0,0.4);
+      padding: 0.6em 1.2em;
+      border-radius: 25px;
       box-shadow: 0 0 8px rgba(255,255,255,0.3);
       width: fit-content;
-      margin: 0 auto 0.5em;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .invite-text {
@@ -163,16 +185,16 @@
 </head>
 <body>
   <div class="overlay" onclick="tocarMusica()">
-    <h1 class="title">
-      <img class="icon" src="https://img.icons8.com/ios-filled/100/parchment.png" alt="Pergaminho" />
+    <div class="decor-wrap">
+      <div class="scroll"></div>
       <span class="title-text">Intimação Celestial</span>
-      <img class="icon" src="https://img.icons8.com/ios-filled/100/parchment.png" alt="Pergaminho" />
-    </h1>
+      <div class="scroll"></div>
+    </div>
 
-    <div class="subtitle">
-      <img class="icon" src="https://img.icons8.com/3d-fluency/94/real-crown.png" alt="Coroa" />
+    <div class="decor-wrap">
+      <div class="crown"></div>
       <span class="subtitle-text">Aghatta XV</span>
-      <img class="icon" src="https://img.icons8.com/3d-fluency/94/real-crown.png" alt="Coroa" />
+      <div class="crown"></div>
     </div>
 
     <div class="verso">
@@ -182,16 +204,14 @@
     <div class="calendar">
       <img src="Aniversário Aghatta XV.png" alt="Calendário">
       <div id="contador" class="contador"></div>
-
       <script>
         for(let i = 0; i < 15; i++) {
           const butterfly = document.createElement('div');
           butterfly.className = 'butterfly';
-          butterfly.style.left = '52.5%';
-          butterfly.style.top = '68%';
-          butterfly.style.setProperty('--dir', Math.random().toFixed(2));
-          butterfly.style.animationDelay = `${i * 0.5}s`;
-          butterfly.innerHTML = '<img src="https://img.icons8.com/color/48/000000/butterfly.png"/>';
+          butterfly.style.left = `53%`;
+          butterfly.style.top = `58%`;
+          butterfly.style.animationDelay = `${i * 0.8}s`;
+          butterfly.innerHTML = '<img src="https://img.icons8.com/color/48/000000/butterfly.png" />';
           document.querySelector('.calendar').appendChild(butterfly);
         }
       </script>
@@ -244,23 +264,20 @@
       "imagem6.jpeg", "imagem7.jpeg", "imagem8.jpeg", "imagem9.jpeg", "imagem10.jpeg",
       "imagem11.jpeg", "imagem12.jpeg", "imagem13.jpeg", "imagem14.jpeg", "imagem15.jpeg"
     ];
-
     function embaralhar(array) {
       return array.sort(() => Math.random() - 0.5);
     }
-
     const imagensAleatorias = embaralhar(imagensSlide);
     let indexAtual = 0;
-
     function trocarImagem() {
       document.getElementById("slide-img").src = imagensAleatorias[indexAtual];
       indexAtual = (indexAtual + 1) % imagensAleatorias.length;
     }
-
     setInterval(trocarImagem, 4000);
   </script>
 </body>
 </html>
+
 
 
 

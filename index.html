@@ -1,420 +1,434 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Intimação Celestial - Aghatta XV</title>
-  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Great+Vibes&display=swap" rel="stylesheet" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Intimação Celestial - Aghatta XV</title>
+<link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Great+Vibes&display=swap" rel="stylesheet" />
+<style>
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
 
-    body {
-      font-family: 'Georgia', serif;
-      background-color: #002366;
-      overflow: hidden;
-      transition: background 1.2s ease-in-out;
-      position: relative;
-    }
+  body {
+    font-family: 'Georgia', serif;
+    background-color: #002366;
+    overflow: hidden;
+    position: relative;
+  }
 
-    body.aberto {
-      overflow-y: auto;
-    }
+  /* Overlay preto translúcido sobre a segunda tela */
+  .conteudo-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 2.5s ease;
+    z-index: 19;
+  }
 
-    .overlay-preto {
-      position: fixed;
-      inset: 0;
-      background-color: rgba(0, 0, 0, 0.7);
-      z-index: 9;
-      pointer-events: none;
-    }
+  .conteudo-overlay.visivel {
+    pointer-events: auto;
+    opacity: 1;
+  }
 
-    .tela-envelope {
-      width: 100vw;
-      height: 100vh;
-      background-color: #002366;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: absolute;
-      inset: 0;
-      z-index: 10;
-      transition: opacity 1.2s ease;
-      cursor: pointer;
-    }
+  .tela-envelope {
+    width: 100vw;
+    height: 100vh;
+    background-color: #002366;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    transition: opacity 2.5s ease;
+    cursor: pointer;
+  }
 
-    .tela-envelope.oculta {
-      opacity: 0;
-      pointer-events: none;
-    }
+  .tela-envelope.oculta {
+    opacity: 0;
+    pointer-events: none;
+  }
 
-    .texto-inicial {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1em;
-      margin: 1.5em 0;
-      color: gold;
-      font-family: 'Parisienne', cursive;
-      font-size: 2.8em;
-      text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
-    }
+  .texto-inicial {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    margin: 1.5em 0;
+    color: gold;
+    font-family: 'Parisienne', cursive;
+    font-size: 2.8em;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+  }
 
-    .scroll {
-      width: 40px;
-      height: 40px;
-      background: url('https://img.icons8.com/emoji/48/scroll-emoji.png') no-repeat center;
-      background-size: contain;
-      animation: rolarPergaminho 4s ease-in-out infinite;
-    }
+  .scroll {
+    width: 40px;
+    height: 40px;
+    background: url('https://img.icons8.com/emoji/48/scroll-emoji.png') no-repeat center;
+    background-size: contain;
+    animation: rolarPergaminho 4s ease-in-out infinite;
+  }
 
-    @keyframes rolarPergaminho {
-      0%, 100% {
-        transform: scaleY(0.7);
-        opacity: 0.8;
-      }
-      50% {
-        transform: scaleY(1);
-        opacity: 1;
-      }
+  @keyframes rolarPergaminho {
+    0%, 100% {
+      transform: scaleY(0.7);
+      opacity: 0.8;
     }
-
-    /* Envelope container */
-    .envelope-container {
-      position: relative;
-      width: 320px;
-      height: 220px;
-      perspective: 900px;
-      cursor: pointer;
-    }
-
-    /* Envelop base */
-    .envelope-base {
-      position: relative;
-      width: 320px;
-      height: 220px;
-      background: linear-gradient(145deg, #f9f5e1, #dbcea8);
-      border-radius: 15px;
-      box-shadow:
-        inset 0 2px 5px rgba(255,255,255,0.8),
-        0 10px 20px rgba(0,0,0,0.4);
-      overflow: hidden;
-      z-index: 1;
-    }
-
-    /* Flap of the envelope */
-    .flap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 320px;
-      height: 130px;
-      background: linear-gradient(135deg, #f3e9b4, #b2963f);
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-      box-shadow:
-        inset 0 2px 6px rgba(255,255,255,0.9),
-        0 6px 8px rgba(0,0,0,0.3);
-      transform-origin: top center;
-      transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 3;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Georgia', serif;
-      font-size: 2.2em;
-      color: #654b0d;
-      text-shadow: 0 0 4px rgba(0,0,0,0.3);
-      user-select: none;
-    }
-
-    /* Flap opened rotation */
-    .flap.aberto {
-      transform: rotateX(180deg);
-      box-shadow: none;
-    }
-
-    /* Conteúdo dentro do envelope */
-    .conteudo-envelope {
-      position: absolute;
-      top: 60px;
-      left: 30px;
-      right: 30px;
-      bottom: 30px;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.25);
-      padding: 1.3em 1.5em;
-      font-family: 'Georgia', serif;
-      font-size: 1.15em;
-      color: #4a3b00;
-      line-height: 1.5em;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 1s ease, transform 1s ease;
-      pointer-events: none;
-      user-select: text;
-      z-index: 2;
-    }
-
-    .flap.aberto ~ .conteudo-envelope {
+    50% {
+      transform: scaleY(1);
       opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
     }
+  }
 
-    /* Coroas maiores */
-    .coroa-topo {
-      position: absolute;
-      top: -85px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 140px;
-      z-index: 4;
-      user-select: none;
-      pointer-events: none;
-    }
+  /* Envelope container */
+  .envelope-container {
+    position: relative;
+    width: 320px;
+    height: 220px;
+    perspective: 900px;
+    cursor: pointer;
+    z-index: 21;
+  }
 
-    /* Conteúdo geral */
-    .conteudo {
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 1.2s ease;
-      position: relative;
-      z-index: 20;
-      background: url('Aghatta.png') no-repeat center center fixed;
-      background-size: cover;
-      background-color: rgba(0, 0, 0, 0.7);
-      min-height: 100vh;
-      padding: 2em 1em;
-      color: white;
-      text-align: center;
-    }
+  /* Envelop base */
+  .envelope-base {
+    position: relative;
+    width: 320px;
+    height: 220px;
+    background: linear-gradient(145deg, #f9f5e1, #dbcea8);
+    border-radius: 15px;
+    box-shadow:
+      inset 0 2px 5px rgba(255,255,255,0.8),
+      0 10px 20px rgba(0,0,0,0.4);
+    overflow: hidden;
+    z-index: 1;
+  }
 
-    body.aberto .conteudo {
-      opacity: 1;
-      pointer-events: auto;
-    }
+  /* Flap of the envelope */
+  .flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 320px;
+    height: 130px;
+    background: linear-gradient(135deg, #f3e9b4, #b2963f);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    box-shadow:
+      inset 0 2px 6px rgba(255,255,255,0.9),
+      0 6px 8px rgba(0,0,0,0.3);
+    transform-origin: top center;
+    transition: transform 3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Georgia', serif;
+    font-size: 2.2em;
+    color: #654b0d;
+    text-shadow: 0 0 4px rgba(0,0,0,0.3);
+    user-select: none;
+  }
 
-    .linha-coroa {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1em;
-      margin-bottom: 1em;
-    }
+  /* Flap opened rotation */
+  .flap.aberto {
+    transform: rotateX(180deg);
+    box-shadow: none;
+  }
 
-    /* Coroas na linha Aghatta XV */
-    .coroa-segunda {
-      width: 120px;
-      height: 120px;
-      user-select: none;
-    }
+  /* Conteúdo dentro do envelope */
+  .conteudo-envelope {
+    position: absolute;
+    top: 60px;
+    left: 30px;
+    right: 30px;
+    bottom: 30px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.25);
+    padding: 1.3em 1.5em;
+    font-family: 'Georgia', serif;
+    font-size: 1.15em;
+    color: #4a3b00;
+    line-height: 1.5em;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 2.5s ease, transform 2.5s ease;
+    pointer-events: none;
+    user-select: text;
+    z-index: 2;
+  }
 
-    /* Título centralizado */
-    .subtitulo {
-      font-family: 'Parisienne', cursive;
-      font-size: 3em;
-      color: #8ecaff;
-      text-shadow: 0 0 12px #5ab3ff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      min-width: 200px;
-      user-select: none;
-    }
+  .flap.aberto ~ .conteudo-envelope {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
 
-    .versiculo {
-      font-style: italic;
-      font-size: 1.2em;
-      margin: 1.5em auto;
-      max-width: 700px;
-      line-height: 1.5em;
-      text-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
-      user-select: none;
-    }
+  /* Coroas maiores */
+  .coroa-topo {
+    position: absolute;
+    top: -85px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    z-index: 22;
+    user-select: none;
+    pointer-events: none;
+  }
 
-    .contador {
-      font-size: 1.2em;
-      background: rgba(0, 0, 0, 0.8);
-      padding: 0.8em 1.2em;
-      border-radius: 20px;
-      margin: 1em auto;
-      width: 90vw;
-      max-width: 400px;
-      user-select: none;
-    }
+  /* Segunda página - conteúdo principal (fora do envelope) */
+  .conteudo {
+    position: fixed;
+    inset: 0;
+    background: url('Aghatta.png') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    padding: 2em 1em;
+    text-align: center;
+    font-family: 'Georgia', serif;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(100%);
+    transition: opacity 2.5s ease, transform 2.5s ease;
+    z-index: 20;
+  }
 
-    .galeria {
-      width: 90vw;
-      max-width: 400px;
-      margin: 1.5em auto;
-      aspect-ratio: 3/4;
-      overflow: hidden;
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-    }
+  body.aberto .conteudo {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
 
-    .galeria img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 20px;
-      user-select: none;
-    }
+  .linha-coroa {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    margin-bottom: 1em;
+  }
 
-    .convite {
-      font-family: 'Great Vibes', cursive;
-      font-size: 2em;
-      margin: 2em auto;
-      max-width: 600px;
-      text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
-      user-select: none;
-    }
+  /* Coroas na linha Aghatta XV */
+  .coroa-segunda {
+    width: 120px;
+    height: 120px;
+    user-select: none;
+  }
 
-    .info {
-      font-size: 1.1em;
-      line-height: 1.6em;
-      text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-      user-select: none;
-    }
+  /* Título centralizado */
+  .subtitulo {
+    font-family: 'Parisienne', cursive;
+    font-size: 3em;
+    color: #8ecaff;
+    text-shadow: 0 0 12px #5ab3ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-width: 200px;
+    user-select: none;
+  }
 
-    .botoes {
-      display: flex;
-      justify-content: center;
-      gap: 2em;
-      margin: 2em 0;
-    }
+  .versiculo {
+    font-style: italic;
+    font-size: 1.2em;
+    margin: 1.5em auto;
+    max-width: 700px;
+    line-height: 1.5em;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    user-select: none;
+  }
 
-    .botoes img {
-      width: 48px;
-      height: 48px;
-      transition: transform 0.3s;
-      filter: drop-shadow(0 0 2px #000);
-      user-select: none;
-    }
+  .contador {
+    font-size: 1.2em;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 0.8em 1.2em;
+    border-radius: 20px;
+    margin: 1em auto;
+    width: 90vw;
+    max-width: 400px;
+    user-select: none;
+  }
 
-    .botoes img:hover {
-      transform: scale(1.2);
-    }
-  </style>
+  .galeria {
+    width: 90vw;
+    max-width: 400px;
+    margin: 1.5em auto;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+  }
+
+  .galeria img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    user-select: none;
+  }
+
+  /* Mensagem no topo do slide */
+  .mensagem-slide {
+    color: #8ecaff;
+    text-shadow: 0 0 10px #5ab3ff;
+    font-family: 'Parisienne', cursive;
+    font-size: 1.8em;
+    margin-bottom: 0.6em;
+    user-select: none;
+    text-align: center;
+  }
+
+  .convite {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2em;
+    margin: 2em auto;
+    max-width: 600px;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+    user-select: none;
+  }
+
+  .info {
+    font-size: 1.1em;
+    line-height: 1.6em;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    user-select: none;
+  }
+
+  .botoes {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    margin: 2em 0;
+  }
+
+  .botoes img {
+    width: 48px;
+    height: 48px;
+    transition: transform 0.3s;
+    filter: drop-shadow(0 0 2px #000);
+    user-select: none;
+  }
+
+  .botoes img:hover {
+    transform: scale(1.2);
+  }
+</style>
 </head>
 <body>
 
-  <div class="overlay-preto"></div>
+<div class="overlay-preto"></div>
 
-  <div class="tela-envelope" onclick="abrirEnvelope()">
-    <div class="texto-inicial">
-      <div class="scroll"></div>
-      <span>Intimação Celestial</span>
-      <div class="scroll"></div>
-    </div>
-    <div class="envelope-container" aria-label="Envelope convite" role="button" tabindex="0">
-      <img src="coroa.png" alt="Coroa decorativa" class="coroa-topo" />
-      <div class="envelope-base"></div>
-      <div id="flap" class="flap">Envelope</div>
-      <div class="conteudo-envelope">
-        <p>Este é o convite oficial para a celebração de Aghatta XV.</p>
-        <p>Abra o envelope para descobrir detalhes sobre a festa.</p>
-      </div>
+<div class="tela-envelope" onclick="abrirEnvelope()" aria-label="Clique para abrir o envelope" role="button" tabindex="0">
+  <div class="texto-inicial">
+    <div class="scroll"></div>
+    <span>Intimação Celestial</span>
+    <div class="scroll"></div>
+  </div>
+  <div class="envelope-container" aria-label="Envelope convite" role="button" tabindex="0">
+    <img src="coroa.png" alt="Coroa decorativa" class="coroa-topo" />
+    <div class="envelope-base"></div>
+    <div id="flap" class="flap">Envelope</div>
+    <div class="conteudo-envelope" aria-live="polite">
+      <p>Este é o convite oficial para a celebração de Aghatta XV.</p>
+      <p>Abra o envelope para descobrir detalhes sobre a festa.</p>
     </div>
   </div>
+</div>
 
-  <div class="conteudo" aria-live="polite">
-    <div class="linha-coroa" aria-hidden="true">
-      <img src="coroa.png" alt="" class="coroa-segunda" />
-      <div class="subtitulo">Aghatta XV</div>
-      <img src="coroa.png" alt="" class="coroa-segunda" />
-    </div>
+<div class="conteudo-overlay" id="overlay"></div>
 
-    <div class="versiculo">
-      "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou." — Isaías 41:20
-    </div>
-
-    <div>
-      <img src="Aniversário Aghatta XV.png" alt="Calendário do evento" style="width:90vw; max-width:400px; border-radius: 15px;" />
-      <div id="contador" class="contador" aria-live="polite"></div>
-    </div>
-
-    <div class="convite">
-      Essa festa não será a mesma sem a sua presença.<br />
-      Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
-    </div>
-
-    <div class="galeria">
-      <img id="slide-img" src="imagem1.jpeg" alt="Galeria de imagens do evento" />
-    </div>
-
-    <div class="info">
-      <p><strong>🗓 Data:</strong> 12 de Setembro de 2025<br />
-        <strong>⏰ Hora:</strong> 19h<br />
-        <strong>📍 Local:</strong> Chácara das Paineiras</p>
-    </div>
-
-    <div class="botoes">
-      <a href="#"><img src="https://img.icons8.com/color/96/marker.png" alt="Localização" /></a>
-      <a href="#"><img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirme sua presença" /></a>
-    </div>
+<div class="conteudo" aria-live="polite" tabindex="0">
+  <div class="linha-coroa" aria-hidden="true">
+    <img src="coroa.png" alt="" class="coroa-segunda" />
+    <div class="subtitulo">Aghatta XV</div>
+    <img src="coroa.png" alt="" class="coroa-segunda" />
   </div>
 
-  <audio id="audio" src="audio.mp3" preload="auto" loop></audio>
+  <div class="versiculo">
+    "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou." — Isaías 41:20
+  </div>
 
-  <script>
-    const flap = document.getElementById('flap');
-    const telaEnvelope = document.querySelector('.tela-envelope');
-    const body = document.body;
-    let aberto = false;
+  <div>
+    <img src="Aniversário Aghatta XV.png" alt="Calendário do evento" style="width:90vw; max-width:400px; border-radius: 15px;" />
+    <div id="contador" class="contador" aria-live="polite"></div>
+  </div>
 
-    function abrirEnvelope() {
-      if (aberto) return;
-      aberto = true;
+  <div class="galeria">
+    <div class="mensagem-slide">Um pouco da minha história</div>
+    <img id="slide-img" src="imagem1.jpeg" alt="Galeria de imagens do evento" />
+  </div>
+
+  <div class="convite">
+    Essa festa não será a mesma sem a sua presença.<br />
+    Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
+  </div>
+
+  <div class="info">
+    <p><strong>🗓 Data:</strong> 12 de Setembro de 2025<br />
+      <strong>⏰ Hora:</strong> 19h<br />
+      <strong>📍 Local:</strong> Chácara das Paineiras</p>
+  </div>
+
+  <div class="botoes">
+    <a href="#"><img src="https://img.icons8.com/color/96/marker.png" alt="Localização" /></a>
+    <a href="#"><img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirme sua presença" /></a>
+  </div>
+</div>
+
+<script>
+  const flap = document.getElementById('flap');
+  const telaEnvelope = document.querySelector('.tela-envelope');
+  const conteudo = document.querySelector('.conteudo');
+  const overlay = document.getElementById('overlay');
+  const body = document.body;
+
+  function abrirEnvelope() {
+    if (!flap.classList.contains('aberto')) {
       flap.classList.add('aberto');
-      telaEnvelope.classList.add('oculta');
-      body.classList.add('aberto');
-      const audio = document.getElementById('audio');
-      audio.play().catch(() => {});
+      setTimeout(() => {
+        body.classList.add('aberto');
+        telaEnvelope.classList.add('oculta');
+        overlay.classList.add('visivel');
+      }, 3000);
+    }
+  }
+
+  // Contador regressivo até 12 de setembro de 2025 19:00
+  function atualizarContador() {
+    const dataEvento = new Date('2025-09-12T19:00:00');
+    const agora = new Date();
+    const diff = dataEvento - agora;
+
+    if(diff <= 0) {
+      document.getElementById('contador').textContent = "O evento já começou!";
+      clearInterval(intervaloContador);
+      return;
     }
 
-    // Contador regressivo
-    const evento = new Date('2025-09-12T19:00:00').getTime();
-    setInterval(() => {
-      const agora = new Date().getTime();
-      const restante = evento - agora;
-      const contador = document.getElementById('contador');
-      if (restante < 0) {
-        contador.textContent = 'O evento já aconteceu!';
-        return;
-      }
-      const dias = Math.floor(restante / 864e5);
-      const horas = Math.floor((restante % 864e5) / 36e5);
-      const minutos = Math.floor((restante % 36e5) / 6e4);
-      const segundos = Math.floor((restante % 6e4) / 1000);
-      contador.textContent = `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
-    }, 1000);
+    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutos = Math.floor((diff / (1000 * 60)) % 60);
+    const segundos = Math.floor((diff / 1000) % 60);
 
-    // Slideshow imagens
-    const imagens = [
-      'imagem1.jpeg', 'imagem2.jpeg', 'imagem3.jpeg',
-      'imagem4.jpeg', 'imagem5.jpeg', 'imagem6.jpeg',
-      'imagem7.jpeg', 'imagem8.jpeg', 'imagem9.jpeg',
-      'imagem10.jpeg', 'imagem11.jpeg', 'imagem12.jpeg',
-      'imagem13.jpeg', 'imagem14.jpeg', 'imagem15.jpeg'
-    ];
-    let idx = 0;
-    setInterval(() => {
-      const slide = document.getElementById('slide-img');
-      idx = (idx + 1) % imagens.length;
-      slide.src = imagens[idx];
-    }, 4000);
-  </script>
+    document.getElementById('contador').textContent =
+      `Faltam ${dias} dias, ${horas}h ${minutos}m ${segundos}s para Aghatta XV`;
+  }
+
+  const intervaloContador = setInterval(atualizarContador, 1000);
+  atualizarContador();
+
+  // Controle simples da galeria (se desejar eu adiciono navegação)
+</script>
 
 </body>
 </html>
+
 
 
 

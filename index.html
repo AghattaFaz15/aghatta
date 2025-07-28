@@ -76,7 +76,7 @@
 
     .calendar {
       position: relative;
-      margin-bottom: 2em;
+      margin-bottom: 1em;
     }
 
     .calendar img {
@@ -88,7 +88,7 @@
     .butterfly {
       position: absolute;
       width: 40px;
-      animation: freeFly 12s infinite ease-in-out;
+      animation: flyUp 10s forwards ease-in;
     }
 
     .butterfly img {
@@ -100,12 +100,9 @@
       100% { transform: rotateZ(5deg); }
     }
 
-    @keyframes freeFly {
+    @keyframes flyUp {
       0% { transform: translate(0, 0); opacity: 1; }
-      25% { transform: translate(50px, -80px); opacity: 0.8; }
-      50% { transform: translate(-60px, -160px); opacity: 0.6; }
-      75% { transform: translate(60px, -240px); opacity: 0.4; }
-      100% { transform: translate(-30px, -320px); opacity: 0; }
+      100% { transform: translate(0, -350px); opacity: 0; }
     }
 
     .contador {
@@ -181,15 +178,15 @@
 <body>
   <div class="overlay" onclick="tocarMusica()">
     <h1 class="title">
-      <img class="pergaminho" src="https://i.imgur.com/j7Vd3pz.gif" alt="Pergaminho animado esquerdo">
+      <img class="pergaminho" src="https://i.imgur.com/5BM1pMz.gif" alt="Pergaminho animado esquerdo">
       <span class="title-text">Intimação Celestial</span>
-      <img class="pergaminho" src="https://i.imgur.com/j7Vd3pz.gif" alt="Pergaminho animado direito">
+      <img class="pergaminho" src="https://i.imgur.com/5BM1pMz.gif" alt="Pergaminho animado direito">
     </h1>
 
     <div class="subtitle">
-      <img class="coroa" src="https://i.imgur.com/w1UDK3L.gif" alt="Coroa animada esquerda">
+      <img class="coroa" src="https://i.imgur.com/fA7N7PU.gif" alt="Coroa animada esquerda">
       <span class="subtitle-text">Aghatta XV</span>
-      <img class="coroa" src="https://i.imgur.com/w1UDK3L.gif" alt="Coroa animada direita">
+      <img class="coroa" src="https://i.imgur.com/fA7N7PU.gif" alt="Coroa animada direita">
     </div>
 
     <div class="verso">
@@ -199,23 +196,26 @@
     <div class="calendar">
       <img src="Aniversário Aghatta XV.png" alt="Calendário">
       <script>
-        for(let i = 0; i < 15; i++) {
-          const x = 47 + Math.random() * 6; // Posição centralizada no número 12
-          const y = 33 + Math.random() * 2; // Altura aproximada da linha do 12
-          document.write(`
-            <div class="butterfly" style="left:${x}%; top:${y}%; animation-delay:${i * 0.4}s;">
-              <img src="https://img.icons8.com/color/48/000000/butterfly.png"/>
-            </div>
-          `);
+        for(let i = 0; i < 12; i++) {
+          setTimeout(() => {
+            const x = 52; // Posição horizontal aproximada do número 12
+            const y = 39; // Posição vertical aproximada do número 12
+            const butterfly = document.createElement("div");
+            butterfly.className = "butterfly";
+            butterfly.style.left = `${x}%`;
+            butterfly.style.top = `${y}%`;
+            butterfly.innerHTML = `<img src="https://img.icons8.com/color/48/000000/butterfly.png"/>`;
+            document.querySelector(".calendar").appendChild(butterfly);
+          }, i * 600); // atraso entre saídas
         }
       </script>
     </div>
 
+    <div class="contador" id="contador"></div>
+
     <div class="invite-text">
       Essa festa não será a mesma sem a sua presença.<br>Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
     </div>
-
-    <div class="contador" id="contador"></div>
 
     <div class="slideshow-container">
       <div class="slide-title">Um pouco da minha história</div>
@@ -257,6 +257,7 @@
   </script>
 </body>
 </html>
+
 
 
 

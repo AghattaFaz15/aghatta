@@ -32,6 +32,7 @@
       gap: 1em;
       flex-wrap: wrap;
       margin-bottom: 1em;
+      position: relative;
     }
 
     .title-text {
@@ -39,6 +40,7 @@
       font-size: 2.8em;
       color: gold;
       text-shadow: 0 0 10px rgba(255,215,0,0.7);
+      z-index: 2;
     }
 
     .subtitle-text {
@@ -46,14 +48,10 @@
       font-size: 2.4em;
       color: #8ecaff;
       text-shadow: 0 0 8px #5ab3ff;
+      z-index: 2;
     }
 
-    .icon-float {
-      position: relative;
-      display: inline-block;
-    }
-
-    .icon-animated {
+    .floating-icon {
       position: absolute;
       width: 60px;
       animation: pulse 2s infinite ease-in-out;
@@ -73,7 +71,7 @@
 
     .calendar {
       position: relative;
-      margin-bottom: 2em;
+      margin-bottom: 0.5em;
       text-align: center;
     }
 
@@ -85,8 +83,8 @@
 
     .butterfly {
       position: absolute;
-      width: 60px;
-      animation: flyRandom 8s forwards ease-in-out;
+      width: 70px;
+      animation: flyRandom 9s forwards ease-in-out;
     }
 
     .butterfly img {
@@ -105,7 +103,7 @@
         transform:
           translate(
             calc(-150px + 300px * var(--rand-x)),
-            calc(-300px + -200px * var(--rand-y))
+            calc(-450px + -200px * var(--rand-y))
           );
         opacity: 0;
       }
@@ -116,10 +114,9 @@
       background: rgba(33,150,243,0.3);
       padding: 0.8em 1.2em;
       border-radius: 30px;
-      margin-top: 1em;
+      margin: 0.5em auto 2em;
       width: 80%;
       max-width: 400px;
-      margin-inline: auto;
     }
 
     .slideshow-container {
@@ -129,26 +126,17 @@
       margin-bottom: 1.5em;
     }
 
+    .slide-title {
+      font-size: 1.4em;
+      color: gold;
+      font-family: 'Parisienne', cursive;
+      margin-bottom: 0.5em;
+    }
+
     .slideshow-container img {
       width: 100%;
       border-radius: 20px;
       box-shadow: 0 0 12px rgba(255,255,255,0.4);
-    }
-
-    .slide-title {
-      position: absolute;
-      top: -30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.4);
-      padding: 0.6em 1.2em;
-      border-radius: 25px;
-      font-size: 1.2em;
-      color: gold;
-      font-family: 'Parisienne', cursive;
-      box-shadow: 0 0 8px rgba(255,255,255,0.3);
-      width: 80%;
-      max-width: 500px;
     }
 
     .invite-text {
@@ -185,42 +173,40 @@
 <body>
   <div class="overlay" onclick="tocarMusica()">
 
+    <!-- TÍTULO COM PERGAMINHOS -->
     <div class="title">
-      <div class="icon-float">
-        <img class="icon-animated" src="https://img.icons8.com/emoji/96/old-scroll.png" style="left:-70px; top:-10px;" />
-        <span class="title-text">Intimação Celestial</span>
-        <img class="icon-animated" src="https://img.icons8.com/emoji/96/old-scroll.png" style="left:120px; top:-10px;" />
-      </div>
+      <img class="floating-icon" src="https://img.icons8.com/emoji/96/old-scroll.png" style="left: -70px; top: -10px;" />
+      <span class="title-text">Intimação Celestial</span>
+      <img class="floating-icon" src="https://img.icons8.com/emoji/96/old-scroll.png" style="right: -70px; top: -10px;" />
     </div>
 
+    <!-- SUBTÍTULO COM COROAS PRINCESA -->
     <div class="subtitle">
-      <div class="icon-float">
-        <img class="icon-animated" src="https://img.icons8.com/emoji/96/crown-emoji.png" style="left:-70px; top:-10px;" />
-        <span class="subtitle-text">Aghatta XV</span>
-        <img class="icon-animated" src="https://img.icons8.com/emoji/96/crown-emoji.png" style="left:120px; top:-10px;" />
-      </div>
+      <img class="floating-icon" src="https://img.icons8.com/color/96/tiara.png" style="left: -80px; top: -10px;" />
+      <span class="subtitle-text">Aghatta XV</span>
+      <img class="floating-icon" src="https://img.icons8.com/color/96/tiara.png" style="right: -80px; top: -10px;" />
     </div>
 
     <div class="verso">
       "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou." — Isaías 41:20
     </div>
 
+    <!-- CALENDÁRIO E BORBOLETAS -->
     <div class="calendar">
       <img src="Aniversário Aghatta XV.png" alt="Calendário" />
 
-      <!-- Script das borboletas -->
       <script>
         for (let i = 0; i < 12; i++) {
           setTimeout(() => {
             const butterfly = document.createElement("div");
             butterfly.className = "butterfly";
-            butterfly.style.left = "57%";  // Ajustado mais para a direita — dia 12
+            butterfly.style.left = "58%"; // posição ajustada mais para direita — dia 12
             butterfly.style.top = "39%";
             butterfly.style.setProperty("--rand-x", Math.random().toFixed(2));
             butterfly.style.setProperty("--rand-y", Math.random().toFixed(2));
             butterfly.innerHTML = `<img src="https://img.icons8.com/color/96/000000/butterfly.png"/>`;
             document.querySelector(".calendar").appendChild(butterfly);
-          }, i * 700); // Cada borboleta com atraso individual
+          }, i * 600);
         }
       </script>
 
@@ -231,6 +217,7 @@
       Essa festa não será a mesma sem a sua presença.<br>Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
     </div>
 
+    <!-- SLIDESHOW -->
     <div class="slideshow-container">
       <div class="slide-title">Um pouco da minha história</div>
       <img id="slide-img" src="imagem1.jpeg" alt="Slideshow" />
@@ -271,6 +258,7 @@
   </script>
 </body>
 </html>
+
 
 
 

@@ -35,6 +35,7 @@
       transition: opacity 1.2s ease, visibility 1.2s ease;
       opacity: 1;
       visibility: visible;
+      cursor: pointer;
     }
 
     .tela-envelope::before {
@@ -50,6 +51,7 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
+      cursor: default;
     }
 
     .texto-inicial {
@@ -91,6 +93,7 @@
       margin-top: 20px;
       filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.7));
       z-index: 2;
+      perspective: 1000px;
     }
 
     .coroa-topo {
@@ -105,11 +108,12 @@
       transition: transform 0.5s ease;
     }
 
+    /* Envelope e flap animado */
     .envelope {
       position: relative;
       width: 100%;
       height: 100%;
-      perspective: 1000px;
+      transform-style: preserve-3d;
     }
 
     .flap {
@@ -120,9 +124,11 @@
       height: 110px;
       transform-origin: top center;
       transition: transform 1.4s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 2;
+      z-index: 3;
       cursor: pointer;
       user-select: none;
+      will-change: transform;
+      backface-visibility: hidden;
     }
 
     .flap img {
@@ -132,8 +138,10 @@
       border-radius: 10px 10px 0 0;
       pointer-events: none;
       user-select: none;
+      backface-visibility: hidden;
     }
 
+    /* Animação para abrir o flap */
     .flap.aberto {
       transform: rotateX(160deg);
       pointer-events: none;
@@ -146,6 +154,7 @@
       overflow: hidden;
       user-select: none;
       pointer-events: none;
+      backface-visibility: hidden;
     }
 
     .envelope-base img {
@@ -156,6 +165,51 @@
       user-select: none;
     }
 
+    /* Balão azul translúcido só no topo dos slides */
+    .galeria {
+      position: relative;
+      width: 90vw;
+      max-width: 400px;
+      margin: 2em auto 3em;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 0 12px rgba(255,255,255,0.4);
+    }
+
+    /* Aqui vem o balão dentro da galeria */
+    .balao-topo {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(30, 90, 200, 0.7);
+      color: white;
+      font-family: 'Parisienne', cursive;
+      font-size: 1.6em;
+      padding: 0.4em 1em;
+      border-radius: 25px;
+      box-shadow: 0 0 10px rgba(30,90,200,0.8);
+      z-index: 10;
+      user-select: none;
+      pointer-events: none;
+      backdrop-filter: blur(5px);
+      text-align: center;
+      max-width: 90%;
+      white-space: nowrap;
+    }
+
+    .galeria img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      user-select: none;
+      transition: opacity 1s ease-in-out;
+      opacity: 1;
+    }
+
+    /* Conteúdo principal */
     .conteudo {
       opacity: 0;
       pointer-events: none;
@@ -231,39 +285,6 @@
       max-width: 400px;
     }
 
-    .galeria {
-      width: 90vw;
-      max-width: 400px;
-      margin: 2em auto;
-      aspect-ratio: 3/4;
-      overflow: hidden;
-      border-radius: 20px;
-      box-shadow: 0 0 12px rgba(255,255,255,0.4);
-      position: relative;
-    }
-
-    .galeria::before {
-      content: "Um pouco da minha história";
-      position: absolute;
-      top: -1.8em;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Parisienne', cursive;
-      font-size: 1.6em;
-      color: gold;
-      text-shadow: 0 0 8px rgba(255,215,0,0.8);
-    }
-
-    .galeria img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 20px;
-      user-select: none;
-      transition: opacity 1s ease-in-out;
-      opacity: 1;
-    }
-
     .convite {
       font-family: 'Great Vibes', cursive;
       font-size: 2em;
@@ -302,10 +323,6 @@
       transform: scale(1.2);
     }
 
-    .tocha, .flecha {
-      display: none;
-    }
-
     /* Responsividade */
     @media (max-width: 600px) {
       .coroa-topo {
@@ -326,10 +343,17 @@
       .texto-inicial span {
         font-size: 1.8em;
       }
+
+      .balao-topo {
+        font-size: 1.3em;
+        padding: 0.3em 0.8em;
+      }
     }
   </style>
 </head>
 <body>
+
+  <!-- REMOVIDO o balão azul fixo geral -->
 
   <div class="tela-envelope" onclick="abrirEnvelope()" role="button" tabindex="0" aria-label="Abrir envelope">
     <div class="texto-inicial">
@@ -367,12 +391,11 @@
         <div id="contador" class="contador"></div>
       </div>
 
-      <div class="convite">
-        Essa festa não será a mesma sem a sua presença.<br>
-        Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
-      </div>
-
       <div class="galeria">
+        <!-- Balão azul dentro da galeria -->
+        <div class="balao-topo" aria-label="Um pouco da minha história">
+          Um pouco da minha história
+        </div>
         <img id="slide-img" src="imagem1.jpeg" alt="Slideshow" />
       </div>
 
@@ -383,55 +406,20 @@
       </div>
 
       <div class="botoes">
-        <a href="#" title="Localização"><img src="https://img.icons8.com/color/96/marker.png" alt="Localização" /></a>
-        <a href="#" title="Confirme presença"><img src="https://img.icons8.com/color/96/checkmark.png" alt="Confirme presença" /></a>
+        <a href="https://wa.me/5585981737686" aria-label="Whatsapp"><img src="whatsapp.png" alt="WhatsApp"/></a>
+        <a href="https://www.instagram.com/aghattaxv/" aria-label="Instagram"><img src="instagram.png" alt="Instagram"/></a>
+      </div>
+
+      <div class="convite">
+        <p>Conto com a sua presença para celebrar comigo essa nova etapa da vida!</p>
       </div>
     </div>
   </div>
 
-  <audio id="audio" src="sfx1.mp3" preload="auto"></audio>
-
   <script>
-    let aberto = false;
-    const flap = document.getElementById("flap");
-    const telaEnvelope = document.querySelector(".tela-envelope");
-
-    function abrirEnvelope() {
-      if (aberto) return;
-      aberto = true;
-
-      flap.classList.add("aberto");
-
-      setTimeout(() => {
-        telaEnvelope.classList.add("oculta");
-        document.body.classList.add("aberto");
-
-        const audio = document.getElementById("audio");
-        if(audio) {
-          audio.play().catch(() => {
-            // Som pode não tocar por autoplay restrictions
-          });
-        }
-      }, 1400);
-    }
-
-    // Slideshow simples para galeria
-    const imagens = ["imagem1.jpeg", "imagem2.jpeg", "imagem3.jpeg"];
-    let indice = 0;
-    const slideImg = document.getElementById("slide-img");
-
-    setInterval(() => {
-      indice = (indice + 1) % imagens.length;
-      slideImg.style.opacity = 0;
-      setTimeout(() => {
-        slideImg.src = imagens[indice];
-        slideImg.style.opacity = 1;
-      }, 600);
-    }, 4500);
-
-    // Contador regressivo simples (exemplo)
-    const contadorEl = document.getElementById("contador");
-    const dataEvento = new Date("2025-09-12T19:00:00");
+    // Contador regressivo - exemplo simples
+    const contadorEl = document.getElementById('contador');
+    const dataEvento = new Date('2025-09-12T19:00:00');
 
     function atualizarContador() {
       const agora = new Date();
@@ -439,6 +427,7 @@
 
       if(diff <= 0) {
         contadorEl.textContent = "O evento já começou!";
+        clearInterval(intervalo);
         return;
       }
 
@@ -447,16 +436,53 @@
       const minutos = Math.floor((diff % (1000*60*60)) / (1000*60));
       const segundos = Math.floor((diff % (1000*60)) / 1000);
 
-      contadorEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s para o evento`;
+      contadorEl.textContent = `${dias} dias, ${horas}h ${minutos}m ${segundos}s`;
     }
 
-    setInterval(atualizarContador, 1000);
+    const intervalo = setInterval(atualizarContador, 1000);
     atualizarContador();
 
+    // Slides
+    const imagens = ['imagem1.jpeg', 'imagem2.jpeg', 'imagem3.jpeg'];
+    let idx = 0;
+    const slideImg = document.getElementById('slide-img');
+
+    function trocarSlide() {
+      idx = (idx + 1) % imagens.length;
+      slideImg.style.opacity = 0;
+      setTimeout(() => {
+        slideImg.src = imagens[idx];
+        slideImg.style.opacity = 1;
+      }, 600);
+    }
+
+    setInterval(trocarSlide, 3000);
+
+    // Abrir envelope com animação do flap abrindo
+    const flap = document.getElementById('flap');
+    const telaEnvelope = document.querySelector('.tela-envelope');
+    const body = document.body;
+
+    function abrirEnvelope() {
+      flap.classList.add('aberto');
+      setTimeout(() => {
+        telaEnvelope.classList.add('oculta');
+        body.classList.add('aberto');
+      }, 1400);
+    }
+
+    // Acessibilidade: permitir abrir com Enter ou Espaço
+    document.querySelector('.tela-envelope').addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        abrirEnvelope();
+      }
+    });
   </script>
 
 </body>
 </html>
+
 
 
 

@@ -28,10 +28,10 @@
 
     h1 {
       font-family: 'Parisienne', cursive;
-      font-size: 3em;
-      margin-bottom: 0.3em;
+      font-size: 2.6em;
+      margin-bottom: 0.5em;
       color: gold;
-      text-shadow: 0 0 12px rgba(255,215,0,0.8);
+      text-shadow: 0 0 10px rgba(255,215,0,0.7);
     }
 
     .titulo-extra {
@@ -51,7 +51,7 @@
 
     .calendar {
       position: relative;
-      margin-bottom: 1em;
+      margin-bottom: 1.5em;
     }
 
     .calendar img {
@@ -60,35 +60,21 @@
       border-radius: 15px;
     }
 
-    .calendar .slide-title {
-      position: absolute;
-      top: 8%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.4);
-      padding: 0.5em 1.2em;
-      border-radius: 25px;
-      font-size: 1.2em;
-      color: gold;
-      font-family: 'Parisienne', cursive;
-      box-shadow: 0 0 8px rgba(255,255,255,0.3);
-    }
-
     .butterfly {
       position: absolute;
       width: 40px;
       animation: fly 8s infinite ease-in-out;
     }
 
-    /* Todas saem do mesmo ponto: dia 12 do calendário */
-    .butterfly:nth-child(1) { left: 61%; top: 57%; animation-delay: 0s; }
-    .butterfly:nth-child(2) { left: 61%; top: 57%; animation-delay: 1s; }
-    .butterfly:nth-child(3) { left: 61%; top: 57%; animation-delay: 2s; }
-    .butterfly:nth-child(4) { left: 61%; top: 57%; animation-delay: 3s; }
-    .butterfly:nth-child(5) { left: 61%; top: 57%; animation-delay: 4s; }
-    .butterfly:nth-child(6) { left: 61%; top: 57%; animation-delay: 5s; }
-    .butterfly:nth-child(7) { left: 61%; top: 57%; animation-delay: 6s; }
-    .butterfly:nth-child(8) { left: 61%; top: 57%; animation-delay: 7s; }
+    /* Precisão: saindo do dia 12 */
+    .butterfly:nth-child(1) { left: 60.5%; top: 53%; animation-delay: 0s; }
+    .butterfly:nth-child(2) { left: 60.5%; top: 53%; animation-delay: 1s; }
+    .butterfly:nth-child(3) { left: 60.5%; top: 53%; animation-delay: 2s; }
+    .butterfly:nth-child(4) { left: 60.5%; top: 53%; animation-delay: 3s; }
+    .butterfly:nth-child(5) { left: 60.5%; top: 53%; animation-delay: 4s; }
+    .butterfly:nth-child(6) { left: 60.5%; top: 53%; animation-delay: 5s; }
+    .butterfly:nth-child(7) { left: 60.5%; top: 53%; animation-delay: 6s; }
+    .butterfly:nth-child(8) { left: 60.5%; top: 53%; animation-delay: 7s; }
 
     @keyframes fly {
       0% { transform: translateY(0) scale(1); opacity: 1; }
@@ -131,6 +117,8 @@
       color: gold;
       font-family: 'Parisienne', cursive;
       box-shadow: 0 0 8px rgba(255,255,255,0.3);
+      width: 80%;
+      max-width: 500px;
     }
 
     .convite {
@@ -184,7 +172,7 @@
   </style>
 </head>
 <body>
-  <div class="overlay">
+  <div class="overlay" onclick="tocarMusica()">
     <h1>📜 Intimação Celestial 📜</h1>
     <div class="titulo-extra">Aghatta XV</div>
 
@@ -194,7 +182,6 @@
 
     <div class="calendar">
       <img src="Aniversário Aghatta XV.png" alt="Calendário">
-      <div class="slide-title">12 de Setembro de 2025</div>
       <!-- Borboletas -->
       <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
       <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
@@ -231,7 +218,7 @@
   </div>
 
   <!-- Música -->
-  <audio id="background-audio" src="audio.mp3" autoplay loop></audio>
+  <audio id="background-audio" src="audio.mp3" preload="auto" loop></audio>
   <div class="audio-control" onclick="toggleAudio()">
     <img id="audio-icon" src="https://img.icons8.com/fluency/48/play.png" alt="Play/Pause"/>
   </div>
@@ -262,6 +249,7 @@
     // Controle de áudio
     const audio = document.getElementById("background-audio");
     const icon = document.getElementById("audio-icon");
+
     function toggleAudio() {
       if (audio.paused) {
         audio.play();
@@ -271,13 +259,21 @@
         icon.src = "https://img.icons8.com/fluency/48/play.png";
       }
     }
+
+    // Tocar música no primeiro clique na tela
+    function tocarMusica() {
+      if (audio.paused) {
+        audio.play();
+        icon.src = "https://img.icons8.com/fluency/48/pause.png";
+      }
+      document.body.removeEventListener('click', tocarMusica);
+    }
+
+    document.body.addEventListener('click', tocarMusica);
   </script>
 </body>
 </html>
 
-
-
-</html>
 
 
 

@@ -49,12 +49,12 @@
     }
 
     .pergaminho {
-      width: 60px;
+      width: 70px;
       opacity: 0;
     }
 
     .coroa {
-      width: 40px;
+      width: 50px;
       opacity: 0;
     }
 
@@ -102,26 +102,15 @@
       width: 80%;
       max-width: 400px;
       border-radius: 15px;
-    }
-
-    .calendar .baloon {
-      position: absolute;
-      top: -40px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.5);
-      padding: 0.6em 1.2em;
-      border-radius: 20px;
-      color: white;
-      font-family: 'Parisienne', cursive;
-      font-size: 1em;
-      z-index: 2;
+      position: relative;
+      z-index: 1;
     }
 
     .butterfly {
       position: absolute;
       width: 40px;
       animation: fly 10s infinite ease-in-out;
+      z-index: 2;
     }
 
     .butterfly img {
@@ -210,15 +199,15 @@
 <body>
   <div class="overlay" onclick="tocarMusica()">
     <h1 class="titulo-principal">
-      <img class="pergaminho animate-esquerda" src="pergaminho.png" alt="Pergaminho Esquerdo">
+      <img class="pergaminho animate-esquerda" src="https://i.imgur.com/bXLRgLM.png" alt="Pergaminho Esquerdo">
       <span class="titulo-texto">Intimação Celestial</span>
-      <img class="pergaminho animate-direita" src="pergaminho.png" alt="Pergaminho Direito">
+      <img class="pergaminho animate-direita" src="https://i.imgur.com/bXLRgLM.png" alt="Pergaminho Direito">
     </h1>
 
     <div class="titulo-extra">
-      <img class="coroa animate-coroa" src="coroa.png" alt="Coroa Esquerda">
+      <img class="coroa animate-coroa" src="https://i.imgur.com/1m8dW3B.png" alt="Coroa Esquerda">
       <span class="titulo-texto">Aghatta XV</span>
-      <img class="coroa animate-coroa" src="coroa.png" alt="Coroa Direita">
+      <img class="coroa animate-coroa" src="https://i.imgur.com/1m8dW3B.png" alt="Coroa Direita">
     </div>
 
     <div class="verso">
@@ -226,11 +215,10 @@
     </div>
 
     <div class="calendar">
-      <div class="baloon">Um pouco da minha história</div>
-      <img src="Aniversario.png" alt="Calendário">
+      <img src="Aniversário Aghatta XV.png" alt="Calendário Aghatta">
       <script>
         for (let i = 0; i < 15; i++) {
-          document.write(`<div class='butterfly' style='left: 60.5%; top: 50%; animation-delay: ${i * 0.5}s;'>
+          document.write(`<div class='butterfly' style='left: 50%; top: 60%; animation-delay: ${i * 0.5}s;'>
             <img src='https://img.icons8.com/color/48/000000/butterfly.png'/>
           </div>`);
         }
@@ -260,7 +248,6 @@
   <audio id="background-audio" src="audio.mp3" preload="auto" loop></audio>
 
   <script>
-    // Contador
     const eventoData = new Date("2025-09-12T19:00:00").getTime();
     setInterval(() => {
       const agora = new Date().getTime();
@@ -272,7 +259,6 @@
       document.getElementById("contador").innerHTML = `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
     }, 1000);
 
-    // Slide aleatório
     const totalSlides = 15;
     let indices = Array.from({length: totalSlides}, (_, i) => i + 1);
     indices = indices.sort(() => Math.random() - 0.5);
@@ -282,7 +268,6 @@
       slideIndex++;
     }, 3500);
 
-    // Áudio auto play
     const audio = document.getElementById("background-audio");
     function tocarMusica() {
       audio.play();
@@ -292,6 +277,7 @@
   </script>
 </body>
 </html>
+
 
 
 

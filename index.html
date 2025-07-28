@@ -38,10 +38,48 @@
       pointer-events: none;
     }
 
-    .coroa-topo {
-      width: 180px;
-      margin-bottom: -20px;
+    .envelope {
+      position: relative;
+      width: 300px;
+      height: 200px;
+      margin-top: 40px;
+      perspective: 1000px;
+    }
+
+    .envelope-base {
+      width: 100%;
+      height: 100%;
+      border: 2px solid #fff;
+      background-color: white;
+      border-radius: 0 0 10px 10px;
+    }
+
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background-color: white;
+      border: 2px solid #fff;
+      border-bottom: none;
+      border-radius: 10px 10px 0 0;
+      transform-origin: top center;
+      transition: transform 1.2s ease-in-out;
       z-index: 2;
+    }
+
+    .flap.aberto {
+      transform: rotateX(160deg);
+    }
+
+    .coroa-topo {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      z-index: 3;
     }
 
     .texto-inicial {
@@ -70,32 +108,6 @@
     @keyframes rolarPergaminho {
       0%, 100% { transform: scaleY(0.7); opacity: 0.8; }
       50% { transform: scaleY(1); opacity: 1; }
-    }
-
-    .envelope {
-      position: relative;
-      width: 300px;
-      height: auto;
-      margin-top: 20px;
-      cursor: pointer;
-    }
-
-    .envelope-base {
-      width: 100%;
-      display: block;
-    }
-
-    .envelope-flap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      transform-origin: top center;
-      transition: transform 1.2s ease-in-out;
-    }
-
-    .envelope-flap.aberto {
-      transform: rotateX(120deg);
     }
 
     .conteudo {
@@ -204,21 +216,19 @@
 </head>
 <body>
 
-  <!-- TELA INICIAL -->
   <div class="tela-envelope" onclick="abrirEnvelope()">
-    <img src="coroa.png" alt="Coroa" class="coroa-topo" />
     <div class="texto-inicial">
       <div class="scroll"></div>
       <span>Intimação Celestial</span>
       <div class="scroll"></div>
     </div>
     <div class="envelope">
-      <img src="envelope-base.png" class="envelope-base" alt="Envelope Base" />
-      <img src="envelope-flap.png" class="envelope-flap" id="flap" alt="Envelope Flap" />
+      <img src="coroa.png" alt="Coroa" class="coroa-topo" />
+      <div class="flap" id="flap"></div>
+      <div class="envelope-base"></div>
     </div>
   </div>
 
-  <!-- CONTEÚDO PRINCIPAL -->
   <div class="conteudo">
     <div class="overlay">
       <div>
@@ -273,7 +283,6 @@
       document.getElementById("audio").play().catch(() => {});
     }
 
-    // CONTADOR
     const evento = new Date("2025-09-12T19:00:00").getTime();
     setInterval(() => {
       const agora = new Date().getTime();
@@ -290,7 +299,6 @@
         `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
     }, 1000);
 
-    // SLIDESHOW
     const imagens = [
       "imagem1.jpeg", "imagem2.jpeg", "imagem3.jpeg",
       "imagem4.jpeg", "imagem5.jpeg", "imagem6.jpeg",
@@ -308,6 +316,7 @@
 
 </body>
 </html>
+
 
 
 

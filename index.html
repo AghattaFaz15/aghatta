@@ -49,16 +49,6 @@
       max-width: 700px;
     }
 
-    .contador {
-      font-size: 1.3em;
-      background: rgba(33, 150, 243, 0.3);
-      padding: 0.8em 1.2em;
-      border-radius: 30px;
-      margin-bottom: 1em;
-      width: 80%;
-      max-width: 400px;
-    }
-
     .calendar {
       position: relative;
       margin-bottom: 1em;
@@ -70,20 +60,50 @@
       border-radius: 15px;
     }
 
+    .calendar .slide-title {
+      position: absolute;
+      top: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.4);
+      padding: 0.5em 1.2em;
+      border-radius: 25px;
+      font-size: 1.2em;
+      color: gold;
+      font-family: 'Parisienne', cursive;
+      box-shadow: 0 0 8px rgba(255,255,255,0.3);
+    }
+
     .butterfly {
       position: absolute;
       width: 40px;
       animation: fly 8s infinite ease-in-out;
     }
 
-    .butterfly:nth-child(1) { left: 50%; top: 30%; animation-delay: 0s; }
-    .butterfly:nth-child(2) { left: 55%; top: 35%; animation-delay: 2s; }
-    .butterfly:nth-child(3) { left: 45%; top: 40%; animation-delay: 4s; }
+    /* Todas saem do mesmo ponto: dia 12 do calendário */
+    .butterfly:nth-child(1) { left: 61%; top: 57%; animation-delay: 0s; }
+    .butterfly:nth-child(2) { left: 61%; top: 57%; animation-delay: 1s; }
+    .butterfly:nth-child(3) { left: 61%; top: 57%; animation-delay: 2s; }
+    .butterfly:nth-child(4) { left: 61%; top: 57%; animation-delay: 3s; }
+    .butterfly:nth-child(5) { left: 61%; top: 57%; animation-delay: 4s; }
+    .butterfly:nth-child(6) { left: 61%; top: 57%; animation-delay: 5s; }
+    .butterfly:nth-child(7) { left: 61%; top: 57%; animation-delay: 6s; }
+    .butterfly:nth-child(8) { left: 61%; top: 57%; animation-delay: 7s; }
 
     @keyframes fly {
       0% { transform: translateY(0) scale(1); opacity: 1; }
-      50% { transform: translate(-50px, -150px) scale(1.2); opacity: 0.6; }
-      100% { transform: translate(50px, -300px) scale(0.9); opacity: 0; }
+      50% { transform: translate(-40px, -150px) scale(1.2); opacity: 0.6; }
+      100% { transform: translate(40px, -300px) scale(0.9); opacity: 0; }
+    }
+
+    .contador {
+      font-size: 1.3em;
+      background: rgba(33, 150, 243, 0.3);
+      padding: 0.8em 1.2em;
+      border-radius: 30px;
+      margin-bottom: 2em;
+      width: 80%;
+      max-width: 400px;
     }
 
     .slideshow-container {
@@ -99,14 +119,14 @@
       box-shadow: 0 0 12px rgba(255,255,255,0.4);
     }
 
-    .slide-title {
+    .slideshow-container .slide-title {
       position: absolute;
-      top: 10px;
+      top: 5%;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(0,0,0,0.4);
-      padding: 0.5em 1em;
-      border-radius: 20px;
+      padding: 0.6em 1.2em;
+      border-radius: 25px;
       font-size: 1.2em;
       color: gold;
       font-family: 'Parisienne', cursive;
@@ -174,6 +194,13 @@
 
     <div class="calendar">
       <img src="Aniversário Aghatta XV.png" alt="Calendário">
+      <div class="slide-title">12 de Setembro de 2025</div>
+      <!-- Borboletas -->
+      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
+      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
+      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
+      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
+      <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
       <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
       <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>
       <div class="butterfly"><img src="https://img.icons8.com/color/48/000000/butterfly.png"/></div>

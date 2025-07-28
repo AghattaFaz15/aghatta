@@ -6,30 +6,22 @@
   <title>Intimação Celestial - Aghatta XV</title>
   <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Georgia', serif;
-      overflow: hidden;
       background-color: #002366;
+      overflow: hidden;
       transition: background 1.2s ease-in-out;
     }
 
-    body.opened {
+    body.aberto {
       overflow-y: auto;
     }
 
-    .screen {
+    .tela-envelope {
       width: 100vw;
       height: 100vh;
-      position: relative;
-    }
-
-    .envelope-screen {
       background-color: #002366;
       display: flex;
       flex-direction: column;
@@ -37,77 +29,82 @@
       justify-content: center;
       position: absolute;
       inset: 0;
-      z-index: 2;
+      z-index: 10;
       transition: opacity 1.2s ease;
     }
 
-    .envelope-screen.hidden {
+    .tela-envelope.oculta {
       opacity: 0;
       pointer-events: none;
     }
 
     .coroa-topo {
-      width: 200px;
-      margin-bottom: 30px;
+      width: 180px;
+      margin-bottom: -20px;
+      z-index: 2;
     }
 
-    .envelope-container {
-      position: relative;
-      width: 260px;
-      height: 180px;
-      perspective: 1000px;
-      margin-bottom: 30px;
-    }
-
-    .envelope-flap {
-      width: 100%;
-      height: 100%;
-      background: url('envelope.png') no-repeat center center;
-      background-size: cover;
-      border-radius: 10px;
-      transition: transform 1.5s ease-in-out, opacity 1.5s ease;
-      transform-origin: top center;
-    }
-
-    .envelope-flap.aberto {
-      transform: rotateX(100deg) scale(1.05);
-      opacity: 0;
-    }
-
-    .envelope-label {
+    .texto-inicial {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 1em;
+      margin: 1.5em 0;
     }
 
-    .scroll {
-      width: 40px;
-      height: 40px;
-      background: url('https://img.icons8.com/emoji/48/scroll-emoji.png') no-repeat center;
-      background-size: contain;
-      animation: scrollRoll 4s ease-in-out infinite;
-    }
-
-    .title-text {
+    .texto-inicial span {
       font-family: 'Parisienne', cursive;
-      font-size: 2.4em;
+      font-size: 2.5em;
       color: gold;
       text-shadow: 0 0 10px rgba(255,215,0,0.7);
     }
 
-    @keyframes scrollRoll {
-      0%, 100% { transform: scaleY(0.6); opacity: 0.8; }
+    .texto-inicial .scroll {
+      width: 40px;
+      height: 40px;
+      background: url('https://img.icons8.com/emoji/48/scroll-emoji.png') no-repeat center;
+      background-size: contain;
+      animation: rolarPergaminho 4s ease-in-out infinite;
+    }
+
+    @keyframes rolarPergaminho {
+      0%, 100% { transform: scaleY(0.7); opacity: 0.8; }
       50% { transform: scaleY(1); opacity: 1; }
     }
 
-    .main-content {
+    .envelope {
+      position: relative;
+      width: 300px;
+      height: auto;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    .envelope-base {
+      width: 100%;
+      display: block;
+    }
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      transform-origin: top center;
+      transition: transform 1.2s ease-in-out;
+    }
+
+    .envelope-flap.aberto {
+      transform: rotateX(120deg);
+    }
+
+    .conteudo {
       opacity: 0;
       pointer-events: none;
       transition: opacity 1.2s ease;
     }
 
-    body.opened .main-content {
+    body.aberto .conteudo {
       opacity: 1;
       pointer-events: auto;
     }
@@ -115,44 +112,38 @@
     .overlay {
       background: url('Aghatta.png') no-repeat center center fixed;
       background-size: cover;
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0,0,0,0.7);
       min-height: 100vh;
       padding: 2em 1em;
       text-align: center;
       color: white;
     }
 
-    .decor-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1em;
-      flex-wrap: wrap;
-      margin-bottom: 1em;
+    .titulo {
+      font-family: 'Parisienne', cursive;
+      font-size: 2.4em;
+      color: gold;
+      text-shadow: 0 0 10px rgba(255,215,0,0.7);
+      margin-top: 0.5em;
     }
 
-    .subtitle-text {
+    .subtitulo {
       font-family: 'Parisienne', cursive;
       font-size: 2.4em;
       color: #8ecaff;
       text-shadow: 0 0 8px #5ab3ff;
     }
 
-    .verso {
+    .coroa-segunda {
+      width: 90px;
+      height: 90px;
+    }
+
+    .versiculo {
       font-style: italic;
       font-size: 1.1em;
-      margin: 1.5em 0;
+      margin: 1.5em auto;
       max-width: 700px;
-    }
-
-    .calendar {
-      margin-bottom: 1em;
-    }
-
-    .calendar img {
-      width: 90vw;
-      max-width: 400px;
-      border-radius: 15px;
     }
 
     .contador {
@@ -160,24 +151,12 @@
       background: rgba(0,0,0,0.8);
       padding: 0.8em 1.2em;
       border-radius: 20px;
-      margin-top: -1.2em;
-      margin-bottom: 1.2em;
+      margin: 1em auto;
       width: 90vw;
       max-width: 400px;
     }
 
-    .slide-title {
-      font-size: 1.4em;
-      color: gold;
-      font-family: 'Parisienne', cursive;
-      background: rgba(0,0,0,0.4);
-      padding: 0.6em 1.2em;
-      border-radius: 25px;
-      margin: 1em auto;
-      width: fit-content;
-    }
-
-    .slideshow-container {
+    .galeria {
       width: 90vw;
       max-width: 400px;
       margin: 1.5em auto;
@@ -185,7 +164,7 @@
       overflow: hidden;
     }
 
-    .slideshow-container img {
+    .galeria img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -193,115 +172,108 @@
       box-shadow: 0 0 12px rgba(255,255,255,0.4);
     }
 
-    .invite-text {
+    .convite {
       font-family: 'Great Vibes', cursive;
       font-size: 2em;
-      margin-bottom: 2em;
+      margin: 2em auto;
       max-width: 600px;
     }
 
-    .convite p {
+    .info {
       font-size: 1.1em;
       line-height: 1.6em;
     }
 
-    .buttons {
+    .botoes {
       display: flex;
       justify-content: center;
       gap: 2em;
-      flex-wrap: wrap;
-      margin-bottom: 2em;
+      margin: 2em 0;
     }
 
-    .buttons img {
+    .botoes img {
       width: 48px;
       height: 48px;
       transition: transform 0.3s;
     }
 
-    .buttons img:hover {
+    .botoes img:hover {
       transform: scale(1.2);
-    }
-
-    .coroa-segunda {
-      width: 70px;
-      height: 70px;
     }
   </style>
 </head>
 <body>
-  <div class="screen envelope-screen" onclick="abrirEnvelope()">
+
+  <!-- TELA INICIAL -->
+  <div class="tela-envelope" onclick="abrirEnvelope()">
     <img src="coroa.png" alt="Coroa" class="coroa-topo" />
-    <div class="envelope-container">
-      <div class="envelope-flap" id="envelope"></div>
+    <div class="texto-inicial">
+      <div class="scroll"></div>
+      <span>Intimação Celestial</span>
+      <div class="scroll"></div>
     </div>
-    <div class="envelope-label">
-      <div class="scroll"></div>
-      <div class="title-text">Intimação Celestial</div>
-      <div class="scroll"></div>
+    <div class="envelope">
+      <img src="envelope-base.png" class="envelope-base" alt="Envelope Base" />
+      <img src="envelope-flap.png" class="envelope-flap" id="flap" alt="Envelope Flap" />
     </div>
   </div>
 
-  <div class="main-content">
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div class="conteudo">
     <div class="overlay">
-      <div class="decor-wrap">
-        <div class="scroll"></div>
-        <span class="title-text">Intimação Celestial</span>
-        <div class="scroll"></div>
-      </div>
-
-      <div class="decor-wrap">
+      <div>
         <img src="coroa.png" alt="Coroa" class="coroa-segunda" />
-        <span class="subtitle-text">Aghatta XV</span>
+        <div class="subtitulo">Aghatta XV</div>
         <img src="coroa.png" alt="Coroa" class="coroa-segunda" />
       </div>
 
-      <div class="verso">
+      <div class="versiculo">
         "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou." — Isaías 41:20
       </div>
 
-      <div class="calendar">
-        <img src="Aniversário Aghatta XV.png" alt="Calendário" />
+      <div>
+        <img src="Aniversário Aghatta XV.png" alt="Calendário" style="width:90vw; max-width:400px; border-radius: 15px;">
         <div id="contador" class="contador"></div>
       </div>
 
-      <div class="invite-text">
+      <div class="convite">
         Essa festa não será a mesma sem a sua presença.<br>
         Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
       </div>
 
-      <div class="slide-title">Um pouco da minha história</div>
-      <div class="slideshow-container">
+      <div class="galeria">
         <img id="slide-img" src="imagem1.jpeg" alt="Slideshow" />
       </div>
 
-      <div class="convite">
+      <div class="info">
         <p><strong>🗓 Data:</strong> 12 de Setembro de 2025<br>
            <strong>⏰ Hora:</strong> 19h<br>
            <strong>📍 Local:</strong> Chácara das Paineiras</p>
       </div>
 
-      <div class="buttons">
+      <div class="botoes">
         <a href="#"><img src="https://img.icons8.com/color/96/marker.png" alt="Localização" /></a>
         <a href="#"><img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirme" /></a>
       </div>
     </div>
   </div>
 
-  <audio id="background-audio" src="audio.mp3" preload="auto" loop></audio>
+  <audio id="audio" src="audio.mp3" preload="auto" loop></audio>
 
   <script>
+    const flap = document.getElementById("flap");
     let aberto = false;
 
     function abrirEnvelope() {
       if (aberto) return;
       aberto = true;
-      document.getElementById("envelope").classList.add("aberto");
-      document.querySelector(".envelope-screen").classList.add("hidden");
-      document.body.classList.add("opened");
-      document.getElementById("background-audio").play().catch(() => {});
+      flap.classList.add("aberto");
+      document.querySelector(".tela-envelope").classList.add("oculta");
+      document.body.classList.add("aberto");
+      document.getElementById("audio").play().catch(() => {});
     }
 
+    // CONTADOR
     const evento = new Date("2025-09-12T19:00:00").getTime();
     setInterval(() => {
       const agora = new Date().getTime();
@@ -318,7 +290,8 @@
         `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
     }, 1000);
 
-    const imagensSlide = [
+    // SLIDESHOW
+    const imagens = [
       "imagem1.jpeg", "imagem2.jpeg", "imagem3.jpeg",
       "imagem4.jpeg", "imagem5.jpeg", "imagem6.jpeg",
       "imagem7.jpeg", "imagem8.jpeg", "imagem9.jpeg",
@@ -327,13 +300,15 @@
     ];
     let idx = 0;
     setInterval(() => {
-      const slideImg = document.getElementById("slide-img");
-      idx = (idx + 1) % imagensSlide.length;
-      slideImg.src = imagensSlide[idx];
+      const slide = document.getElementById("slide-img");
+      idx = (idx + 1) % imagens.length;
+      slide.src = imagens[idx];
     }, 4000);
   </script>
+
 </body>
 </html>
+
 
 
 

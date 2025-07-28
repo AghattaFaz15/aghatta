@@ -10,20 +10,53 @@
       margin: 0;
       padding: 0;
       font-family: 'Georgia', serif;
-      background: url('Aghatta.png') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
+      background-color: #fff;
+      color: #000;
     }
 
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.6);
-      min-height: 100vh;
+    /* Tela Inicial */
+    #envelope-tela {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: #ffffff;
       display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+      transition: opacity 1s ease;
+      text-align: center;
+    }
+
+    #envelope-img {
+      width: 140px;
+      animation: abrirEnvelope 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes abrirEnvelope {
+      0% { transform: scale(1) rotate(0deg); }
+      100% { transform: scale(1.05) rotate(1deg); }
+    }
+
+    #envelope-tela p {
+      color: #333;
+      font-family: 'Parisienne', cursive;
+      font-size: 1.5em;
+      margin-top: 1em;
+    }
+
+    /* Conteúdo do convite */
+    .overlay {
+      display: none;
       flex-direction: column;
       align-items: center;
       padding: 2em 1em;
       text-align: center;
-      position: relative;
+      background: url('Aghatta.png') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      min-height: 100vh;
     }
 
     .decor-wrap {
@@ -52,10 +85,9 @@
     .crown {
       width: 50px;
       height: 50px;
-      background: url('https://cdn-icons-png.flaticon.com/512/754/754878.png') no-repeat center;
+      background: url('https://cdn-icons-png.flaticon.com/512/4205/4205353.png') no-repeat center;
       background-size: contain;
       animation: shine 3s infinite ease-in-out;
-      filter: drop-shadow(0 0 5px gold);
     }
 
     .scroll {
@@ -64,7 +96,7 @@
       background: url('https://img.icons8.com/emoji/48/scroll-emoji.png') no-repeat center;
       background-size: contain;
       animation: scrollRoll 4s ease-in-out infinite;
-      transform-origin: center center;
+      transform-origin: center top;
     }
 
     @keyframes shine {
@@ -99,7 +131,6 @@
       position: absolute;
       width: 32px;
       animation: flap 1.2s infinite alternate, flyRandom 12s infinite ease-in-out;
-      pointer-events: none;
     }
 
     .butterfly img {
@@ -120,18 +151,14 @@
     }
 
     .contador {
-      position: absolute;
-      top: 15%;
-      left: 50%;
-      transform: translateX(-50%);
       font-size: 1.2em;
       background: rgba(0,0,0,0.8);
       padding: 0.8em 1.2em;
       border-radius: 20px;
-      color: white;
+      margin-top: -1.2em;
+      margin-bottom: 1.2em;
       width: 90vw;
       max-width: 400px;
-      z-index: 10;
     }
 
     .slideshow-container {
@@ -152,7 +179,7 @@
     }
 
     .slide-title {
-      margin-top: 1em;
+      margin-top: -0.5em;
       font-size: 1.4em;
       color: gold;
       font-family: 'Parisienne', cursive;
@@ -197,45 +224,42 @@
   </style>
 </head>
 <body>
-  <div class="overlay" onclick="tocarMusica()">
+  <div id="envelope-tela">
+    <img id="envelope-img" src="https://cdn-icons-png.flaticon.com/512/561/561127.png" alt="Envelope">
+    <p>Toque para abrir o convite</p>
+  </div>
 
+  <div class="overlay">
     <div class="decor-wrap">
       <div class="scroll"></div>
       <span class="title-text">Intimação Celestial</span>
       <div class="scroll"></div>
     </div>
-
     <div class="decor-wrap">
       <div class="crown"></div>
       <span class="subtitle-text">Aghatta XV</span>
       <div class="crown"></div>
     </div>
-
     <div class="verso">
       "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou." — Isaías 41:20
     </div>
-
     <div class="calendar">
       <img src="Aniversário Aghatta XV.png" alt="Calendário">
       <div id="contador" class="contador"></div>
     </div>
-
     <div class="invite-text">
       Essa festa não será a mesma sem a sua presença.<br>
       Deus reservou este dia no calendário eterno — e escreveu o seu nome nele.
     </div>
-
     <div class="slide-title">Um pouco da minha história</div>
     <div class="slideshow-container">
       <img id="slide-img" src="imagem1.jpeg" alt="Slideshow" />
     </div>
-
     <div class="convite">
       <p><strong>🗓 Data:</strong> 12 de Setembro de 2025<br>
          <strong>⏰ Hora:</strong> 19h<br>
          <strong>📍 Local:</strong> Chácara das Paineiras</p>
     </div>
-
     <div class="buttons">
       <a href="#"><img src="https://img.icons8.com/color/96/marker.png" alt="Localização" /></a>
       <a href="#"><img src="https://img.icons8.com/color/96/checked--v1.png" alt="Confirme" /></a>
@@ -243,7 +267,6 @@
   </div>
 
   <audio id="background-audio" src="audio.mp3" preload="auto" loop></audio>
-
   <script>
     const evento = new Date("2025-09-12T19:00:00").getTime();
     setInterval(() => {
@@ -257,12 +280,6 @@
         `Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s`;
     }, 1000);
 
-    function tocarMusica() {
-      document.getElementById("background-audio").play();
-      document.body.removeEventListener("click", tocarMusica);
-    }
-    document.body.addEventListener("click", tocarMusica);
-
     const imagensSlide = [
       "imagem1.jpeg", "imagem2.jpeg", "imagem3.jpeg", "imagem4.jpeg", "imagem5.jpeg",
       "imagem6.jpeg", "imagem7.jpeg", "imagem8.jpeg", "imagem9.jpeg", "imagem10.jpeg",
@@ -272,7 +289,6 @@
     function embaralhar(array) {
       return array.sort(() => Math.random() - 0.5);
     }
-
     const imagensAleatorias = embaralhar(imagensSlide);
     let indexAtual = 0;
     function trocarImagem() {
@@ -281,19 +297,28 @@
     }
     setInterval(trocarImagem, 4000);
 
-    // Borboletas saindo do dia 12
     for (let i = 0; i < 15; i++) {
       const butterfly = document.createElement('div');
       butterfly.className = 'butterfly';
-      butterfly.style.left = '42%'; // mais à esquerda
-      butterfly.style.top = '36%';  // mais acima (dia 12)
+      butterfly.style.left = '56%';
+      butterfly.style.top = '42%';
       butterfly.style.animationDelay = `${i * 0.6}s`;
       butterfly.innerHTML = '<img src="https://img.icons8.com/color/48/000000/butterfly.png" />';
       document.querySelector('.calendar').appendChild(butterfly);
     }
+
+    document.getElementById("envelope-tela").addEventListener("click", function() {
+      document.getElementById("background-audio").play();
+      document.getElementById("envelope-tela").style.opacity = "0";
+      setTimeout(() => {
+        document.getElementById("envelope-tela").style.display = "none";
+        document.querySelector(".overlay").style.display = "flex";
+      }, 1000);
+    });
   </script>
 </body>
 </html>
+
 
 
 

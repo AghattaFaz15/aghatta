@@ -35,10 +35,11 @@
       background: rgba(0, 0, 0, 0.6);
       padding: 20px 30px;
       border-radius: 12px;
-      color: white;
+      color: #cce6ff;
       font-size: 2em;
       text-align: center;
-      text-shadow: 2px 2px 6px black;
+      text-shadow: 2px 2px 8px #66bfff;
+      font-family: 'Parisienne', cursive;
     }
     video {
       width: 100vw;
@@ -46,12 +47,15 @@
       object-fit: cover;
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
 </head>
 <body>
 
+  <audio id="porta" src="porta.mp3" preload="auto"></audio>
+
   <div id="inicio" class="tela" onclick="mostrarVideo()">
     <img src="imagem-capa.jpg" alt="Imagem de capa">
-    <div class="mensagem">Toque na porta do Céu</div>
+    <div class="mensagem">O Céu bate à porta. Toque para abrir.</div>
   </div>
 
   <div id="videoContainer" class="tela escondido">
@@ -62,8 +66,10 @@
 
   <script>
     const video = document.getElementById("video")
+    const porta = document.getElementById("porta")
 
     function mostrarVideo() {
+      porta.play().catch(() => {})
       document.getElementById("inicio").classList.add("escondido")
       document.getElementById("videoContainer").classList.remove("escondido")
       video.play().catch(() => {})

@@ -77,8 +77,17 @@
     const toctoc = document.getElementById("toctoc")
     const porta = document.getElementById("porta")
 
-    // Toca o som de toctoc ao carregar a página
-    toctoc.play().catch(() => {})
+    // Tentar tocar o som ao carregar
+    window.addEventListener('load', () => {
+      toctoc.play().catch(() => {
+        // Se o navegador bloquear, tocar no primeiro clique
+        document.body.addEventListener('click', tocarToctoc, { once: true })
+      })
+    })
+
+    function tocarToctoc() {
+      toctoc.play().catch(() => {})
+    }
 
     function mostrarVideo() {
       toctoc.pause()

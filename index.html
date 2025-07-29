@@ -5,9 +5,7 @@
   <title>Mensagem do Rei</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      width: 100%;
-      height: 100%;
+    body {
       background: black;
       overflow: hidden;
       font-family: 'Great Vibes', cursive;
@@ -26,11 +24,6 @@
       opacity: 0;
       pointer-events: none;
     }
-    #inicio {
-      width: 100%;
-      height: 100%;
-      position: relative;
-    }
     #inicio img {
       width: 100%;
       height: 100%;
@@ -44,7 +37,7 @@
       margin-top: 6vh;
       width: 90%;
       color: #f9f3ff;
-      font-size: 7vw;
+      font-size: 6vw;
       text-align: center;
       text-shadow: 3px 3px 12px #e0b3ff;
       background: rgba(0, 0, 0, 0.5);
@@ -63,6 +56,7 @@
 <body>
 
   <audio id="toctoc" src="toctoc.mp3" preload="auto" loop></audio>
+  <audio id="porta" src="porta.mp3" preload="auto"></audio>
 
   <div id="inicio" class="tela" onclick="mostrarVideo()">
     <img src="imagem-capa.jpg" alt="Imagem de capa">
@@ -81,14 +75,21 @@
   <script>
     const video = document.getElementById("video")
     const toctoc = document.getElementById("toctoc")
+    const porta = document.getElementById("porta")
+
+    // Toca o som de toctoc ao carregar a página
     toctoc.play().catch(() => {})
 
     function mostrarVideo() {
       toctoc.pause()
       toctoc.currentTime = 0
+
+      porta.play().catch(() => {})
+
       document.getElementById("inicio").classList.add("escondido")
       document.getElementById("videoContainer").classList.remove("escondido")
       video.play().catch(() => {})
+
       video.onended = () => {
         document.getElementById("videoContainer").classList.add("escondido")
         setTimeout(() => {

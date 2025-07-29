@@ -31,10 +31,14 @@
     }
     .mensagem {
       position: absolute;
+      top: 8%;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px 30px;
+      border-radius: 12px;
       color: white;
-      font-size: 2.5em;
-      text-shadow: 2px 2px 6px black;
+      font-size: 2em;
       text-align: center;
+      text-shadow: 2px 2px 6px black;
     }
     video {
       width: 100vw;
@@ -51,37 +55,24 @@
   </div>
 
   <div id="videoContainer" class="tela escondido">
-    <video id="video" playsinline muted>
+    <video id="video" playsinline>
       <source src="mensagem.mp4" type="video/mp4">
-      Seu navegador não suporta vídeo.
     </video>
   </div>
 
-  <div id="final" class="tela escondido">
-    <img src="Aghatta_20250728_225115_0000.png" alt="Mensagem final">
-  </div>
-
   <script>
-    const video = document.getElementById("video");
+    const video = document.getElementById("video")
 
     function mostrarVideo() {
-      document.getElementById("inicio").classList.add("escondido");
-      document.getElementById("videoContainer").classList.remove("escondido");
-
-      video.load();
-      video.play().catch(err => {
-        console.error("Erro ao iniciar vídeo:", err);
-      });
-
+      document.getElementById("inicio").classList.add("escondido")
+      document.getElementById("videoContainer").classList.remove("escondido")
+      video.play().catch(() => {})
       video.onended = () => {
-        document.getElementById("videoContainer").classList.add("escondido");
-        document.getElementById("final").classList.remove("escondido");
-
-        // Espera 4 segundos e redireciona
+        document.getElementById("videoContainer").classList.add("escondido")
         setTimeout(() => {
-          window.location.href = "segunda-experiencia.html";
-        }, 4000);
-      };
+          window.location.href = "segunda-experiencia.html"
+        }, 1000)
+      }
     }
   </script>
 

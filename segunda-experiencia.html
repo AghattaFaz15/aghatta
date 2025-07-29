@@ -104,6 +104,11 @@
     flex-shrink: 0;
     line-height: 1;
   }
+  .linha-coroa img {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 0 8px gold);
+  }
   .versiculo {
     font-style: italic;
     font-size: 1.1em;
@@ -193,29 +198,6 @@
     position: relative;
     z-index: 1;
   }
-  .borboleta {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Butterfly_icon.svg/120px-Butterfly_icon.svg.png') no-repeat center;
-    background-size: contain;
-    pointer-events: none;
-    animation-timing-function: ease-in-out;
-    animation-fill-mode: forwards;
-    will-change: transform, opacity;
-    z-index: 20;
-    opacity: 1;
-  }
-  @keyframes borboletaVoando {
-    0% {
-      opacity: 1;
-      transform: translate(0, 0) scale(1) rotate(0deg);
-    }
-    100% {
-      opacity: 0;
-      transform: translate(var(--x), var(--y)) scale(0.3) rotate(720deg);
-    }
-  }
   @media (max-width: 600px) {
     .texto-inicial {
       font-size: 2em;
@@ -231,7 +213,7 @@
     .galeria {
       max-width: 300px;
     }
-    .borboleta {
+    .linha-coroa img {
       width: 30px;
       height: 30px;
     }
@@ -240,7 +222,8 @@
 </head>
 <body>
 
-<audio id="audio" src="porta.mp3" preload="auto"></audio>
+<audio id="audio1" src="porta.mp3" preload="auto"></audio>
+<audio id="audio2" src="audio.mp3" preload="auto"></audio>
 
 <div class="tela-inicial" onclick="ativarExperiencia()" role="button" tabindex="0" aria-label="Iniciar experiência">
   <div class="texto-inicial">
@@ -252,7 +235,9 @@
 
 <div class="conteudo" aria-live="polite">
   <div class="linha-coroa" role="banner">
+    <img src="coroa.png" alt="Coroa esquerda">
     <div class="subtitulo">Aghatta XV</div>
+    <img src="coroa.png" alt="Coroa direita">
   </div>
 
   <div class="versiculo">
@@ -322,112 +307,27 @@
   }
   setInterval(trocarSlide, 3500);
 
-  const audio = document.getElementById('audio');
+  const audio1 = document.getElementById('audio1');
+  const audio2 = document.getElementById('audio2');
   const telaInicial = document.querySelector('.tela-inicial');
   const body = document.body;
 
   function ativarExperiencia() {
-    audio.play();
+    audio1.play();
     telaInicial.classList.add('oculta');
+    setTimeout(() => {
+      audio2.play();
+    }, 1200);
     body.classList.add('aberto');
-    criarBorboletas();
   }
+
   telaInicial.addEventListener('keydown', e => {
     if(e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       ativarExperiencia();
     }
   });
-
-  function criarBorboletas() {
-    const count = 25;
-    for(let i=0; i<count; i++) {
-      const borboleta = document.createElement('div');
-      borboleta.className = 'borboleta';
-      const x = (Math.random() - 0.5) * 300 + 'px';
-      const y = (Math.random() - 0.5) * 300 + 'px';
-      borboleta.style.setProperty('--x', x);
-      borboleta.style.setProperty('--y', y);
-      borboleta.style.top = (window.innerHeight / 2 + (Math.random() * 100 - 50)) + 'px';
-      borboleta.style.left = (window.innerWidth / 2 + (Math.random() * 100 - 50)) + 'px';
-      borboleta.style.animation = `borboletaVoando 3500ms ease-in-out forwards`;
-      borboleta.style.animationDelay = `${i * 150}ms`;
-      document.body.appendChild(borboleta);
-      setTimeout(() => {
-        borboleta.remove();
-      }, 4000);
-    }
-  }
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

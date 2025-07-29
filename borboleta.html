@@ -26,7 +26,7 @@
     .background {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       display: block;
     }
 
@@ -34,8 +34,9 @@
       position: absolute;
       width: 40px;
       height: 40px;
-      top: 54%;
-      left: 49%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       animation: voar 10s infinite ease-in-out;
       transform-origin: center;
     }
@@ -73,39 +74,35 @@
     }
 
     @keyframes baterAsa {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(35deg);
-      }
+      from { transform: rotate(0deg); }
+      to { transform: rotate(35deg); }
     }
 
     @keyframes voar {
       0% {
-        transform: translate(0, 0) scale(1) rotate(0deg);
+        transform: translate(-50%, -50%) translate(0, 0) scale(1) rotate(0deg);
         opacity: 0;
       }
       10% {
         opacity: 1;
       }
       100% {
-        transform: translate(var(--x), var(--y)) scale(1.4) rotate(360deg);
+        transform: translate(-50%, -50%) translate(var(--x), var(--y)) scale(1.4) rotate(360deg);
         opacity: 0;
       }
     }
 
     /* Variações individuais */
-    .b1 { animation-delay: 0s; --x: -120px; --y: -500px; }
-    .b2 { animation-delay: 1.5s; --x: 100px; --y: -550px; }
+    .b1 { animation-delay: 0s; --x: -100px; --y: -500px; }
+    .b2 { animation-delay: 1.5s; --x: 80px; --y: -550px; }
     .b3 { animation-delay: 3s; --x: -60px; --y: -520px; }
-    .b4 { animation-delay: 2.2s; --x: 80px; --y: -600px; }
-    .b5 { animation-delay: 0.8s; --x: -90px; --y: -580px; }
+    .b4 { animation-delay: 2.2s; --x: 120px; --y: -580px; }
+    .b5 { animation-delay: 0.8s; --x: -90px; --y: -600px; }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Sua imagem de fundo -->
+    <!-- Imagem de fundo (com a coroa) -->
     <img src="Aniversário Aghatta XV.png" alt="Calendário Aghatta" class="background">
 
     <!-- Borboletas CSS -->
@@ -137,4 +134,3 @@
   </div>
 </body>
 </html>
-

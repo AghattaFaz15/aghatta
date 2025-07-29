@@ -13,16 +13,15 @@
     overflow: hidden;
     transition: background 1.2s ease-in-out;
     color: white;
-    background: url("Aghatta.png") center center / cover no-repeat fixed;
   }
   body.aberto {
     overflow-y: auto;
     background-color: #000;
-    background: url("Aghatta.png") center center / cover no-repeat fixed;
   }
   .tela-inicial {
     width: 100vw;
     height: 100vh;
+    background: url("Aghatta.png") center center / cover no-repeat;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -34,7 +33,6 @@
     opacity: 1;
     visibility: visible;
     cursor: pointer;
-    background-attachment: fixed;
   }
   .tela-inicial.oculta {
     opacity: 0;
@@ -54,8 +52,6 @@
     font-size: 3em;
     color: gold;
     text-shadow: 0 0 10px rgba(255,215,0,0.7);
-    text-align: center;
-    width: 100%;
   }
   .texto-inicial .scroll {
     width: 40px;
@@ -124,7 +120,7 @@
     position: relative;
     width: 90vw;
     max-width: 400px;
-    margin: 1em auto 5em;
+    margin: 1em auto 3em;
   }
   #convite-img {
     width: 100%;
@@ -164,7 +160,7 @@
     position: relative;
     width: 90vw;
     max-width: 400px;
-    margin: 5em auto 3em;
+    margin: 2em auto 3em;
     aspect-ratio: 3 / 4;
     overflow: hidden;
     border-radius: 20px;
@@ -247,11 +243,11 @@
     position: absolute;
     width: 40px;
     height: 40px;
-    top: calc(50% + 2em);
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     animation: voar linear infinite;
-    opacity: 1;
+    opacity: 0;
     z-index: 5;
     pointer-events: none;
   }
@@ -306,7 +302,7 @@
 <audio id="audio2" src="audio.mp3" preload="auto"></audio>
 
 <div class="tela-inicial" onclick="ativarExperiencia()" role="button" tabindex="0" aria-label="Iniciar experiência">
-  <div class="texto-inicial" aria-live="polite">
+  <div class="texto-inicial">
     <div class="scroll" aria-hidden="true"></div>
     Intimação Celestial
     <div class="scroll" aria-hidden="true"></div>
@@ -327,100 +323,6 @@
   <div class="contador-container" id="container">
     <img id="convite-img" src="Aniversário Aghatta XV.png" alt="Calendário" />
     <div id="contador" class="contador" role="timer" aria-live="polite" aria-atomic="true"></div>
-    <div class="borboleta" style="--x: 100px; --y: -50px;">
-      <div class="asa-esquerda"></div>
-      <div class="asa-direita"></div>
-      <div class="corpo"></div>
-    </div>
-    <div class="borboleta" style="--x: -120px; --y: 60px; animation-delay: 2s;">
-      <div class="asa-esquerda"></div>
-      <div class="asa-direita"></div>
-      <div class="corpo"></div>
-     <!-- ... (restante do código permanece igual) ... -->
-
-<div class="contador-container" id="container">
-  <img id="convite-img" src="Aniversário Aghatta XV.png" alt="Calendário" />
-  <div id="contador" class="contador" role="timer" aria-live="polite" aria-atomic="true"></div>
-
-  <div class="borboleta" style="--x: 100px; --y: -50px;">
-    <div class="asa-esquerda"></div>
-    <div class="asa-direita"></div>
-    <div class="corpo"></div>
-  </div>
-  <div class="borboleta" style="--x: -120px; --y: 60px; animation-delay: 2s;">
-    <div class="asa-esquerda"></div>
-    <div class="asa-direita"></div>
-    <div class="corpo"></div>
-  </div>
-  <div class="borboleta" style="--x: 80px; --y: 90px; animation-delay: 1.5s;">
-    <div class="asa-esquerda"></div>
-    <div class="asa-direita"></div>
-    <div class="corpo"></div>
-  </div>
-  <div class="borboleta" style="--x: -90px; --y: -80px; animation-delay: 3s;">
-    <div class="asa-esquerda"></div>
-    <div class="asa-direita"></div>
-    <div class="corpo"></div>
-  </div>
-  <div class="borboleta" style="--x: 130px; --y: 30px; animation-delay: 0.8s;">
-    <div class="asa-esquerda"></div>
-    <div class="asa-direita"></div>
-    <div class="corpo"></div>
-  </div>
-  <div class="borboleta" style="--x: -140px; --y: 110px; animation-delay: 2.5s;">
-    <div class="asa-esquerda"></div>
-    <div class="asa-direita"></div>
-    <div class="corpo"></div>
-  </div>
-  <div class="borboleta" style="--x: 60px; --y: -100px; animation-delay: 1.2s;">
-    <div class="asa-esquerda"></div>
-    <div class="asa-direita"></div>
-    <div class="corpo"></div>
-  </div>
-  <div class="borboleta" style="--x: -100px; --y: 20px; animation-delay: 3.5s;">
-    <div class="asa-esquerda"></div>
-    <div class="asa-direita"></div>
-    <div class="corpo"></div>
-  </div>
-  <div class="borboleta" style="--x: 110px; --y: 70px; animation-delay: 0.4s;">
-    <div class="asa-esquerda"></div>
-    <div class="asa-direita"></div>
-    <div class="corpo"></div>
-  </div>
-  <div class="borboleta" style="--x: -70px; --y: -90px; animation-delay: 2.2s;">
-    <div class="asa-esquerda"></div>
-    <div class="asa-direita"></div>
-    <div class="corpo"></div>
-  </div>
-  <div class="borboleta" style="--x: 90px; --y: -30px; animation-delay: 1.8s;">
-    <div class="asa-esquerda"></div>
-    <div class="asa-direita"></div>
-    <div class="corpo"></div>
-  </div>
-  <div class="borboleta" style="--x: -130px; --y: 80px; animation-delay: 0.6s;">
-    <div class="asa-esquerda"></div>
-    <div class="asa-direita"></div>
-    <div class="corpo"></div>
-  </div>
-  <div class="borboleta" style="--x: 140px; --y: -70px; animation-delay: 3.8s;">
-    <div class="asa-esquerda"></div>
-    <div class="asa-direita"></div>
-    <div class="corpo"></div>
-  </div>
-  <div class="borboleta" style="--x: -60px; --y: 100px; animation-delay: 1.1s;">
-    <div class="asa-esquerda"></div>
-    <div class="asa-direita"></div>
-    <div class="corpo"></div>
-  </div>
-  <div class="borboleta" style="--x: 120px; --y: 40px; animation-delay: 2.9s;">
-    <div class="asa-esquerda"></div>
-    <div class="asa-direita"></div>
-    <div class="corpo"></div>
-  </div>
-
-</div>
-
-    </div>
   </div>
 
   <div class="frase-intro">
@@ -436,74 +338,104 @@
   <div class="links-extra">
     <p>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5z"/></svg>
-      <a href="https://goo.gl/maps/12345" target="_blank" rel="noopener noreferrer">Local do Evento</a>
+      <a href="https://goo.gl/maps/SeuLinkAqui" target="_blank" rel="noopener noreferrer" aria-label="Abrir localização no Google Maps">
+        Chácara das Paineiras - Clique para ver no mapa
+      </a>
     </p>
     <p>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H9l-4 4v-4H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10z"/></svg>
-      <a href="https://wa.me/5551999999999" target="_blank" rel="noopener noreferrer">Confirme presença</a>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm-1.5 14.5l-4-4 1.41-1.41L10.5 13.67l5.59-5.59L17.5 9z"/></svg>
+      <a href="https://forms.gle/seulinkparaconfirmar" target="_blank" rel="noopener noreferrer" aria-label="Confirmar presença no formulário">
+        Confirmar presença aqui
+      </a>
     </p>
   </div>
 
+  <div class="botoes"></div>
+
   <div class="frase-presenca">
-    Conto com a tua presença!
+    Essa festa não seria a mesma sem a sua presença.
   </div>
 </div>
 
 <script>
-  const telaInicial = document.querySelector('.tela-inicial');
-  const body = document.body;
-  const audio2 = document.getElementById('audio2');
-  const contador = document.getElementById('contador');
-
-  const dataEvento = new Date('2025-12-25T00:00:00'); // Ajuste a data aqui
-
-  function ativarExperiencia() {
-    telaInicial.classList.add('oculta');
-    body.classList.add('aberto');
-    audio2.play();
-    atualizarContador();
-    setInterval(atualizarContador, 1000);
-  }
-
-  telaInicial.addEventListener('keydown', (e) => {
-    if(e.key === 'Enter' || e.key === ' ') ativarExperiencia();
-  });
+  const contadorEl = document.getElementById('contador');
+  const dataEvento = new Date('2025-09-12T19:00:00');
 
   function atualizarContador() {
     const agora = new Date();
-    let diff = dataEvento - agora;
-
+    const diff = dataEvento - agora;
     if(diff <= 0) {
-      contador.textContent = 'O evento já começou!';
+      contadorEl.textContent = 'O evento já começou!';
+      clearInterval(intervalo);
       return;
     }
-
-    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-    diff -= dias * (1000 * 60 * 60 * 24);
-    const horas = Math.floor(diff / (1000 * 60 * 60));
-    diff -= horas * (1000 * 60 * 60);
-    const minutos = Math.floor(diff / (1000 * 60));
-    diff -= minutos * (1000 * 60);
-    const segundos = Math.floor(diff / 1000);
-
-    contador.textContent = `${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos para o evento!`;
+    const dias = Math.floor(diff / (1000*60*60*24));
+    const horas = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+    const minutos = Math.floor((diff % (1000*60*60)) / (1000*60));
+    const segundos = Math.floor((diff % (1000*60)) / 1000);
+    contadorEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s para o início`;
   }
 
-  // Slideshow simples
-  const imagens = ['imagem1.jpeg', 'imagem2.jpeg', 'imagem3.jpeg', 'imagem4.jpeg'];
-  let indice = 0;
+  let intervalo = setInterval(atualizarContador, 1000);
+  atualizarContador();
+
   const slideImg = document.getElementById('slide-img');
+  let slideIndex = 1;
+  const totalSlides = 15;
 
-  function trocarImagem() {
-    indice = (indice + 1) % imagens.length;
-    slideImg.style.opacity = 0;
+  function trocarSlide() {
+    slideIndex++;
+    if(slideIndex > totalSlides) slideIndex = 1;
+    slideImg.style.opacity = '0';
     setTimeout(() => {
-      slideImg.src = imagens[indice];
-      slideImg.style.opacity = 1;
-    }, 600);
+      slideImg.src = `imagem${slideIndex}.jpeg`;
+      slideImg.style.opacity = '1';
+    }, 800);
   }
-  setInterval(trocarImagem, 6000);
+  setInterval(trocarSlide, 3500);
 
+  const audio2 = document.getElementById('audio2');
+  const telaInicial = document.querySelector('.tela-inicial');
+  const body = document.body;
+
+  function ativarExperiencia() {
+    audio2.play();
+    telaInicial.classList.add('oculta');
+    body.classList.add('aberto');
+  }
+
+  telaInicial.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      ativarExperiencia();
+    }
+  });
+
+  const total = 15;
+  const container = document.getElementById('container');
+
+  for (let i = 0; i < total; i++) {
+    const b = document.createElement('div');
+    b.className = 'borboleta';
+    b.style.setProperty('--x', `${(Math.random() - 0.5) * 600}px`);
+    b.style.setProperty('--y', `${-Math.random() * 800 - 200}px`);
+    b.style.animationDuration = `${10 + Math.random() * 5}s`;
+    b.style.animationDelay = `${Math.random() * 10}s`;
+
+    const asaE = document.createElement('div');
+    asaE.className = 'asa-esquerda';
+
+    const asaD = document.createElement('div');
+    asaD.className = 'asa-direita';
+
+    const corpo = document.createElement('div');
+    corpo.className = 'corpo';
+
+    b.appendChild(asaE);
+    b.appendChild(asaD);
+    b.appendChild(corpo);
+    container.appendChild(b);
+  }
 </script>
 
 </body>

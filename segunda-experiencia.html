@@ -1,481 +1,368 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Intimação Celestial - Aghatta XV</title>
-  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Great+Vibes&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Georgia', serif;
-      background-color: #002366;
-      overflow: hidden;
-      transition: background 1.2s ease-in-out;
-      color: white;
-    }
-    body.aberto {
-      overflow-y: auto;
-      background-color: #000;
-    }
-    .tela-envelope {
-      width: 100vw;
-      height: 100vh;
-      background: url("Aghatta.png") center center / cover no-repeat;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: fixed;
-      inset: 0;
-      z-index: 10;
-      transition: opacity 1.2s ease, visibility 1.2s ease;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Intimação Celestial - Aghatta XV</title>
+<link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Great+Vibes&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Georgia', serif;
+    background-color: #002366;
+    overflow: hidden;
+    transition: background 1.2s ease-in-out;
+    color: white;
+  }
+  body.aberto {
+    overflow-y: auto;
+    background-color: #000;
+  }
+  .tela-inicial {
+    width: 100vw;
+    height: 100vh;
+    background: url("Aghatta.png") center center / cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    transition: opacity 1.2s ease, visibility 1.2s ease;
+    opacity: 1;
+    visibility: visible;
+    cursor: pointer;
+  }
+  .tela-inicial.oculta {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    cursor: default;
+  }
+  .texto-inicial {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    margin: 1.5em 0;
+    z-index: 2;
+    position: relative;
+    font-family: 'Parisienne', cursive;
+    font-size: 3em;
+    color: gold;
+    text-shadow: 0 0 10px rgba(255,215,0,0.7);
+  }
+  .texto-inicial .scroll {
+    width: 40px;
+    height: 40px;
+    background: url('https://img.icons8.com/emoji/48/scroll-emoji.png') no-repeat center;
+    background-size: contain;
+    animation: rolarPergaminho 4s ease-in-out infinite;
+    z-index: 2;
+    position: relative;
+  }
+  @keyframes rolarPergaminho {
+    0%, 100% { transform: scaleY(0.7); opacity: 0.8; }
+    50% { transform: scaleY(1); opacity: 1; }
+  }
+  .conteudo {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(40px);
+    transition: opacity 1.5s ease, transform 1.5s ease;
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    padding: 3em 1.5em;
+    background: linear-gradient(135deg, rgba(0,0,30,0.8), rgba(0,0,60,0.8));
+    overflow-y: auto;
+    box-sizing: border-box;
+    color: #f0f8ff;
+    border-radius: 12px;
+    margin: 0 auto;
+    max-width: 900px;
+    box-shadow: 0 0 40px rgba(72, 133, 237, 0.6);
+  }
+  body.aberto .conteudo {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .linha-coroa {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    margin-bottom: 1em;
+  }
+  .linha-coroa .subtitulo {
+    font-family: 'Parisienne', cursive;
+    font-size: 2.4em;
+    color: #8ecaff;
+    text-shadow: 0 0 8px #5ab3ff;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  .versiculo {
+    font-style: italic;
+    font-size: 1.1em;
+    margin: 1.5em auto;
+    max-width: 700px;
+    line-height: 1.4em;
+  }
+  .contador {
+    font-size: 1.2em;
+    background: rgba(0,0,0,0.8);
+    padding: 0.8em 1.2em;
+    border-radius: 20px;
+    margin: 1em auto;
+    width: 90vw;
+    max-width: 400px;
+  }
+  .convite {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2em;
+    margin: 2em auto;
+    max-width: 600px;
+  }
+  .info {
+    font-size: 1.1em;
+    line-height: 1.6em;
+    max-width: 400px;
+    margin: 0 auto 2em;
+  }
+  .botoes {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    margin: 2em 0;
+  }
+  .botoes a {
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    transition: transform 0.3s;
+  }
+  .botoes img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .botoes a:hover {
+    transform: scale(1.2);
+  }
+  .galeria {
+    position: relative;
+    width: 90vw;
+    max-width: 400px;
+    margin: 2em auto 3em;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 0 12px rgba(255,255,255,0.4);
+  }
+  .balao-topo {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(30, 90, 200, 0.7);
+    color: white;
+    font-family: 'Parisienne', cursive;
+    font-size: 1.6em;
+    padding: 0.4em 1em;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(30,90,200,0.8);
+    z-index: 10;
+    user-select: none;
+    pointer-events: none;
+    backdrop-filter: blur(5px);
+    text-align: center;
+    max-width: 90%;
+    white-space: nowrap;
+  }
+  .galeria img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    user-select: none;
+    transition: opacity 1s ease-in-out;
+    opacity: 1;
+    position: relative;
+    z-index: 1;
+  }
+  .borboleta {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Butterfly_icon.svg/120px-Butterfly_icon.svg.png') no-repeat center;
+    background-size: contain;
+    pointer-events: none;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    will-change: transform, opacity;
+    z-index: 20;
+    opacity: 1;
+  }
+  @keyframes borboletaVoando {
+    0% {
       opacity: 1;
-      visibility: visible;
-      cursor: pointer;
+      transform: translate(0, 0) scale(1) rotate(0deg);
     }
-    .tela-envelope::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-color: rgba(0,0,0,0.5);
-      backdrop-filter: blur(2px);
-      z-index: -1;
-    }
-    .tela-envelope.oculta {
+    100% {
       opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      cursor: default;
+      transform: translate(var(--x), var(--y)) scale(0.3) rotate(720deg);
     }
+  }
+  @media (max-width: 600px) {
     .texto-inicial {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1em;
-      margin: 1.5em 0;
-      z-index: 2;
-      position: relative;
-    }
-    .texto-inicial span {
-      font-family: 'Parisienne', cursive;
-      font-size: 2.5em;
-      color: gold;
-      text-shadow: 0 0 10px rgba(255,215,0,0.7);
+      font-size: 2em;
     }
     .texto-inicial .scroll {
-      width: 40px;
-      height: 40px;
-      background: url('https://img.icons8.com/emoji/48/scroll-emoji.png') no-repeat center;
-      background-size: contain;
-      animation: rolarPergaminho 4s ease-in-out infinite;
-      z-index: 2;
-      position: relative;
-    }
-    @keyframes rolarPergaminho {
-      0%, 100% { transform: scaleY(0.7); opacity: 0.8; }
-      50% { transform: scaleY(1); opacity: 1; }
-    }
-    .envelope-container {
-      position: relative;
-      width: 300px;
-      height: 220px;
-      margin-top: 20px;
-      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.7));
-      z-index: 2;
-      perspective: 1000px;
-    }
-    .coroa-topo {
-      position: absolute;
-      top: -80px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 140px;
-      z-index: 3;
-      user-select: none;
-      filter: drop-shadow(0 0 15px gold);
-      transition: transform 0.5s ease;
-    }
-    .envelope {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transform-style: preserve-3d;
-    }
-    .flap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 110px;
-      transform-origin: top center;
-      transition: transform 1.4s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 3;
-      cursor: pointer;
-      user-select: none;
-      will-change: transform;
-      backface-visibility: hidden;
-    }
-    .flap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 10px 10px 0 0;
-      pointer-events: none;
-      user-select: none;
-      backface-visibility: hidden;
-    }
-    .flap.aberto {
-      transform: rotateX(160deg);
-      pointer-events: none;
-    }
-    .envelope-base {
-      width: 100%;
-      height: 100%;
-      border-radius: 0 0 10px 10px;
-      overflow: hidden;
-      user-select: none;
-      pointer-events: none;
-      backface-visibility: hidden;
-    }
-    .envelope-base img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 0 0 10px 10px;
-      user-select: none;
-    }
-    .galeria {
-      position: relative;
-      width: 90vw;
-      max-width: 400px;
-      margin: 2em auto 3em;
-      aspect-ratio: 3 / 4;
-      overflow: hidden;
-      border-radius: 20px;
-      box-shadow: 0 0 12px rgba(255,255,255,0.4);
-    }
-    .balao-topo {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(30, 90, 200, 0.7);
-      color: white;
-      font-family: 'Parisienne', cursive;
-      font-size: 1.6em;
-      padding: 0.4em 1em;
-      border-radius: 25px;
-      box-shadow: 0 0 10px rgba(30,90,200,0.8);
-      z-index: 10;
-      user-select: none;
-      pointer-events: none;
-      backdrop-filter: blur(5px);
-      text-align: center;
-      max-width: 90%;
-      white-space: nowrap;
-    }
-    .galeria img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 20px;
-      user-select: none;
-      transition: opacity 1s ease-in-out;
-      opacity: 1;
-      position: relative;
-      z-index: 1;
-    }
-    .conteudo {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(40px);
-      transition: opacity 1.5s ease, transform 1.5s ease;
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      padding: 3em 1.5em;
-      background: linear-gradient(135deg, rgba(0,0,30,0.8), rgba(0,0,60,0.8));
-      overflow-y: auto;
-      box-sizing: border-box;
-      color: #f0f8ff;
-      border-radius: 12px;
-      margin: 0 auto;
-      max-width: 900px;
-      box-shadow: 0 0 40px rgba(72, 133, 237, 0.6);
-    }
-    body.aberto .conteudo {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
-    }
-    .overlay {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-      color: white;
-      position: relative;
-    }
-    .linha-coroa {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1em;
-      margin-bottom: 1em;
-    }
-    .linha-coroa .subtitulo {
-      font-family: 'Parisienne', cursive;
-      font-size: 2.4em;
-      color: #8ecaff;
-      text-shadow: 0 0 8px #5ab3ff;
-      flex-shrink: 0;
-      line-height: 1;
-    }
-    .coroa-segunda {
-      width: 120px;
-      height: 120px;
-      flex-shrink: 0;
-      user-select: none;
-      filter: drop-shadow(0 0 12px #8ecaff);
-    }
-    .versiculo {
-      font-style: italic;
-      font-size: 1.1em;
-      margin: 1.5em auto;
-      max-width: 700px;
-      line-height: 1.4em;
-    }
-    .contador {
-      font-size: 1.2em;
-      background: rgba(0,0,0,0.8);
-      padding: 0.8em 1.2em;
-      border-radius: 20px;
-      margin: 1em auto;
-      width: 90vw;
-      max-width: 400px;
-    }
-    .convite {
-      font-family: 'Great Vibes', cursive;
-      font-size: 2em;
-      margin: 2em auto;
-      max-width: 600px;
-    }
-    .info {
-      font-size: 1.1em;
-      line-height: 1.6em;
-      max-width: 400px;
-      margin: 0 auto 2em;
-    }
-    .botoes {
-      display: flex;
-      justify-content: center;
-      gap: 2em;
-      margin: 2em 0;
+      width: 30px;
+      height: 30px;
     }
     .botoes a {
-      display: inline-block;
-      width: 48px;
-      height: 48px;
-      transition: transform 0.3s;
-    }
-    .botoes img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    .botoes a:hover {
-      transform: scale(1.2);
-    }
-    .borboleta {
-      position: absolute;
       width: 40px;
       height: 40px;
-      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Butterfly_icon.svg/120px-Butterfly_icon.svg.png') no-repeat center;
-      background-size: contain;
-      pointer-events: none;
-      animation-timing-function: ease-in-out;
-      animation-fill-mode: forwards;
-      will-change: transform, opacity;
-      z-index: 20;
-      opacity: 1;
     }
-    @keyframes borboletaVoando {
-      0% {
-        opacity: 1;
-        transform: translate(0, 0) scale(1) rotate(0deg);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(var(--x), var(--y)) scale(0.3) rotate(720deg);
-      }
+    .galeria {
+      max-width: 300px;
     }
-    @media (max-width: 600px) {
-      .coroa-topo {
-        width: 100px;
-        top: -60px;
-      }
-      .coroa-segunda {
-        width: 80px;
-        height: 80px;
-      }
-      .envelope-container {
-        width: 260px;
-        height: 190px;
-      }
-      .texto-inicial span {
-        font-size: 1.8em;
-      }
-      .balao-topo {
-        font-size: 1.3em;
-        padding: 0.3em 0.8em;
-      }
-      .borboleta {
-        width: 30px;
-        height: 30px;
-      }
+    .borboleta {
+      width: 30px;
+      height: 30px;
     }
-  </style>
+  }
+</style>
 </head>
 <body>
 
-<audio id="audio" src="sfx1.mp3" preload="auto"></audio>
+<audio id="audio" src="porta.mp3" preload="auto"></audio>
 
-<div class="tela-envelope" onclick="abrirEnvelope()" role="button" tabindex="0" aria-label="Abrir envelope">
+<div class="tela-inicial" onclick="ativarExperiencia()" role="button" tabindex="0" aria-label="Iniciar experiência">
   <div class="texto-inicial">
     <div class="scroll" aria-hidden="true"></div>
-    <span>Intimação Celestial</span>
+    Intimação Celestial
     <div class="scroll" aria-hidden="true"></div>
-  </div>
-  <div class="envelope-container" aria-hidden="true">
-    <img src="coroa.png" alt="Coroa" class="coroa-topo" />
-    <div class="envelope">
-      <div class="flap" id="flap" aria-hidden="true">
-        <img src="envelope-flap.png" alt="Flap do envelope" />
-      </div>
-      <div class="envelope-base" aria-hidden="true">
-        <img src="envelope-base.png" alt="Base do envelope" />
-      </div>
-    </div>
   </div>
 </div>
 
 <div class="conteudo" aria-live="polite">
-  <div class="overlay">
-    <div class="linha-coroa" role="banner">
-      <img src="coroa.png" alt="Coroa" class="coroa-segunda" />
-      <div class="subtitulo">Aghatta XV</div>
-      <img src="coroa.png" alt="Coroa" class="coroa-segunda" />
-    </div>
+  <div class="linha-coroa" role="banner">
+    <div class="subtitulo">Aghatta XV</div>
+  </div>
 
-    <div class="versiculo">
-      "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou." — Isaías 41:20
-    </div>
+  <div class="versiculo">
+    "Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou." — Isaías 41:20
+  </div>
 
-    <div>
-      <img id="convite-img" src="Aniversário Aghatta XV.png" alt="Calendário" style="width:90vw; max-width:400px; border-radius: 15px; position: relative; z-index: 1;">
-      <div id="contador" class="contador"></div>
-    </div>
+  <div>
+    <img id="convite-img" src="Aniversário Aghatta XV.png" alt="Calendário" style="width:90vw; max-width:400px; border-radius: 15px; position: relative; z-index: 1;" />
+    <div id="contador" class="contador"></div>
+  </div>
 
-    <div class="galeria">
-      <div class="balao-topo" aria-label="Um pouco da minha história">Um pouco da minha história</div>
-      <img id="slide-img" src="imagem1.jpeg" alt="Slideshow" />
-    </div>
+  <div class="galeria">
+    <div class="balao-topo" aria-label="Um pouco da minha história">Um pouco da minha história</div>
+    <img id="slide-img" src="imagem1.jpeg" alt="Slideshow" />
+  </div>
 
-    <div class="info">
-      <p><strong>🗓 Data:</strong> 12 de Setembro de 2025<br>
-         <strong>⏰ Hora:</strong> 19h<br>
-         <strong>📍 Local:</strong> Chácara das Paineiras</p>
-    </div>
+  <div class="info">
+    <p><strong>🗓 Data:</strong> 12 de Setembro de 2025<br />
+    <strong>⏰ Hora:</strong> 19h<br />
+    <strong>📍 Local:</strong> Chácara das Paineiras</p>
+  </div>
 
-    <div class="botoes">
-      <a href="https://wa.me/5585981737686" aria-label="Whatsapp"><img src="whatsapp.png" alt="WhatsApp"/></a>
-      <a href="https://www.instagram.com/aghattaxv/" aria-label="Instagram"><img src="instagram.png" alt="Instagram"/></a>
-    </div>
+  <div class="botoes">
+    <a href="https://wa.me/5585981737686" aria-label="Whatsapp"><img src="whatsapp.png" alt="WhatsApp" /></a>
+    <a href="https://www.instagram.com/aghattaxv/" aria-label="Instagram"><img src="instagram.png" alt="Instagram" /></a>
+  </div>
 
-    <div class="convite">
-      <p>Conto com a sua presença para celebrar comigo essa nova etapa da vida!</p>
-    </div>
+  <div class="convite">
+    <p>Conto com a sua presença para celebrar comigo essa nova etapa da vida!</p>
   </div>
 </div>
 
 <script>
   const contadorEl = document.getElementById('contador');
   const dataEvento = new Date('2025-09-12T19:00:00');
+
   function atualizarContador() {
     const agora = new Date();
     const diff = dataEvento - agora;
     if(diff <= 0) {
       contadorEl.textContent = 'O evento já começou!';
+      clearInterval(intervalo);
       return;
     }
-    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutos = Math.floor((diff / (1000 * 60)) % 60);
-    const segundos = Math.floor((diff / 1000) % 60);
-    contadorEl.textContent = `Faltam ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
+    const dias = Math.floor(diff / (1000*60*60*24));
+    const horas = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+    const minutos = Math.floor((diff % (1000*60*60)) / (1000*60));
+    const segundos = Math.floor((diff % (1000*60)) / 1000);
+    contadorEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s para o início`;
   }
-  setInterval(atualizarContador, 1000);
+
+  let intervalo = setInterval(atualizarContador, 1000);
   atualizarContador();
 
-  // Slideshow
-  const imagens = [
-    {src:'imagem1.jpeg', alt:'Imagem da infância de Aghatta'},
-    {src:'imagem2.jpeg', alt:'Imagem da festa anterior'},
-    {src:'imagem3.jpeg', alt:'Imagem com amigos e família'},
-    {src:'imagem4.jpeg', alt:'Imagem do convite especial'},
-  ];
-  let slideIndex = 0;
   const slideImg = document.getElementById('slide-img');
-  setInterval(() => {
-    slideIndex = (slideIndex + 1) % imagens.length;
-    slideImg.src = imagens[slideIndex].src;
-    slideImg.alt = imagens[slideIndex].alt;
-  }, 3500);
+  let slideIndex = 1;
+  const totalSlides = 15;
 
-  // Envelope abrir
-  const flap = document.getElementById('flap');
-  const telaEnvelope = document.querySelector('.tela-envelope');
-  const body = document.body;
-  const audio = document.getElementById('audio');
-
-  function criarBorboleta() {
-    const borboleta = document.createElement('div');
-    borboleta.className = 'borboleta';
-    borboleta.style.left = `${Math.random() * 100}vw`;
-    borboleta.style.top = `${Math.random() * 100}vh`;
-    const x = (Math.random() - 0.5) * 200 + 'px';
-    const y = (Math.random() - 0.5) * 200 + 'px';
-    borboleta.style.setProperty('--x', x);
-    borboleta.style.setProperty('--y', y);
-    borboleta.style.animation = 'borboletaVoando 6s forwards ease-in-out';
-    document.body.appendChild(borboleta);
-    setTimeout(() => borboleta.remove(), 6000);
-  }
-
-  function abrirEnvelope() {
-    flap.classList.add('aberto');
-    audio.currentTime = 0;
-    audio.play();
-    for(let i=0; i<6; i++) {
-      setTimeout(criarBorboleta, i * 1000);
-    }
+  function trocarSlide() {
+    slideIndex++;
+    if(slideIndex > totalSlides) slideIndex = 1;
+    slideImg.style.opacity = '0';
     setTimeout(() => {
-      telaEnvelope.classList.add('oculta');
-      body.classList.add('aberto');
-    }, 1400);
+      slideImg.src = `imagem${slideIndex}.jpeg`;
+      slideImg.style.opacity = '1';
+    }, 800);
   }
+  setInterval(trocarSlide, 3500);
 
-  // Acessibilidade: ativar com Enter ou Espaço
-  telaEnvelope.addEventListener('keydown', e => {
+  const audio = document.getElementById('audio');
+  const telaInicial = document.querySelector('.tela-inicial');
+  const body = document.body;
+
+  function ativarExperiencia() {
+    audio.play();
+    telaInicial.classList.add('oculta');
+    body.classList.add('aberto');
+    criarBorboletas();
+  }
+  telaInicial.addEventListener('keydown', e => {
     if(e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      abrirEnvelope();
+      ativarExperiencia();
     }
   });
+
+  function criarBorboletas() {
+    const count = 25;
+    for(let i=0; i<count; i++) {
+      const borboleta = document.createElement('div');
+      borboleta.className = 'borboleta';
+      const x = (Math.random() - 0.5) * 300 + 'px';
+      const y = (Math.random() - 0.5) * 300 + 'px';
+      borboleta.style.setProperty('--x', x);
+      borboleta.style.setProperty('--y', y);
+      borboleta.style.top = (window.innerHeight / 2 + (Math.random() * 100 - 50)) + 'px';
+      borboleta.style.left = (window.innerWidth / 2 + (Math.random() * 100 - 50)) + 'px';
+      borboleta.style.animation = `borboletaVoando 3500ms ease-in-out forwards`;
+      borboleta.style.animationDelay = `${i * 150}ms`;
+      document.body.appendChild(borboleta);
+      setTimeout(() => {
+        borboleta.remove();
+      }, 4000);
+    }
+  }
 </script>
 
 </body>
 </html>
+
 
 
 

@@ -67,28 +67,6 @@
     50% { transform: scaleY(1); opacity: 1; }
   }
 
-  /* Novo topo fixo */
-  .topo-fixo {
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(30, 90, 200, 0.8);
-    color: white;
-    font-family: 'Parisienne', cursive;
-    font-size: 1.8em;
-    padding: 0.6em 1.2em;
-    border-radius: 0 0 20px 20px;
-    box-shadow: 0 0 12px rgba(30,90,200,0.9);
-    z-index: 20;
-    user-select: none;
-    pointer-events: none;
-    backdrop-filter: blur(6px);
-    text-align: center;
-    white-space: nowrap;
-    max-width: 100vw;
-  }
-
   .conteudo {
     opacity: 0;
     pointer-events: none;
@@ -97,7 +75,7 @@
     position: relative;
     z-index: 1;
     min-height: 100vh;
-    padding: 5em 1.5em 3em; /* espaço para o topo fixo */
+    padding: 5em 1.5em 3em;
     background: linear-gradient(135deg, rgba(0,0,30,0.8), rgba(0,0,60,0.8));
     overflow-y: auto;
     box-sizing: border-box;
@@ -128,8 +106,8 @@
     line-height: 1;
   }
   .linha-coroa img {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     filter: drop-shadow(0 0 8px gold);
   }
   .versiculo {
@@ -139,8 +117,6 @@
     max-width: 700px;
     line-height: 1.4em;
   }
-
-  /* Contador com balão centralizado */
   .contador-container {
     position: relative;
     width: 90vw;
@@ -149,7 +125,7 @@
   }
   .contador-container .contador {
     position: absolute;
-    bottom: -45px; /* abaixo da imagem */
+    bottom: -45px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 1.2em;
@@ -161,8 +137,17 @@
     text-align: center;
     white-space: nowrap;
   }
-
-  /* Galeria com balão top centralizado */
+  .frase-intro {
+    font-family: 'Parisienne', cursive;
+    font-size: 1.3em;
+    text-align: center;
+    color: #e0e0ff;
+    margin: -2em auto 3em;
+    max-width: 700px;
+    padding: 0 1em;
+    line-height: 1.5em;
+    text-shadow: 0 0 6px #002366;
+  }
   .galeria {
     position: relative;
     width: 90vw;
@@ -204,8 +189,6 @@
     position: relative;
     z-index: 1;
   }
-
-  /* Ícones e links com parágrafos */
   .info, .links-extra {
     font-size: 1.1em;
     line-height: 1.6em;
@@ -233,14 +216,12 @@
   .links-extra a:hover {
     text-decoration: underline;
   }
-
   .botoes {
     display: flex;
     justify-content: center;
     gap: 2em;
     margin: 2em 0;
   }
-
   .frase-presenca {
     font-family: 'Great Vibes', cursive;
     font-size: 1.6em;
@@ -250,7 +231,6 @@
     color: #aad4ff;
     text-shadow: 0 0 8px #4b9cff;
   }
-
   @media (max-width: 600px) {
     .texto-inicial {
       font-size: 2em;
@@ -267,8 +247,8 @@
       max-width: 300px;
     }
     .linha-coroa img {
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
     }
     .balao-topo {
       font-size: 1.2em;
@@ -287,8 +267,6 @@
 </style>
 </head>
 <body>
-
-<div class="topo-fixo" aria-hidden="true">O aniversário é meu...<br>Mas a festa é Dele!!!</div>
 
 <audio id="audio2" src="audio.mp3" preload="auto"></audio>
 
@@ -316,6 +294,11 @@
     <div id="contador" class="contador" role="timer" aria-live="polite" aria-atomic="true"></div>
   </div>
 
+  <div class="frase-intro">
+    Contando os dias para honrar 15 anos da promessa que virou pessoa...<br>
+    Deus escreveu, o tempo confirmou e agora, juntos, vamos celebrar...
+  </div>
+
   <div class="galeria">
     <div class="balao-topo" aria-label="Um pouco da minha história">Um pouco da minha história</div>
     <img id="slide-img" src="imagem1.jpeg" alt="Slideshow" />
@@ -323,14 +306,12 @@
 
   <div class="links-extra">
     <p>
-      <!-- Ícone de localização (map pin) SVG -->
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5z"/></svg>
       <a href="https://goo.gl/maps/SeuLinkAqui" target="_blank" rel="noopener noreferrer" aria-label="Abrir localização no Google Maps">
         Chácara das Paineiras - Clique para ver no mapa
       </a>
     </p>
     <p>
-      <!-- Ícone de confirmação SVG (check circle) -->
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm-1.5 14.5l-4-4 1.41-1.41L10.5 13.67l5.59-5.59L17.5 9z"/></svg>
       <a href="https://forms.gle/seulinkparaconfirmar" target="_blank" rel="noopener noreferrer" aria-label="Confirmar presença no formulário">
         Confirmar presença aqui

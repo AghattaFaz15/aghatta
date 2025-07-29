@@ -183,6 +183,8 @@
       user-select: none;
       transition: opacity 1s ease-in-out;
       opacity: 1;
+      position: relative;
+      z-index: 1;
     }
     .conteudo {
       opacity: 0;
@@ -212,6 +214,7 @@
       margin: 0 auto;
       text-align: center;
       color: white;
+      position: relative;
     }
     .linha-coroa {
       display: flex;
@@ -283,6 +286,29 @@
     .botoes a:hover {
       transform: scale(1.2);
     }
+    .borboleta {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Butterfly_icon.svg/120px-Butterfly_icon.svg.png') no-repeat center;
+      background-size: contain;
+      pointer-events: none;
+      animation-timing-function: ease-in-out;
+      animation-fill-mode: forwards;
+      will-change: transform, opacity;
+      z-index: 20;
+      opacity: 1;
+    }
+    @keyframes borboletaVoando {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--x), var(--y)) scale(0.3) rotate(720deg);
+      }
+    }
     @media (max-width: 600px) {
       .coroa-topo {
         width: 100px;
@@ -302,6 +328,10 @@
       .balao-topo {
         font-size: 1.3em;
         padding: 0.3em 0.8em;
+      }
+      .borboleta {
+        width: 30px;
+        height: 30px;
       }
     }
   </style>
@@ -342,7 +372,7 @@
     </div>
 
     <div>
-      <img src="Aniversário Aghatta XV.png" alt="Calendário" style="width:90vw; max-width:400px; border-radius: 15px;">
+      <img id="convite-img" src="Aniversário Aghatta XV.png" alt="Calendário" style="width:90vw; max-width:400px; border-radius: 15px; position: relative; z-index: 1;">
       <div id="contador" class="contador"></div>
     </div>
 
@@ -375,47 +405,68 @@
     const agora = new Date();
     const diff = dataEvento - agora;
     if(diff <= 0) {
-      contadorEl.textContent = "O evento já começou!";
-      clearInterval(intervalo);
+      contadorEl.textContent = 'O evento já começou!';
       return;
     }
-    const dias = Math.floor(diff / (1000*60*60*24));
-    const horas = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-    const minutos = Math.floor((diff % (1000*60*60)) / (1000*60));
-    const segundos = Math.floor((diff % (1000*60)) / 1000);
-    contadorEl.textContent = `${dias} dias, ${horas}h ${minutos}m ${segundos}s`;
+    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutos = Math.floor((diff / (1000 * 60)) % 60);
+    const segundos = Math.floor((diff / 1000) % 60);
+    contadorEl.textContent = `Faltam ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
   }
-  const intervalo = setInterval(atualizarContador, 1000);
+  setInterval(atualizarContador, 1000);
   atualizarContador();
 
-  const imagens = ['imagem1.jpeg', 'imagem2.jpeg', 'imagem3.jpeg'];
-  let idx = 0;
+  // Slideshow
+  const imagens = [
+    {src:'imagem1.jpeg', alt:'Imagem da infância de Aghatta'},
+    {src:'imagem2.jpeg', alt:'Imagem da festa anterior'},
+    {src:'imagem3.jpeg', alt:'Imagem com amigos e família'},
+    {src:'imagem4.jpeg', alt:'Imagem do convite especial'},
+  ];
+  let slideIndex = 0;
   const slideImg = document.getElementById('slide-img');
-  function trocarSlide() {
-    idx = (idx + 1) % imagens.length;
-    slideImg.style.opacity = 0;
-    setTimeout(() => {
-      slideImg.src = imagens[idx];
-      slideImg.style.opacity = 1;
-    }, 600);
-  }
-  setInterval(trocarSlide, 3000);
+  setInterval(() => {
+    slideIndex = (slideIndex + 1) % imagens.length;
+    slideImg.src = imagens[slideIndex].src;
+    slideImg.alt = imagens[slideIndex].alt;
+  }, 3500);
 
+  // Envelope abrir
   const flap = document.getElementById('flap');
   const telaEnvelope = document.querySelector('.tela-envelope');
   const body = document.body;
+  const audio = document.getElementById('audio');
+
+  function criarBorboleta() {
+    const borboleta = document.createElement('div');
+    borboleta.className = 'borboleta';
+    borboleta.style.left = `${Math.random() * 100}vw`;
+    borboleta.style.top = `${Math.random() * 100}vh`;
+    const x = (Math.random() - 0.5) * 200 + 'px';
+    const y = (Math.random() - 0.5) * 200 + 'px';
+    borboleta.style.setProperty('--x', x);
+    borboleta.style.setProperty('--y', y);
+    borboleta.style.animation = 'borboletaVoando 6s forwards ease-in-out';
+    document.body.appendChild(borboleta);
+    setTimeout(() => borboleta.remove(), 6000);
+  }
+
   function abrirEnvelope() {
     flap.classList.add('aberto');
+    audio.currentTime = 0;
+    audio.play();
+    for(let i=0; i<6; i++) {
+      setTimeout(criarBorboleta, i * 1000);
+    }
     setTimeout(() => {
       telaEnvelope.classList.add('oculta');
       body.classList.add('aberto');
-      const audio = document.getElementById('audio');
-      if(audio) {
-        audio.play().catch(() => {});
-      }
     }, 1400);
   }
-  document.querySelector('.tela-envelope').addEventListener('keydown', e => {
+
+  // Acessibilidade: ativar com Enter ou Espaço
+  telaEnvelope.addEventListener('keydown', e => {
     if(e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       abrirEnvelope();
@@ -425,6 +476,7 @@
 
 </body>
 </html>
+
 
 
 

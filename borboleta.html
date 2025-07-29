@@ -1,5 +1,3 @@
-borboleta.html
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -36,106 +34,97 @@ borboleta.html
       position: absolute;
       width: 40px;
       height: 40px;
-      top: 54%;
-      left: 49%;
-      animation: voar 10s infinite ease-in-out;
-      transform-origin: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: voar linear infinite;
+      opacity: 0;
+      z-index: 10;
+      pointer-events: none;
     }
 
-    .asa {
+    .asa-esquerda, .asa-direita {
       position: absolute;
       width: 20px;
       height: 30px;
-      background: radial-gradient(circle, #5cf 0%, #23a 100%);
-      border-radius: 50% 50% 0 0;
-      opacity: 0.9;
-      animation: baterAsa 0.5s infinite alternate ease-in-out;
+      background: radial-gradient(circle at center, #6ec6ff, #004e92);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      transform-origin: center;
+      animation: baterAsas 0.8s ease-in-out infinite;
     }
 
-    .asa.esquerda {
+    .asa-esquerda {
       left: 0;
-      transform-origin: right center;
+      transform: rotate(20deg);
     }
 
-    .asa.direita {
+    .asa-direita {
       right: 0;
-      transform-origin: left center;
+      transform: rotate(-20deg);
     }
 
     .corpo {
       position: absolute;
       left: 50%;
-      top: 10%;
-      transform: translateX(-50%);
+      top: 5px;
       width: 6px;
       height: 30px;
       background: #333;
-      border-radius: 50%;
-      z-index: 1;
+      border-radius: 3px;
+      transform: translateX(-50%);
     }
 
-    @keyframes baterAsa {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(35deg);
-      }
+    @keyframes baterAsas {
+      0%, 100% { transform: rotate(20deg); }
+      50% { transform: rotate(60deg); }
     }
 
     @keyframes voar {
       0% {
-        transform: translate(0, 0) scale(1) rotate(0deg);
+        transform: translate(-50%, -50%) translate(0, 0) scale(1) rotate(0deg);
         opacity: 0;
       }
       10% {
         opacity: 1;
       }
       100% {
-        transform: translate(var(--x), var(--y)) scale(1.4) rotate(360deg);
+        transform: translate(-50%, -50%) translate(var(--x), var(--y)) scale(1.3) rotate(360deg);
         opacity: 0;
       }
     }
-
-    /* Variações individuais */
-    .b1 { animation-delay: 0s; --x: -120px; --y: -500px; }
-    .b2 { animation-delay: 1.5s; --x: 100px; --y: -550px; }
-    .b3 { animation-delay: 3s; --x: -60px; --y: -520px; }
-    .b4 { animation-delay: 2.2s; --x: 80px; --y: -600px; }
-    .b5 { animation-delay: 0.8s; --x: -90px; --y: -580px; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Sua imagem de fundo -->
-    <img src="Aniversário Aghatta XV.png" alt="Calendário Aghatta" class="background">
-
-    <!-- Borboletas CSS -->
-    <div class="borboleta b1">
-      <div class="asa esquerda"></div>
-      <div class="asa direita"></div>
-      <div class="corpo"></div>
-    </div>
-    <div class="borboleta b2">
-      <div class="asa esquerda"></div>
-      <div class="asa direita"></div>
-      <div class="corpo"></div>
-    </div>
-    <div class="borboleta b3">
-      <div class="asa esquerda"></div>
-      <div class="asa direita"></div>
-      <div class="corpo"></div>
-    </div>
-    <div class="borboleta b4">
-      <div class="asa esquerda"></div>
-      <div class="asa direita"></div>
-      <div class="corpo"></div>
-    </div>
-    <div class="borboleta b5">
-      <div class="asa esquerda"></div>
-      <div class="asa direita"></div>
-      <div class="corpo"></div>
-    </div>
+  <div class="container" id="container">
+    <img src="Aniversário Aghatta XV.png" alt="Convite" class="background">
   </div>
+
+  <script>
+    const total = 15;
+    const container = document.getElementById('container');
+
+    for (let i = 0; i < total; i++) {
+      const b = document.createElement('div');
+      b.className = 'borboleta';
+      b.style.setProperty('--x', `${(Math.random() - 0.5) * 600}px`);
+      b.style.setProperty('--y', `${-Math.random() * 800 - 200}px`);
+      b.style.animationDuration = `${10 + Math.random() * 5}s`;
+      b.style.animationDelay = `${Math.random() * 10}s`;
+
+      const asaE = document.createElement('div');
+      asaE.className = 'asa-esquerda';
+
+      const asaD = document.createElement('div');
+      asaD.className = 'asa-direita';
+
+      const corpo = document.createElement('div');
+      corpo.className = 'corpo';
+
+      b.appendChild(asaE);
+      b.appendChild(asaD);
+      b.appendChild(corpo);
+      container.appendChild(b);
+    }
+  </script>
 </body>
 </html>

@@ -1,8 +1,10 @@
+borboleta.html
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Borboletas da Coroa - 15 Anos</title>
+  <meta charset="UTF-8">
+  <title>Borboletas da Coroa</title>
   <style>
     * {
       margin: 0;
@@ -34,12 +36,10 @@
       position: absolute;
       width: 40px;
       height: 40px;
-      /* Centraliza a borboleta perto do centro da imagem */
       top: 54%;
       left: 49%;
-      animation: voar 12s infinite ease-in-out;
+      animation: voar 10s infinite ease-in-out;
       transform-origin: center;
-      pointer-events: none; /* Pra não atrapalhar clique se tiver */
     }
 
     .asa {
@@ -91,40 +91,26 @@
       10% {
         opacity: 1;
       }
-      90% {
-        opacity: 1;
-      }
       100% {
         transform: translate(var(--x), var(--y)) scale(1.4) rotate(360deg);
         opacity: 0;
       }
     }
 
-    /* Direções e delays para 15 borboletas */
-    .b1  { animation-delay: 0s;    --x: -120px; --y: -500px; }
-    .b2  { animation-delay: 1s;    --x: 100px;  --y: -550px; }
-    .b3  { animation-delay: 2s;    --x: -60px;  --y: -520px; }
-    .b4  { animation-delay: 3s;    --x: 80px;   --y: -600px; }
-    .b5  { animation-delay: 4s;    --x: -90px;  --y: -580px; }
-    .b6  { animation-delay: 1.5s;  --x: 110px;  --y: -480px; }
-    .b7  { animation-delay: 2.5s;  --x: -100px; --y: -530px; }
-    .b8  { animation-delay: 3.5s;  --x: 70px;   --y: -560px; }
-    .b9  { animation-delay: 4.5s;  --x: -80px;  --y: -510px; }
-    .b10 { animation-delay: 5.5s;  --x: 90px;   --y: -590px; }
-    .b11 { animation-delay: 6.5s;  --x: -130px; --y: -540px; }
-    .b12 { animation-delay: 7.5s;  --x: 120px;  --y: -520px; }
-    .b13 { animation-delay: 8.5s;  --x: -110px; --y: -570px; }
-    .b14 { animation-delay: 9.5s;  --x: 60px;   --y: -550px; }
-    .b15 { animation-delay: 10.5s; --x: -70px;  --y: -530px; }
-
+    /* Variações individuais */
+    .b1 { animation-delay: 0s; --x: -120px; --y: -500px; }
+    .b2 { animation-delay: 1.5s; --x: 100px; --y: -550px; }
+    .b3 { animation-delay: 3s; --x: -60px; --y: -520px; }
+    .b4 { animation-delay: 2.2s; --x: 80px; --y: -600px; }
+    .b5 { animation-delay: 0.8s; --x: -90px; --y: -580px; }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Imagem de fundo -->
-    <img src="Aniversário Aghatta XV.png" alt="Calendário Aghatta" class="background" />
+    <!-- Sua imagem de fundo -->
+    <img src="Aniversário Aghatta XV.png" alt="Calendário Aghatta" class="background">
 
-    <!-- 15 Borboletas -->
+    <!-- Borboletas CSS -->
     <div class="borboleta b1">
       <div class="asa esquerda"></div>
       <div class="asa direita"></div>
@@ -150,57 +136,6 @@
       <div class="asa direita"></div>
       <div class="corpo"></div>
     </div>
-    <div class="borboleta b6">
-      <div class="asa esquerda"></div>
-      <div class="asa direita"></div>
-      <div class="corpo"></div>
-    </div>
-    <div class="borboleta b7">
-      <div class="asa esquerda"></div>
-      <div class="asa direita"></div>
-      <div class="corpo"></div>
-    </div>
-    <div class="borboleta b8">
-      <div class="asa esquerda"></div>
-      <div class="asa direita"></div>
-      <div class="corpo"></div>
-    </div>
-    <div class="borboleta b9">
-      <div class="asa esquerda"></div>
-      <div class="asa direita"></div>
-      <div class="corpo"></div>
-    </div>
-    <div class="borboleta b10">
-      <div class="asa esquerda"></div>
-      <div class="asa direita"></div>
-      <div class="corpo"></div>
-    </div>
-    <div class="borboleta b11">
-      <div class="asa esquerda"></div>
-      <div class="asa direita"></div>
-      <div class="corpo"></div>
-    </div>
-    <div class="borboleta b12">
-      <div class="asa esquerda"></div>
-      <div class="asa direita"></div>
-      <div class="corpo"></div>
-    </div>
-    <div class="borboleta b13">
-      <div class="asa esquerda"></div>
-      <div class="asa direita"></div>
-      <div class="corpo"></div>
-    </div>
-    <div class="borboleta b14">
-      <div class="asa esquerda"></div>
-      <div class="asa direita"></div>
-      <div class="corpo"></div>
-    </div>
-    <div class="borboleta b15">
-      <div class="asa esquerda"></div>
-      <div class="asa direita"></div>
-      <div class="corpo"></div>
-    </div>
-
   </div>
 </body>
 </html>

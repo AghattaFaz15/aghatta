@@ -58,9 +58,9 @@
   <audio id="toctoc" src="toctoc.mp3" preload="auto" loop></audio>
   <audio id="porta" src="porta.mp3" preload="auto"></audio>
 
-  <div id="inicio" class="tela" onclick="mostrarVideo()">
+  <div id="inicio" class="tela">
     <img src="imagem-capa.jpg" alt="Imagem de capa">
-    <div class="mensagem">
+    <div class="mensagem" id="mensagemTexto">
       O Céu bate à porta.<br>
       Toque para abrir...
     </div>
@@ -73,39 +73,40 @@
   </div>
 
   <script>
-    const video = document.getElementById("video")
-    const toctoc = document.getElementById("toctoc")
-    const porta = document.getElementById("porta")
+    const video = document.getElementById("video");
+    const toctoc = document.getElementById("toctoc");
+    const porta = document.getElementById("porta");
+    const inicio = document.getElementById("inicio");
 
-    // Tentar tocar o som ao carregar
-    window.addEventListener('load', () => {
-      toctoc.play().catch(() => {
-        // Se o navegador bloquear, tocar no primeiro clique
-        document.body.addEventListener('click', tocarToctoc, { once: true })
-      })
-    })
+    let primeiroToque = false;
 
-    function tocarToctoc() {
-      toctoc.play().catch(() => {})
-    }
+    inicio.addEventListener("click", () => {
+      if (!primeiroToque) {
+        // Primeiro clique: inicia o toctoc
+        toctoc.play().catch(() => {});
+        primeiroToque = true;
 
-    function mostrarVideo() {
-      toctoc.pause()
-      toctoc.currentTime = 0
+        // Atualiza o texto para o próximo toque
+        document.getElementById("mensagemTexto").innerHTML = "Toque novamente para abrir...";
+      } else {
+        // Segundo clique: para o toctoc e inicia o vídeo
+        toctoc.pause();
+        toctoc.currentTime = 0;
 
-      porta.play().catch(() => {})
+        porta.play().catch(() => {});
 
-      document.getElementById("inicio").classList.add("escondido")
-      document.getElementById("videoContainer").classList.remove("escondido")
-      video.play().catch(() => {})
+        inicio.classList.add("escondido");
+        document.getElementById("videoContainer").classList.remove("escondido");
+        video.play().catch(() => {});
 
-      video.onended = () => {
-        document.getElementById("videoContainer").classList.add("escondido")
-        setTimeout(() => {
-          window.location.href = "segunda-experiencia.html"
-        }, 1000)
+        video.onended = () => {
+          document.getElementById("videoContainer").classList.add("escondido");
+          setTimeout(() => {
+            window.location.href = "segunda-experiencia.html";
+          }, 1000);
+        };
       }
-    }
+    });
   </script>
 
 </body>

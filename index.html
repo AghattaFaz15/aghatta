@@ -62,7 +62,7 @@
 </head>
 <body>
 
-  <audio id="porta" src="porta.mp3" preload="auto" loop></audio>
+  <audio id="toctoc" src="toctoc.mp3" preload="auto" loop></audio>
 
   <div id="inicio" class="tela" onclick="mostrarVideo()">
     <img src="imagem-capa.jpg" alt="Imagem de capa">
@@ -80,12 +80,12 @@
 
   <script>
     const video = document.getElementById("video")
-    const porta = document.getElementById("porta")
-    porta.play().catch(() => {})
+    const toctoc = document.getElementById("toctoc")
+    toctoc.play().catch(() => {})
 
     function mostrarVideo() {
-      porta.pause()
-      porta.currentTime = 0
+      toctoc.pause()
+      toctoc.currentTime = 0
       document.getElementById("inicio").classList.add("escondido")
       document.getElementById("videoContainer").classList.remove("escondido")
       video.play().catch(() => {})

@@ -13,22 +13,16 @@
     overflow: hidden;
     transition: background 1.2s ease-in-out;
     color: white;
-
-    /* Fundo fixo para a imagem, cobrindo a tela e não alterando no scroll */
     background: url("Aghatta.png") center center / cover no-repeat fixed;
   }
   body.aberto {
     overflow-y: auto;
     background-color: #000;
-
-    /* Mantém fundo fixo após abrir */
     background: url("Aghatta.png") center center / cover no-repeat fixed;
   }
   .tela-inicial {
     width: 100vw;
     height: 100vh;
-    /* Removido o background daqui pois já está no body fixo */
-    /* background: url("Aghatta.png") center center / cover no-repeat; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -40,7 +34,6 @@
     opacity: 1;
     visibility: visible;
     cursor: pointer;
-    /* Para garantir que a imagem não se mova com o scroll */
     background-attachment: fixed;
   }
   .tela-inicial.oculta {
@@ -61,8 +54,6 @@
     font-size: 3em;
     color: gold;
     text-shadow: 0 0 10px rgba(255,215,0,0.7);
-
-    /* Centralizar texto em linha e verticalmente (ajuste mais robusto) */
     text-align: center;
     width: 100%;
   }
@@ -133,7 +124,7 @@
     position: relative;
     width: 90vw;
     max-width: 400px;
-    margin: 1em auto 3em;
+    margin: 1em auto 5em;
   }
   #convite-img {
     width: 100%;
@@ -173,7 +164,7 @@
     position: relative;
     width: 90vw;
     max-width: 400px;
-    margin: 2em auto 3em;
+    margin: 5em auto 3em;
     aspect-ratio: 3 / 4;
     overflow: hidden;
     border-radius: 20px;
@@ -256,11 +247,11 @@
     position: absolute;
     width: 40px;
     height: 40px;
-    top: 50%;
+    top: calc(50% + 2em);
     left: 50%;
     transform: translate(-50%, -50%);
     animation: voar linear infinite;
-    opacity: 0;
+    opacity: 1;
     z-index: 5;
     pointer-events: none;
   }
@@ -336,6 +327,16 @@
   <div class="contador-container" id="container">
     <img id="convite-img" src="Aniversário Aghatta XV.png" alt="Calendário" />
     <div id="contador" class="contador" role="timer" aria-live="polite" aria-atomic="true"></div>
+    <div class="borboleta" style="--x: 100px; --y: -50px;">
+      <div class="asa-esquerda"></div>
+      <div class="asa-direita"></div>
+      <div class="corpo"></div>
+    </div>
+    <div class="borboleta" style="--x: -120px; --y: 60px; animation-delay: 2s;">
+      <div class="asa-esquerda"></div>
+      <div class="asa-direita"></div>
+      <div class="corpo"></div>
+    </div>
   </div>
 
   <div class="frase-intro">
@@ -360,56 +361,65 @@
   </div>
 
   <div class="frase-presenca">
-    Conto com sua presença para celebrar comigo!
+    Conto com a tua presença!
   </div>
 </div>
 
 <script>
   const telaInicial = document.querySelector('.tela-inicial');
-  const conteudo = document.querySelector('.conteudo');
-  const audio = document.getElementById('audio2');
+  const body = document.body;
+  const audio2 = document.getElementById('audio2');
+  const contador = document.getElementById('contador');
+
+  const dataEvento = new Date('2025-12-25T00:00:00'); // Ajuste a data aqui
 
   function ativarExperiencia() {
     telaInicial.classList.add('oculta');
-    document.body.classList.add('aberto');
-    audio.play().catch(() => console.log('Audio bloqueado pelo navegador'));
+    body.classList.add('aberto');
+    audio2.play();
+    atualizarContador();
+    setInterval(atualizarContador, 1000);
   }
 
-  // Contador regressivo exemplo
-  function atualizarContador() {
-    const fimEvento = new Date("2025-12-20T20:00:00");
-    const agora = new Date();
-    const diff = fimEvento - agora;
+  telaInicial.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' ') ativarExperiencia();
+  });
 
-    if (diff <= 0) {
-      document.getElementById('contador').textContent = "O evento começou!";
+  function atualizarContador() {
+    const agora = new Date();
+    let diff = dataEvento - agora;
+
+    if(diff <= 0) {
+      contador.textContent = 'O evento já começou!';
       return;
     }
 
     const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutos = Math.floor((diff / (1000 * 60)) % 60);
-    const segundos = Math.floor((diff / 1000) % 60);
+    diff -= dias * (1000 * 60 * 60 * 24);
+    const horas = Math.floor(diff / (1000 * 60 * 60));
+    diff -= horas * (1000 * 60 * 60);
+    const minutos = Math.floor(diff / (1000 * 60));
+    diff -= minutos * (1000 * 60);
+    const segundos = Math.floor(diff / 1000);
 
-    document.getElementById('contador').textContent = 
-      `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+    contador.textContent = `${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos para o evento!`;
   }
-  setInterval(atualizarContador, 1000);
-  atualizarContador();
 
   // Slideshow simples
-  const imagens = ['imagem1.jpeg', 'imagem2.jpeg', 'imagem3.jpeg'];
-  let idx = 0;
+  const imagens = ['imagem1.jpeg', 'imagem2.jpeg', 'imagem3.jpeg', 'imagem4.jpeg'];
+  let indice = 0;
   const slideImg = document.getElementById('slide-img');
 
-  setInterval(() => {
-    idx = (idx + 1) % imagens.length;
+  function trocarImagem() {
+    indice = (indice + 1) % imagens.length;
     slideImg.style.opacity = 0;
     setTimeout(() => {
-      slideImg.src = imagens[idx];
+      slideImg.src = imagens[indice];
       slideImg.style.opacity = 1;
-    }, 500);
-  }, 4000);
+    }, 600);
+  }
+  setInterval(trocarImagem, 6000);
+
 </script>
 
 </body>

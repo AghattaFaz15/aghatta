@@ -3,25 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Galeria</title>
+  <title>Espelho do Convite - Aghatta XV</title>
   <style>
     body {
-      margin: 0;
+      font-family: Georgia, serif;
+      background: #000b2e;
+      color: #fff;
       padding: 2em;
-      background: transparent;
-      font-family: 'Georgia', serif;
-      color: white;
-      text-align: center;
+      line-height: 1.6em;
+    }
+    h1, h2 {
+      color: #8ecaff;
+      font-family: 'Parisienne', cursive;
+      text-shadow: 0 0 10px #5ab3ff;
     }
 
-    h2 {
+    /* Retângulo da mensagem no topo do slideshow */
+    .top-message {
+      max-width: 900px;
+      margin: 0 auto 1em;
+      background-color: rgba(0, 26, 77, 0.9);
+      padding: 0.8em 1.5em;
+      border-radius: 8px;
+      box-shadow: 0 0 15px 4px rgba(255, 215, 0, 0.6);
+      text-align: center;
+      font-size: 1.3em;
+      font-weight: bold;
       color: gold;
-      font-size: 2em;
-      margin-bottom: 1em;
+      font-family: 'Parisienne', cursive;
     }
 
     .slideshow-wrapper {
-      max-width: 600px;
+      max-width: 900px;
       margin: 0 auto;
       border-radius: 12px;
       overflow: hidden;
@@ -30,95 +43,122 @@
       position: relative;
     }
 
-    .topo-retangulo {
-      background: gold;
-      color: #002366;
-      font-weight: bold;
-      font-size: 1.25em;
-      padding: 0.6em 0;
-      box-shadow: 0 2px 8px rgba(255, 215, 0, 0.8);
-      font-family: 'Parisienne', cursive;
-      user-select: none;
-    }
-
     .slideshow-container {
       position: relative;
       width: 100%;
-      padding-top: 66.66%; /* 3:2 aspect ratio */
+      padding-top: 66.66%; /* Proporção 3:2 para manter altura proporcional */
       overflow: hidden;
     }
 
-    .slide {
+    .slideshow-container img {
       position: absolute;
       top: 0; left: 0;
       width: 100%;
       height: 100%;
-      display: none;
-    }
-
-    .slide img {
-      width: 100%;
-      height: 100%;
       object-fit: cover;
-      display: block;
-      border-bottom-left-radius: 12px;
-      border-bottom-right-radius: 12px;
+      border-radius: 12px;
+      user-select: none;
+      pointer-events: none;
     }
 
-    .ativo {
-      display: block;
-      animation: fadein 1s ease-in-out;
-    }
+    /* Galeria e textos permanecem iguais */
 
-    @keyframes fadein {
-      from {opacity: 0;}
-      to {opacity: 1;}
+    .textos {
+      max-width: 600px;
+      margin: 2em auto;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1.5em;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(30, 90, 200, 0.4);
+    }
+    .versiculo, .frase-intro, .frase-presenca {
+      margin-bottom: 1.5em;
     }
   </style>
 </head>
 <body>
 
-  <div class="slideshow-wrapper">
-    <div class="topo-retangulo">Um pouco da minha história</div>
-    <div class="slideshow-container" id="slideshow">
-      <!-- Slides gerados via JS -->
+  <h1>Resumo do Convite</h1>
+
+  <div class="textos">
+    <div class="versiculo">
+      <strong>Versículo:</strong><br>
+      “Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou.” — Isaías 41:20
+    </div>
+
+    <div class="frase-intro">
+      <strong>Frase de introdução:</strong><br>
+      Contando os dias para honrar 15 anos da promessa que virou pessoa...<br>
+      Deus escreveu, o tempo confirmou e agora, juntos, vamos celebrar...
+    </div>
+
+    <div class="frase-presenca">
+      <strong>Frase de presença:</strong><br>
+      Essa festa não seria a mesma sem a sua presença.
     </div>
   </div>
 
+  <h2>Slideshow</h2>
+
+  <div class="top-message">um pouco da minha história</div>
+
+  <div class="slideshow-wrapper">
+    <div class="slideshow-container">
+      <img src="imagem1.jpeg" alt="Imagem do slideshow" id="espelho-slide" draggable="false">
+    </div>
+  </div>
+
+  <h2>Galeria</h2>
+  <div class="galeria">
+    <img src="imagem1.jpeg" alt="Imagem da galeria" id="espelho-galeria" draggable="false">
+  </div>
+
   <script>
-    const container = document.getElementById('slideshow');
-    const totalSlides = 15;
-
-    for (let i = 1; i <= totalSlides; i++) {
-      const slide = document.createElement('div');
-      slide.className = 'slide';
-      const img = document.createElement('img');
-      img.src = `imagem${i}.jpeg`;
-      img.alt = `Imagem ${i}`;
-      slide.appendChild(img);
-      container.appendChild(slide);
+    // Lista das imagens do slideshow
+    const imagens = [];
+    for (let i = 1; i <= 15; i++) {
+      imagens.push(`imagem${i}.jpeg`);
     }
 
-    const slides = document.querySelectorAll('.slide');
-    let indice = 0;
+    let indiceAtual = 0;
+    const slideImg = document.getElementById('espelho-slide');
 
-    function mostrarSlide() {
-      slides.forEach(s => s.classList.remove('ativo'));
-      slides[indice].classList.add('ativo');
-
-      indice = (indice + 1) % slides.length;
-
-      // Ajusta a altura do iframe no pai
-      window.parent.postMessage({
-        type: 'resize-iframe',
-        id: 'galeriaFrame',
-        height: document.body.scrollHeight
-      }, '*');
+    function mudarSlide() {
+      indiceAtual = (indiceAtual + 1) % imagens.length;
+      slideImg.src = imagens[indiceAtual];
     }
 
-    mostrarSlide(); // mostra o primeiro slide
+    // Trocar slide a cada 3 segundos
+    setInterval(mudarSlide, 3000);
 
-    setInterval(mostrarSlide, 3000); // troca a cada 3 segundos
+    // Comunicação com a janela principal (para comandos futuros)
+    window.addEventListener('message', (event) => {
+      const data = event.data;
+      if (!data || typeof data !== 'object' || !data.comando) return;
+
+      switch (data.comando) {
+        case 'alterarImagem':
+          if (data.seletor === '#slide-img') {
+            document.getElementById('espelho-slide').src = data.novoSrc;
+          }
+          if (data.seletor === '#slide-img' || data.seletor === '.galeria img') {
+            document.getElementById('espelho-galeria').src = data.novoSrc;
+          }
+          break;
+
+        case 'alterarTexto':
+          if (data.seletor === '.frase-intro') {
+            document.querySelector('.frase-intro').innerHTML = `<strong>Frase de introdução:</strong><br>${data.novoTexto}`;
+          }
+          if (data.seletor === '.versiculo') {
+            document.querySelector('.versiculo').innerHTML = `<strong>Versículo:</strong><br>${data.novoTexto}`;
+          }
+          if (data.seletor === '.frase-presenca') {
+            document.querySelector('.frase-presenca').innerHTML = `<strong>Frase de presença:</strong><br>${data.novoTexto}`;
+          }
+          break;
+      }
+    });
   </script>
 
 </body>

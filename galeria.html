@@ -3,77 +3,85 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Espelho do Convite - Aghatta XV</title>
+  <title>Galeria - Aghatta XV</title>
   <style>
-    html, body {
-      margin: 0; padding: 0; height: 100%;
+    body {
       font-family: Georgia, serif;
       background: #000b2e;
-      color: #fff;
-      overflow-y: visible; /* scroll no body, não no slide */
-    }
-    .header-slide {
-      position: sticky;
-      top: 0;
-      background: rgba(0, 0, 30, 0.6);
-      color: #8ecaff;
-      font-family: 'Parisienne', cursive;
-      text-shadow: 0 0 10px #5ab3ff;
-      padding: 1em 0;
-      font-size: 2.4em;
-      text-align: center;
-      z-index: 10;
-    }
-    .slideshow-container {
-      margin: 20px auto;
-      max-width: 900px; /* limite largura pra não ficar gigante em telas grandes */
-      height: 70vh;     /* altura proporcional, ocupa boa parte da tela */
-      border: 8px solid rgba(255, 215, 0, 0.4); /* borda dourada translúcida */
-      border-radius: 20px;
-      box-sizing: border-box;
-      background: rgba(255, 215, 0, 0.05);
-      overflow: hidden;
+      color: white;
+      margin: 0;
+      padding: 2em 0;
       display: flex;
       justify-content: center;
-      align-items: center;
     }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+    }
+
+    .bloco-slide {
+      background: rgba(255, 215, 0, 0.07);
+      border: 4px solid rgba(255, 215, 0, 0.3);
+      border-radius: 16px;
+      padding: 1em;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+      text-align: center;
+    }
+
+    .bloco-slide h2 {
+      font-family: 'Parisienne', cursive;
+      color: gold;
+      margin-bottom: 1em;
+      font-size: 2em;
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+    }
+
     .slideshow {
-      width: 100%;
-      height: 100%;
       position: relative;
+      width: 100%;
+      padding-top: 66.66%; /* 3:2 ratio */
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
     }
+
     .slideshow img {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      display: block;
-      user-select: none;
+      object-fit: cover;
+      border-radius: 12px;
     }
   </style>
 </head>
 <body>
 
-  <div class="header-slide">Um pouco da minha história</div>
-
-  <div class="slideshow-container">
+<div class="container">
+  <div class="bloco-slide">
+    <h2>Um pouco da minha história</h2>
     <div class="slideshow">
-      <img id="slide-img" src="imagem1.jpeg" alt="Imagem do slideshow" />
+      <img id="slide-img" src="imagem1.jpeg" alt="Slideshow" />
     </div>
   </div>
+</div>
 
-  <script>
-    const totalSlides = 15;
-    let currentIndex = 1;
-    const slideImg = document.getElementById('slide-img');
+<script>
+  const imagens = [];
+  for (let i = 1; i <= 15; i++) {
+    imagens.push(`imagem${i}.jpeg`);
+  }
 
-    function proximoSlide() {
-      currentIndex++;
-      if (currentIndex > totalSlides) currentIndex = 1;
-      slideImg.src = `imagem${currentIndex}.jpeg`;
-    }
+  let index = 0;
+  const imgElement = document.getElementById('slide-img');
 
-    setInterval(proximoSlide, 4000);
-  </script>
+  setInterval(() => {
+    index = (index + 1) % imagens.length;
+    imgElement.src = imagens[index];
+  }, 3500); // 3.5 segundos por slide
+</script>
 
 </body>
 </html>

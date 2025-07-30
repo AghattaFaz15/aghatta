@@ -27,10 +27,21 @@
       text-align: center;
       z-index: 10;
     }
+    .slideshow-container {
+      margin: 0 3vw; /* margem lateral para mostrar a borda */
+      height: 90vh;
+      border: 6px solid rgba(255, 215, 0, 0.35); /* borda dourada translúcida */
+      border-radius: 20px;
+      box-sizing: border-box;
+      overflow: hidden;
+      background: rgba(255, 215, 0, 0.05); /* leve brilho dentro */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     .slideshow {
-      width: 100vw;
-      height: 100vh;
-      max-height: 100vh;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
       position: relative;
     }
@@ -47,8 +58,10 @@
 
   <div class="header-slide">Um pouco da minha história</div>
 
-  <div class="slideshow">
-    <img id="slide-img" src="imagem1.jpeg" alt="Imagem do slideshow" />
+  <div class="slideshow-container">
+    <div class="slideshow">
+      <img id="slide-img" src="imagem1.jpeg" alt="Imagem do slideshow" />
+    </div>
   </div>
 
   <script>
@@ -62,7 +75,6 @@
       slideImg.src = `imagem${currentIndex}.jpeg`;
     }
 
-    // Troca o slide a cada 4 segundos
     setInterval(proximoSlide, 4000);
   </script>
 

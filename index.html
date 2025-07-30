@@ -32,13 +32,17 @@
 
   /* Tela 1 */
   #tela1 {
-    background: url('rolofechado.png') no-repeat center/contain;
+    background: white;
     cursor: pointer;
     font-size: 2.5em;
     text-shadow: 0 0 10px gold;
+    color: #b8860b;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 15vh;
   }
   #tela1 span {
-    margin-top: 85vh;
+    margin-top: 0;
     display: block;
     text-align: center;
   }
@@ -46,28 +50,35 @@
   /* Tela 2 */
   #tela2 {
     background: url('roloaberto.png') no-repeat center/contain;
-    padding: 2em 2em 3em;
+    padding: 2em 2.5em 2em;
     flex-direction: column;
     overflow: hidden;
+    transform: scale(1.08);
+    box-sizing: border-box;
   }
   #textoConvite {
     overflow-y: auto;
-    max-height: 65vh;
-    font-size: 1.2em;
-    line-height: 1.5em;
-    padding-right: 1em;
+    max-height: 55vh;
+    font-size: 1.6em;
+    line-height: 1.6em;
+    padding-right: 1.2em;
     outline: none;
+    color: gold;
+    font-weight: 600;
+    text-shadow: 0 0 8px #d4af37cc;
+    background: rgba(0,0,0,0.25);
+    border-radius: 12px;
   }
   #botaoAvancar {
-    margin-top: 1em;
+    margin-top: 1.3em;
     background: gold;
     color: black;
     border: none;
-    padding: 0.8em 1.5em;
+    padding: 0.9em 1.7em;
     border-radius: 15px;
     font-weight: bold;
-    font-size: 1.2em;
-    box-shadow: 0 0 10px gold;
+    font-size: 1.4em;
+    box-shadow: 0 0 12px gold;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.4s ease;
@@ -78,28 +89,19 @@
     cursor: pointer;
   }
 
-  /* Tela 3 */
-  #tela3 {
-    background: url('imagem-capa.jpg') no-repeat center/cover;
-    cursor: pointer;
-    font-size: 2.5em;
-    text-shadow: 0 0 15px gold;
-    color: gold;
-  }
-  #tela3 span {
-    user-select: none;
-  }
-
   /* Tela 4 */
   #tela4 {
     background: black;
     justify-content: center;
     align-items: center;
+    padding: 0;
   }
   video {
-    max-width: 90vw;
-    max-height: 80vh;
-    border-radius: 15px;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
     background: black;
   }
 </style>
@@ -114,25 +116,21 @@
   <!-- Tela 2 -->
   <div class="tela oculto" id="tela2" aria-label="Pergaminho aberto com convite">
     <div id="textoConvite" tabindex="0" aria-live="polite" aria-atomic="true">
-      <p><em>“Antes que eu nascesse… o Céu já sabia quem caminharia comigo.”</em></p>
+      <p>“Antes que eu nascesse… o Céu já sabia quem caminharia comigo.”</p>
+      <p>E foi assim…</p>
       <p>Em silêncio eterno, Deus já escrevia meu nome… e o seu, lado a lado.</p>
       <p>Por isso, <strong>se este convite chegou até você</strong>, não pense que foi acaso — foi propósito.</p>
       <p>Uma <strong>Intimação Celestial</strong> foi emitida... não como obrigação, mas como honra.</p>
       <p>Porque você não é apenas mais um nome na lista… <strong>Você é memória viva.</strong></p>
-      <p>É história que pulsa.<br>É parte da promessa.</p>
+      <p>É história que pulsa.</p>
+      <p>É parte da promessa.</p>
       <p><strong>Você é um versículo no capítulo mais belo da minha jornada.</strong></p>
       <p>📌 Sua presença não é apenas esperada… <strong>ela é celebrada.</strong></p>
       <p>De todas as escolhas que o Céu poderia fazer… Ele escolheu você para estar aqui.</p>
-      <p><em>Então venha! Traga seu riso, sua lembrança, sua fé. Traga quem você é — porque é assim, exatamente assim, que você faz parte da minha história.</em></p>
-      <p><em>— Aghatta, filha sonhada e separada pelo Pai 👑✨</em></p>
+      <p><em>...os Céus batem a porta, e você é chamado pelo nome.</em></p>
+      <p><em>— Aghatta, filha sonhada e separada pelo Pai 👑✨.</em></p>
     </div>
     <button id="botaoAvancar" aria-label="Avançar para a próxima etapa">Avançar</button>
-  </div>
-
-  <!-- Tela 3 -->
-  <div class="tela oculto" id="tela3" role="button" tabindex="0" aria-label="Clique para ouvir o som e continuar">
-    <span>Toque para ouvir o chamado</span>
-    <audio id="audioToctoc" src="toctoc.mp3" loop preload="auto"></audio>
   </div>
 
   <!-- Tela 4 -->
@@ -146,11 +144,9 @@
 <script>
   const tela1 = document.getElementById('tela1');
   const tela2 = document.getElementById('tela2');
-  const tela3 = document.getElementById('tela3');
   const tela4 = document.getElementById('tela4');
   const textoConvite = document.getElementById('textoConvite');
   const botaoAvancar = document.getElementById('botaoAvancar');
-  const audioToctoc = document.getElementById('audioToctoc');
   const videoMensagem = document.getElementById('videoMensagem');
 
   // Troca visibilidade das telas
@@ -177,35 +173,10 @@
     }
   });
 
-  // Botão avançar para tela 3
+  // Botão avançar para tela 4 (pula tela 3)
   botaoAvancar.addEventListener('click', () => {
-    mostrarTela(tela2, tela3);
-  });
-
-  // Tela 3: tocar áudio toctoc no clique, no segundo clique pausa e avança para tela 4
-  let tocouAudio = false;
-  tela3.addEventListener('click', () => {
-    if (!tocouAudio) {
-      audioToctoc.play().catch(() => {});
-      tocouAudio = true;
-    } else {
-      audioToctoc.pause();
-      mostrarTela(tela3, tela4);
-      videoMensagem.play().catch(() => {});
-    }
-  });
-  tela3.addEventListener('keydown', e => {
-    if(e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      if (!tocouAudio) {
-        audioToctoc.play().catch(() => {});
-        tocouAudio = true;
-      } else {
-        audioToctoc.pause();
-        mostrarTela(tela3, tela4);
-        videoMensagem.play().catch(() => {});
-      }
-    }
+    mostrarTela(tela2, tela4);
+    videoMensagem.play().catch(() => {});
   });
 
   // Tela 4: fim do vídeo redireciona

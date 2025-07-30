@@ -66,6 +66,7 @@
       overflow: hidden;
       user-select: text;
       color: #3b0a49;
+      position: relative;
     }
     #roloAberto img {
       position: absolute;
@@ -194,7 +195,7 @@
   <!-- Tela 2: Rolo Aberto -->
   <div id="roloAberto" class="tela escondido">
     <img src="roloaberto.png" alt="Rolo Aberto" />
-    <div id="textoContainer">
+    <div id="textoContainer" tabindex="0" role="region" aria-label="Texto do convite">
       Você está prestes a receber algo muito especial —<br><br>
       um convite que vai além do papel, da simples mensagem.<br><br>
       É a celebração de uma vida que floresceu,<br>
@@ -240,7 +241,7 @@
 
   <!-- Tela 4: Vídeo -->
   <div id="videoContainer" class="escondido">
-    <video id="videoMensagem" playsinline>
+    <video id="videoMensagem" playsinline muted>
       <source src="mensagem.mp4" type="video/mp4" />
       Seu navegador não suporta vídeo.
     </video>

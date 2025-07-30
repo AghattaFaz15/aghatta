@@ -5,23 +5,19 @@
   <title>Intimação Celestial</title>
   <style>
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      margin: 0; padding: 0; box-sizing: border-box;
     }
     html, body {
-      width: 100vw;
-      height: 100vh;
+      width: 100vw; height: 100vh;
       font-family: 'Roboto', sans-serif;
       overflow: hidden;
       background: #ffffff;
+      position: relative;
     }
-
     .tela {
       position: fixed;
       top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100vw; height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -30,14 +26,13 @@
       opacity: 0;
       pointer-events: none;
       flex-direction: column;
+      padding: 20px;
     }
-
     .tela.mostrar {
       opacity: 1;
       pointer-events: auto;
       z-index: 10;
     }
-
     .mensagem-topo {
       position: absolute;
       top: 4vh;
@@ -51,14 +46,36 @@
       user-select: none;
       z-index: 2;
     }
-
+    /* Para o texto que vai surgindo na tela 2 */
+    #textoRoloAberto {
+      position: absolute;
+      top: 15vh;
+      width: 80vw;
+      margin: 0 auto;
+      left: 10vw;
+      right: 10vw;
+      font-size: 3.8vw;
+      font-style: italic;
+      color: #4a2a7a;
+      background: rgba(255 255 255 / 0.85);
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #a57aff88;
+      text-shadow: 1px 1px 3px #7f6adfcc;
+      user-select: none;
+      opacity: 0;
+      transition: opacity 1s ease;
+      z-index: 3;
+      line-height: 1.5;
+      pointer-events: none;
+      white-space: pre-wrap;
+    }
     .img-centralizada {
       max-width: 98vw;
       max-height: 90vh;
       object-fit: contain;
       z-index: 1;
     }
-
     .img-fundo {
       position: absolute;
       top: 0; left: 0;
@@ -67,7 +84,6 @@
       object-fit: cover;
       z-index: -1;
     }
-
     video {
       width: 100vw;
       height: 100vh;
@@ -76,7 +92,6 @@
       top: 0; left: 0;
       z-index: 10;
     }
-
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
 </head>
@@ -85,19 +100,21 @@
   <!-- Sons -->
   <audio id="toctoc" src="toctoc.mp3" preload="auto" loop></audio>
   <audio id="porta" src="porta.mp3" preload="auto"></audio>
+  <audio id="audioRoloAberto" src="texto-roloaberto.mp3" preload="auto"></audio>
 
-  <!-- Tela 1: Rolo fechado -->
+  <!-- Tela 1: Rolo fechado com imagem maior -->
   <div id="tela1" class="tela mostrar">
     <div class="mensagem-topo">
       Deus te enviou essa mensagem<br />
       toque para abrir...
     </div>
-    <img src="rolofechado.png" alt="Pergaminho fechado" class="img-centralizada" />
+    <img src="rolofechado.png" alt="Pergaminho fechado" style="max-height: 100vh; max-width: 95vw; object-fit: contain; z-index: 1;" />
   </div>
 
-  <!-- Tela 2: Rolo aberto -->
+  <!-- Tela 2: Rolo aberto com texto aparecendo devagar -->
   <div id="tela2" class="tela">
     <img src="roloaberto.png" alt="Pergaminho aberto" class="img-centralizada" />
+    <div id="textoRoloAberto"></div>
   </div>
 
   <!-- Tela 3: Porta -->
@@ -128,8 +145,54 @@
     const toctoc = document.getElementById('toctoc');
     const portaSound = document.getElementById('porta');
     const video = document.getElementById('video');
+    const audioRoloAberto = document.getElementById('audioRoloAberto');
+    const textoRoloAberto = document.getElementById('textoRoloAberto');
 
     let etapa = 0;
+
+    // Texto para aparecer devagar no rolo aberto
+    const textoParaMostrar = `Antes que eu nascesse... o Céu já sabia quem caminharia comigo.\n
+E foi assim...\n
+Em silêncio eterno, Deus já escrevia meu nome...\n
+e o seu, lado a lado.\n
+\n
+Por isso, se este convite chegou até você,\n
+não pense que foi acaso — foi propósito.\n
+\n
+Uma Intimação Celestial foi emitida...\n
+não como obrigação, mas como honra.\n
+\n
+Porque você não é apenas mais um nome na lista...\n
+Você é memória viva.\n
+É história que pulsa.\n
+É parte da promessa.\n
+\n
+Você é um versículo no capítulo mais belo da minha jornada.\n
+\n
+Sua presença não é apenas esperada...\n
+ela é celebrada.\n
+\n
+De todas as escolhas que o Céu poderia fazer...\n
+Ele escolheu você para estar aqui.\n
+\n
+Então venha!\n
+Traga seu riso, sua lembrança, sua fé.\n
+Traga quem você é —\n
+porque é assim, exatamente assim, que você faz parte da minha história.\n
+\n
+— Aghatta, filha sonhada e separada pelo Pai 👑✨`;
+
+    // Função para mostrar texto letra a letra
+    function mostrarTextoDevagar(texto, elemento, intervalo = 50) {
+      let i = 0;
+      elemento.style.opacity = 1;
+      elemento.textContent = "";
+      const timer = setInterval(() => {
+        elemento.textContent += texto.charAt(i);
+        i++;
+        if (i >= texto.length) clearInterval(timer);
+      }, intervalo);
+    }
 
     function mostrarTela(index) {
       telas.forEach((tela, i) => {
@@ -145,6 +208,9 @@
     telas[0].addEventListener('click', () => {
       etapa = 1;
       mostrarTela(etapa);
+      // No rolo aberto, iniciar a animação do texto e áudio
+      mostrarTextoDevagar(textoParaMostrar, textoRoloAberto, 45);
+      audioRoloAberto.play().catch(() => {});
     });
 
     telas[1].addEventListener('click', () => {

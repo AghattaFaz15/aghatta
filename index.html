@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Convite Celestial - Aghatta XV</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -10,8 +10,7 @@
       height: 100vh;
       overflow: hidden;
       font-family: 'Dancing Script', cursive;
-      background: #fff;
-      user-select: none;
+      background: #000;
     }
     .tela {
       position: absolute;
@@ -24,182 +23,107 @@
       flex-direction: column;
       transition: opacity 1s ease-in-out;
       opacity: 1;
-      background: #fff;
     }
     .escondido {
       opacity: 0;
       pointer-events: none;
-      transition: opacity 1s ease-in-out;
-    }
-    /* Primeira tela: rolo fechado com zoom maior e centralizado */
-    #roloFechado img {
-      max-width: 110vw;
-      height: auto;
-      transform: scale(1.6);
-      margin-top: 8vh;
-      object-fit: contain;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      user-select: none;
-      transition: transform 0.5s ease;
-    }
-    #roloFechado .texto {
-      position: absolute;
-      top: 5vh;
-      width: 100%;
-      color: #000;
-      font-size: 3.8vw;
-      text-align: center;
-      font-weight: bold;
-      text-shadow: 1px 1px 3px #fff;
-      user-select: none;
-    }
-    #roloFechado .texto span {
-      font-size: 2.4vw;
-      display: block;
-      margin-top: 0.6rem;
     }
 
-    /* Segunda tela: rolo aberto */
-    #roloAberto {
-      background: #000;
-      overflow: hidden;
-      user-select: text;
-      color: #3b0a49;
-      position: relative;
+    #tela1 img {
+      width: 100vw;
+      height: auto;
+      transform: scale(1.2);
     }
-    #roloAberto img {
+
+    #mensagemToque {
       position: absolute;
-      width: auto;
-      height: 105vh;
-      top: -3vh;
-      left: 50%;
-      transform: translateX(-50%) scale(1.1);
-      object-fit: cover;
-      z-index: -1;
-      user-select: none;
-    }
-    #textoContainer {
-      width: 55vw;
-      height: 55vh;
-      overflow-y: scroll;
-      background: transparent;
-      padding: 4vh 4vw 30vh 4vw;
-      font-size: 3.2vw;
-      line-height: 1.6;
+      top: 8vh;
+      text-align: center;
+      font-size: 3vw;
+      color: #000;
+      font-weight: bold;
       text-shadow: 1px 1px 3px #fff;
-      position: relative;
-      z-index: 2;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(107, 63, 160, 0.7) transparent;
     }
-    #textoContainer::-webkit-scrollbar {
-      width: 8px;
+
+    #tela2 {
+      background: #000;
     }
-    #textoContainer::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    #textoContainer::-webkit-scrollbar-thumb {
-      background-color: rgba(107, 63, 160, 0.7);
-      border-radius: 20px;
-      border: 2px solid transparent;
-      background-clip: content-box;
-    }
-    #botaoAvancar {
+
+    #tela2 img {
       position: absolute;
-      bottom: 12vh;
-      padding: 16px 36px;
-      font-size: 2vw;
-      background: #6b3fa0;
-      color: white;
-      border: none;
-      border-radius: 16px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.35);
-      cursor: pointer;
-      display: none;
-      transition: background 0.3s ease, transform 0.3s ease;
-      z-index: 5;
-      user-select: none;
-    }
-    #botaoAvancar:hover {
-      background: #5a2e85;
+      top: -5vh;
+      height: 120vh;
+      z-index: -1;
       transform: scale(1.05);
     }
 
-    /* Terceira tela: porta com imagem-capa, zoom e texto */
-    #porta {
-      background: #000;
-      overflow: hidden;
-      position: relative;
-      user-select: none;
+    #textoContainer {
+      width: 65vw;
+      height: 58vh;
+      overflow-y: scroll;
+      padding: 4vh 4vw 15vh 4vw;
+      font-size: 2.6vw;
+      color: #3b0a49;
+      background: transparent;
+      text-shadow: 1px 1px 2px #fff;
+      line-height: 1.6;
     }
-    #porta img {
-      width: 110vw;
-      height: 110vh;
+
+    #botaoAvancar {
+      position: absolute;
+      bottom: 10vh;
+      padding: 14px 28px;
+      font-size: 1.7vw;
+      background: #6b3fa0;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      cursor: pointer;
+      display: none;
+    }
+
+    #botaoAvancar:hover {
+      background: #502e78;
+    }
+
+    #tela3 img {
+      width: 100vw;
+      height: 100vh;
       object-fit: cover;
-      transform: scale(1.15);
-      user-select: none;
-      margin-left: -5vw; /* centralizar com zoom */
-      margin-top: -5vh;
-      transition: transform 0.5s ease;
+      transform: scale(1.05);
     }
-    #portaTexto {
+
+    #mensagemPorta {
       position: absolute;
       top: 5vh;
       width: 100%;
       text-align: center;
       color: #fff;
-      font-size: 3.5vw;
-      text-shadow: 2px 2px 6px #000;
-      cursor: pointer;
-      user-select: none;
-      font-weight: 600;
+      font-size: 3vw;
+      text-shadow: 2px 2px 5px #000;
     }
 
-    /* Vídeo */
-    #videoContainer {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 1;
-      transition: opacity 1s ease-in-out;
-      z-index: 10;
-      user-select: none;
-    }
-    #videoContainer.escondido {
-      opacity: 0;
-      pointer-events: none;
-    }
-    #videoContainer video {
+    #tela4 video {
       width: 100vw;
       height: 100vh;
       object-fit: cover;
-      user-select: none;
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <!-- Tela 1: Rolo Fechado -->
-  <div id="roloFechado" class="tela">
-    <img src="rolofechado.png" alt="Rolo Fechado" />
-    <div class="texto">
-      Deus te enviou essa mensagem
-      <span>TOQUE PARA ABRIR...</span>
-    </div>
+  <div id="tela1" class="tela">
+    <img src="rolofechado.png" alt="Rolo Fechado">
+    <div id="mensagemToque">Deus te enviou essa mensagem<br><span style="font-size:2vw;">TOQUE PARA ABRIR...</span></div>
   </div>
 
   <!-- Tela 2: Rolo Aberto -->
-  <div id="roloAberto" class="tela escondido">
-    <img src="roloaberto.png" alt="Rolo Aberto" />
-    <div id="textoContainer" tabindex="0" role="region" aria-label="Texto do convite">
+  <div id="tela2" class="tela escondido">
+    <img src="roloaberto.png" alt="Rolo Aberto">
+    <div id="textoContainer">
       Você está prestes a receber algo muito especial —<br><br>
       um convite que vai além do papel, da simples mensagem.<br><br>
       É a celebração de uma vida que floresceu,<br>
@@ -234,76 +158,65 @@
     <button id="botaoAvancar">Avançar</button>
   </div>
 
-  <!-- Tela 3: Porta -->
-  <div id="porta" class="tela escondido">
-    <img src="imagem-capa.jpg" alt="Porta" />
-    <div id="portaTexto" title="Toque para abrir vídeo">
-      Os Céus batem à porta...<br />
-      Toque para abrir
-    </div>
+  <!-- Tela 3: Imagem Capa com Áudio -->
+  <div id="tela3" class="tela escondido">
+    <img src="imagem-capa.jpg" alt="Capa Celestial">
+    <div id="mensagemPorta">Os Céus batem à porta...<br>Toque para abrir</div>
+    <audio id="audioToctoc" loop>
+      <source src="toctoc.mp3" type="audio/mpeg">
+    </audio>
   </div>
 
   <!-- Tela 4: Vídeo -->
-  <div id="videoContainer" class="escondido">
-    <video id="videoMensagem" playsinline muted>
-      <source src="mensagem.mp4" type="video/mp4" />
-      Seu navegador não suporta vídeo.
+  <div id="tela4" class="tela escondido">
+    <video id="videoMensagem" autoplay muted>
+      <source src="mensagem.mp4" type="video/mp4">
     </video>
   </div>
 
-  <!-- Áudio toctoc -->
-  <audio id="toctoc" src="toctoc.mp3" preload="auto" loop></audio>
-
   <script>
-    const telas = {
-      roloFechado: document.getElementById('roloFechado'),
-      roloAberto: document.getElementById('roloAberto'),
-      porta: document.getElementById('porta'),
-      videoContainer: document.getElementById('videoContainer'),
-      videoMensagem: document.getElementById('videoMensagem'),
-      toctoc: document.getElementById('toctoc'),
-    };
+    const tela1 = document.getElementById('tela1');
+    const tela2 = document.getElementById('tela2');
+    const tela3 = document.getElementById('tela3');
+    const tela4 = document.getElementById('tela4');
 
     const textoContainer = document.getElementById('textoContainer');
     const botaoAvancar = document.getElementById('botaoAvancar');
-    const portaTexto = document.getElementById('portaTexto');
+    const audio = document.getElementById('audioToctoc');
+    const video = document.getElementById('videoMensagem');
 
-    // Tela 1 => Tela 2
-    telas.roloFechado.addEventListener('click', () => {
-      telas.roloFechado.classList.add('escondido');
-      telas.roloAberto.classList.remove('escondido');
+    // Transição da tela 1 para 2
+    tela1.addEventListener('click', () => {
+      tela1.classList.add('escondido');
+      tela2.classList.remove('escondido');
     });
 
-    // Mostrar botão avançar quando chegar ao final do scroll
+    // Exibir botão só no fim do scroll
     textoContainer.addEventListener('scroll', () => {
-      const noFim = textoContainer.scrollHeight - textoContainer.scrollTop <= textoContainer.clientHeight + 20;
-      if (noFim) {
+      const fim = textoContainer.scrollHeight - textoContainer.scrollTop <= textoContainer.clientHeight + 20;
+      if (fim) {
         botaoAvancar.style.display = 'block';
       }
     });
 
-    // Tela 2 => Tela 3
+    // Transição da tela 2 para 3
     botaoAvancar.addEventListener('click', () => {
-      telas.roloAberto.classList.add('escondido');
-      telas.porta.classList.remove('escondido');
-      telas.toctoc.play().catch(() => {});
+      tela2.classList.add('escondido');
+      tela3.classList.remove('escondido');
+      audio.play();
     });
 
-    // Tela 3: toca o som toctoc em loop até toque, depois abre o vídeo sem som
-    telas.porta.addEventListener('click', () => {
-      if (!telas.videoContainer.classList.contains('escondido')) return;
-      telas.toctoc.pause();
-      telas.toctoc.currentTime = 0;
-      telas.porta.classList.add('escondido');
-      telas.videoContainer.classList.remove('escondido');
-      telas.videoMensagem.play();
+    // Transição da tela 3 para 4 (vídeo)
+    tela3.addEventListener('click', () => {
+      audio.pause();
+      tela3.classList.add('escondido');
+      tela4.classList.remove('escondido');
     });
 
-    // Ao terminar vídeo, redireciona
-    telas.videoMensagem.addEventListener('ended', () => {
+    // Redireciona após vídeo terminar
+    video.addEventListener('ended', () => {
       window.location.href = "segunda-experiencia.html";
     });
   </script>
-
 </body>
 </html>

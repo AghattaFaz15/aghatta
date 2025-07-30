@@ -12,7 +12,7 @@
     }
 
     body {
-      background: transparent; /* fundo transparente, nada de preto */
+      background: transparent;
       overflow-x: hidden;
       font-family: 'Georgia', serif;
       color: #ffd700;
@@ -44,7 +44,7 @@
       left: 50%;
       transform: translateX(-50%);
       width: 80%;
-      background: rgba(65, 105, 225, 0.5); /* azul royal translúcido */
+      background: rgba(65, 105, 225, 0.5);
       color: gold;
       font-size: 1.3rem;
       text-align: center;
@@ -58,13 +58,13 @@
 
     .borboleta {
       position: absolute;
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       background-image: url('borboleta.png');
       background-size: contain;
       background-repeat: no-repeat;
       opacity: 0.8;
-      filter: drop-shadow(0 0 6px gold);
+      filter: drop-shadow(0 0 6px gold) brightness(1.2);
       animation: baterAsas 2s infinite ease-in-out;
       pointer-events: none;
       z-index: 5;
@@ -92,28 +92,21 @@
     const container = document.getElementById('container');
     const totalBorboletas = 15;
 
-    // Posiciona as borboletas no centro da imagem (relativo ao container)
-    // Vamos calcular o centro do container para usar como ponto inicial
-    const containerRect = container.getBoundingClientRect();
-    // Para o cálculo relativo dentro do container, usaremos 50% de largura e 50% da altura
     const centerX = container.clientWidth / 2;
-    const centerY = container.clientHeight / 2;
+    const centerY = container.clientHeight / 2 + 60; // 🔥🔥 Desceu o ponto de origem geral das borboletas
 
     for (let i = 0; i < totalBorboletas; i++) {
       const b = document.createElement('div');
       b.className = 'borboleta';
 
-      // Vamos criar uma variação de posição em torno do centro para elas "saírem" de lá
-      const offsetX = (Math.random() - 0.5) * 40; // -20 a +20 px
-      const offsetY = (Math.random() - 0.5) * 40; // -20 a +20 px
+      const offsetX = (Math.random() - 0.3) * 40; // Mais para direita
+      const offsetY = (Math.random() - 0.3) * 30; // Mais abaixo
 
-      // Inicialmente posiciona elas próximas ao centro
       b.style.left = `${centerX + offsetX}px`;
       b.style.top = `${centerY + offsetY}px`;
 
       container.appendChild(b);
 
-      // Movimento aleatório para as borboletas voarem para cima com variações
       const duration = 10 + Math.random() * 5;
       const amplitudeX = 50 + Math.random() * 40;
       const angle = (Math.random() - 0.5) * 50;

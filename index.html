@@ -28,12 +28,6 @@
       pointer-events: none;
     }
 
-    .imagem-max {
-      max-height: 100vh;
-      max-width: 100vw;
-      object-fit: contain;
-    }
-
     .mensagem-topo {
       position: absolute;
       top: 5vh;
@@ -42,22 +36,41 @@
       text-align: center;
       text-shadow: 2px 2px 6px #fff;
       padding: 20px;
+      z-index: 2;
+    }
+
+    .rolofechado-img {
+      width: 37.5vw;
+      height: 66.6vh;
+      object-fit: contain;
+    }
+
+    .roloaberto-img {
+      position: absolute;
+      width: 72vw;
+      height: 100vh;
+      object-fit: contain;
+      z-index: 1;
     }
 
     #roloTexto {
       position: absolute;
-      top: 18vh;
-      bottom: 22vh;
-      left: 15vw;
-      right: 15vw;
+      top: 12vh;
+      bottom: 20vh;
+      left: 18vw;
+      right: 18vw;
       overflow-y: auto;
-      font-size: 1.6vw;
-      line-height: 2.2vw;
-      background: rgba(255, 255, 255, 0.8);
-      padding: 18px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px #0005;
+      font-size: 1.8vw;
+      line-height: 2.6vw;
+      background: transparent;
+      color: #3c2c2c;
+      padding: 10px;
       z-index: 2;
+    }
+
+    #roloTexto::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
     }
 
     #avancar {
@@ -70,21 +83,20 @@
       padding: 10px 24px;
       border-radius: 30px;
       cursor: pointer;
-      z-index: 2;
-      transition: background 0.3s;
+      z-index: 3;
     }
 
     #avancar:hover {
       background: #5e3292;
     }
 
-    video {
+    .img-porta {
       width: 100vw;
       height: 100vh;
       object-fit: cover;
     }
 
-    .img-porta {
+    video {
       width: 100vw;
       height: 100vh;
       object-fit: cover;
@@ -99,12 +111,12 @@
       Deus te enviou esta mensagem<br>
       TOQUE PARA ABRIR...
     </div>
-    <img src="rolofechado.png" alt="Rolo fechado" class="imagem-max">
+    <img src="rolofechado.png" alt="Rolo fechado" class="rolofechado-img">
   </div>
 
   <!-- Tela 2: Rolo aberto com texto -->
   <div id="tela2" class="tela escondido">
-    <img src="roloaberto.png" alt="Rolo aberto" class="imagem-max" style="max-height: 105vh;">
+    <img src="roloaberto.png" alt="Rolo aberto" class="roloaberto-img">
     <div id="roloTexto">
       <p>Você está prestes a receber algo muito especial —<br>
       um convite que vai além do papel, da simples mensagem.</p>
@@ -181,8 +193,6 @@
     const toctoc = document.getElementById("toctoc");
     const porta = document.getElementById("porta");
     const botaoAvancar = document.getElementById("avancar");
-
-    let etapa = 0;
 
     tela1.addEventListener("click", () => {
       tela1.classList.add("escondido");

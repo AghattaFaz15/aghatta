@@ -1,53 +1,70 @@
-<div class="contador-container" id="container">
-  <img id="convite-img" src="Aniversário Aghatta XV.png" alt="Convite Aghatta" />
-  <div id="contador" class="contador"></div>
-</div>
-
-<script>
-  const contadorEl = document.getElementById('contador');
-  const dataEvento = new Date('2025-09-12T19:00:00');
-
-  function atualizarContador() {
-    const agora = new Date();
-    const diff = dataEvento - agora;
-    if (diff <= 0) {
-      contadorEl.textContent = 'O evento já começou!';
-      clearInterval(intervalo);
-      return;
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contador</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 2em;
+      font-family: 'Georgia', serif;
+      background: transparent;
+      color: white;
+      text-align: center;
     }
-    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const segundos = Math.floor((diff % (1000 * 60)) / 1000);
-    contadorEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s para o início`;
-  }
 
-  let intervalo = setInterval(atualizarContador, 1000);
-  atualizarContador();
+    h2 {
+      font-size: 2em;
+      color: gold;
+    }
 
-  const container = document.getElementById('container');
-  const total = 15;
+    #contador {
+      font-size: 2.5em;
+      margin-top: 1em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
 
-  for (let i = 0; i < total; i++) {
-    const b = document.createElement('div');
-    b.className = 'borboleta';
-    b.style.setProperty('--x', `${(Math.random() - 0.5) * 600}px`);
-    b.style.setProperty('--y', `${-Math.random() * 800 - 200}px`);
-    b.style.animationDuration = `${10 + Math.random() * 5}s`;
-    b.style.animationDelay = `${Math.random() * 10}s`;
+  <h2>Contagem Regressiva</h2>
+  <div id="contador">Carregando...</div>
 
-    const asaE = document.createElement('div');
-    asaE.className = 'asa-esquerda';
+  <script>
+    const destino = new Date("2025-09-12T19:00:00").getTime();
+    const el = document.getElementById('contador');
 
-    const asaD = document.createElement('div');
-    asaD.className = 'asa-direita';
+    function atualizarContador() {
+      const agora = new Date().getTime();
+      const distancia = destino - agora;
 
-    const corpo = document.createElement('div');
-    corpo.className = 'corpo';
+      if (distancia < 0) {
+        el.textContent = "É hoje! 🔥";
+        return;
+      }
 
-    b.appendChild(asaE);
-    b.appendChild(asaD);
-    b.appendChild(corpo);
-    container.appendChild(b);
-  }
-</script>
+      const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+      el.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+    }
+
+    setInterval(atualizarContador, 1000);
+    atualizarContador();
+  </script>
+
+  <script>
+    window.addEventListener('load', () => {
+      window.parent.postMessage({
+        type: 'resize-iframe',
+        id: 'contadorFrame',
+        height: document.body.scrollHeight
+      }, '*');
+    });
+  </script>
+
+</body>
+</html>

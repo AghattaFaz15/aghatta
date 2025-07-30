@@ -1,0 +1,53 @@
+<div class="contador-container" id="container">
+  <img id="convite-img" src="Aniversário Aghatta XV.png" alt="Convite Aghatta" />
+  <div id="contador" class="contador"></div>
+</div>
+
+<script>
+  const contadorEl = document.getElementById('contador');
+  const dataEvento = new Date('2025-09-12T19:00:00');
+
+  function atualizarContador() {
+    const agora = new Date();
+    const diff = dataEvento - agora;
+    if (diff <= 0) {
+      contadorEl.textContent = 'O evento já começou!';
+      clearInterval(intervalo);
+      return;
+    }
+    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((diff % (1000 * 60)) / 1000);
+    contadorEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s para o início`;
+  }
+
+  let intervalo = setInterval(atualizarContador, 1000);
+  atualizarContador();
+
+  const container = document.getElementById('container');
+  const total = 15;
+
+  for (let i = 0; i < total; i++) {
+    const b = document.createElement('div');
+    b.className = 'borboleta';
+    b.style.setProperty('--x', `${(Math.random() - 0.5) * 600}px`);
+    b.style.setProperty('--y', `${-Math.random() * 800 - 200}px`);
+    b.style.animationDuration = `${10 + Math.random() * 5}s`;
+    b.style.animationDelay = `${Math.random() * 10}s`;
+
+    const asaE = document.createElement('div');
+    asaE.className = 'asa-esquerda';
+
+    const asaD = document.createElement('div');
+    asaD.className = 'asa-direita';
+
+    const corpo = document.createElement('div');
+    corpo.className = 'corpo';
+
+    b.appendChild(asaE);
+    b.appendChild(asaD);
+    b.appendChild(corpo);
+    container.appendChild(b);
+  }
+</script>

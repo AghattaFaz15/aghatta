@@ -1,112 +1,180 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Mensagem do Rei</title>
+  <meta charset="UTF-8" />
+  <title>Intimação Celestial</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
+    html, body {
+      width: 100vw;
+      height: 100vh;
       background: black;
-      overflow: hidden;
       font-family: 'Great Vibes', cursive;
+      overflow: hidden;
     }
     .tela {
-      position: absolute;
+      position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center;
+      background: black;
+      color: #fef9f4;
+      text-align: center;
       transition: opacity 1s ease-in-out;
-      opacity: 1;
-    }
-    .escondido {
       opacity: 0;
       pointer-events: none;
+      user-select: none;
+      flex-direction: column;
+      padding: 20px;
     }
-    #inicio img {
+    .tela.mostrar {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      position: absolute;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      position: absolute;
-      top: 0;
-      left: 0;
       z-index: -1;
+      user-select: none;
     }
     .mensagem {
-      margin-top: 6vh;
-      width: 90%;
-      color: #f9f3ff;
-      font-size: 6vw;
-      text-align: center;
-      text-shadow: 3px 3px 12px #e0b3ff;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 30px;
+      font-size: 5vw;
+      text-shadow: 2px 2px 8px #8c52ff;
+      background: rgba(0, 0, 0, 0.6);
       border-radius: 20px;
-      line-height: 1.5;
+      padding: 30px;
+      max-width: 90vw;
+      z-index: 1;
+      animation: pulsar 2.5s ease-in-out infinite;
+    }
+    @keyframes pulsar {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.85; }
     }
     video {
       width: 100vw;
       height: 100vh;
       object-fit: cover;
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 10;
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
 </head>
 <body>
 
+  <!-- Audios -->
   <audio id="toctoc" src="toctoc.mp3" preload="auto" loop></audio>
   <audio id="porta" src="porta.mp3" preload="auto"></audio>
 
-  <div id="inicio" class="tela">
-    <img src="imagem-capa.jpg" alt="Imagem de capa">
-    <div class="mensagem" id="mensagemTexto">
-      O Céu bate à porta.<br>
-      Toque para abrir...
+  <!-- Tela 1: Rolo fechado -->
+  <div id="tela1" class="tela mostrar">
+    <img src="rolofechado.png" alt="Pergaminho fechado" />
+    <div class="mensagem" id="mensagemTela1">
+      Deus te enviou essa mensagem<br />
+      TOQUE PARA ABRIR...
     </div>
   </div>
 
-  <div id="videoContainer" class="tela escondido">
+  <!-- Tela 2: Rolo aberto -->
+  <div id="tela2" class="tela">
+    <img src="roloaberto.png" alt="Pergaminho aberto" />
+    <div class="mensagem" id="mensagemTela2">
+      A Palavra foi aberta para você.<br />
+      TOQUE PARA CONTINUAR...
+    </div>
+  </div>
+
+  <!-- Tela 3: Porta com frase e som -->
+  <div id="tela3" class="tela">
+    <img src="porta.png" alt="Porta celestial" />
+    <div class="mensagem" id="mensagemTela3">
+      O céu bate à porta...
+    </div>
+  </div>
+
+  <!-- Tela 4: Vídeo -->
+  <div id="tela4" class="tela">
     <video id="video" playsinline muted>
-      <source src="mensagem.mp4" type="video/mp4">
+      <source src="mensagem.mp4" type="video/mp4" />
+      Seu navegador não suporta vídeo.
     </video>
   </div>
 
   <script>
-    const video = document.getElementById("video");
-    const toctoc = document.getElementById("toctoc");
-    const porta = document.getElementById("porta");
-    const inicio = document.getElementById("inicio");
+    const telas = [
+      document.getElementById('tela1'),
+      document.getElementById('tela2'),
+      document.getElementById('tela3'),
+      document.getElementById('tela4')
+    ];
 
-    let primeiroToque = false;
+    const toctoc = document.getElementById('toctoc');
+    const portaSound = document.getElementById('porta');
+    const video = document.getElementById('video');
 
-    inicio.addEventListener("click", () => {
-      if (!primeiroToque) {
-        // Primeiro clique: inicia o toctoc
+    let etapa = 0;
+
+    function mostrarTela(index) {
+      telas.forEach((tela, i) => {
+        if(i === index) {
+          tela.classList.add('mostrar');
+        } else {
+          tela.classList.remove('mostrar');
+        }
+      });
+    }
+
+    // Controle de toques para primeira e segunda telas
+    let primeiroToqueTela1 = false;
+
+    telas[0].addEventListener('click', () => {
+      if (!primeiroToqueTela1) {
         toctoc.play().catch(() => {});
-        primeiroToque = true;
-
-        // Atualiza o texto para o próximo toque
-        document.getElementById("mensagemTexto").innerHTML = "Toque novamente para abrir...";
+        primeiroToqueTela1 = true;
+        document.getElementById('mensagemTela1').innerHTML = 'Toque novamente para abrir...';
       } else {
-        // Segundo clique: para o toctoc e inicia o vídeo
         toctoc.pause();
         toctoc.currentTime = 0;
-
-        porta.play().catch(() => {});
-
-        inicio.classList.add("escondido");
-        document.getElementById("videoContainer").classList.remove("escondido");
-        video.play().catch(() => {});
-
-        video.onended = () => {
-          document.getElementById("videoContainer").classList.add("escondido");
-          setTimeout(() => {
-            window.location.href = "segunda-experiencia.html";
-          }, 1000);
-        };
+        etapa = 1;
+        mostrarTela(etapa);
       }
     });
+
+    telas[1].addEventListener('click', () => {
+      etapa = 2;
+      mostrarTela(etapa);
+      toctoc.play().catch(() => {});
+
+      // Após um curto delay, toca som da porta (não em loop)
+      setTimeout(() => {
+        toctoc.pause();
+        toctoc.currentTime = 0;
+        portaSound.play().catch(() => {});
+      }, 1500);
+    });
+
+    telas[2].addEventListener('click', () => {
+      etapa = 3;
+      mostrarTela(etapa);
+      video.play().catch(() => {});
+    });
+
+    video.onended = () => {
+      // Ao terminar o vídeo, redireciona para segunda experiência
+      window.location.href = 'segunda-experiencia.html';
+    };
+
+    // Começa mostrando a primeira tela
+    mostrarTela(etapa);
   </script>
 
 </body>

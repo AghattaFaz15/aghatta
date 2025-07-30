@@ -50,7 +50,7 @@
       z-index: 3;
       width: auto;
     }
-    /* Borboletas com imagem, posicionadas para sair da base da imagem */
+    /* Borboletas com imagem, posicionadas para sair um pouco acima da base da imagem */
     .borboleta {
       position: absolute;
       width: 36px;
@@ -83,7 +83,7 @@
 </head>
 <body>
   <div id="container">
-    <img id="convite-img" src="Aniversário Aghatta XV.png" alt="Convite Aghatta" />
+    <img id="convite-img" src="Aniversário_Aghatta_XV.png" alt="Convite Aghatta" />
     <div id="contador"></div>
   </div>
 
@@ -112,15 +112,12 @@
     const container = document.getElementById('container');
     const conviteImg = document.getElementById('convite-img');
 
-    // Esperar a imagem carregar pra pegar dimensões exatas
     conviteImg.addEventListener('load', () => {
       const totalBorboletas = 15;
 
-      // Pega posição e tamanho da imagem RELATIVO ao container (por isso getBoundingClientRect)
       const imgRect = conviteImg.getBoundingClientRect();
       const containerRect = container.getBoundingClientRect();
 
-      // Ajusta para posição relativa dentro do container:
       const baseLeft = imgRect.left - containerRect.left;
       const baseTop = imgRect.top - containerRect.top;
       const imgWidth = conviteImg.offsetWidth;
@@ -130,16 +127,13 @@
         const b = document.createElement('div');
         b.className = 'borboleta';
 
-        // Posiciona horizontalmente aleatório dentro da largura da imagem
         const x = Math.random() * imgWidth;
-        // Inicia na base da imagem (parte inferior, com offset pra cima para ficar visível)
-        const y = imgHeight - 30 + (Math.random() * 10); // +/- 10px de variação pra naturalidade
+        // Aqui subimos o ponto inicial: -60px em relação à base da imagem (em vez de -30px)
+        const y = imgHeight - 60 + (Math.random() * 20); // variação +/- 20px para naturalidade
 
-        // Define posição dentro do container
         b.style.left = `${baseLeft + x}px`;
         b.style.top = `${baseTop + y}px`;
 
-        // Varia a duração e atraso da animação para naturalidade
         b.style.animationDuration = `${8 + Math.random() * 5}s`;
         b.style.animationDelay = `${Math.random() * 10}s`;
 
@@ -147,7 +141,6 @@
       }
     });
 
-    // Caso a imagem já esteja carregada antes do script rodar (cache), dispara manualmente:
     if (conviteImg.complete) {
       conviteImg.dispatchEvent(new Event('load'));
     }

@@ -27,7 +27,6 @@
       max-width: 90vw;
     }
 
-    /* Imagem central com fundo transparente no arquivo */
     .imagem-central {
       width: 100%;
       height: auto;
@@ -37,7 +36,6 @@
       z-index: 1;
     }
 
-    /* Retângulo azul royal translúcido para o contador */
     #contador-container {
       margin-top: 15px;
       width: 100%;
@@ -57,17 +55,15 @@
       user-select: none;
     }
 
-    /* Borboletas - imagens animadas voando */
     .borboleta {
       position: absolute;
       width: 32px;
       height: 32px;
       pointer-events: none;
       z-index: 5;
-      filter: drop-shadow(0 0 4px gold);
+      opacity: 0;
       animation-timing-function: ease-in-out;
       animation-iteration-count: infinite;
-      animation-direction: alternate;
     }
   </style>
 </head>
@@ -83,24 +79,23 @@
 
   <script>
     const container = document.getElementById('container');
-    const totalBorboletas = 15;
+    const totalBorboletas = 20;
 
     for (let i = 0; i < totalBorboletas; i++) {
       const borboleta = document.createElement('img');
       borboleta.src = 'borboleta.png';
       borboleta.className = 'borboleta';
 
-      // Posição inicial: aleatória no topo da imagem (considerando container)
-      const startX = 20 + Math.random() * (container.clientWidth - 40);
-      const startY = -40 - Math.random() * 80;
+      const startX = 30 + Math.random() * (container.clientWidth - 60);
+      const startY = 160 + Math.random() * 40; // Surgem mais abaixo da imagem
 
       borboleta.style.left = `${startX}px`;
       borboleta.style.top = `${startY}px`;
 
-      // Animação de subida com leve oscilação horizontal
-      const duration = 8000 + Math.random() * 7000; // 8 a 15 segundos
-      const deltaX = (Math.random() - 0.5) * 80; // até +-40px horizontal
-      const deltaY = -180 - Math.random() * 120; // sobe entre 180 a 300 px
+      const deltaX = (Math.random() - 0.5) * 100;
+      const deltaY = -180 - Math.random() * 120;
+      const duration = 8000 + Math.random() * 5000;
+      const delay = Math.random() * 4000;
 
       borboleta.animate([
         { transform: 'translate(0, 0)', opacity: 0 },
@@ -109,14 +104,15 @@
       ], {
         duration: duration,
         iterations: Infinity,
-        delay: Math.random() * duration,
+        delay: delay,
         easing: 'ease-in-out',
+        direction: 'alternate'
       });
 
       container.appendChild(borboleta);
     }
 
-    // Função do contador regressivo
+    // CONTADOR
     const contadorEl = document.getElementById('contador');
     const dataEvento = new Date('2025-09-12T19:00:00');
 
@@ -135,7 +131,7 @@
       contadorEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s para o início`;
     }
 
-    let intervalo = setInterval(atualizarContador, 1000);
+    const intervalo = setInterval(atualizarContador, 1000);
     atualizarContador();
   </script>
 

@@ -82,11 +82,11 @@
 
     for (let i = 0; i < total; i++) {
       const b = document.createElement('img');
-      b.src = "borboleta.png"; // coloque sua imagem no repositório com esse nome
+      b.src = "borboleta.png";
       b.className = 'borboleta';
 
-      // Posição de surgimento: mais acima e mais à direita
-      const startX = window.innerWidth * 0.72 + (Math.random() * 30 - 15);
+      // Posição de surgimento: mais para a esquerda e mesma altura
+      const startX = window.innerWidth * 0.62 + (Math.random() * 30 - 15);
       const startY = window.innerHeight * 0.28 + (Math.random() * 30 - 15);
 
       b.style.left = `${startX}px`;
@@ -94,7 +94,6 @@
 
       container.appendChild(b);
 
-      // Movimento aleatório
       const duration = 8 + Math.random() * 6;
       const angle = (Math.random() - 0.5) * 360;
       const amplitudeX = 100 + Math.random() * 100;
@@ -117,7 +116,6 @@
       );
     }
 
-    // CONTADOR DE TEMPO
     const contadorEl = document.getElementById('contador');
     const dataEvento = new Date('2025-09-12T19:00:00');
 

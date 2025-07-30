@@ -11,43 +11,44 @@
       color: #fff;
       padding: 2em;
       line-height: 1.6em;
+      margin: 0;
     }
+
     h1, h2 {
       color: #8ecaff;
       font-family: 'Parisienne', cursive;
       text-shadow: 0 0 10px #5ab3ff;
+      text-align: center;
     }
 
-    /* Retângulo da mensagem no topo do slideshow */
     .top-message {
-      max-width: 900px;
-      margin: 0 auto 1em;
-      background-color: rgba(0, 26, 77, 0.9);
-      padding: 0.8em 1.5em;
-      border-radius: 8px;
-      box-shadow: 0 0 15px 4px rgba(255, 215, 0, 0.6);
+      max-width: 920px;
+      margin: 1.5em auto 1em;
+      padding: 1em 1.5em;
+      border-radius: 12px;
       text-align: center;
-      font-size: 1.3em;
+      font-size: 1.5em;
       font-weight: bold;
       color: gold;
       font-family: 'Parisienne', cursive;
+      background: rgba(0, 0, 0, 0.4);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(6px);
     }
 
     .slideshow-wrapper {
-      max-width: 900px;
-      margin: 0 auto;
-      border-radius: 12px;
+      max-width: 920px;
+      margin: 0 auto 2em;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 0 15px 4px rgba(255, 215, 0, 0.6);
+      box-shadow: 0 0 25px 6px rgba(255, 215, 0, 0.7);
       background-color: #001a4d;
-      position: relative;
     }
 
     .slideshow-container {
       position: relative;
       width: 100%;
-      padding-top: 66.66%; /* Proporção 3:2 para manter altura proporcional */
-      overflow: hidden;
+      height: 600px; /* Altura real aumentada */
     }
 
     .slideshow-container img {
@@ -56,12 +57,9 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 12px;
       user-select: none;
       pointer-events: none;
     }
-
-    /* Galeria e textos permanecem iguais */
 
     .textos {
       max-width: 600px;
@@ -71,6 +69,7 @@
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(30, 90, 200, 0.4);
     }
+
     .versiculo, .frase-intro, .frase-presenca {
       margin-bottom: 1.5em;
     }
@@ -104,22 +103,13 @@
 
   <div class="slideshow-wrapper">
     <div class="slideshow-container">
-      <img src="imagem1.jpeg" alt="Imagem do slideshow" id="espelho-slide" draggable="false">
+      <img src="imagem1.jpeg" alt="Imagem do slideshow" id="espelho-slide">
     </div>
   </div>
 
-  <h2>Galeria</h2>
-  <div class="galeria">
-    <img src="imagem1.jpeg" alt="Imagem da galeria" id="espelho-galeria" draggable="false">
-  </div>
-
   <script>
-    // Lista das imagens do slideshow
-    const imagens = [];
-    for (let i = 1; i <= 15; i++) {
-      imagens.push(`imagem${i}.jpeg`);
-    }
-
+    // Imagens de 1 a 15
+    const imagens = Array.from({ length: 15 }, (_, i) => `imagem${i + 1}.jpeg`);
     let indiceAtual = 0;
     const slideImg = document.getElementById('espelho-slide');
 
@@ -128,10 +118,9 @@
       slideImg.src = imagens[indiceAtual];
     }
 
-    // Trocar slide a cada 3 segundos
     setInterval(mudarSlide, 3000);
 
-    // Comunicação com a janela principal (para comandos futuros)
+    // Comunicação com a janela principal
     window.addEventListener('message', (event) => {
       const data = event.data;
       if (!data || typeof data !== 'object' || !data.comando) return;
@@ -139,10 +128,7 @@
       switch (data.comando) {
         case 'alterarImagem':
           if (data.seletor === '#slide-img') {
-            document.getElementById('espelho-slide').src = data.novoSrc;
-          }
-          if (data.seletor === '#slide-img' || data.seletor === '.galeria img') {
-            document.getElementById('espelho-galeria').src = data.novoSrc;
+            slideImg.src = data.novoSrc;
           }
           break;
 

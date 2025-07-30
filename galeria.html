@@ -2,106 +2,107 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Galeria Aghatta XV</title>
+  <title>Galeria</title>
   <style>
-    body {
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
       margin: 0;
-      padding: 2em;
-      background-color: #000b2e;
+      padding: 0;
+      height: 100%;
+      background: transparent;
       font-family: 'Georgia', serif;
-      color: white;
       display: flex;
+      align-items: center;
       justify-content: center;
     }
 
-    .container-slideshow {
-      width: 680px;
-      height: 1100px;
-      background: rgba(255, 215, 0, 0.08);
-      border: 4px solid rgba(255, 215, 0, 0.4);
+    .galeria-container {
+      width: 90vw;
+      max-width: 700px;
+      aspect-ratio: 2 / 3;
+      position: relative;
+      border: 8px solid rgba(255, 215, 0, 0.4);
       border-radius: 20px;
-      padding: 1.5em;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+      background-color: rgba(0, 0, 139, 0.2); /* azul royal translúcido */
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
     }
 
-    .titulo-slide {
-      font-size: 2em;
-      margin-bottom: 1em;
+    .frase-topo {
       color: gold;
-      text-shadow: 0 0 10px rgba(255,215,0,0.7);
-      font-family: 'Parisienne', cursive;
+      font-size: 1.5em;
+      font-weight: bold;
+      text-shadow: 0 0 10px gold;
       text-align: center;
+      padding: 1em 0 0.5em;
+      background: rgba(0, 0, 139, 0.3);
+      width: 100%;
+      z-index: 2;
     }
 
-    .slideshow {
+    .slide-container {
+      flex: 1;
       position: relative;
       width: 100%;
       height: 100%;
-      flex: 1;
-      overflow: hidden;
-      border-radius: 16px;
-      background-color: black;
     }
 
-    .slideshow img {
+    .slide {
       position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       opacity: 0;
       transition: opacity 1s ease-in-out;
+      border-radius: 0 0 12px 12px;
     }
 
-    .slideshow img.ativo {
+    .slide.ativa {
       opacity: 1;
       z-index: 1;
-    }
-
-    @media (max-width: 720px) {
-      .container-slideshow {
-        width: 90vw;
-        height: auto;
-      }
     }
   </style>
 </head>
 <body>
 
-  <div class="container-slideshow">
-    <div class="titulo-slide">Um pouco da minha história</div>
-    <div class="slideshow" id="slideshow">
-      <!-- Imagens em slide -->
+  <div class="galeria-container">
+    <div class="frase-topo">Um pouco da minha história</div>
+    <div class="slide-container" id="slide-container">
+      <!-- Slides de imagem1.jpeg a imagem15.jpeg -->
+      <img class="slide ativa" src="imagem1.jpeg" alt="Slide 1" />
+      <img class="slide" src="imagem2.jpeg" alt="Slide 2" />
+      <img class="slide" src="imagem3.jpeg" alt="Slide 3" />
+      <img class="slide" src="imagem4.jpeg" alt="Slide 4" />
+      <img class="slide" src="imagem5.jpeg" alt="Slide 5" />
+      <img class="slide" src="imagem6.jpeg" alt="Slide 6" />
+      <img class="slide" src="imagem7.jpeg" alt="Slide 7" />
+      <img class="slide" src="imagem8.jpeg" alt="Slide 8" />
+      <img class="slide" src="imagem9.jpeg" alt="Slide 9" />
+      <img class="slide" src="imagem10.jpeg" alt="Slide 10" />
+      <img class="slide" src="imagem11.jpeg" alt="Slide 11" />
+      <img class="slide" src="imagem12.jpeg" alt="Slide 12" />
+      <img class="slide" src="imagem13.jpeg" alt="Slide 13" />
+      <img class="slide" src="imagem14.jpeg" alt="Slide 14" />
+      <img class="slide" src="imagem15.jpeg" alt="Slide 15" />
     </div>
   </div>
 
   <script>
-    const imagens = [];
-    for (let i = 1; i <= 15; i++) {
-      imagens.push(`imagem${i}.jpeg`);
-    }
-
-    const container = document.getElementById("slideshow");
-
-    imagens.forEach((src, idx) => {
-      const img = document.createElement("img");
-      img.src = src;
-      if (idx === 0) img.classList.add("ativo");
-      container.appendChild(img);
-    });
-
-    const slides = container.querySelectorAll("img");
-    let atual = 0;
+    const slides = document.querySelectorAll('.slide');
+    let index = 0;
 
     setInterval(() => {
-      slides[atual].classList.remove("ativo");
-      atual = (atual + 1) % slides.length;
-      slides[atual].classList.add("ativo");
-    }, 3000);
+      slides[index].classList.remove('ativa');
+      index = (index + 1) % slides.length;
+      slides[index].classList.add('ativa');
+    }, 4000);
   </script>
 
 </body>

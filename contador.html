@@ -2,121 +2,119 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contador - Aghatta XV</title>
   <style>
     * {
-      margin: 0; padding: 0; box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    body {
-      background: transparent; /* Removido fundo preto */
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow-x: hidden;
       font-family: 'Georgia', serif;
       color: #ffd700;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
-      flex-direction: column;
-      background-color: transparent; /* reforço para transparência */
+      position: relative;
     }
 
     #container {
       position: relative;
       width: 100%;
-      max-width: 420px;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 1;
     }
 
     .imagem-central {
-      width: 100%;
-      height: auto;
-      display: block;
-      user-select: none;
-      position: relative;
+      width: 95vw;
+      max-width: 420px;
       z-index: 1;
-      background: transparent !important; /* remove qualquer fundo */
-    }
-
-    #contador-container {
-      margin-top: 20px;
-      width: 100%;
-      background: rgba(65, 105, 225, 0.75); /* Azul Royal translúcido */
-      border-radius: 12px;
-      padding: 12px 0;
-      text-align: center;
-      box-shadow: 0 0 10px rgba(65, 105, 225, 0.9);
-      position: relative;
-      z-index: 3;
-    }
-
-    #contador {
-      font-size: 1.6em;
-      color: #ffd700;
-      text-shadow: 0 0 8px #ffd700;
-      user-select: none;
+      pointer-events: none;
     }
 
     .borboleta {
       position: absolute;
-      width: 32px;
-      height: 32px;
-      pointer-events: none;
+      width: 40px;
+      height: 40px;
+      background-image: url('borboleta.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      top: calc(50% + 55px); /* cerca de 1cm abaixo do centro */
+      left: 50%;
+      transform: translate(-50%, -50%);
       opacity: 0;
-      z-index: 5;
+      z-index: 999; /* acima de tudo */
+      animation: brilho 2s infinite alternate ease-in-out;
+    }
+
+    @keyframes brilho {
+      0% { filter: drop-shadow(0 0 2px gold); }
+      100% { filter: drop-shadow(0 0 12px #ffd700); }
+    }
+
+    #contador {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: rgba(0, 0, 139, 0.4); /* Azul Royal translúcido */
+      border: 2px solid rgba(255, 215, 0, 0.6);
+      border-radius: 12px;
+      font-size: 1.4em;
+      text-align: center;
+      z-index: 2;
+      text-shadow: 0 0 8px #ffd700;
     }
   </style>
 </head>
 <body>
-
   <div id="container">
     <img src="Aniversário_Aghatta_XV.png" alt="Aniversário Aghatta XV" class="imagem-central" />
-    <div id="contador-container">
-      <div id="contador">Carregando contador...</div>
-    </div>
+    <div id="contador">Carregando contador...</div>
   </div>
 
   <script>
     const container = document.getElementById('container');
     const totalBorboletas = 20;
 
-    for (let i = 0; i < totalBorboletas; i++) {
-      const borboleta = document.createElement('img');
-      borboleta.src = 'borboleta.png';
-      borboleta.className = 'borboleta';
+    function criarBorboleta() {
+      const b = document.createElement('div');
+      b.className = 'borboleta';
 
-      // Posição fixa, descida para mais abaixo sobre a imagem (ajustado Y)
-      const startX = 200;
-      const startY = 180; // antes 140, agora 180 para surgir mais embaixo
+      container.appendChild(b);
 
-      borboleta.style.left = `${startX}px`;
-      borboleta.style.top = `${startY}px`;
+      const duracao = 7000 + Math.random() * 5000;
+      const deslocamentoX = (Math.random() - 0.5) * 300;
+      const deslocamentoY = -300 - Math.random() * 300;
+      const rotacao = (Math.random() - 0.5) * 180;
 
-      // Glow aleatório
-      const glow = 6 + Math.random() * 14;
-      borboleta.style.filter = `drop-shadow(0 0 ${glow}px gold)`;
+      b.animate(
+        [
+          { transform: 'translate(-50%, -50%) scale(0.8)', opacity: 0 },
+          { transform: `translate(${deslocamentoX}px, ${deslocamentoY}px) rotate(${rotacao}deg) scale(1.1)`, opacity: 1 },
+          { transform: `translate(${deslocamentoX * 1.2}px, ${deslocamentoY * 1.5}px) scale(0.6)`, opacity: 0 }
+        ],
+        {
+          duration: duracao,
+          easing: 'ease-in-out',
+          iterations: 1,
+          fill: 'forwards'
+        }
+      );
 
-      const deltaX = (Math.random() - 0.5) * 160;
-      const deltaY = -150 - Math.random() * 200;
-      const scale = 0.8 + Math.random() * 0.7;
-      const rotate = (Math.random() - 0.5) * 180;
-      const duration = 7000 + Math.random() * 4000;
-      const delay = Math.random() * 5000;
-
-      borboleta.animate([
-        { transform: `translate(0, 0) scale(${scale}) rotate(0deg)`, opacity: 0 },
-        { transform: `translate(${deltaX/2}px, ${deltaY/2}px) scale(${scale + 0.1}) rotate(${rotate/2}deg)`, opacity: 1 },
-        { transform: `translate(${deltaX}px, ${deltaY}px) scale(${scale}) rotate(${rotate}deg)`, opacity: 0 }
-      ], {
-        duration: duration,
-        iterations: Infinity,
-        delay: delay,
-        easing: 'ease-in-out',
-        direction: 'alternate'
-      });
-
-      container.appendChild(borboleta);
+      setTimeout(() => b.remove(), duracao + 2000);
     }
+
+    setInterval(() => {
+      criarBorboleta();
+    }, 800);
 
     // CONTADOR
     const contadorEl = document.getElementById('contador');
@@ -137,9 +135,8 @@
       contadorEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s para o início`;
     }
 
-    const intervalo = setInterval(atualizarContador, 1000);
+    let intervalo = setInterval(atualizarContador, 1000);
     atualizarContador();
   </script>
-
 </body>
 </html>

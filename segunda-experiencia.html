@@ -436,6 +436,20 @@
     b.appendChild(corpo);
     container.appendChild(b);
   }
+<script>
+  window.addEventListener('message', (event) => {
+    const data = event.data;
+    if (data.comando === 'mudarBorboletas') {
+      const novas = document.querySelectorAll('.borboleta, .borboleta1, .borboleta2, .borboleta3'); // ajusta aqui se tiver mais classes
+      novas.forEach(b => {
+        if (b.tagName.toLowerCase() === 'img') {
+          b.src = data.novaImagem;
+        } else {
+          b.style.backgroundImage = `url(${data.novaImagem})`;
+        }
+      });
+    }
+  });
 </script>
 
 </body>

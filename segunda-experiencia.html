@@ -101,6 +101,37 @@
       transform: translateY(0);
     }
 
+    .titulo-central {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1em;
+      margin-bottom: 1em;
+    }
+
+    .coroa {
+      height: 120px;
+      user-select: none;
+    }
+
+    .nome-pulsante {
+      font-size: 2.8em;
+      color: gold;
+      animation: pulsar 2.5s ease-in-out infinite;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+    }
+
+    @keyframes pulsar {
+      0%, 100% {
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+        transform: scale(1);
+      }
+      50% {
+        text-shadow: 0 0 25px rgba(255, 215, 0, 1);
+        transform: scale(1.07);
+      }
+    }
+
     iframe {
       width: 100vw;
       height: 80vh;
@@ -126,32 +157,6 @@
       opacity: 1;
       transform: translateY(0);
     }
-
-    /* Borboletas */
-    .borboleta {
-      position: fixed;
-      width: 40px;
-      height: 40px;
-      background-image: url('borboleta.png');
-      background-size: cover;
-      animation: voar 10s linear infinite;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    @keyframes voar {
-      0% {
-        transform: translate(0, 0) scale(1) rotate(0deg);
-        opacity: 0;
-      }
-      20% {
-        opacity: 1;
-      }
-      100% {
-        transform: translate(100vw, -100vh) scale(1.5) rotate(720deg);
-        opacity: 0;
-      }
-    }
   </style>
 </head>
 <body>
@@ -169,12 +174,11 @@
 
 <!-- Conteúdo principal -->
 <div class="conteudo">
-  <div style="display:flex; align-items:center; justify-content:center; gap: 1em;">
-    <img src="coroa.png" alt="Coroa" style="height:70px; user-select:none;" />
-    <span>Aghatta XV</span>
-    <img src="coroa.png" alt="Coroa" style="height:70px; user-select:none;" />
+  <div class="titulo-central">
+    <img src="coroa.png" alt="Coroa" class="coroa" />
+    <span class="nome-pulsante">Aghatta XV</span>
+    <img src="coroa.png" alt="Coroa" class="coroa" />
   </div>
-  <p>Aghatta XV</p>
 </div>
 
 <!-- Versículos -->
@@ -198,7 +202,6 @@
     tela.classList.add('oculta');
     body.classList.add('aberto');
     audio.play().catch(e => console.warn('Autoplay bloqueado:', e));
-    soltarBorboletas();
   }
 
   tela.addEventListener('keydown', e => {
@@ -225,19 +228,6 @@
       }
     });
   });
-
-  // Borboletas animadas
-  function soltarBorboletas() {
-    for (let i = 0; i < 15; i++) {
-      const b = document.createElement('div');
-      b.className = 'borboleta';
-      b.style.top = Math.random() * window.innerHeight + 'px';
-      b.style.left = -50 + 'px';
-      b.style.animationDuration = (5 + Math.random() * 10) + 's';
-      document.body.appendChild(b);
-      setTimeout(() => b.remove(), 15000);
-    }
-  }
 </script>
 
 </body>

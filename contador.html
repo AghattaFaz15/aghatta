@@ -58,12 +58,12 @@
 
     .borboleta {
       position: absolute;
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       background-image: url('borboleta.png');
       background-size: contain;
       background-repeat: no-repeat;
-      opacity: 0.8;
+      opacity: 0;
       filter: drop-shadow(0 0 6px gold) brightness(1.2);
       animation: baterAsas 2s infinite ease-in-out;
       pointer-events: none;
@@ -73,11 +73,9 @@
     @keyframes baterAsas {
       0%, 100% {
         transform: scale(1) rotate(0deg);
-        opacity: 0.8;
       }
       50% {
         transform: scale(1.1) rotate(10deg);
-        opacity: 1;
       }
     }
   </style>
@@ -93,37 +91,37 @@
     const totalBorboletas = 15;
 
     const centerX = container.clientWidth / 2;
-    const centerY = container.clientHeight / 2 + 60; // 🔥🔥 Desceu o ponto de origem geral das borboletas
+    const centerY = container.clientHeight / 2 + 40; // 🔼 Subiu um pouco o surgimento
 
     for (let i = 0; i < totalBorboletas; i++) {
       const b = document.createElement('div');
       b.className = 'borboleta';
 
-      const offsetX = (Math.random() - 0.3) * 40; // Mais para direita
-      const offsetY = (Math.random() - 0.3) * 30; // Mais abaixo
+      const offsetX = (Math.random() - 0.3) * 40;
+      const offsetY = (Math.random() - 0.3) * 30;
 
       b.style.left = `${centerX + offsetX}px`;
       b.style.top = `${centerY + offsetY}px`;
 
       container.appendChild(b);
 
-      const duration = 10 + Math.random() * 5;
-      const amplitudeX = 50 + Math.random() * 40;
-      const angle = (Math.random() - 0.5) * 50;
-      const delay = Math.random() * 5000;
+      const duration = 12 + Math.random() * 5;
+      const amplitudeX = 100 + Math.random() * 80;
+      const angle = (Math.random() - 0.5) * 60;
+      const delay = Math.random() * 3000;
 
       b.animate(
         [
-          { transform: `translate(0, 0) rotate(0deg) scale(1)`, opacity: 1 },
-          { transform: `translate(${amplitudeX}px, -150px) rotate(${angle}deg) scale(1.1)`, opacity: 0.8 },
-          { transform: `translate(${-amplitudeX}px, -300px) rotate(${-angle}deg) scale(1)`, opacity: 0 },
+          { transform: `translate(0, 0) rotate(0deg) scale(1)`, opacity: 0 },
+          { transform: `translate(${amplitudeX}px, -200px) rotate(${angle}deg) scale(1.1)`, opacity: 0.9 },
+          { transform: `translate(${-amplitudeX}px, -400px) rotate(${-angle}deg) scale(1)`, opacity: 0 },
         ],
         {
           duration: duration * 1000,
           iterations: Infinity,
           delay: delay,
           easing: "ease-in-out",
-          direction: "alternate",
+          direction: "normal",
         }
       );
     }

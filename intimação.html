@@ -95,7 +95,7 @@
   function ativarExperiencia() {
     tela.classList.add('oculta');
     body.classList.add('aberto');
-    audio.play().catch(e => console.warn('Autoplay bloqueado:', e));
+    audio.play().catch(e => console.warn('Autoplay bloqueado pelo navegador:', e));
   }
 
   tela.addEventListener('keydown', e => {
@@ -105,12 +105,13 @@
     }
   });
 
-  // Se veio de um redirecionamento, ativa automaticamente após um pequeno atraso
+  // Detectar se tem ?auto=true na URL
   window.addEventListener('load', () => {
-    if (document.referrer && document.referrer !== window.location.href) {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('auto') === 'true') {
       setTimeout(() => {
         ativarExperiencia();
-      }, 1000);
+      }, 300); // pequeno delay pra garantir carregamento
     }
   });
 </script>

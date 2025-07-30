@@ -24,30 +24,39 @@
     align-items: center;
     user-select: none;
     transition: opacity 0.6s ease;
+    background: black;
   }
   .oculto {
     opacity: 0;
     pointer-events: none;
   }
 
-  /* Tela 1 */
+  /* Tela 1 - rolo fechado */
   #tela1 {
     background: white;
     cursor: pointer;
-    font-size: 2.5em;
-    text-shadow: 0 0 10px gold;
+    font-size: 2.2em;
     color: #b8860b;
-    flex-direction: column;
     justify-content: flex-start;
-    padding-top: 15vh;
+    padding-top: 10vh;
+  }
+  #roloFechado {
+    max-width: 70vw;
+    max-height: 70vh;
+    object-fit: contain;
+    user-select: none;
   }
   #tela1 span {
-    margin-top: 0;
+    margin-top: 1em;
     display: block;
     text-align: center;
+    font-family: 'Parisienne', cursive;
+    font-size: 2.8em;
+    color: gold;
+    text-shadow: 0 0 12px gold;
   }
 
-  /* Tela 2 */
+  /* Tela 2 - rolo aberto e texto */
   #tela2 {
     background: url('roloaberto.png') no-repeat center/contain;
     padding: 2em 2.5em 2em;
@@ -89,7 +98,30 @@
     cursor: pointer;
   }
 
-  /* Tela 4 */
+  /* Tela 3 - imagem capa com audio toctoc */
+  #tela3 {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    user-select: none;
+  }
+  #imagemCapa {
+    max-width: 80vw;
+    max-height: 80vh;
+    object-fit: contain;
+    cursor: pointer;
+    filter: drop-shadow(0 0 10px gold);
+  }
+  #textoToque {
+    color: gold;
+    font-family: 'Parisienne', cursive;
+    font-size: 2em;
+    margin-top: 1em;
+    text-shadow: 0 0 12px gold;
+  }
+
+  /* Tela 4 - video fullscreen */
   #tela4 {
     background: black;
     justify-content: center;
@@ -105,11 +137,13 @@
     background: black;
   }
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet" />
 </head>
 <body>
 
   <!-- Tela 1 -->
   <div class="tela" id="tela1" role="button" tabindex="0" aria-label="Toque para abrir o pergaminho">
+    <img id="roloFechado" src="rolofechado.png" alt="Pergaminho fechado" draggable="false" />
     <span>TOQUE PARA ABRIR...</span>
   </div>
 
@@ -133,6 +167,13 @@
     <button id="botaoAvancar" aria-label="Avançar para a próxima etapa">Avançar</button>
   </div>
 
+  <!-- Tela 3 -->
+  <div class="tela oculto" id="tela3" role="button" tabindex="0" aria-label="Imagem capa, toque para continuar">
+    <img id="imagemCapa" src="imagem-capa.jpg" alt="Imagem capa da Aghatta XV" draggable="false" />
+    <div id="textoToque">Toque para continuar</div>
+    <audio id="audioToctoc" src="toctoc.mp3" preload="auto" loop></audio>
+  </div>
+
   <!-- Tela 4 -->
   <div class="tela oculto" id="tela4" aria-label="Mensagem em vídeo">
     <video id="videoMensagem" muted playsinline preload="auto">
@@ -144,21 +185,22 @@
 <script>
   const tela1 = document.getElementById('tela1');
   const tela2 = document.getElementById('tela2');
+  const tela3 = document.getElementById('tela3');
   const tela4 = document.getElementById('tela4');
   const textoConvite = document.getElementById('textoConvite');
   const botaoAvancar = document.getElementById('botaoAvancar');
   const videoMensagem = document.getElementById('videoMensagem');
-
-  // Troca visibilidade das telas
+  const audioToctoc = document.getElementById('audioToctoc');
+  const imagemCapa = document.getElementById('imagemCapa');
+  
+  // Função para trocar telas
   function mostrarTela(esconder, mostrar) {
     esconder.classList.add('oculto');
     mostrar.classList.remove('oculto');
   }
 
-  // Tela 1: abrir pergaminho (ir para tela 2)
-  tela1.addEventListener('click', () => {
-    mostrarTela(tela1, tela2);
-  });
+  // Tela 1: abre tela 2
+  tela1.addEventListener('click', () => mostrarTela(tela1, tela2));
   tela1.addEventListener('keydown', e => {
     if(e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -166,17 +208,32 @@
     }
   });
 
-  // Tela 2: mostrar botão avançar só no fim do scroll do texto
+  // Tela 2: mostrar botão avançar no fim do scroll
   textoConvite.addEventListener('scroll', () => {
     if(textoConvite.scrollTop + textoConvite.clientHeight >= textoConvite.scrollHeight - 5) {
       botaoAvancar.classList.add('mostrar');
     }
   });
 
-  // Botão avançar para tela 4 (pula tela 3)
+  // Botão avançar: vai para tela 3 e inicia áudio toctoc
   botaoAvancar.addEventListener('click', () => {
-    mostrarTela(tela2, tela4);
+    mostrarTela(tela2, tela3);
+    audioToctoc.play().catch(() => {});
+  });
+
+  // Tela 3: ao toque, para áudio e inicia vídeo
+  function avançarTela4() {
+    audioToctoc.pause();
+    mostrarTela(tela3, tela4);
     videoMensagem.play().catch(() => {});
+  }
+
+  tela3.addEventListener('click', avançarTela4);
+  tela3.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      avançarTela4();
+    }
   });
 
   // Tela 4: fim do vídeo redireciona

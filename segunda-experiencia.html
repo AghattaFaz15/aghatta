@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Segunda Experiência</title>
+  <title>Aghatta XV</title>
   <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
+    html, body {
+      height: 100%;
       font-family: 'Georgia', serif;
-      background-color: #000; /* fundo inicial preto */
+      background-color: #000;
       overflow: hidden;
       transition: background 1.2s ease-in-out;
       color: white;
@@ -24,12 +25,11 @@
       height: 100vh;
       background: #000;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       position: fixed;
       inset: 0;
-      z-index: 10;
+      z-index: 9999;
       transition: opacity 1.2s ease, visibility 1.2s ease;
       opacity: 1;
       visibility: visible;
@@ -44,39 +44,39 @@
     }
 
     .texto-inicial {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1em;
       font-family: 'Parisienne', cursive;
       font-size: 3em;
       color: gold;
       text-shadow: 0 0 10px rgba(255,215,0,0.7);
     }
 
-    .conteudo {
+    .conteudo-total {
       opacity: 0;
       pointer-events: none;
       transform: translateY(40px);
       transition: opacity 1.5s ease, transform 1.5s ease;
-      padding: 5em 2em;
-      max-width: 800px;
+      padding: 4em 1em;
+      max-width: 900px;
       margin: 0 auto;
-      z-index: 1;
     }
 
-    body.aberto .conteudo {
+    body.aberto .conteudo-total {
       opacity: 1;
       pointer-events: auto;
       transform: translateY(0);
     }
 
+    .conteudo-total section {
+      margin-bottom: 5em;
+    }
+
     iframe {
-      display: block;
       width: 100%;
       border: none;
-      margin: 3em 0;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+      height: auto;
+      min-height: 600px;
+      background-color: rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
     }
   </style>
 </head>
@@ -85,21 +85,27 @@
 <audio id="audio2" src="audio.mp3" preload="auto"></audio>
 
 <div class="tela-inicial" onclick="ativarExperiencia()" role="button" tabindex="0" aria-label="Iniciar experiência">
-  <div class="texto-inicial">
-    Intimação Celestial
-  </div>
+  <div class="texto-inicial">Intimação Celestial</div>
 </div>
 
-<div class="conteudo">
-  <h2>Bem-vindo à celebração de Aghatta XV</h2>
-  <p>Você está prestes a testemunhar uma jornada guiada pela fé, luz e promessas cumpridas.</p>
+<div class="conteudo-total">
+  <section>
+    <h2 style="font-family:'Parisienne', cursive; font-size: 2.5em; color: gold; text-align: center; text-shadow: 0 0 10px rgba(255,215,0,0.6);">
+      Aghatta XV
+    </h2>
+    <p style="text-align: center; font-size: 1.2em; margin-top: 1em;">
+      Aghatta XV
+    </p>
+  </section>
+
+  <section>
+    <iframe src="galeria.html" title="Galeria de Fotos"></iframe>
+  </section>
+
+  <section>
+    <iframe src="contador.html" title="Contagem Regressiva"></iframe>
+  </section>
 </div>
-
-<!-- GALERIA embutida -->
-<iframe src="galeria.html" height="850"></iframe>
-
-<!-- CONTADOR embutido -->
-<iframe src="contador.html" height="600"></iframe>
 
 <script>
   const audio = document.getElementById('audio2');
@@ -109,7 +115,7 @@
   function ativarExperiencia() {
     tela.classList.add('oculta');
     body.classList.add('aberto');
-    audio.play().catch(e => console.warn('Autoplay bloqueado pelo navegador:', e));
+    audio.play().catch(e => console.warn('Autoplay bloqueado:', e));
   }
 
   tela.addEventListener('keydown', e => {
@@ -122,9 +128,7 @@
   window.addEventListener('load', () => {
     const params = new URLSearchParams(window.location.search);
     if (params.get('auto') === 'true') {
-      setTimeout(() => {
-        ativarExperiencia();
-      }, 300);
+      setTimeout(() => ativarExperiencia(), 300);
     }
   });
 </script>

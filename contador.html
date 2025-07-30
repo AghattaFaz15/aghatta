@@ -23,8 +23,8 @@
 
     #container {
       position: relative;
-      width: 320px;
-      max-width: 90vw;
+      width: 100%;
+      max-width: 420px;
     }
 
     .imagem-central {
@@ -37,9 +37,9 @@
     }
 
     #contador-container {
-      margin-top: 15px;
+      margin-top: 20px;
       width: 100%;
-      background: rgba(65, 105, 225, 0.75);
+      background: rgba(65, 105, 225, 0.75); /* Azul Royal translúcido */
       border-radius: 12px;
       padding: 12px 0;
       text-align: center;
@@ -60,10 +60,8 @@
       width: 32px;
       height: 32px;
       pointer-events: none;
-      z-index: 5;
       opacity: 0;
-      animation-timing-function: ease-in-out;
-      animation-iteration-count: infinite;
+      z-index: 5;
     }
   </style>
 </head>
@@ -71,7 +69,6 @@
 
   <div id="container">
     <img src="Aniversário_Aghatta_XV.png" alt="Aniversário Aghatta XV" class="imagem-central" />
-
     <div id="contador-container">
       <div id="contador">Carregando contador...</div>
     </div>
@@ -86,21 +83,28 @@
       borboleta.src = 'borboleta.png';
       borboleta.className = 'borboleta';
 
-      const startX = 30 + Math.random() * (container.clientWidth - 60);
-      const startY = 160 + Math.random() * 40; // Surgem mais abaixo da imagem
+      // Posição fixa (ponto sobre o "12" da imagem, ajuste fino se quiser)
+      const startX = 200;
+      const startY = 140;
 
       borboleta.style.left = `${startX}px`;
       borboleta.style.top = `${startY}px`;
 
-      const deltaX = (Math.random() - 0.5) * 100;
-      const deltaY = -180 - Math.random() * 120;
-      const duration = 8000 + Math.random() * 5000;
-      const delay = Math.random() * 4000;
+      // Glow aleatório
+      const glow = 6 + Math.random() * 14;
+      borboleta.style.filter = `drop-shadow(0 0 ${glow}px gold)`;
+
+      const deltaX = (Math.random() - 0.5) * 160;
+      const deltaY = -150 - Math.random() * 200;
+      const scale = 0.8 + Math.random() * 0.7;
+      const rotate = (Math.random() - 0.5) * 180;
+      const duration = 7000 + Math.random() * 4000;
+      const delay = Math.random() * 5000;
 
       borboleta.animate([
-        { transform: 'translate(0, 0)', opacity: 0 },
-        { transform: `translate(${deltaX / 2}px, ${deltaY / 2}px)`, opacity: 1 },
-        { transform: `translate(${deltaX}px, ${deltaY}px)`, opacity: 0 }
+        { transform: `translate(0, 0) scale(${scale}) rotate(0deg)`, opacity: 0 },
+        { transform: `translate(${deltaX/2}px, ${deltaY/2}px) scale(${scale + 0.1}) rotate(${rotate/2}deg)`, opacity: 1 },
+        { transform: `translate(${deltaX}px, ${deltaY}px) scale(${scale}) rotate(${rotate}deg)`, opacity: 0 }
       ], {
         duration: duration,
         iterations: Infinity,

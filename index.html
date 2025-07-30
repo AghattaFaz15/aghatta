@@ -11,6 +11,7 @@
       overflow: hidden;
       font-family: 'Dancing Script', cursive;
       background: #fff;
+      user-select: none;
     }
     .tela {
       position: absolute;
@@ -28,39 +29,43 @@
     .escondido {
       opacity: 0;
       pointer-events: none;
+      transition: opacity 1s ease-in-out;
     }
-    /* === Rolo Fechado === */
+    /* Primeira tela: rolo fechado */
     #roloFechado img {
       max-width: 95vw;
       height: auto;
-      transform: scale(1.3);
+      transform: scale(1.4);
       margin-top: 8vh;
       object-fit: contain;
       display: block;
       margin-left: auto;
       margin-right: auto;
+      user-select: none;
     }
-    #roloFechado div.texto {
+    #roloFechado .texto {
       position: absolute;
       top: 5vh;
       width: 100%;
       color: #000;
-      font-size: 3.5vw;
+      font-size: 3.8vw;
       text-align: center;
       font-weight: bold;
-      text-shadow: 1px 1px 2px #fff;
+      text-shadow: 1px 1px 3px #fff;
       user-select: none;
     }
-    #roloFechado div.texto span {
-      font-size: 2.2vw;
+    #roloFechado .texto span {
+      font-size: 2.4vw;
       display: block;
       margin-top: 0.6rem;
     }
 
-    /* === Rolo Aberto === */
+    /* Segunda tela: rolo aberto */
     #roloAberto {
       background: #000;
       overflow: hidden;
+      user-select: text;
+      color: #3b0a49;
     }
     #roloAberto img {
       position: absolute;
@@ -79,17 +84,14 @@
       overflow-y: scroll;
       background: transparent;
       padding: 4vh 4vw 30vh 4vw;
-      font-size: 2.8vw;
-      color: #3b0a49;
-      text-shadow: 1px 1px 2px #fff;
+      font-size: 3.2vw;
       line-height: 1.6;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(107, 63, 160, 0.7) transparent;
-      user-select: text;
+      text-shadow: 1px 1px 3px #fff;
       position: relative;
       z-index: 2;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(107, 63, 160, 0.7) transparent;
     }
-    /* Scrollbar para Webkit */
     #textoContainer::-webkit-scrollbar {
       width: 8px;
     }
@@ -102,13 +104,11 @@
       border: 2px solid transparent;
       background-clip: content-box;
     }
-
-    /* Botão Avançar */
     #botaoAvancar {
       position: absolute;
       bottom: 12vh;
-      padding: 14px 32px;
-      font-size: 1.8vw;
+      padding: 16px 36px;
+      font-size: 2vw;
       background: #6b3fa0;
       color: white;
       border: none;
@@ -125,10 +125,12 @@
       transform: scale(1.05);
     }
 
-    /* Porta */
+    /* Terceira tela: porta com imagem e texto */
     #porta {
       background: #000;
       overflow: hidden;
+      position: relative;
+      user-select: none;
     }
     #porta img {
       width: 100vw;
@@ -145,9 +147,36 @@
       color: #fff;
       font-size: 3.5vw;
       text-shadow: 2px 2px 6px #000;
+      cursor: pointer;
       user-select: none;
+      font-weight: 600;
     }
 
+    /* Vídeo */
+    #videoContainer {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+      transition: opacity 1s ease-in-out;
+      z-index: 10;
+      user-select: none;
+    }
+    #videoContainer.escondido {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #videoContainer video {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      user-select: none;
+    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
 </head>
@@ -162,7 +191,7 @@
     </div>
   </div>
 
-  <!-- Tela 2: Rolo Aberto com texto -->
+  <!-- Tela 2: Rolo Aberto -->
   <div id="roloAberto" class="tela escondido">
     <img src="roloaberto.png" alt="Rolo Aberto" />
     <div id="textoContainer">
@@ -200,24 +229,39 @@
     <button id="botaoAvancar">Avançar</button>
   </div>
 
-  <!-- Tela 3: Porta com imagem e frase -->
+  <!-- Tela 3: Porta -->
   <div id="porta" class="tela escondido">
     <img src="imagem-capa.jpg" alt="Porta" />
-    <div id="portaTexto">
+    <div id="portaTexto" title="Toque para abrir vídeo">
       Os Céus batem à porta...<br />
       Toque para abrir
     </div>
   </div>
+
+  <!-- Tela 4: Vídeo -->
+  <div id="videoContainer" class="escondido">
+    <video id="videoMensagem" playsinline>
+      <source src="mensagem.mp4" type="video/mp4" />
+      Seu navegador não suporta vídeo.
+    </video>
+  </div>
+
+  <!-- Áudio toctoc -->
+  <audio id="toctoc" src="toctoc.mp3" preload="auto" loop></audio>
 
   <script>
     const telas = {
       roloFechado: document.getElementById('roloFechado'),
       roloAberto: document.getElementById('roloAberto'),
       porta: document.getElementById('porta'),
+      videoContainer: document.getElementById('videoContainer'),
+      videoMensagem: document.getElementById('videoMensagem'),
+      toctoc: document.getElementById('toctoc'),
     };
 
     const textoContainer = document.getElementById('textoContainer');
     const botaoAvancar = document.getElementById('botaoAvancar');
+    const portaTexto = document.getElementById('portaTexto');
 
     // Tela 1 => Tela 2
     telas.roloFechado.addEventListener('click', () => {
@@ -233,14 +277,25 @@
       }
     });
 
-    // Tela 2 => Tela 3 ao clicar no botão avançar
+    // Tela 2 => Tela 3
     botaoAvancar.addEventListener('click', () => {
       telas.roloAberto.classList.add('escondido');
       telas.porta.classList.remove('escondido');
+      telas.toctoc.play().catch(() => {});
     });
 
-    // Tela 3 => segunda-experiencia.html ao clicar na porta
+    // Tela 3: toca o som toctoc em loop até toque
     telas.porta.addEventListener('click', () => {
+      if (!telas.videoContainer.classList.contains('escondido')) return;
+      telas.toctoc.pause();
+      telas.toctoc.currentTime = 0;
+      telas.porta.classList.add('escondido');
+      telas.videoContainer.classList.remove('escondido');
+      telas.videoMensagem.play();
+    });
+
+    // Ao terminar vídeo, redireciona
+    telas.videoMensagem.addEventListener('ended', () => {
       window.location.href = "segunda-experiencia.html";
     });
   </script>

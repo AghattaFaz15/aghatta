@@ -73,8 +73,6 @@
     iframe {
       width: 100%;
       border: none;
-      height: auto;
-      min-height: 600px;
       background: transparent;
     }
 
@@ -84,13 +82,13 @@
       justify-content: center;
       gap: 1em;
       font-family: 'Parisienne', cursive;
-      font-size: 2.5em;
+      font-size: 2.8em;
       color: gold;
       text-shadow: 0 0 10px rgba(255,215,0,0.6);
     }
 
     .titulo-central img {
-      width: 50px;
+      width: 80px;
       height: auto;
     }
 
@@ -120,11 +118,11 @@
   </section>
 
   <section>
-    <iframe src="galeria.html" title="Galeria de Fotos"></iframe>
+    <iframe id="galeriaFrame" src="galeria.html" scrolling="no"></iframe>
   </section>
 
   <section>
-    <iframe src="contador.html" title="Contagem Regressiva"></iframe>
+    <iframe id="contadorFrame" src="contador.html" scrolling="no"></iframe>
   </section>
 </div>
 
@@ -150,6 +148,16 @@
     const params = new URLSearchParams(window.location.search);
     if (params.get('auto') === 'true') {
       setTimeout(() => ativarExperiencia(), 300);
+    }
+  });
+
+  // Ajustar altura automática dos iframes
+  window.addEventListener("message", function(event) {
+    if (event.data && event.data.type === "resize-iframe") {
+      const iframe = document.getElementById(event.data.id);
+      if (iframe) {
+        iframe.style.height = event.data.height + "px";
+      }
     }
   });
 </script>

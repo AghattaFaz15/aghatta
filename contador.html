@@ -2,69 +2,130 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contador</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contador - Aghatta XV</title>
   <style>
     body {
-      margin: 0;
+      font-family: Georgia, serif;
+      background: #000b2e;
+      color: #fff;
       padding: 2em;
-      font-family: 'Georgia', serif;
-      background: transparent;
-      color: white;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    #container {
+      max-width: 800px;
+      width: 100%;
+      position: relative;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2em;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(30, 90, 200, 0.4);
+      overflow: visible;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 500px;
     }
-
-    h2 {
-      font-size: 2em;
-      color: gold;
+    #convite-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      display: block;
+      margin: 0 auto 1.5em;
+      position: relative;
+      z-index: 1;
     }
-
     #contador {
-      font-size: 2.5em;
-      margin-top: 1em;
+      font-size: 2em;
       font-weight: bold;
+      color: gold;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+      margin-top: auto;
+      padding-top: 1em;
+      z-index: 2;
+      position: relative;
+      background: rgba(0,0,0,0.3);
+      border-radius: 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    /* Borboletas com imagem */
+    .borboleta {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      animation-name: voar;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: 0;
+      background-image: url('borboleta.png'); /* sua imagem de borboleta */
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    @keyframes voar {
+      0% {
+        transform: translate(var(--x), var(--y)) scale(1);
+        opacity: 0.9;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(calc(var(--x) + 100px), calc(var(--y) - 600px)) scale(0.5);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
-
-  <h2>Contagem Regressiva</h2>
-  <div id="contador">Carregando...</div>
+  <div id="container">
+    <img id="convite-img" src="Aniversário Aghatta XV.png" alt="Convite Aghatta" />
+    <div id="contador"></div>
+  </div>
 
   <script>
-    const destino = new Date("2025-09-12T19:00:00").getTime();
-    const el = document.getElementById('contador');
+    const contadorEl = document.getElementById('contador');
+    const dataEvento = new Date('2025-09-12T19:00:00');
 
     function atualizarContador() {
-      const agora = new Date().getTime();
-      const distancia = destino - agora;
-
-      if (distancia < 0) {
-        el.textContent = "É hoje! 🔥";
+      const agora = new Date();
+      const diff = dataEvento - agora;
+      if (diff <= 0) {
+        contadorEl.textContent = 'O evento já começou!';
+        clearInterval(intervalo);
         return;
       }
-
-      const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
-      const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
-
-      el.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((diff % (1000 * 60)) / 1000);
+      contadorEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s para o início`;
     }
 
-    setInterval(atualizarContador, 1000);
+    let intervalo = setInterval(atualizarContador, 1000);
     atualizarContador();
-  </script>
 
-  <script>
-    window.addEventListener('load', () => {
-      window.parent.postMessage({
-        type: 'resize-iframe',
-        id: 'contadorFrame',
-        height: document.body.scrollHeight
-      }, '*');
-    });
-  </script>
+    const container = document.getElementById('container');
+    const total = 15;
 
+    for (let i = 0; i < total; i++) {
+      const b = document.createElement('div');
+      b.className = 'borboleta';
+      b.style.setProperty('--x', `${(Math.random() - 0.5) * 600}px`);
+      b.style.setProperty('--y', `${-Math.random() * 800 - 200}px`);
+      b.style.animationDuration = `${10 + Math.random() * 5}s`;
+      b.style.animationDelay = `${Math.random() * 10}s`;
+      container.appendChild(b);
+    }
+  </script>
 </body>
 </html>

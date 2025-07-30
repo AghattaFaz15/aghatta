@@ -6,54 +6,48 @@
   <title>Contador - Aghatta XV</title>
   <style>
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      margin: 0; padding: 0; box-sizing: border-box;
     }
 
     body {
       background: linear-gradient(to bottom, #000, #111);
-      overflow-x: hidden;
       font-family: 'Georgia', serif;
       color: #ffd700;
-      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
       flex-direction: column;
-      position: relative;
     }
 
     #container {
       position: relative;
       width: 320px;
       max-width: 90vw;
-      height: auto;
-      overflow: visible;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 20px;
     }
 
+    /* Imagem central com fundo transparente no arquivo */
     .imagem-central {
       width: 100%;
       height: auto;
       display: block;
-      z-index: 1;
       user-select: none;
+      position: relative;
+      z-index: 1;
     }
 
+    /* Retângulo azul royal translúcido para o contador */
     #contador-container {
-      position: relative;
       margin-top: 15px;
       width: 100%;
-      background: rgba(65, 105, 225, 0.7); /* azul royal translúcido */
+      background: rgba(65, 105, 225, 0.75);
       border-radius: 12px;
       padding: 12px 0;
       text-align: center;
-      z-index: 10;
-      box-shadow: 0 0 10px rgba(65, 105, 225, 0.8);
+      box-shadow: 0 0 10px rgba(65, 105, 225, 0.9);
+      position: relative;
+      z-index: 3;
     }
 
     #contador {
@@ -63,10 +57,11 @@
       user-select: none;
     }
 
+    /* Borboletas - imagens animadas voando */
     .borboleta {
       position: absolute;
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       pointer-events: none;
       z-index: 5;
       filter: drop-shadow(0 0 4px gold);
@@ -88,27 +83,26 @@
 
   <script>
     const container = document.getElementById('container');
-    const total = 15; // número de borboletas
+    const totalBorboletas = 15;
 
-    for (let i = 0; i < total; i++) {
-      const b = document.createElement('img');
-      b.src = 'borboleta.png';
-      b.className = 'borboleta';
+    for (let i = 0; i < totalBorboletas; i++) {
+      const borboleta = document.createElement('img');
+      borboleta.src = 'borboleta.png';
+      borboleta.className = 'borboleta';
 
-      // Posição inicial acima da imagem central
-      const startX = 50 + Math.random() * (container.clientWidth - 50);
-      const startY = -50 - Math.random() * 100;
+      // Posição inicial: aleatória no topo da imagem (considerando container)
+      const startX = 20 + Math.random() * (container.clientWidth - 40);
+      const startY = -40 - Math.random() * 80;
 
-      b.style.left = `${startX}px`;
-      b.style.top = `${startY}px`;
+      borboleta.style.left = `${startX}px`;
+      borboleta.style.top = `${startY}px`;
 
-      // Define duração, distância e delay para a animação
-      const duration = 8000 + Math.random() * 7000; // 8s a 15s
-      const deltaX = (Math.random() - 0.5) * 80;  // movimentação horizontal
-      const deltaY = -150 - Math.random() * 150;  // movimentação vertical
+      // Animação de subida com leve oscilação horizontal
+      const duration = 8000 + Math.random() * 7000; // 8 a 15 segundos
+      const deltaX = (Math.random() - 0.5) * 80; // até +-40px horizontal
+      const deltaY = -180 - Math.random() * 120; // sobe entre 180 a 300 px
 
-      // Define animação usando Web Animations API
-      b.animate([
+      borboleta.animate([
         { transform: 'translate(0, 0)', opacity: 0 },
         { transform: `translate(${deltaX / 2}px, ${deltaY / 2}px)`, opacity: 1 },
         { transform: `translate(${deltaX}px, ${deltaY}px)`, opacity: 0 }
@@ -119,10 +113,10 @@
         easing: 'ease-in-out',
       });
 
-      container.appendChild(b);
+      container.appendChild(borboleta);
     }
 
-    // Contador regressivo
+    // Função do contador regressivo
     const contadorEl = document.getElementById('contador');
     const dataEvento = new Date('2025-09-12T19:00:00');
 

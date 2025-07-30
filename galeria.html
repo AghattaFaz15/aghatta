@@ -3,86 +3,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Galeria - Aghatta XV</title>
+  <title>Espelho do Convite - Aghatta XV</title>
   <style>
-    body {
-      margin: 0;
-      background: #000b2e;
-      color: white;
+    html, body {
+      margin: 0; padding: 0; height: 100%;
       font-family: Georgia, serif;
-      padding: 2em 1em;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background: #000b2e;
+      color: #fff;
+      overflow: visible;
     }
-
-    .top-message {
-      max-width: 960px;
-      margin-bottom: 1em;
-      padding: 1em 1.5em;
-      border-radius: 12px;
-      text-align: center;
-      font-size: 1.6em;
-      font-weight: bold;
-      color: gold;
+    body {
+      overflow-y: visible;
+    }
+    .header-slide {
+      position: sticky;
+      top: 0;
+      background: rgba(0, 0, 30, 0.6);
+      color: #8ecaff;
       font-family: 'Parisienne', cursive;
-      background: rgba(0, 0, 0, 0.4);
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(6px);
+      text-shadow: 0 0 10px #5ab3ff;
+      padding: 1em 0;
+      font-size: 2.4em;
+      text-align: center;
+      z-index: 10;
     }
-
-    .slideshow-wrapper {
-      max-width: 960px;
-      width: 100%;
-      border-radius: 16px;
+    .slideshow {
+      width: 100vw;
+      height: 100vh;
+      max-height: 100vh;
       overflow: hidden;
-      box-shadow: 0 0 25px 6px rgba(255, 215, 0, 0.7);
-      background-color: #001a4d;
-    }
-
-    .slideshow-container {
       position: relative;
-      width: 100%;
-      height: 600px;
     }
-
-    .slideshow-container img {
-      position: absolute;
+    .slideshow img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      top: 0;
-      left: 0;
-      transition: opacity 1s ease-in-out;
-      opacity: 1;
+      object-fit: contain;
+      display: block;
+      user-select: none;
     }
   </style>
 </head>
 <body>
 
-  <div class="top-message">um pouco da minha história</div>
+  <div class="header-slide">Um pouco da minha história</div>
 
-  <div class="slideshow-wrapper">
-    <div class="slideshow-container">
-      <img src="imagem1.jpeg" alt="Imagem do slideshow" id="slide-galeria" onerror="this.src='https://via.placeholder.com/960x600?text=Aghatta+XV';">
-    </div>
+  <div class="slideshow">
+    <img id="slide-img" src="imagem1.jpeg" alt="Imagem do slideshow" />
   </div>
 
   <script>
-    const imagens = Array.from({ length: 15 }, (_, i) => `imagem${i + 1}.jpeg`);
-    let indice = 0;
-    const slide = document.getElementById('slide-galeria');
+    const totalSlides = 15;
+    let currentIndex = 1;
+    const slideImg = document.getElementById('slide-img');
 
     function proximoSlide() {
-      indice = (indice + 1) % imagens.length;
-      slide.style.opacity = 0;
-      setTimeout(() => {
-        slide.src = imagens[indice];
-        slide.style.opacity = 1;
-      }, 400);
+      currentIndex++;
+      if (currentIndex > totalSlides) currentIndex = 1;
+      slideImg.src = `imagem${currentIndex}.jpeg`;
     }
 
-    setInterval(proximoSlide, 3500);
+    // Troca o slide a cada 4 segundos
+    setInterval(proximoSlide, 4000);
   </script>
 
 </body>

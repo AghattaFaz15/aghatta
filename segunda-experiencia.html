@@ -3,23 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Segunda Experiência - Aghatta XV</title>
+  <title>Intimação Celestial - Aghatta XV</title>
   <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
       font-family: 'Georgia', serif;
       background-color: #000;
-      overflow-y: auto;
       color: white;
       scroll-behavior: smooth;
     }
+
     body.aberto {
+      background-color: transparent;
+    }
+
+    .background-fixo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       background-image: url('Aghatta.png');
+      background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
-      background-size: cover;
+      background-attachment: fixed;
+      z-index: -1;
+      filter: brightness(0.6);
+      transition: opacity 1.5s ease;
+      opacity: 0;
     }
+
+    body.aberto .background-fixo {
+      opacity: 1;
+    }
+
     .tela-inicial {
       width: 100vw;
       height: 100vh;
@@ -36,22 +62,21 @@
       visibility: visible;
       cursor: pointer;
     }
+
     .tela-inicial.oculta {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
       cursor: default;
     }
+
     .texto-inicial {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1em;
       font-family: 'Parisienne', cursive;
       font-size: 3em;
       color: gold;
       text-shadow: 0 0 10px rgba(255,215,0,0.7);
     }
+
     .conteudo {
       opacity: 0;
       pointer-events: none;
@@ -67,32 +92,82 @@
       letter-spacing: 0.05em;
       color: gold;
       text-shadow: 0 0 5px #f9d71c;
+      position: relative;
     }
+
     body.aberto .conteudo {
       opacity: 1;
       pointer-events: auto;
       transform: translateY(0);
     }
+
     iframe {
       width: 100vw;
-      height: 100vh;
+      height: 80vh;
       border: none;
       display: block;
-      margin: 0 auto 3em;
+      margin: 0 auto 2em;
       background: transparent;
+    }
+
+    .versiculos {
+      font-size: 1.2em;
+      font-style: italic;
+      color: #ffe066;
+      text-align: center;
+      margin: 4em auto 2em;
+      max-width: 600px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+
+    .versiculos.visivel {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Borboletas */
+    .borboleta {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      background-image: url('borboleta.png');
+      background-size: cover;
+      animation: voar 10s linear infinite;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    @keyframes voar {
+      0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+        opacity: 0;
+      }
+      20% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(100vw, -100vh) scale(1.5) rotate(720deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
 
+<!-- Imagem de fundo fixa -->
+<div class="background-fixo"></div>
+
+<!-- Áudio -->
 <audio id="audio2" src="audio.mp3" preload="auto"></audio>
 
+<!-- Tela de abertura -->
 <div class="tela-inicial" onclick="ativarExperiencia()" role="button" tabindex="0" aria-label="Iniciar experiência">
-  <div class="texto-inicial">
-    Intimação Celestial
-  </div>
+  <div class="texto-inicial">Intimação Celestial</div>
 </div>
 
+<!-- Conteúdo principal -->
 <div class="conteudo">
   <div style="display:flex; align-items:center; justify-content:center; gap: 1em;">
     <img src="coroa.png" alt="Coroa" style="height:70px; user-select:none;" />
@@ -102,12 +177,18 @@
   <p>Aghatta XV</p>
 </div>
 
-<!-- iframe galeria -->
+<!-- Versículos -->
+<div class="versiculos" id="versiculo1">“Antes que eu te formasse no ventre, eu te conheci.” (Jeremias 1:5)</div>
+<div class="versiculos" id="versiculo2">“O Senhor te guardará de todo mal.” (Salmo 121:7)</div>
+<div class="versiculos" id="versiculo3">“Tu és toda formosa, minha querida, e em ti não há defeito.” (Cânticos 4:7)</div>
+
+<!-- Galeria -->
 <iframe src="galeria.html" title="Galeria Aghatta" scrolling="no"></iframe>
 
-<!-- iframe contador -->
+<!-- Contador -->
 <iframe src="contador.html" title="Contador para o Evento Aghatta XV" scrolling="no"></iframe>
 
+<!-- JavaScript -->
 <script>
   const audio = document.getElementById('audio2');
   const tela = document.querySelector('.tela-inicial');
@@ -116,7 +197,8 @@
   function ativarExperiencia() {
     tela.classList.add('oculta');
     body.classList.add('aberto');
-    audio.play().catch(e => console.warn('Autoplay bloqueado pelo navegador:', e));
+    audio.play().catch(e => console.warn('Autoplay bloqueado:', e));
+    soltarBorboletas();
   }
 
   tela.addEventListener('keydown', e => {
@@ -126,15 +208,36 @@
     }
   });
 
-  // Detectar se tem ?auto=true na URL
+  // Auto iniciar se tiver ?auto=true
   window.addEventListener('load', () => {
     const params = new URLSearchParams(window.location.search);
     if (params.get('auto') === 'true') {
-      setTimeout(() => {
-        ativarExperiencia();
-      }, 300);
+      setTimeout(() => ativarExperiencia(), 300);
     }
   });
+
+  // Versículos aparecem ao rolar
+  window.addEventListener('scroll', () => {
+    document.querySelectorAll('.versiculos').forEach(el => {
+      const pos = el.getBoundingClientRect().top;
+      if (pos < window.innerHeight - 100) {
+        el.classList.add('visivel');
+      }
+    });
+  });
+
+  // Borboletas animadas
+  function soltarBorboletas() {
+    for (let i = 0; i < 15; i++) {
+      const b = document.createElement('div');
+      b.className = 'borboleta';
+      b.style.top = Math.random() * window.innerHeight + 'px';
+      b.style.left = -50 + 'px';
+      b.style.animationDuration = (5 + Math.random() * 10) + 's';
+      document.body.appendChild(b);
+      setTimeout(() => b.remove(), 15000);
+    }
+  }
 </script>
 
 </body>

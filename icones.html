@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Conexões da Aghatta XV</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto&display=swap');
+
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #1b1b3a, #4a2c75);
+    color: #f0e6f6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em 0 3em;
+  }
+
+  h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.5rem;
+    margin-bottom: 0.3em;
+    color: #d4af37;
+    text-shadow: 0 0 10px #d4af37aa;
+  }
+
+  .container {
+    width: 90vw;
+    max-width: 900px;
+    background: #2e1a47cc;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #d4af37bb;
+    padding: 1.5em 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5em;
+  }
+
+  /* Ícones e título das seções */
+  .secao-titulo {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ffd700;
+    user-select: none;
+    text-shadow: 0 0 8px #ffd700bb;
+  }
+
+  .secao-titulo svg {
+    width: 32px;
+    height: 32px;
+    fill: #ffd700;
+  }
+
+  /* --- LOCALIZAÇÃO --- */
+  #localizacao iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #d4af37bb;
+  }
+
+  /* --- MURAL DE RECADOS --- */
+  #mural form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9em;
+  }
+  #mural label {
+    font-weight: 600;
+  }
+  #mural input[type="text"],
+  #mural textarea {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    padding: 0.5em;
+    border-radius: 8px;
+    border: none;
+    resize: vertical;
+  }
+  #mural textarea {
+    min-height: 80px;
+  }
+  #mural button {
+    background-color: #d4af37;
+    border: none;
+    border-radius: 12px;
+    padding: 0.7em 1.4em;
+    font-weight: 700;
+    cursor: pointer;
+    color: #2e1a47;
+    font-size: 1.1rem;
+    box-shadow: 0 0 10px #d4af37cc;
+    transition: background-color 0.3s ease;
+    align-self: flex-start;
+  }
+  #mural button:hover {
+    background-color: #b1912c;
+  }
+  #mural .recados-lista {
+    margin-top: 1.2em;
+    max-height: 230px;
+    overflow-y: auto;
+    background: #3b2163cc;
+    border-radius: 12px;
+    padding: 0.8em 1em;
+    box-shadow: 0 0 8px #d4af37aa;
+  }
+  #mural .recado {
+    padding: 0.6em 0.8em;
+    border-bottom: 1px solid #d4af3744;
+  }
+  #mural .recado:last-child {
+    border-bottom: none;
+  }
+  #mural .recado .nome {
+    font-weight: 700;
+    color: #ffd700;
+  }
+  #mural .recado .assinatura {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #d4af37cc;
+  }
+  #mural .recado .confirmacao {
+    font-size: 0.85rem;
+    color: #8aff8a;
+    margin-top: 0.3em;
+  }
+
+  /* --- CONFIRMAÇÃO PRESENÇA --- */
+  #confirmacao-presenca {
+    background: #3b2163cc;
+    padding: 1.3em 1.6em;
+    border-radius: 15px;
+    box-shadow: 0 0 12px #d4af37bb;
+    text-align: center;
+    user-select: none;
+  }
+  #confirmacao-presenca label {
+    cursor: pointer;
+    font-size: 1.2rem;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6em;
+    color: #ffd700;
+    font-weight: 700;
+    text-shadow: 0 0 10px #ffd700bb;
+  }
+  #confirmacao-presenca input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+  }
+  #confirmacao-msg {
+    margin-top: 1em;
+    font-weight: 600;
+    color: #8aff8a;
+  }
+
+  /* Scroll barras custom */
+  .recados-lista::-webkit-scrollbar {
+    width: 8px;
+  }
+  .recados-lista::-webkit-scrollbar-thumb {
+    background-color: #d4af37cc;
+    border-radius: 20px;
+  }
+
+  /* RESPONSIVO */
+  @media (max-width: 500px) {
+    h1 {
+      font-size: 2.8rem;
+    }
+    .secao-titulo {
+      font-size: 1.4rem;
+    }
+    #mural button {
+      font-size: 1rem;
+      padding: 0.5em 1em;
+    }
+    #confirmacao-presenca label {
+      font-size: 1rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <h1>Conexões da Aghatta XV</h1>
+
+  <div class="container">
+
+    <!-- Localização -->
+    <section id="localizacao">
+      <div class="secao-titulo" aria-label="Localização">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
+        <span>Localização</span>
+      </div>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.9965146020674!2d-46.66359648451566!3d-23.56496956775951!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c9c91d5d9d%3A0x8b7b7a093a5b17e0!2sIgreja%20B%C3%ADblica%20das%20Assembleias%20de%20Deus%20do%20Brasil!5e0!3m2!1spt-BR!2sbr!4v1690719037760!5m2!1spt-BR!2sbr"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="Mapa para a localização do evento">
+      </iframe>
+    </section>
+
+    <!-- Mural de Recados -->
+    <section id="mural" aria-label="Mural de Recados Interativo">
+      <div class="secao-titulo">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v16l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+        <span>Mural de Recados</span>
+      </div>
+
+      <form id="formRecado">
+        <label for="nome">Seu nome:</label>
+        <input type="text" id="nome" name="nome" required placeholder="Como deseja ser lembrado" autocomplete="off"/>
+
+        <label for="mensagem">Seu recado:</label>
+        <textarea id="mensagem" name="mensagem" rows="4" required placeholder="Deixe sua mensagem para a Aghatta"></textarea>
+
+        <label for="assinatura">Assinatura / Símbolo especial (opcional):</label>
+        <input type="text" id="assinatura" name="assinatura" placeholder="Ex: 🦋, ❤, ✨, ou uma palavra especial" autocomplete="off"/>
+
+        <label>
+          <input type="checkbox" id="confirmacao" name="confirmacao" />
+          Confirmo minha presença no evento
+        </label>
+
+        <button type="submit">Enviar Recado</button>
+      </form>
+
+      <div class="recados-lista" id="recados"></div>
+    </section>
+
+    <!-- Confirmação de Presença -->
+    <section id="confirmacao-presenca" aria-label="Confirmação de Presença">
+      <div class="secao-titulo">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 16.17l-3.5-3.5-1.42 1.42L9 19 20.5 7.5 19.08 6.08z"/></svg>
+        <span>Confirmação de Presença (RSVP)</span>
+      </div>
+      <label>
+        <input type="checkbox" id="rsvpCheck" />
+        Estou confirmando minha presença com alegria
+      </label>
+      <div id="confirmacao-msg" role="alert" aria-live="polite"></div>
+    </section>
+  </div>
+
+<script>
+  // --- MURAL DE RECADOS ---
+  const form = document.getElementById('formRecado');
+  const recadosDiv = document.getElementById('recados');
+
+  let recados = JSON.parse(localStorage.getItem('recadosAghatta')) || [];
+
+  function renderizarRecados() {
+    recadosDiv.innerHTML = '';
+    if (recados.length === 0) {
+      recadosDiv.innerHTML = '<p style="text-align:center; opacity:0.6;">Nenhum recado ainda. Seja o primeiro!</p>';
+      return;
+    }
+    recados.forEach(({nome, mensagem, assinatura, confirmado}, i) => {
+      const div = document.createElement('div');
+      div.className = 'recado';
+      div.innerHTML = `
+        <div class="nome">${nome}</div>
+        <div class="mensagem">${mensagem}</div>
+        ${assinatura ? `<div class="assinatura">Assinatura: ${assinatura}</div>` : ''}
+        ${confirmado ? '<div class="confirmacao">✅ Confirmou presença</div>' : ''}
+      `;
+      recadosDiv.appendChild(div);
+    });
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const nome = form.nome.value.trim();
+    const mensagem = form.mensagem.value.trim();
+    const assinatura = form.assinatura.value.trim();
+    const confirmado = form.confirmacao.checked;
+
+    if (!nome || !mensagem) {
+      alert('Por favor, preencha seu nome e recado.');
+      return;
+    }
+
+    recados.push({ nome, mensagem, assinatura, confirmado });
+    localStorage.setItem('recadosAghatta', JSON.stringify(recados));
+
+    form.reset();
+    renderizarRecados();
+  });
+
+  renderizarRecados();
+
+  // --- CONFIRMAÇÃO DE PRESENÇA ---
+  const rsvpCheck = document.getElementById('rsvpCheck');
+  const confirmacaoMsg = document.getElementById('confirmacao-msg');
+
+  rsvpCheck.addEventListener('change', () => {
+    if (rsvpCheck.checked) {
+      confirmacaoMsg.textContent = '🙏 Que bênção ter você conosco!';
+    } else {
+      confirmacaoMsg.textContent = '';
+    }
+  });
+</script>
+
+</body>
+</html>

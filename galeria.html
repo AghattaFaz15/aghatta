@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Galeria</title>
   <style>
     body {
@@ -20,37 +20,105 @@
       margin-bottom: 1em;
     }
 
-    .galeria {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1em;
+    .slideshow-wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 15px 4px rgba(255, 215, 0, 0.6);
+      background-color: #001a4d;
+      position: relative;
     }
 
-    .galeria img {
+    .topo-retangulo {
+      background: gold;
+      color: #002366;
+      font-weight: bold;
+      font-size: 1.25em;
+      padding: 0.6em 0;
+      box-shadow: 0 2px 8px rgba(255, 215, 0, 0.8);
+      font-family: 'Parisienne', cursive;
+      user-select: none;
+    }
+
+    .slideshow-container {
+      position: relative;
       width: 100%;
-      border: 2px solid gold;
-      border-radius: 8px;
+      padding-top: 66.66%; /* 3:2 aspect ratio */
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+    }
+
+    .ativo {
+      display: block;
+      animation: fadein 1s ease-in-out;
+    }
+
+    @keyframes fadein {
+      from {opacity: 0;}
+      to {opacity: 1;}
     }
   </style>
 </head>
 <body>
 
-  <h2>Galeria de Memórias</h2>
-  <div class="galeria">
-    <img src="imagem1.jpg" alt="Foto 1" />
-    <img src="imagem2.jpg" alt="Foto 2" />
-    <img src="imagem3.jpg" alt="Foto 3" />
-    <!-- Adicione mais imagens conforme desejar -->
+  <div class="slideshow-wrapper">
+    <div class="topo-retangulo">Um pouco da minha história</div>
+    <div class="slideshow-container" id="slideshow">
+      <!-- Slides gerados via JS -->
+    </div>
   </div>
 
   <script>
-    window.addEventListener('load', () => {
+    const container = document.getElementById('slideshow');
+    const totalSlides = 15;
+
+    for (let i = 1; i <= totalSlides; i++) {
+      const slide = document.createElement('div');
+      slide.className = 'slide';
+      const img = document.createElement('img');
+      img.src = `imagem${i}.jpeg`;
+      img.alt = `Imagem ${i}`;
+      slide.appendChild(img);
+      container.appendChild(slide);
+    }
+
+    const slides = document.querySelectorAll('.slide');
+    let indice = 0;
+
+    function mostrarSlide() {
+      slides.forEach(s => s.classList.remove('ativo'));
+      slides[indice].classList.add('ativo');
+
+      indice = (indice + 1) % slides.length;
+
+      // Ajusta a altura do iframe no pai
       window.parent.postMessage({
         type: 'resize-iframe',
         id: 'galeriaFrame',
         height: document.body.scrollHeight
       }, '*');
-    });
+    }
+
+    mostrarSlide(); // mostra o primeiro slide
+
+    setInterval(mostrarSlide, 3000); // troca a cada 3 segundos
   </script>
 
 </body>

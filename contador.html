@@ -1,149 +1,131 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contador - Aghatta XV</title>
-  <style>
-    body {
-      font-family: Georgia, serif;
-      background: #000b2e;
-      color: #fff;
-      padding: 2em;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      min-height: 100vh;
-      align-items: center;
+<div class="contador-container" id="container" style="position: relative; width: 100%; max-width: 500px; margin: auto;">
+  <img id="convite-img" src="Aniversário_Aghatta_XV.png" alt="Convite Aghatta" style="width: 400px; height: auto; background: transparent; display: block; margin: auto;" />
+  <div id="contador" class="contador" style="font-size: 1.2em; color: white; text-align: center; margin-top: 0.5em;"></div>
+</div>
+
+<script>
+  const contadorEl = document.getElementById('contador');
+  const dataEvento = new Date('2025-09-12T19:00:00');
+
+  function atualizarContador() {
+    const agora = new Date();
+    const diff = dataEvento - agora;
+    if (diff <= 0) {
+      contadorEl.textContent = 'O evento já começou!';
+      clearInterval(intervalo);
+      return;
     }
-    #container {
-      position: relative;
-      max-width: 800px;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 2em 2em 3em 2em;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(30, 90, 200, 0.4);
-      text-align: center;
-      overflow: visible;
+    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((diff % (1000 * 60)) / 1000);
+    contadorEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s para o início`;
+  }
+
+  let intervalo = setInterval(atualizarContador, 1000);
+  atualizarContador();
+
+  const container = document.getElementById('container');
+  const total = 15;
+
+  for (let i = 0; i < total; i++) {
+    const b = document.createElement('div');
+    b.className = 'borboleta';
+
+    // Borboletas mais acima, centralizadas e à direita:
+    b.style.setProperty('--x', `${(Math.random() * 300) + 100}px`);  // mais para o centro-direita
+    b.style.setProperty('--y', `${-Math.random() * 1000 - 400}px`);   // mais acima
+
+    b.style.animationDuration = `${10 + Math.random() * 5}s`;
+    b.style.animationDelay = `${Math.random() * 10}s`;
+
+    const asaE = document.createElement('div');
+    asaE.className = 'asa-esquerda';
+
+    const asaD = document.createElement('div');
+    asaD.className = 'asa-direita';
+
+    const corpo = document.createElement('div');
+    corpo.className = 'corpo';
+
+    b.appendChild(asaE);
+    b.appendChild(asaD);
+    b.appendChild(corpo);
+    container.appendChild(b);
+  }
+</script>
+
+<style>
+  #container {
+    position: relative;
+    height: 600px;
+  }
+
+  .contador {
+    font-size: 1.2em;
+    color: white;
+    text-align: center;
+    margin-top: 0.5em;
+  }
+
+  .borboleta {
+    position: absolute;
+    left: calc(50% + var(--x));
+    bottom: var(--y);
+    width: 25px;
+    height: 25px;
+    animation-name: voar;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+  }
+
+  .asa-esquerda, .asa-direita {
+    position: absolute;
+    width: 12px;
+    height: 22px;
+    background: url('borboleta.png') no-repeat center center;
+    background-size: contain;
+    opacity: 0.8;
+  }
+
+  .asa-esquerda {
+    left: 0;
+    transform-origin: left center;
+    animation: baterAsa 1s infinite alternate;
+  }
+
+  .asa-direita {
+    right: 0;
+    transform-origin: right center;
+    animation: baterAsa 1s infinite alternate;
+  }
+
+  .corpo {
+    position: absolute;
+    width: 8px;
+    height: 20px;
+    background: #f5a623;
+    border-radius: 10px;
+    left: 50%;
+    top: 5px;
+    transform: translateX(-50%);
+  }
+
+  @keyframes voar {
+    0%, 100% {
+      transform: translateY(0);
     }
-    #convite-img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
-      display: block;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
+    50% {
+      transform: translateY(15px);
     }
-    #contador {
-      font-size: 1.1em; /* menor */
-      font-weight: bold;
-      color: gold;
-      text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
-      margin-top: 0.6em; /* mais juntinho */
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 10px;
-      padding: 0.3em 0.8em;
-      display: inline-block;
-      position: relative;
-      z-index: 3;
-      width: auto;
+  }
+
+  @keyframes baterAsa {
+    0% {
+      transform: rotate(0deg);
     }
-    /* Borboletas com imagem, posicionadas para sair um pouco acima da base da imagem */
-    .borboleta {
-      position: absolute;
-      width: 36px;
-      height: 36px;
-      background-image: url('borboleta.png'); /* Ajuste o caminho se precisar */
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      animation-name: voar;
-      animation-iteration-count: infinite;
-      animation-timing-function: ease-in-out;
-      opacity: 0.9;
-      pointer-events: none;
-      z-index: 1;
+    100% {
+      transform: rotate(30deg);
     }
-    @keyframes voar {
-      0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 0.9;
-      }
-      50% {
-        opacity: 1;
-      }
-      100% {
-        transform: translate(60px, -400px) scale(0.5);
-        opacity: 0;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div id="container">
-    <img id="convite-img" src="Aniversário_Aghatta_XV.png" alt="Convite Aghatta" />
-    <div id="contador"></div>
-  </div>
-
-  <script>
-    const contadorEl = document.getElementById('contador');
-    const dataEvento = new Date('2025-09-12T19:00:00');
-
-    function atualizarContador() {
-      const agora = new Date();
-      const diff = dataEvento - agora;
-      if (diff <= 0) {
-        contadorEl.textContent = 'O evento já começou!';
-        clearInterval(intervalo);
-        return;
-      }
-      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos = Math.floor((diff % (1000 * 60)) / 1000);
-      contadorEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s para o início`;
-    }
-
-    let intervalo = setInterval(atualizarContador, 1000);
-    atualizarContador();
-
-    const container = document.getElementById('container');
-    const conviteImg = document.getElementById('convite-img');
-
-    conviteImg.addEventListener('load', () => {
-      const totalBorboletas = 15;
-
-      const imgRect = conviteImg.getBoundingClientRect();
-      const containerRect = container.getBoundingClientRect();
-
-      const baseLeft = imgRect.left - containerRect.left;
-      const baseTop = imgRect.top - containerRect.top;
-      const imgWidth = conviteImg.offsetWidth;
-      const imgHeight = conviteImg.offsetHeight;
-
-      for (let i = 0; i < totalBorboletas; i++) {
-        const b = document.createElement('div');
-        b.className = 'borboleta';
-
-        const x = Math.random() * imgWidth;
-        // Aqui subimos o ponto inicial: -60px em relação à base da imagem (em vez de -30px)
-        const y = imgHeight - 60 + (Math.random() * 20); // variação +/- 20px para naturalidade
-
-        b.style.left = `${baseLeft + x}px`;
-        b.style.top = `${baseTop + y}px`;
-
-        b.style.animationDuration = `${8 + Math.random() * 5}s`;
-        b.style.animationDelay = `${Math.random() * 10}s`;
-
-        container.appendChild(b);
-      }
-    });
-
-    if (conviteImg.complete) {
-      conviteImg.dispatchEvent(new Event('load'));
-    }
-  </script>
-</body>
-</html>
+  }
+</style>

@@ -31,17 +31,18 @@
       pointer-events: none;
       transition: opacity 1s ease-in-out;
     }
-    /* Primeira tela: rolo fechado */
+    /* Primeira tela: rolo fechado com zoom maior e centralizado */
     #roloFechado img {
-      max-width: 95vw;
+      max-width: 110vw;
       height: auto;
-      transform: scale(1.4);
+      transform: scale(1.6);
       margin-top: 8vh;
       object-fit: contain;
       display: block;
       margin-left: auto;
       margin-right: auto;
       user-select: none;
+      transition: transform 0.5s ease;
     }
     #roloFechado .texto {
       position: absolute;
@@ -126,7 +127,7 @@
       transform: scale(1.05);
     }
 
-    /* Terceira tela: porta com imagem e texto */
+    /* Terceira tela: porta com imagem-capa, zoom e texto */
     #porta {
       background: #000;
       overflow: hidden;
@@ -134,11 +135,14 @@
       user-select: none;
     }
     #porta img {
-      width: 100vw;
-      height: 100vh;
+      width: 110vw;
+      height: 110vh;
       object-fit: cover;
-      transform: scale(1.1);
+      transform: scale(1.15);
       user-select: none;
+      margin-left: -5vw; /* centralizar com zoom */
+      margin-top: -5vh;
+      transition: transform 0.5s ease;
     }
     #portaTexto {
       position: absolute;
@@ -285,7 +289,7 @@
       telas.toctoc.play().catch(() => {});
     });
 
-    // Tela 3: toca o som toctoc em loop até toque
+    // Tela 3: toca o som toctoc em loop até toque, depois abre o vídeo sem som
     telas.porta.addEventListener('click', () => {
       if (!telas.videoContainer.classList.contains('escondido')) return;
       telas.toctoc.pause();

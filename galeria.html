@@ -3,64 +3,70 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Espelho do Convite - Aghatta XV</title>
+  <title>Galeria Aghatta XV</title>
   <style>
     body {
-      font-family: Georgia, serif;
-      background: #000b2e;
-      color: #fff;
+      margin: 0;
       padding: 2em;
-      line-height: 1.6em;
+      background-color: #000b2e;
+      font-family: 'Georgia', serif;
+      color: white;
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      justify-content: center;
     }
 
     .container-slideshow {
+      width: 680px;
+      height: 1100px;
       background: rgba(255, 215, 0, 0.08);
-      border: 2px solid rgba(255, 215, 0, 0.4);
-      border-radius: 16px;
-      padding: 2em;
-      margin-top: 2em;
-      max-width: 95vw;
-      box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+      border: 4px solid rgba(255, 215, 0, 0.4);
+      border-radius: 20px;
+      padding: 1.5em;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
     }
 
     .titulo-slide {
       font-size: 2em;
-      text-align: center;
       margin-bottom: 1em;
       color: gold;
-      text-shadow: 0 0 10px rgba(255,215,0,0.6);
+      text-shadow: 0 0 10px rgba(255,215,0,0.7);
       font-family: 'Parisienne', cursive;
+      text-align: center;
     }
 
     .slideshow {
-      width: 100%;
-      max-width: 900px;
-      height: auto;
-      margin: 0 auto;
-      border-radius: 12px;
-      overflow: hidden;
-      aspect-ratio: 4 / 3;
-      background: #000;
       position: relative;
+      width: 100%;
+      height: 100%;
+      flex: 1;
+      overflow: hidden;
+      border-radius: 16px;
+      background-color: black;
     }
 
     .slideshow img {
+      position: absolute;
       width: 100%;
       height: 100%;
       object-fit: contain;
-      position: absolute;
-      top: 0;
-      left: 0;
       opacity: 0;
-      transition: opacity 0.6s ease-in-out;
+      transition: opacity 1s ease-in-out;
     }
 
     .slideshow img.ativo {
       opacity: 1;
       z-index: 1;
+    }
+
+    @media (max-width: 720px) {
+      .container-slideshow {
+        width: 90vw;
+        height: auto;
+      }
     }
   </style>
 </head>
@@ -69,7 +75,7 @@
   <div class="container-slideshow">
     <div class="titulo-slide">Um pouco da minha história</div>
     <div class="slideshow" id="slideshow">
-      <!-- As imagens serão injetadas pelo script -->
+      <!-- Imagens em slide -->
     </div>
   </div>
 
@@ -95,7 +101,7 @@
       slides[atual].classList.remove("ativo");
       atual = (atual + 1) % slides.length;
       slides[atual].classList.add("ativo");
-    }, 3000); // 3 segundos
+    }, 3000);
   </script>
 
 </body>

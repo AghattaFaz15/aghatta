@@ -34,7 +34,7 @@
 
     /* Tela 1 - Rolo Fechado */
     #tela1 img {
-      width: 75vw;  /* Mais zoom no rolo fechado */
+      width: 80vw;  /* Aumentei mais o zoom no rolo fechado */
       height: auto;
       max-height: 90vh;
       object-fit: contain;
@@ -56,12 +56,12 @@
     #tela2 {
       background: transparent;
       color: #3c2c2c;
-      align-items: flex-start; /* Subi ainda mais o rolo aberto */
+      align-items: flex-start;
       padding-top: 3vh;
     }
     #tela2 img {
       position: absolute;
-      top: 0; /* Subi mais o rolo aberto */
+      top: 0; /* Mantido o topo */
       left: 0;
       width: 100vw;
       height: 98vh;
@@ -71,17 +71,17 @@
     }
     #roloTexto {
       position: absolute;
-      top: 15vh;
+      top: 18vh; /* Scroll descido um pouco */
       bottom: 22vh;
       left: 18vw;
       right: 18vw;
       overflow-y: auto;
-      font-size: 4vw; /* Texto maior */
+      font-size: 4vw;
       line-height: 5vw;
       background: transparent;
       padding: 10px 15px;
       z-index: 2;
-      max-height: 63vh; /* Scroll um pouco mais alto */
+      max-height: 60vh;
       border-radius: 10px;
       user-select: text;
     }
@@ -107,7 +107,7 @@
     /* Botão Avançar – fixo no rodapé, aparece no final do scroll */
     #avancar {
       position: absolute;
-      bottom: 3.5vh;
+      bottom: 5vh; /* Subi um pouco o botão pra não colar na borda */
       left: 50%;
       transform: translateX(-50%);
       z-index: 3;
@@ -255,7 +255,7 @@
     // Botão Avançar aparece só no fim do scroll
     roloTexto.addEventListener('scroll', () => {
       const scrollBottom = roloTexto.scrollHeight - roloTexto.scrollTop - roloTexto.clientHeight;
-      if (scrollBottom < 15) { // quando quase no final
+      if (scrollBottom < 15) {
         avancarBtn.style.opacity = '1';
         avancarBtn.style.pointerEvents = 'auto';
       } else {

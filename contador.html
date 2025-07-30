@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contador - Aghatta XV</title>
   <style>
     * {
@@ -10,105 +10,132 @@
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
-      background: linear-gradient(to bottom, #000, #111);
-      overflow: hidden;
+      background: transparent; /* fundo transparente, nada de preto */
+      overflow-x: hidden;
       font-family: 'Georgia', serif;
       color: #ffd700;
-    }
-    #container {
-      position: relative;
-      width: 100%;
-      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
+      height: 100vh;
     }
-    .imagem-central {
-      width: 90%;
+
+    #container {
+      position: relative;
+      width: 350px;
+      max-width: 90vw;
       height: auto;
+      overflow: visible;
+    }
+
+    .imagem-central {
+      width: 100%;
+      height: auto;
+      display: block;
+      position: relative;
       z-index: 1;
     }
+
+    #contador {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      background: rgba(65, 105, 225, 0.5); /* azul royal translúcido */
+      color: gold;
+      font-size: 1.3rem;
+      text-align: center;
+      padding: 0.5em 1em;
+      border-radius: 12px;
+      box-shadow: 0 0 8px 2px rgba(65, 105, 225, 0.7);
+      z-index: 10;
+      font-weight: bold;
+      user-select: none;
+    }
+
     .borboleta {
       position: absolute;
-      width: 48px;
-      height: 48px;
+      width: 32px;
+      height: 32px;
+      background-image: url('borboleta.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0.8;
+      filter: drop-shadow(0 0 6px gold);
+      animation: baterAsas 2s infinite ease-in-out;
       pointer-events: none;
-      z-index: 10;
-      opacity: 0;
-      animation: brilho 2s infinite alternate ease-in-out;
-      transition: opacity 1s ease-in-out;
-    }
-    @keyframes brilho {
-      0% { filter: drop-shadow(0 0 6px gold); }
-      100% { filter: drop-shadow(0 0 15px #ffd700); }
-    }
-    #contador-box {
-      position: absolute;
-      bottom: 20px;
-      background: rgba(0, 51, 153, 0.5);
-      padding: 10px 20px;
-      border: 2px solid gold;
-      border-radius: 12px;
       z-index: 5;
     }
-    #contador {
-      font-size: 1.6em;
-      text-align: center;
-      color: #ffd700;
-      text-shadow: 0 0 6px #ffd700;
+
+    @keyframes baterAsas {
+      0%, 100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0.8;
+      }
+      50% {
+        transform: scale(1.1) rotate(10deg);
+        opacity: 1;
+      }
     }
   </style>
 </head>
 <body>
   <div id="container">
     <img src="Aniversário_Aghatta_XV.png" alt="Aniversário Aghatta XV" class="imagem-central" />
-    <div id="contador-box">
-      <div id="contador">Carregando contador...</div>
-    </div>
+    <div id="contador">Carregando contador...</div>
   </div>
 
   <script>
     const container = document.getElementById('container');
-    const total = 15;
+    const totalBorboletas = 15;
 
-    for (let i = 0; i < total; i++) {
-      const b = document.createElement('img');
-      b.src = "borboleta.png";
+    // Posiciona as borboletas no centro da imagem (relativo ao container)
+    // Vamos calcular o centro do container para usar como ponto inicial
+    const containerRect = container.getBoundingClientRect();
+    // Para o cálculo relativo dentro do container, usaremos 50% de largura e 50% da altura
+    const centerX = container.clientWidth / 2;
+    const centerY = container.clientHeight / 2;
+
+    for (let i = 0; i < totalBorboletas; i++) {
+      const b = document.createElement('div');
       b.className = 'borboleta';
 
-      // Surgimento exatamente em torno do "12"
-      const startX = window.innerWidth * 0.62 + (Math.random() * 20 - 10);
-      const startY = window.innerHeight * 0.28 + (Math.random() * 20 - 10);
+      // Vamos criar uma variação de posição em torno do centro para elas "saírem" de lá
+      const offsetX = (Math.random() - 0.5) * 40; // -20 a +20 px
+      const offsetY = (Math.random() - 0.5) * 40; // -20 a +20 px
 
-      b.style.left = `${startX}px`;
-      b.style.top = `${startY}px`;
+      // Inicialmente posiciona elas próximas ao centro
+      b.style.left = `${centerX + offsetX}px`;
+      b.style.top = `${centerY + offsetY}px`;
 
       container.appendChild(b);
 
-      const duration = 8 + Math.random() * 6;
-      const angle = (Math.random() - 0.5) * 360;
-      const amplitudeX = 100 + Math.random() * 100;
-      const amplitudeY = 200 + Math.random() * 150;
-      const delay = Math.random() * 4;
+      // Movimento aleatório para as borboletas voarem para cima com variações
+      const duration = 10 + Math.random() * 5;
+      const amplitudeX = 50 + Math.random() * 40;
+      const angle = (Math.random() - 0.5) * 50;
+      const delay = Math.random() * 5000;
 
       b.animate(
         [
-          { transform: `translate(0, 0) scale(1)`, opacity: 0 },
-          { transform: `translate(${amplitudeX}px, -${amplitudeY}px) rotate(${angle}deg) scale(1.1)`, opacity: 1 },
-          { transform: `translate(${-amplitudeX}px, -${amplitudeY * 1.5}px) rotate(${-angle}deg) scale(0.9)`, opacity: 0 }
+          { transform: `translate(0, 0) rotate(0deg) scale(1)`, opacity: 1 },
+          { transform: `translate(${amplitudeX}px, -150px) rotate(${angle}deg) scale(1.1)`, opacity: 0.8 },
+          { transform: `translate(${-amplitudeX}px, -300px) rotate(${-angle}deg) scale(1)`, opacity: 0 },
         ],
         {
           duration: duration * 1000,
           iterations: Infinity,
-          delay: delay * 1000,
+          delay: delay,
           easing: "ease-in-out",
-          direction: "alternate"
+          direction: "alternate",
         }
       );
     }
 
+    // CONTADOR DE TEMPO
     const contadorEl = document.getElementById('contador');
     const dataEvento = new Date('2025-09-12T19:00:00');
 
@@ -127,7 +154,7 @@
       contadorEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s para o início`;
     }
 
-    const intervalo = setInterval(atualizarContador, 1000);
+    let intervalo = setInterval(atualizarContador, 1000);
     atualizarContador();
   </script>
 </body>

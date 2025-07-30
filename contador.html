@@ -21,7 +21,7 @@
       max-width: 800px;
       width: 100%;
       background: rgba(255, 255, 255, 0.05);
-      padding: 2em 2em 4em 2em;
+      padding: 2em 2em 3em 2em;
       border-radius: 12px;
       box-shadow: 0 0 15px rgba(30, 90, 200, 0.4);
       text-align: center;
@@ -37,14 +37,14 @@
       z-index: 2;
     }
     #contador {
-      font-size: 1.4em;
+      font-size: 1.1em; /* menor */
       font-weight: bold;
       color: gold;
-      text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
-      margin-top: 1em;
-      background: rgba(0, 0, 0, 0.4);
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+      margin-top: 0.6em; /* mais juntinho */
+      background: rgba(0, 0, 0, 0.3);
       border-radius: 10px;
-      padding: 0.5em 1em;
+      padding: 0.3em 0.8em;
       display: inline-block;
       position: relative;
       z-index: 3;
@@ -53,9 +53,9 @@
     /* Borboletas com imagem, posicionadas para sair da base da imagem */
     .borboleta {
       position: absolute;
-      width: 40px;
-      height: 40px;
-      background-image: url('borboleta.png'); /* Ajuste o nome/caminho aqui */
+      width: 36px;
+      height: 36px;
+      background-image: url('borboleta.png'); /* Ajuste o caminho se precisar */
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
@@ -68,14 +68,14 @@
     }
     @keyframes voar {
       0% {
-        transform: translate(var(--x), var(--y)) scale(1);
+        transform: translate(0, 0) scale(1);
         opacity: 0.9;
       }
       50% {
         opacity: 1;
       }
       100% {
-        transform: translate(calc(var(--x) + 60px), calc(var(--y) - 400px)) scale(0.5);
+        transform: translate(60px, -400px) scale(0.5);
         opacity: 0;
       }
     }
@@ -111,27 +111,45 @@
 
     const container = document.getElementById('container');
     const conviteImg = document.getElementById('convite-img');
-    const totalBorboletas = 15;
 
-    for (let i = 0; i < totalBorboletas; i++) {
-      const b = document.createElement('div');
-      b.className = 'borboleta';
+    // Esperar a imagem carregar pra pegar dimensões exatas
+    conviteImg.addEventListener('load', () => {
+      const totalBorboletas = 15;
 
-      // Posição inicial perto da base da imagem (aproximadamente em px)
-      // Calcula posições X e Y aleatórias dentro da largura da imagem, e na base (cerca da altura da imagem)
+      // Pega posição e tamanho da imagem RELATIVO ao container (por isso getBoundingClientRect)
       const imgRect = conviteImg.getBoundingClientRect();
-      // Como getBoundingClientRect pode não estar disponível ainda, vamos usar uma faixa fixa, por segurança:
-      const xBase = Math.random() * 300 - 150; // horizontal +/- 150px
-      const yBase = 0; // iniciar na base (0 em Y)
+      const containerRect = container.getBoundingClientRect();
 
-      b.style.setProperty('--x', `${xBase}px`);
-      b.style.setProperty('--y', `${yBase}px`);
+      // Ajusta para posição relativa dentro do container:
+      const baseLeft = imgRect.left - containerRect.left;
+      const baseTop = imgRect.top - containerRect.top;
+      const imgWidth = conviteImg.offsetWidth;
+      const imgHeight = conviteImg.offsetHeight;
 
-      // Varia a duração e atraso da animação
-      b.style.animationDuration = `${8 + Math.random() * 5}s`;
-      b.style.animationDelay = `${Math.random() * 10}s`;
+      for (let i = 0; i < totalBorboletas; i++) {
+        const b = document.createElement('div');
+        b.className = 'borboleta';
 
-      container.appendChild(b);
+        // Posiciona horizontalmente aleatório dentro da largura da imagem
+        const x = Math.random() * imgWidth;
+        // Inicia na base da imagem (parte inferior, com offset pra cima para ficar visível)
+        const y = imgHeight - 30 + (Math.random() * 10); // +/- 10px de variação pra naturalidade
+
+        // Define posição dentro do container
+        b.style.left = `${baseLeft + x}px`;
+        b.style.top = `${baseTop + y}px`;
+
+        // Varia a duração e atraso da animação para naturalidade
+        b.style.animationDuration = `${8 + Math.random() * 5}s`;
+        b.style.animationDelay = `${Math.random() * 10}s`;
+
+        container.appendChild(b);
+      }
+    });
+
+    // Caso a imagem já esteja carregada antes do script rodar (cache), dispara manualmente:
+    if (conviteImg.complete) {
+      conviteImg.dispatchEvent(new Event('load'));
     }
   </script>
 </body>

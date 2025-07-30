@@ -42,19 +42,19 @@
 
     .borboleta {
       position: absolute;
-      width: 40px;
-      height: 40px;
+      width: 60px;
+      height: 60px;
       background-image: url('borboleta.png');
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
-      /* ✨ Novo ponto de surgimento: mais acima e mais à direita */
-      top: calc(50% - 20px);
+      top: calc(50% - 18px); /* Ponto ajustado */
       left: calc(50% + 60px);
       transform: translate(-50%, -50%);
       opacity: 0;
       z-index: 999;
-      animation: brilho 2s infinite alternate ease-in-out;
+      animation: brilho 2s infinite alternate ease-in-out,
+                 baterAsa 0.6s infinite ease-in-out;
     }
 
     @keyframes brilho {
@@ -62,10 +62,15 @@
       100% { filter: drop-shadow(0 0 12px #ffd700); }
     }
 
+    @keyframes baterAsa {
+      0%, 100% { transform: scaleX(1) rotate(0deg); }
+      50% { transform: scaleX(1.15) rotate(2deg); }
+    }
+
     #contador {
       margin-top: 20px;
       padding: 10px 20px;
-      background: rgba(0, 0, 139, 0.4); /* Azul Royal translúcido */
+      background: rgba(0, 0, 139, 0.4);
       border: 2px solid rgba(255, 215, 0, 0.6);
       border-radius: 12px;
       font-size: 1.4em;
@@ -98,9 +103,9 @@
 
       b.animate(
         [
-          { transform: 'translate(-50%, -50%) scale(0.8)', opacity: 0 },
-          { transform: `translate(${deslocamentoX}px, ${deslocamentoY}px) rotate(${rotacao}deg) scale(1.1)`, opacity: 1 },
-          { transform: `translate(${deslocamentoX * 1.2}px, ${deslocamentoY * 1.5}px) scale(0.6)`, opacity: 0 }
+          { transform: 'translate(-50%, -50%) scale(1)', opacity: 0 },
+          { transform: `translate(${deslocamentoX}px, ${deslocamentoY}px) rotate(${rotacao}deg) scale(1.2)`, opacity: 1 },
+          { transform: `translate(${deslocamentoX * 1.2}px, ${deslocamentoY * 1.5}px) scale(0.7)`, opacity: 0 }
         ],
         {
           duration: duracao,

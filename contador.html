@@ -48,11 +48,12 @@
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
-      top: calc(50% + 55px); /* cerca de 1cm abaixo do centro */
-      left: 50%;
+      /* 🔼 Ajustado mais acima e à direita */
+      top: calc(50% + 25px); /* Subido um pouco */
+      left: calc(50% + 20px); /* Deslocado um pouco à direita */
       transform: translate(-50%, -50%);
       opacity: 0;
-      z-index: 999; /* acima de tudo */
+      z-index: 999;
       animation: brilho 2s infinite alternate ease-in-out;
     }
 

@@ -1,5 +1,7 @@
 <div class="contador-container" id="container" style="position: relative; width: 100%; max-width: 500px; margin: auto;">
-  <img id="convite-img" src="Aniversário_Aghatta_XV.png" alt="Convite Aghatta" style="width: 400px; height: auto; background: transparent; display: block; margin: auto;" />
+  <img id="convite-img" src="Aniversário_Aghatta_XV.png" alt="Convite Aghatta"
+    style="width: 400px; height: auto; background: transparent; display: block; margin: auto; position: relative; z-index: 1;" />
+  
   <div id="contador" class="contador" style="font-size: 1.2em; color: white; text-align: center; margin-top: 0.5em;"></div>
 </div>
 
@@ -32,9 +34,9 @@
     const b = document.createElement('div');
     b.className = 'borboleta';
 
-    // Borboletas mais acima, centralizadas e à direita:
-    b.style.setProperty('--x', `${(Math.random() * 300) + 100}px`);  // mais para o centro-direita
-    b.style.setProperty('--y', `${-Math.random() * 1000 - 400}px`);   // mais acima
+    // MAIS acima e à direita da imagem:
+    b.style.setProperty('--x', `${Math.random() * 200 + 150}px`);   // de 150 a 350px para a direita do centro
+    b.style.setProperty('--y', `${-Math.random() * 1200 - 500}px`); // de -500 a -1700px => bem acima
 
     b.style.animationDuration = `${10 + Math.random() * 5}s`;
     b.style.animationDelay = `${Math.random() * 10}s`;
@@ -77,6 +79,7 @@
     animation-name: voar;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
+    z-index: 2; /* 🦋 sobre a imagem */
   }
 
   .asa-esquerda, .asa-direita {

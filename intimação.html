@@ -93,15 +93,24 @@
   const body = document.body;
 
   function ativarExperiencia() {
-    audio.play().catch(e => console.warn('Autoplay bloqueado:', e));
     tela.classList.add('oculta');
     body.classList.add('aberto');
+    audio.play().catch(e => console.warn('Autoplay bloqueado:', e));
   }
 
   tela.addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       ativarExperiencia();
+    }
+  });
+
+  // Se veio de um redirecionamento, ativa automaticamente após um pequeno atraso
+  window.addEventListener('load', () => {
+    if (document.referrer && document.referrer !== window.location.href) {
+      setTimeout(() => {
+        ativarExperiencia();
+      }, 1000);
     }
   });
 </script>

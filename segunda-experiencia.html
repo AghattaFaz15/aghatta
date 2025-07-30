@@ -6,6 +6,7 @@
 <title>Intimação Celestial - Aghatta XV</title>
 <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Great+Vibes&display=swap" rel="stylesheet" />
 <style>
+  /* seu CSS intacto */
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: 'Georgia', serif;
@@ -436,18 +437,61 @@
     b.appendChild(corpo);
     container.appendChild(b);
   }
-<script>
+
+  // Aqui começa o código novo para receber comandos do controle.html
+
   window.addEventListener('message', (event) => {
+    // Se quiser, pode colocar um check no event.origin para segurança
+
     const data = event.data;
-    if (data.comando === 'mudarBorboletas') {
-      const novas = document.querySelectorAll('.borboleta, .borboleta1, .borboleta2, .borboleta3'); // ajusta aqui se tiver mais classes
-      novas.forEach(b => {
-        if (b.tagName.toLowerCase() === 'img') {
-          b.src = data.novaImagem;
-        } else {
-          b.style.backgroundImage = `url(${data.novaImagem})`;
+
+    if (!data || typeof data !== 'object' || !data.comando) return;
+
+    switch(data.comando) {
+      case 'alterarTexto':
+        if(data.seletor && typeof data.novoTexto === 'string') {
+          const el = document.querySelector(data.seletor);
+          if(el) el.textContent = data.novoTexto;
         }
-      });
+        break;
+
+      case 'alterarImagem':
+        if(data.seletor && typeof data.novoSrc === 'string') {
+          const img = document.querySelector(data.seletor);
+          if(img && img.tagName.toLowerCase() === 'img') {
+            img.src = data.novoSrc;
+            if(data.novoAlt) img.alt = data.novoAlt;
+          }
+        }
+        break;
+
+      case 'alterarEstilo':
+        if(data.seletor && data.propriedade && data.valor) {
+          const el = document.querySelector(data.seletor);
+          if(el) el.style[data.propriedade] = data.valor;
+        }
+        break;
+
+      case 'alterarDataEvento':
+        if(data.novaData) {
+          const nova = new Date(data.novaData);
+          if(!isNaN(nova)) {
+            dataEvento.setTime(nova.getTime());
+            atualizarContador();
+          }
+        }
+        break;
+
+      case 'tocarAudio':
+        if(audio2) audio2.play();
+        break;
+
+      case 'pausarAudio':
+        if(audio2) audio2.pause();
+        break;
+
+      default:
+        console.warn('Comando desconhecido:', data.comando);
     }
   });
 </script>

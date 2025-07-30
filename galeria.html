@@ -2,106 +2,54 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Espelho do Convite - Aghatta XV</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galeria</title>
   <style>
     body {
-      font-family: Georgia, serif;
-      background: #000b2e;
-      color: #fff;
+      margin: 0;
       padding: 2em;
-      line-height: 1.6em;
+      background: transparent;
+      font-family: 'Georgia', serif;
+      color: white;
+      text-align: center;
     }
-    h1, h2 {
-      color: #8ecaff;
-      font-family: 'Parisienne', cursive;
-      text-shadow: 0 0 10px #5ab3ff;
+
+    h2 {
+      color: gold;
+      font-size: 2em;
+      margin-bottom: 1em;
     }
-    .slideshow, .galeria {
-      max-width: 300px;
-      margin: 1.5em auto;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+
+    .galeria {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1em;
     }
-    .slideshow img, .galeria img {
+
+    .galeria img {
       width: 100%;
-      height: auto;
-      display: block;
-    }
-    .textos {
-      max-width: 600px;
-      margin: 2em auto;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 1.5em;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(30, 90, 200, 0.4);
-    }
-    .versiculo, .frase-intro, .frase-presenca {
-      margin-bottom: 1.5em;
+      border: 2px solid gold;
+      border-radius: 8px;
     }
   </style>
 </head>
 <body>
 
-  <h1>Resumo do Convite</h1>
-
-  <div class="textos">
-    <div class="versiculo">
-      <strong>Versículo:</strong><br>
-      “Para que vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto, e o Santo de Israel o criou.” — Isaías 41:20
-    </div>
-
-    <div class="frase-intro">
-      <strong>Frase de introdução:</strong><br>
-      Contando os dias para honrar 15 anos da promessa que virou pessoa...<br>
-      Deus escreveu, o tempo confirmou e agora, juntos, vamos celebrar...
-    </div>
-
-    <div class="frase-presenca">
-      <strong>Frase de presença:</strong><br>
-      Essa festa não seria a mesma sem a sua presença.
-    </div>
-  </div>
-
-  <h2>Slideshow</h2>
-  <div class="slideshow">
-    <img src="imagem1.jpeg" alt="Imagem do slideshow" id="espelho-slide">
-  </div>
-
-  <h2>Galeria</h2>
+  <h2>Galeria de Memórias</h2>
   <div class="galeria">
-    <img src="imagem1.jpeg" alt="Imagem da galeria" id="espelho-galeria">
+    <img src="imagem1.jpg" alt="Foto 1" />
+    <img src="imagem2.jpg" alt="Foto 2" />
+    <img src="imagem3.jpg" alt="Foto 3" />
+    <!-- Adicione mais imagens conforme desejar -->
   </div>
 
   <script>
-    // Comunicação com a janela principal
-    window.addEventListener('message', (event) => {
-      const data = event.data;
-      if (!data || typeof data !== 'object' || !data.comando) return;
-
-      switch (data.comando) {
-        case 'alterarImagem':
-          if (data.seletor === '#slide-img') {
-            document.getElementById('espelho-slide').src = data.novoSrc;
-          }
-          if (data.seletor === '#slide-img' || data.seletor === '.galeria img') {
-            document.getElementById('espelho-galeria').src = data.novoSrc;
-          }
-          break;
-
-        case 'alterarTexto':
-          if (data.seletor === '.frase-intro') {
-            document.querySelector('.frase-intro').innerHTML = `<strong>Frase de introdução:</strong><br>${data.novoTexto}`;
-          }
-          if (data.seletor === '.versiculo') {
-            document.querySelector('.versiculo').innerHTML = `<strong>Versículo:</strong><br>${data.novoTexto}`;
-          }
-          if (data.seletor === '.frase-presenca') {
-            document.querySelector('.frase-presenca').innerHTML = `<strong>Frase de presença:</strong><br>${data.novoTexto}`;
-          }
-          break;
-      }
+    window.addEventListener('load', () => {
+      window.parent.postMessage({
+        type: 'resize-iframe',
+        id: 'galeriaFrame',
+        height: document.body.scrollHeight
+      }, '*');
     });
   </script>
 

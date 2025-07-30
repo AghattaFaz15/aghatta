@@ -10,67 +10,62 @@
       background: #000b2e;
       color: #fff;
       padding: 2em;
+      margin: 0;
       display: flex;
       justify-content: center;
       min-height: 100vh;
-      margin: 0;
+      align-items: center;
     }
     #container {
+      position: relative;
       max-width: 800px;
       width: 100%;
-      position: relative;
       background: rgba(255, 255, 255, 0.05);
-      padding: 2em;
+      padding: 2em 2em 4em 2em;
       border-radius: 12px;
       box-shadow: 0 0 15px rgba(30, 90, 200, 0.4);
-      overflow: visible;
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 500px;
+      overflow: visible;
     }
     #convite-img {
       max-width: 100%;
       height: auto;
       border-radius: 12px;
       display: block;
-      margin: 0 auto 1.5em;
+      margin: 0 auto;
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
     #contador {
-      font-size: 2em;
+      font-size: 1.4em;
       font-weight: bold;
       color: gold;
       text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
-      margin-top: auto;
-      padding-top: 1em;
-      z-index: 2;
-      position: relative;
-      background: rgba(0,0,0,0.3);
+      margin-top: 1em;
+      background: rgba(0, 0, 0, 0.4);
       border-radius: 10px;
-      width: 100%;
-      box-sizing: border-box;
+      padding: 0.5em 1em;
+      display: inline-block;
+      position: relative;
+      z-index: 3;
+      width: auto;
     }
-    /* Borboletas com imagem */
+    /* Borboletas com imagem, posicionadas para sair da base da imagem */
     .borboleta {
       position: absolute;
       width: 40px;
       height: 40px;
+      background-image: url('borboleta.png'); /* Ajuste o nome/caminho aqui */
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
       animation-name: voar;
       animation-iteration-count: infinite;
       animation-timing-function: ease-in-out;
       opacity: 0.9;
       pointer-events: none;
-      z-index: 0;
-      background-image: url('borboleta.png'); /* sua imagem de borboleta */
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
+      z-index: 1;
     }
-
     @keyframes voar {
       0% {
         transform: translate(var(--x), var(--y)) scale(1);
@@ -80,7 +75,7 @@
         opacity: 1;
       }
       100% {
-        transform: translate(calc(var(--x) + 100px), calc(var(--y) - 600px)) scale(0.5);
+        transform: translate(calc(var(--x) + 60px), calc(var(--y) - 400px)) scale(0.5);
         opacity: 0;
       }
     }
@@ -115,15 +110,27 @@
     atualizarContador();
 
     const container = document.getElementById('container');
-    const total = 15;
+    const conviteImg = document.getElementById('convite-img');
+    const totalBorboletas = 15;
 
-    for (let i = 0; i < total; i++) {
+    for (let i = 0; i < totalBorboletas; i++) {
       const b = document.createElement('div');
       b.className = 'borboleta';
-      b.style.setProperty('--x', `${(Math.random() - 0.5) * 600}px`);
-      b.style.setProperty('--y', `${-Math.random() * 800 - 200}px`);
-      b.style.animationDuration = `${10 + Math.random() * 5}s`;
+
+      // Posição inicial perto da base da imagem (aproximadamente em px)
+      // Calcula posições X e Y aleatórias dentro da largura da imagem, e na base (cerca da altura da imagem)
+      const imgRect = conviteImg.getBoundingClientRect();
+      // Como getBoundingClientRect pode não estar disponível ainda, vamos usar uma faixa fixa, por segurança:
+      const xBase = Math.random() * 300 - 150; // horizontal +/- 150px
+      const yBase = 0; // iniciar na base (0 em Y)
+
+      b.style.setProperty('--x', `${xBase}px`);
+      b.style.setProperty('--y', `${yBase}px`);
+
+      // Varia a duração e atraso da animação
+      b.style.animationDuration = `${8 + Math.random() * 5}s`;
       b.style.animationDelay = `${Math.random() * 10}s`;
+
       container.appendChild(b);
     }
   </script>

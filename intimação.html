@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Intimação Celestial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #002366;
+      overflow: hidden;
+      transition: background 1.2s ease-in-out;
+      color: white;
+    }
+    body.aberto {
+      overflow-y: auto;
+      background-color: #000;
+    }
+
+    .tela-inicial {
+      width: 100vw;
+      height: 100vh;
+      background: url("Aghatta.png") center center / cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      transition: opacity 1.2s ease, visibility 1.2s ease;
+      opacity: 1;
+      visibility: visible;
+      cursor: pointer;
+    }
+
+    .tela-inicial.oculta {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .texto-inicial {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1em;
+      font-family: 'Parisienne', cursive;
+      font-size: 3em;
+      color: gold;
+      text-shadow: 0 0 10px rgba(255,215,0,0.7);
+    }
+
+    .conteudo {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(40px);
+      transition: opacity 1.5s ease, transform 1.5s ease;
+      padding: 5em 2em;
+      max-width: 800px;
+      margin: 0 auto;
+      z-index: 1;
+    }
+
+    body.aberto .conteudo {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<audio id="audio2" src="audio.mp3" preload="auto"></audio>
+
+<div class="tela-inicial" onclick="ativarExperiencia()" role="button" tabindex="0" aria-label="Iniciar experiência">
+  <div class="texto-inicial">
+    Intimação Celestial
+  </div>
+</div>
+
+<div class="conteudo">
+  <h2>Bem-vindo à celebração de Aghatta XV</h2>
+  <p>Você está prestes a testemunhar uma jornada guiada pela fé, luz e promessas cumpridas.</p>
+</div>
+
+<script>
+  const audio = document.getElementById('audio2');
+  const tela = document.querySelector('.tela-inicial');
+  const body = document.body;
+
+  function ativarExperiencia() {
+    audio.play().catch(e => console.warn('Autoplay bloqueado:', e));
+    tela.classList.add('oculta');
+    body.classList.add('aberto');
+  }
+
+  tela.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      ativarExperiencia();
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -9,28 +9,20 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Georgia', serif;
-      background-color: #000; /* fundo preto inicialmente */
+      background-color: #000; /* fundo inicial preto */
       overflow: hidden;
       transition: background 1.2s ease-in-out;
       color: white;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
     }
     body.aberto {
       overflow-y: auto;
-      background-color: #000; /* fallback preto se imagem não carregar */
-      /* aqui vai a imagem de fundo Aghatta.png */
-      background-image: url('Aghatta.png');
+      background: url("Aghatta.png") center center / cover no-repeat;
     }
 
     .tela-inicial {
       width: 100vw;
       height: 100vh;
-      background-color: #000; /* fundo preto para tela inicial */
+      background: #000;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -52,11 +44,14 @@
     }
 
     .texto-inicial {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1em;
       font-family: 'Parisienne', cursive;
       font-size: 3em;
       color: gold;
-      text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
-      user-select: none;
+      text-shadow: 0 0 10px rgba(255,215,0,0.7);
     }
 
     .conteudo {
@@ -64,11 +59,10 @@
       pointer-events: none;
       transform: translateY(40px);
       transition: opacity 1.5s ease, transform 1.5s ease;
-      padding: 3em 2em 1em;
+      padding: 5em 2em;
       max-width: 800px;
       margin: 0 auto;
       z-index: 1;
-      flex-shrink: 0;
     }
 
     body.aberto .conteudo {
@@ -77,31 +71,12 @@
       transform: translateY(0);
     }
 
-    #iframes-container {
-      display: none;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 1em;
-      box-sizing: border-box;
-      width: 100vw;
-      flex-shrink: 0;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-top: auto;
-      border-top: 1px solid #0f4a91;
-    }
-    body.aberto #iframes-container {
-      display: flex;
-    }
-    #iframes-container iframe {
+    iframe {
+      display: block;
+      width: 100%;
       border: none;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-      background: #001a66;
-      width: 320px;
-      height: 400px;
-      flex-shrink: 0;
+      margin: 3em 0;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
     }
   </style>
 </head>
@@ -120,10 +95,11 @@
   <p>Você está prestes a testemunhar uma jornada guiada pela fé, luz e promessas cumpridas.</p>
 </div>
 
-<div id="iframes-container">
-  <iframe src="galeria.html" title="Galeria do Convite"></iframe>
-  <iframe src="contador.html" title="Contador do Evento"></iframe>
-</div>
+<!-- GALERIA embutida -->
+<iframe src="galeria.html" height="850"></iframe>
+
+<!-- CONTADOR embutido -->
+<iframe src="contador.html" height="600"></iframe>
 
 <script>
   const audio = document.getElementById('audio2');

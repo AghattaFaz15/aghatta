@@ -17,7 +17,7 @@
     }
 
     .top-message {
-      max-width: 920px;
+      max-width: 960px;
       margin-bottom: 1em;
       padding: 1em 1.5em;
       border-radius: 12px;
@@ -32,7 +32,7 @@
     }
 
     .slideshow-wrapper {
-      max-width: 920px;
+      max-width: 960px;
       width: 100%;
       border-radius: 16px;
       overflow: hidden;
@@ -53,6 +53,8 @@
       object-fit: cover;
       top: 0;
       left: 0;
+      transition: opacity 1s ease-in-out;
+      opacity: 1;
     }
   </style>
 </head>
@@ -62,7 +64,7 @@
 
   <div class="slideshow-wrapper">
     <div class="slideshow-container">
-      <img src="imagem1.jpeg" alt="Imagem do slideshow" id="slide-galeria">
+      <img src="imagem1.jpeg" alt="Imagem do slideshow" id="slide-galeria" onerror="this.src='https://via.placeholder.com/960x600?text=Aghatta+XV';">
     </div>
   </div>
 
@@ -73,10 +75,14 @@
 
     function proximoSlide() {
       indice = (indice + 1) % imagens.length;
-      slide.src = imagens[indice];
+      slide.style.opacity = 0;
+      setTimeout(() => {
+        slide.src = imagens[indice];
+        slide.style.opacity = 1;
+      }, 400);
     }
 
-    setInterval(proximoSlide, 3000);
+    setInterval(proximoSlide, 3500);
   </script>
 
 </body>

@@ -30,6 +30,7 @@
       background: #102153dd;
       box-shadow: 0 0 30px #bfa234cc;
       border-radius: 15px;
+      cursor: pointer;
     }
 
     /* Cada página do livro */
@@ -44,6 +45,7 @@
       flex-direction: column;
       justify-content: flex-start;
       border-radius: 15px;
+      user-select: text;
     }
     .page h2 {
       color: gold;
@@ -55,9 +57,8 @@
       flex-grow: 1;
       font-size: 1.15rem;
       line-height: 1.4;
-      user-select: text;
-      overflow-y: auto;
       padding-right: 5px;
+      /* Removido overflow-y para evitar conflito com turn.js */
     }
 
     /* Botões de navegação */
@@ -81,16 +82,6 @@
     button:hover {
       background-color: #a98b2a;
     }
-
-    /* Scrollbar discreta para texto */
-    .page p::-webkit-scrollbar {
-      width: 6px;
-    }
-    .page p::-webkit-scrollbar-thumb {
-      background-color: #bfa234cc;
-      border-radius: 3px;
-    }
-
   </style>
 
   <!-- JQuery e Turn.js CDN -->
@@ -146,13 +137,14 @@
         width: $('#book').width(),
         height: $('#book').height(),
         autoCenter: true,
-        display: 'single', // página única (pode mudar para 'double' se quiser efeito livro aberto)
+        display: 'double', // livro aberto lindo
         acceleration: true,
         gradients: true,
+        duration: 1000 // tempo suave da virada
       });
     });
 
-    // Funções para navegação pelos botões
+    // Botões de navegação
     $('#next1').click(() => $('#book').turn('next'));
     $('#prev2').click(() => $('#book').turn('previous'));
     $('#next2').click(() => $('#book').turn('next'));
@@ -160,7 +152,7 @@
     $('#next3').click(() => $('#book').turn('next'));
     $('#prev4').click(() => $('#book').turn('previous'));
 
-    // Contador dinâmico exemplo (você pode personalizar a data)
+    // Contador dinâmico
     function atualizarContador() {
       const evento = new Date('2025-09-12T19:00:00'); // data e hora do evento
       const agora = new Date();

@@ -1,222 +1,158 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Confirmação de Presença - Aghatta XV</title>
+  <meta charset="UTF-8">
+  <title>Confirmação de Presença Celestial</title>
+  <script type="module">
+    // Importações Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    // Configuração do seu Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
+      authDomain: "livro-aghatta.firebaseapp.com",
+      databaseURL: "https://livro-aghatta-default-rtdb.firebaseio.com",
+      projectId: "livro-aghatta",
+      storageBucket: "livro-aghatta.appspot.com",
+      messagingSenderId: "1087557952930",
+      appId: "1:1087557952930:web:59e5d8cc6ed646ed748eec"
+    };
+
+    // Inicializa o Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Função de confirmação
+    window.confirmarPresenca = () => {
+      const nome = document.getElementById('nomeConvidado').value.trim();
+      if (nome === '') {
+        alert('Digite seu nome para acender a estrela!');
+        return;
+      }
+
+      // Animação da estrela
+      const estrela = document.createElement('div');
+      estrela.className = 'estrela';
+      estrela.textContent = `★ ${nome}`;
+      estrela.style.left = Math.random() * 80 + 10 + 'vw';
+      estrela.style.top = '60vh';
+      document.body.appendChild(estrela);
+      setTimeout(() => estrela.remove(), 5000);
+
+      // Envia para o Firebase
+      const confirmacoesRef = ref(db, 'confirmacoes');
+      push(confirmacoesRef, {
+        nome: nome,
+        timestamp: new Date().toISOString()
+      });
+
+      // Limpa campo
+      document.getElementById('nomeConvidado').value = '';
+    };
+  </script>
+
   <style>
     body {
-      margin: 0; padding: 0;
-      background: url('Aghatta.png') no-repeat center center fixed;
+      margin: 0;
+      padding: 0;
+      background: url('https://i.imgur.com/hqQmAxC.jpg') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Georgia', serif;
+      color: #fff;
       overflow: hidden;
     }
-    #ceu-de-presencas {
+
+    .verso {
       position: absolute;
-      top: 10px; right: 10px;
-      width: 250px; height: 250px;
-      z-index: 10;
-      pointer-events: none;
-    }
-    .borboleta-fixa {
-      position: absolute;
-      width: 30px;
-      animation: aparecerNoCeu 1s ease-in forwards;
-    }
-    .nome-fixo {
-      position: absolute;
-      color: #fff5c2;
-      font-size: 12px;
+      bottom: 20px;
+      right: 30px;
+      font-size: 1.1rem;
       font-style: italic;
-      text-shadow: 0 0 5px #ffd700;
-      transform: translateY(10px);
+      color: #fffacd;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
-    @keyframes aparecerNoCeu {
-      from { transform: scale(0); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-    .container {
-      position: absolute;
-      bottom: 50px;
-      width: 100%;
+
+    .confirmacao-container {
       text-align: center;
-    }
-    input {
-      padding: 10px;
-      border: none;
+      margin-top: 20vh;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 2rem;
       border-radius: 20px;
-      font-size: 16px;
-      width: 250px;
+      backdrop-filter: blur(6px);
+      width: 90%;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .confirmacao-container p.instrucoes {
+      font-size: 1.3rem;
+      color: #fffacd;
+      margin-bottom: 1rem;
+    }
+
+    .confirmacao-container input {
+      font-size: 1.2rem;
+      padding: 0.7rem 1.2rem;
+      border: 2px solid #ffd700;
+      border-radius: 10px;
       outline: none;
+      width: 80%;
+      max-width: 400px;
+      background-color: #fff8dc;
+      color: #4b0082;
     }
-    .botao-coracao {
-      margin-top: 20px;
-      font-size: 50px;
-      color: #ff4d6d;
+
+    .confirmacao-container button {
+      font-size: 1.1rem;
+      background-color: #ffd700;
+      color: #4b0082;
+      border: none;
+      padding: 0.8rem 1.6rem;
+      border-radius: 15px;
+      font-weight: bold;
       cursor: pointer;
-      animation: pulse 2s infinite;
-      transition: transform 0.3s;
-      user-select: none;
+      margin-top: 1rem;
+      font-family: 'Georgia', serif;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-    .botao-coracao:hover {
-      transform: scale(1.2);
+
+    .confirmacao-container button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #ffd700;
     }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-      100% { transform: scale(1); }
-    }
-    .mensagem {
+
+    .estrela {
       position: absolute;
-      bottom: 150px;
-      width: 100%;
-      text-align: center;
-      color: #fff7d6;
-      font-size: 22px;
-      opacity: 0;
-      animation: escrever 3s forwards;
-      font-family: 'Brush Script MT', cursive;
-      text-shadow: 0 0 10px #f9d776;
-      user-select: none;
-    }
-    @keyframes escrever {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    .borboleta {
-      position: absolute;
-      width: 40px;
-      transition: all 3s ease-in-out;
-      z-index: 5;
+      font-size: 1.2rem;
+      color: #ffd700;
+      animation: subir 5s ease-in forwards;
       pointer-events: none;
+    }
+
+    @keyframes subir {
+      0% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-500px) scale(1.5);
+      }
     }
   </style>
 </head>
 <body>
 
-<div id="ceu-de-presencas"></div>
+  <div class="confirmacao-container">
+    <p class="instrucoes">Digite seu nome para confirmar sua presença celestial:</p>
+    <input type="text" id="nomeConvidado" placeholder="Seu nome precioso aqui..." />
+    <br>
+    <button onclick="confirmarPresenca()">Acender minha estrela ✨</button>
+  </div>
 
-<div class="container" role="form" aria-label="Confirmação de presença">
-  <input type="text" id="nome" placeholder="Digite seu nome..." aria-required="true" aria-describedby="mensagem-erro" />
-  <div class="botao-coracao" role="button" tabindex="0" aria-pressed="false" aria-label="Confirmar presença" onclick="confirmarPresenca()" onkeypress="if(event.key==='Enter') confirmarPresenca()">❤️</div>
-  <div id="mensagem-erro" style="color:#ff5555; font-size:14px; margin-top:5px; height:18px;"></div>
-</div>
-
-<div id="mensagem" class="mensagem" aria-live="polite" aria-atomic="true"></div>
-
-<!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-
-<script>
-  // Config Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
-    authDomain: "livro-aghatta.firebaseapp.com",
-    databaseURL: "https://livro-aghatta-default-rtdb.firebaseio.com",
-    projectId: "livro-aghatta",
-    storageBucket: "livro-aghatta.firebasestorage.app",
-    messagingSenderId: "491625108244",
-    appId: "1:491625108244:web:3afdfda239f9d0904ca801"
-  };
-  // Inicializa Firebase
-  firebase.initializeApp(firebaseConfig);
-  const database = firebase.database();
-
-  const ceu = document.getElementById('ceu-de-presencas');
-  const mensagem = document.getElementById('mensagem');
-  const erro = document.getElementById('mensagem-erro');
-
-  // Função para criar borboleta fixa com nome no céu
-  function criarBorboletaFixa(nome, x, y) {
-    const borboletaFixa = document.createElement('img');
-    borboletaFixa.src = 'https://cdn-icons-png.flaticon.com/512/616/616408.png';
-    borboletaFixa.className = 'borboleta-fixa';
-    borboletaFixa.style.left = x + 'px';
-    borboletaFixa.style.top = y + 'px';
-
-    const nomeFixo = document.createElement('div');
-    nomeFixo.className = 'nome-fixo';
-    nomeFixo.style.left = x + 'px';
-    nomeFixo.style.top = (y + 30) + 'px';
-    nomeFixo.textContent = nome;
-
-    ceu.appendChild(borboletaFixa);
-    ceu.appendChild(nomeFixo);
-  }
-
-  // Carrega todas presenças do Firebase e exibe no céu
-  function carregarPresencas() {
-    database.ref('presencas').once('value', snapshot => {
-      if(snapshot.exists()) {
-        const dados = snapshot.val();
-        Object.values(dados).forEach(item => {
-          // Gera posições aleatórias dentro do céu
-          const posX = Math.random() * (ceu.clientWidth - 40);
-          const posY = Math.random() * (ceu.clientHeight - 50);
-          criarBorboletaFixa(item.nome, posX, posY);
-        });
-      }
-    });
-  }
-
-  // Função que anima borboleta e salva nome no Firebase
-  function confirmarPresenca() {
-    erro.textContent = '';
-    const inputNome = document.getElementById('nome');
-    const nome = inputNome.value.trim();
-
-    if (!nome) {
-      erro.textContent = "Por favor, digite seu nome para confirmar presença.";
-      inputNome.focus();
-      return;
-    }
-
-    // Mensagem animada
-    mensagem.textContent = `Presença confirmada: ${nome}`;
-    mensagem.style.animation = 'none';
-    void mensagem.offsetWidth; // restart animation
-    mensagem.style.animation = 'escrever 3s forwards';
-
-    // Criar borboleta animada
-    const borboleta = document.createElement('img');
-    borboleta.src = 'https://cdn-icons-png.flaticon.com/512/616/616408.png';
-    borboleta.className = 'borboleta';
-    document.body.appendChild(borboleta);
-
-    const startX = Math.random() * window.innerWidth;
-    const startY = window.innerHeight - 100;
-    borboleta.style.left = startX + 'px';
-    borboleta.style.top = startY + 'px';
-
-    // Salvar no Firebase
-    database.ref('presencas').push({ nome })
-      .then(() => {
-        // Anima borboleta para o céu e remove
-        setTimeout(() => {
-          borboleta.style.top = '100px';
-          borboleta.style.left = '85%';
-          borboleta.style.opacity = '0';
-          setTimeout(() => {
-            borboleta.remove();
-            // Adiciona borboleta fixa e nome no céu
-            const posX = Math.random() * (ceu.clientWidth - 40);
-            const posY = Math.random() * (ceu.clientHeight - 50);
-            criarBorboletaFixa(nome, posX, posY);
-          }, 3000);
-        }, 100);
-      })
-      .catch(err => {
-        console.error(err);
-        mensagem.textContent = "Erro ao salvar presença. Tente novamente.";
-      });
-
-    inputNome.value = '';
-  }
-
-  // Carregar presenças ao abrir a página
-  window.onload = carregarPresencas;
-</script>
+  <div class="verso">“Há nomes que brilham no céu do coração —<br>não como lembrança, mas como luz viva da promessa.”</div>
 
 </body>
 </html>

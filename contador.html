@@ -28,6 +28,7 @@
       max-width: 90vw;
       height: auto;
       overflow: visible;
+      text-align: center;
     }
 
     .imagem-central {
@@ -36,26 +37,10 @@
       display: block;
       position: relative;
       z-index: 1;
-    }
-
-    #contador {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80%;
-      background: rgba(65, 105, 225, 0.5);
-      color: gold;
-      font-size: 1.3rem;
-      text-align: center;
-      padding: 0.5em 1em;
-      border-radius: 12px;
-      box-shadow: 0 0 8px 2px rgba(65, 105, 225, 0.7);
-      z-index: 10;
-      font-weight: bold;
       user-select: none;
     }
 
+    /* Borboletas mais abaixo da imagem */
     .borboleta {
       position: absolute;
       width: 40px;
@@ -78,12 +63,75 @@
         transform: scale(1.1) rotate(10deg);
       }
     }
+
+    #contador-box {
+      margin-top: 15px;
+      background: rgba(65, 105, 225, 0.5);
+      color: gold;
+      border-radius: 14px;
+      box-shadow: 0 0 8px 2px rgba(65, 105, 225, 0.7);
+      padding: 1em 1.2em;
+      font-weight: bold;
+      user-select: none;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      z-index: 10;
+    }
+
+    #contador-titulo {
+      font-size: 1.5rem;
+      margin-bottom: 0.6em;
+      letter-spacing: 0.12em;
+      text-shadow: 0 0 5px gold;
+    }
+
+    #contador {
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2em;
+    }
+
+    .coracao {
+      color: #ff4d6d;
+      font-size: 2.5rem;
+      animation: pulsar 1.5s ease-in-out infinite;
+      user-select: none;
+      filter: drop-shadow(0 0 6px #ff4d6d);
+    }
+    .coracao.direito {
+      animation-delay: 0.75s;
+    }
+
+    @keyframes pulsar {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.3);
+        opacity: 0.7;
+      }
+    }
   </style>
 </head>
 <body>
   <div id="container">
     <img src="Aniversário_Aghatta_XV.png" alt="Aniversário Aghatta XV" class="imagem-central" />
-    <div id="contador">Carregando contador...</div>
+
+    <!-- Borboletas surgindo mais abaixo da imagem -->
+  </div>
+
+  <div id="contador-box">
+    <div id="contador-titulo">FALTA</div>
+    <div id="contador">
+      <div class="coracao">❤️</div>
+      <div id="tempo">Carregando...</div>
+      <div class="coracao direito">❤️</div>
+    </div>
   </div>
 
   <script>
@@ -95,11 +143,12 @@
         const b = document.createElement('div');
         b.className = 'borboleta';
 
+        // Borboletas aparecem cerca de 60px abaixo do centro vertical da imagem
         const offsetX = (Math.random() - 0.3) * 40;
-        const offsetY = (Math.random() - 0.3) * 30;
+        const offsetY = (Math.random() - 0.3) * 30 + 60; // +60px para descer
 
         b.style.left = `${container.clientWidth / 2 + offsetX}px`;
-        b.style.top = `${container.clientHeight / 2 + 30 + offsetY}px`;
+        b.style.top = `${container.clientHeight / 2 + offsetY}px`;
 
         container.appendChild(b);
 
@@ -126,19 +175,19 @@
     }
 
     function atualizarContador() {
-      const contadorEl = document.getElementById('contador');
+      const tempoEl = document.getElementById('tempo');
       const dataEvento = new Date('2025-09-12T19:00:00');
       const agora = new Date();
       const diff = dataEvento - agora;
       if (diff <= 0) {
-        contadorEl.textContent = 'O evento já começou!';
+        tempoEl.textContent = 'O evento já começou!';
         return;
       }
       const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
       const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const segundos = Math.floor((diff % (1000 * 60)) / 1000);
-      contadorEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s para o início`;
+      tempoEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s`;
     }
 
     window.addEventListener('DOMContentLoaded', () => {

@@ -5,63 +5,73 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Intimação Celestial - Aghatta XV</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Indie+Flower&display=swap');
+
   * {
     margin: 0; padding: 0; box-sizing: border-box;
   }
   html, body {
     height: 100%;
-    background: white; /* fundo branco na tela 1 */
-    color: gold;
+    background: white; /* puro e celestial */
     font-family: Georgia, serif;
     overflow: hidden;
+    color: black; /* default */
   }
   .tela {
     position: fixed;
     inset: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     user-select: none;
     transition: opacity 0.6s ease;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1em;
   }
   .oculto {
     opacity: 0;
     pointer-events: none;
   }
 
-  /* Tela 1 */
+  /* Tela 1 - Rolo fechado, mais centralizado */
   #tela1 {
-    background: white url('rolofechado.png') no-repeat center/contain;
+    background: white url('rolofechado.png') no-repeat center center;
+    background-size: contain;
     cursor: pointer;
     font-size: 2.5em;
     text-shadow: 0 0 10px gold;
     color: gold;
+    flex-direction: column;
+    justify-content: center;
   }
   #tela1 span {
-    margin-top: 75vh; /* texto mais pra cima */
+    margin-top: 70vh; /* mais para cima */
     display: block;
     text-align: center;
     font-weight: bold;
   }
 
-  /* Tela 2 */
+  /* Tela 2 - Rolo aberto com texto manuscrito preto */
   #tela2 {
-    background: url('roloaberto.png') no-repeat center/contain;
-    padding: 1.5em 2em 2em;
+    background: url('roloaberto.png') no-repeat center center;
+    background-size: contain;
+    padding: 1.2em 2em 2em;
     flex-direction: column;
-    color: gold;
     overflow: hidden;
+    color: black;
+    font-family: 'Indie Flower', cursive; /* manuscrito leve e belo */
     user-select: text;
+    text-shadow: none;
   }
   #textoConvite {
     overflow-y: auto;
-    max-height: 52vh; /* scroll menor para caber no pergaminho */
-    font-size: 1.3em;
+    max-height: 48vh; /* scroll menor para caber no pergaminho */
+    font-size: 1.4em;
     line-height: 1.6em;
     padding-right: 1em;
     outline: none;
     background: transparent;
+    color: black;
   }
   #botaoAvancar {
     margin-top: 1em;
@@ -83,25 +93,28 @@
     pointer-events: auto;
   }
 
-  /* Tela 3 */
+  /* Tela 3 - imagem-capa com texto no topo */
   #tela3 {
-    background: url('imagem-capa.jpg') no-repeat center/cover;
+    background: url('imagem-capa.jpg') no-repeat center center;
+    background-size: cover;
     cursor: pointer;
     font-size: 1.8em;
-    text-shadow: 0 0 15px gold;
     color: gold;
     flex-direction: column;
-    justify-content: flex-end;
-    padding-bottom: 2em;
+    justify-content: flex-start;
+    padding: 2em 1em 1em;
+    user-select: none;
+    text-shadow: 0 0 10px black;
   }
   #tela3 span {
-    user-select: none;
-    margin-bottom: 0;
     font-weight: bold;
     text-align: center;
+    width: 100%;
+    margin-bottom: 0;
+    font-size: 2.4em;
   }
 
-  /* Tela 4 */
+  /* Tela 4 - vídeo fullscreen */
   #tela4 {
     background: black;
     justify-content: center;
@@ -142,7 +155,7 @@
 
   <!-- Tela 3 -->
   <div class="tela oculto" id="tela3" role="button" tabindex="0" aria-label="Clique para ouvir o som e continuar">
-    <span>Toque para ouvir o chamado</span>
+    <span>Os céus bate à porta. Toque para abrir</span>
     <audio id="audioToctoc" src="toctoc.mp3" loop preload="auto"></audio>
   </div>
 
@@ -164,13 +177,12 @@
   const audioToctoc = document.getElementById('audioToctoc');
   const videoMensagem = document.getElementById('videoMensagem');
 
-  // Troca visibilidade das telas
   function mostrarTela(esconder, mostrar) {
     esconder.classList.add('oculto');
     mostrar.classList.remove('oculto');
   }
 
-  // Tela 1: abrir pergaminho (ir para tela 2)
+  // Tela 1 abre pergaminho
   tela1.addEventListener('click', () => mostrarTela(tela1, tela2));
   tela1.addEventListener('keydown', e => {
     if(e.key === 'Enter' || e.key === ' ') {
@@ -179,26 +191,27 @@
     }
   });
 
-  // Tela 2: mostrar botão avançar só no fim do scroll do texto e tocar áudio ao tocar em textoConvite
+  // Tela 2: botão aparecer no fim do scroll
   textoConvite.addEventListener('scroll', () => {
     if(textoConvite.scrollTop + textoConvite.clientHeight >= textoConvite.scrollHeight - 5) {
       botaoAvancar.classList.add('mostrar');
     }
   });
 
+  // Tela 2: ao tocar no texto, iniciar áudio toctoc (do loop da próxima tela)
   textoConvite.addEventListener('click', () => {
     if(audioToctoc.paused) {
       audioToctoc.play().catch(() => {});
     }
   });
 
-  // Botão avançar para tela 3
+  // Botão avançar da tela 2 para tela 3
   botaoAvancar.addEventListener('click', () => mostrarTela(tela2, tela3));
 
-  // Tela 3: tocar áudio em loop no início; ao tocar, pausa o áudio e inicia o vídeo
+  // Tela 3: clique para tocar áudio em loop (se não tocou ainda),
+  // se já tocou, pausa áudio e avança para tela 4 e vídeo
   let tocouAudio = false;
 
-  // Iniciar áudio em loop assim que a tela 3 aparecer
   function iniciarAudioToctoc() {
     audioToctoc.play().catch(() => {});
   }
@@ -227,17 +240,18 @@
     }
   });
 
-  // Quando tela 3 for mostrada, começa o áudio
+  // Ao mostrar tela 3, iniciar o áudio (para o loop aguardar o toque)
   const observer = new MutationObserver(mutations => {
     mutations.forEach(mutation => {
       if (mutation.target === tela3 && !tela3.classList.contains('oculto')) {
-        iniciarAudioToctoc();
+        // Não tocar automático, aguarda toque
+        // iniciarAudioToctoc();
       }
     });
   });
   observer.observe(tela3, { attributes: true, attributeFilter: ['class'] });
 
-  // Tela 4: fim do vídeo redireciona para segunda-experiencia.html
+  // Tela 4: ao fim do vídeo, redireciona para segunda-experiencia.html
   videoMensagem.addEventListener('ended', () => {
     window.location.href = 'segunda-experiencia.html';
   });

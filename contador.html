@@ -16,18 +16,17 @@
       font-family: 'Georgia', serif;
       color: #ffd700;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       height: 100vh;
+      justify-content: center;
       position: relative;
     }
 
     #container {
       position: relative;
-      width: 350px;
-      max-width: 90vw;
-      height: auto;
-      overflow: visible;
+      width: 100%;
+      max-width: 800px;
       text-align: center;
     }
 
@@ -35,12 +34,12 @@
       width: 100%;
       height: auto;
       display: block;
-      position: relative;
-      z-index: 1;
       user-select: none;
+      z-index: 1;
+      position: relative;
     }
 
-    /* Borboletas mais abaixo da imagem */
+    /* Borboletas surgindo mais abaixo da imagem */
     .borboleta {
       position: absolute;
       width: 40px;
@@ -65,7 +64,7 @@
     }
 
     #contador-box {
-      margin-top: 15px;
+      margin-top: 10px;
       background: rgba(65, 105, 225, 0.5);
       color: gold;
       border-radius: 14px;
@@ -74,9 +73,8 @@
       font-weight: bold;
       user-select: none;
       width: 80%;
-      margin-left: auto;
-      margin-right: auto;
-      position: relative;
+      max-width: 400px;
+      text-align: center;
       z-index: 10;
     }
 
@@ -122,7 +120,7 @@
   <div id="container">
     <img src="Aniversário_Aghatta_XV.png" alt="Aniversário Aghatta XV" class="imagem-central" />
 
-    <!-- Borboletas surgindo mais abaixo da imagem -->
+    <!-- Borboletas surgindo abaixo da imagem -->
   </div>
 
   <div id="contador-box">
@@ -143,9 +141,8 @@
         const b = document.createElement('div');
         b.className = 'borboleta';
 
-        // Borboletas aparecem cerca de 60px abaixo do centro vertical da imagem
-        const offsetX = (Math.random() - 0.3) * 40;
-        const offsetY = (Math.random() - 0.3) * 30 + 60; // +60px para descer
+        const offsetX = (Math.random() - 0.5) * 200;
+        const offsetY = (Math.random() - 0.3) * 30 + 30;
 
         b.style.left = `${container.clientWidth / 2 + offsetX}px`;
         b.style.top = `${container.clientHeight / 2 + offsetY}px`;

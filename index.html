@@ -2,185 +2,121 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Intimação Celestial - Aghatta XV</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Intimação Celestial</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      height: 100%;
-      background: white;
-      font-family: Georgia, serif;
-      overflow: hidden;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Segoe Script', cursive;
+      background-color: white;
+    }
     .tela {
-      position: fixed;
-      inset: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      transition: opacity 0.6s ease;
-      background: white;
+      flex-direction: column;
     }
-
     .oculto {
-      opacity: 0;
-      pointer-events: none;
+      display: none;
     }
-
-    /* TELA 1 */
-    #tela1 {
-      background: white;
-      text-align: center;
-      justify-content: space-between;
-      padding: 3vh 0;
+    #tela1 img {
+      max-width: 60%;
     }
-
     #tela1 h1 {
       font-size: 2em;
-      color: #222;
-      margin-bottom: 2vh;
+      margin-bottom: 1em;
+      color: #333;
     }
-
-    #roloFechado {
-      width: 70vw;
-      max-width: 400px;
-      height: auto;
-      cursor: pointer;
-      margin: auto;
-    }
-
-    #tela1 span {
+    #tela1 p {
       font-size: 1.2em;
-      color: #444;
-      margin-top: 2vh;
+      margin-top: 0.5em;
+      color: #555;
     }
-
-    /* TELA 2 */
-    #tela2 {
-      background: white;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transform: scale(1.15); /* Zoom mais forte */
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 12px;
+      background: gold;
+      border: none;
+      color: #000;
+      margin-top: 1em;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255,215,0,0.6);
     }
-
     .rolo-container {
       background: url('roloaberto.png') no-repeat center center;
       background-size: contain;
-      width: 90vw;
-      max-width: 600px;
-      height: 90vh;
+      width: 90%;
+      height: 90%;
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      position: relative;
+      justify-content: flex-start;
+      padding-top: 8%;
     }
-
-    #texto-titulo {
-      color: goldenrod;
-      font-size: 1.6em;
-      font-weight: bold;
-      text-align: center;
-      margin-top: 2vh;
-    }
-
     #textoConvite {
-      color: black;
-      font-family: 'Lucida Handwriting', cursive;
-      font-size: 1.2em;
-      line-height: 1.6em;
-      width: 72%;
-      height: 60%;
-      overflow-y: auto;
-      margin-top: 2vh;
-      background: transparent;
+      overflow-y: scroll;
+      width: 60%;
+      height: 52%;
+      font-size: 1.1em;
+      padding-right: 10px;
+      color: #000;
+      background: none;
       scrollbar-width: thin;
-      scrollbar-color: #999 transparent;
+      scrollbar-color: gold transparent;
     }
-
     #textoConvite::-webkit-scrollbar {
       width: 6px;
     }
-
     #textoConvite::-webkit-scrollbar-thumb {
-      background: #999;
+      background-color: gold;
       border-radius: 3px;
     }
-
-    #botaoAvancar {
-      margin-top: 2vh;
-      background: gold;
-      color: black;
-      border: none;
-      padding: 0.8em 1.5em;
-      border-radius: 15px;
-      font-weight: bold;
-      font-size: 1.2em;
-      box-shadow: 0 0 10px gold;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
-      cursor: pointer;
-    }
-
-    #botaoAvancar.mostrar {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    /* TELA 3 */
     #tela3 {
-      background: url('imagem-capa.jpg') center/cover no-repeat;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #mensagemCapa {
+      background: url('imagem-capa.jpg') no-repeat center center;
+      background-size: cover;
       color: white;
-      font-size: 2em;
       text-align: center;
-      padding: 20px;
-      font-family: 'Georgia', serif;
-      animation: pulse 2s infinite;
-      text-shadow: 2px 2px 10px black;
     }
-
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 0.9; }
-      50% { transform: scale(1.03); opacity: 1; }
-      100% { transform: scale(1); opacity: 0.9; }
+    #tela3 h2 {
+      font-size: 2em;
+      animation: pulsar 2s infinite;
+      text-shadow: 0 0 10px black;
     }
-
-    /* TELA 4 */
-    #tela4 {
-      background: black;
-      justify-content: center;
-      align-items: center;
+    @keyframes pulsar {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
     }
-
-    #videoMensagem {
+    video {
       width: 100%;
       height: 100%;
+      object-fit: cover;
     }
   </style>
 </head>
 <body>
-
   <!-- TELA 1 -->
   <div class="tela" id="tela1">
     <h1>Mensagem de Deus para você</h1>
-    <img id="roloFechado" src="rolofechado.png" alt="Pergaminho Fechado" onclick="abrirPergaminho()" />
-    <span>Toque para abrir</span>
+    <img src="rolofechado.png" alt="Pergaminho Fechado" onclick="mostrarTela2()">
+    <p>Toque para abrir</p>
   </div>
 
   <!-- TELA 2 -->
   <div class="tela oculto" id="tela2">
     <div class="rolo-container">
-      <div id="texto-titulo">Convite Celestial</div>
+      <div id="texto-titulo" style="margin-bottom: 1vh; font-size: 1.6em;">Convite Celestial</div>
       <div id="textoConvite">
         <p><em>“Antes que eu nascesse… o Céu já sabia quem caminharia comigo.”</em></p>
         <p>Em silêncio eterno, Deus já escrevia meu nome… e o seu, lado a lado.</p>
@@ -199,62 +135,59 @@
   </div>
 
   <!-- TELA 3 -->
-  <div class="tela oculto" id="tela3">
-    <div id="mensagemCapa">Os céus batem à porta...<br><small>Toque para abrir...</small></div>
+  <div class="tela oculto" id="tela3" onclick="iniciarVideo()">
+    <h2>Os céus batem à porta...<br>Toque para abrir...</h2>
+    <audio id="audioToque" src="toctoc.mp3" autoplay loop></audio>
   </div>
 
   <!-- TELA 4 -->
   <div class="tela oculto" id="tela4">
-    <video id="videoMensagem" autoplay playsinline>
+    <video id="videoMensagem" autoplay muted playsinline>
       <source src="mensagem.mp4" type="video/mp4" />
-      Seu navegador não suporta vídeo.
     </video>
-    <audio id="somPorta" src="porta.mp3" autoplay></audio>
+    <audio id="audioPorta" src="porta.mp3" autoplay></audio>
   </div>
 
   <script>
-    const textoConvite = document.getElementById('textoConvite');
+    const tela1 = document.getElementById('tela1');
+    const tela2 = document.getElementById('tela2');
+    const tela3 = document.getElementById('tela3');
+    const tela4 = document.getElementById('tela4');
+    const video = document.getElementById('videoMensagem');
+    const audioToque = document.getElementById('audioToque');
+    const audioPorta = document.getElementById('audioPorta');
     const botaoAvancar = document.getElementById('botaoAvancar');
-    let audioToctoc;
+    const textoConvite = document.getElementById('textoConvite');
+
+    botaoAvancar.style.display = 'none';
 
     textoConvite.addEventListener('scroll', () => {
-      if (textoConvite.scrollTop + textoConvite.clientHeight >= textoConvite.scrollHeight - 5) {
-        botaoAvancar.classList.add('mostrar');
+      if (textoConvite.scrollTop + textoConvite.clientHeight >= textoConvite.scrollHeight - 10) {
+        botaoAvancar.style.display = 'block';
       }
     });
 
-    function abrirPergaminho() {
-      document.getElementById('tela1').classList.add('oculto');
-      document.getElementById('tela2').classList.remove('oculto');
+    function mostrarTela2() {
+      tela1.classList.add('oculto');
+      tela2.classList.remove('oculto');
     }
 
     function irParaTela3() {
-      document.getElementById('tela2').classList.add('oculto');
-      document.getElementById('tela3').classList.remove('oculto');
-
-      audioToctoc = new Audio('toctoc.mp3');
-      audioToctoc.loop = true;
-      audioToctoc.play();
-
-      document.getElementById('tela3').addEventListener('click', irParaTela4);
+      tela2.classList.add('oculto');
+      tela3.classList.remove('oculto');
     }
 
-    function irParaTela4() {
-      if (audioToctoc) audioToctoc.pause();
-      document.getElementById('tela3').classList.add('oculto');
-      document.getElementById('tela4').classList.remove('oculto');
-
-      const video = document.getElementById('videoMensagem');
-      const somPorta = document.getElementById('somPorta');
-
-      video.muted = true;
+    function iniciarVideo() {
+      audioToque.pause();
+      tela3.classList.add('oculto');
+      tela4.classList.remove('oculto');
       video.play();
-      somPorta.play();
-
-      video.onended = () => {
-        window.location.href = "segunda-experiencia.html";
-      };
+      audioPorta.play();
     }
+
+    video.addEventListener('ended', () => {
+      window.location.href = "segunda-experiencia.html";
+    });
   </script>
 </body>
 </html>

@@ -15,49 +15,55 @@
     }
 
     section {
-      margin: 60px 0;
-      padding: 40px 20px;
+      margin: 80px 0;
+      padding: 50px 30px;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      background-color: rgba(255, 255, 255, 0.85);
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      background-color: rgba(10, 25, 70, 0.85); /* azul translúcido */
+      border: 3px solid gold; /* borda dourada */
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.8); /* brilho dourado */
       width: 90%;
       max-width: 1000px;
       margin-left: auto;
       margin-right: auto;
+      color: #f0e6f6;
+      text-shadow: 0 0 6px gold;
     }
 
     iframe {
       border: none;
       width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
     }
 
     .titulo-reinado {
-      font-size: 3em;
-      color: #b8860b;
+      font-size: 3.5em;
+      color: gold;
       text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 20px;
+      gap: 25px;
+      filter: drop-shadow(0 0 10px gold);
+      user-select: none;
     }
 
     .titulo-reinado img {
-      width: 50px;
+      width: 60px;
       height: auto;
-      filter: drop-shadow(0 0 6px gold);
     }
 
     p.subtitulo {
-      font-size: 1.2em;
-      color: #444;
-      text-align: center;
+      font-size: 1.3em;
       margin-top: 0.5em;
+      color: #d4af37;
+      text-shadow: 0 0 8px #d4af37aa;
+      font-style: italic;
+      user-select: none;
     }
   </style>
 </head>
@@ -70,7 +76,7 @@
   </audio>
 
   <!-- TÍTULO COM COROAS -->
-  <section id="inicio">
+  <section id="inicio" aria-label="Título Aghatta XV">
     <div class="titulo-reinado">
       <img src="coroa.png" alt="Coroa Esquerda" />
       Aghatta XV
@@ -80,18 +86,18 @@
   </section>
 
   <!-- GALERIA -->
-  <section id="galeria">
-    <iframe src="galeria.html" height="600"></iframe>
+  <section id="galeria" aria-label="Galeria de fotos da Aghatta">
+    <iframe src="galeria.html" height="600" title="Galeria de fotos"></iframe>
   </section>
 
   <!-- CONTADOR -->
-  <section id="contador">
-    <iframe src="contador.html" height="400"></iframe>
+  <section id="contador" aria-label="Contador regressivo para o evento">
+    <iframe src="contador.html" height="400" title="Contador regressivo"></iframe>
   </section>
 
   <!-- ÍCONES -->
-  <section id="icones">
-    <iframe src="icones.html" height="600"></iframe>
+  <section id="icones" aria-label="Mural de recados e confirmações">
+    <iframe src="icones.html" height="650" title="Mural de recados e confirmações"></iframe>
   </section>
 
 </body>

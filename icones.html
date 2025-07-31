@@ -95,85 +95,10 @@
     box-shadow: 0 0 15px #bfa234bb;
   }
 
-  /* --- MURAL DE RECADOS --- */
-  #mural form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.9em;
-  }
-  #mural label {
-    font-weight: 600;
-  }
-  #mural input[type="text"],
-  #mural textarea {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
-    padding: 0.5em;
-    border-radius: 8px;
-    border: none;
-    resize: vertical;
-    background: #0f183b;
-    color: #f0e6f6;
-    transition: box-shadow 0.3s ease;
-    box-shadow: inset 0 0 5px #000a1f;
-  }
-  #mural input[type="text"]:focus,
-  #mural textarea:focus {
-    outline: none;
-    box-shadow: 0 0 12px 2px #bfa234cc;
-    background: #1a2360;
-  }
-  #mural textarea {
-    min-height: 80px;
-  }
-  #mural button {
-    background-color: #bfa234;
-    border: none;
-    border-radius: 12px;
-    padding: 0.7em 1.4em;
-    font-weight: 700;
-    cursor: pointer;
-    color: #0f183b;
-    font-size: 1.1rem;
-    box-shadow: 0 0 10px #bfa234cc;
-    transition: background-color 0.3s ease, transform 0.25s ease;
-    align-self: flex-start;
-  }
-  #mural button:hover {
-    background-color: #a98b2a;
-    transform: scale(1.07);
-    box-shadow: 0 0 18px #ffd700dd;
-  }
-  #mural .recados-lista {
-    margin-top: 1.2em;
-    max-height: 230px;
-    overflow-y: auto;
-    background: rgba(20, 28, 60, 0.85);
-    border-radius: 12px;
-    padding: 0.8em 1em;
-    box-shadow: 0 0 12px #bfa234aa;
-  }
-  #mural .recado {
-    padding: 0.6em 0.8em;
-    border-bottom: 1px solid #bfa23444;
-  }
-  #mural .recado:last-child {
-    border-bottom: none;
-  }
-  #mural .recado .nome {
-    font-weight: 700;
-    color: #d1b244;
-  }
-  #mural .recado .confirmacao {
-    font-size: 0.85rem;
-    color: #8aff8a;
-    margin-top: 0.3em;
-  }
-
-  /* --- CONFIRMAÇÃO PRESENÇA --- */
+  /* --- CONFIRMAÇÃO DE PRESENÇA --- */
   #confirmacao-presenca {
     background: rgba(20, 28, 60, 0.85);
-    padding: 1.3em 1.6em;
+    padding: 1.8em 2em;
     border-radius: 15px;
     box-shadow: 0 0 15px #bfa234cc;
     text-align: center;
@@ -181,7 +106,7 @@
   }
   #confirmacao-presenca label {
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     user-select: none;
     display: flex;
     justify-content: center;
@@ -191,24 +116,34 @@
     font-weight: 700;
     text-shadow: 0 0 10px #d1b244bb;
   }
+  /* Esconde checkbox padrão */
   #confirmacao-presenca input[type="checkbox"] {
-    width: 22px;
-    height: 22px;
-    cursor: pointer;
+    display: none;
   }
-  #confirmacao-msg {
-    margin-top: 1em;
-    font-weight: 600;
-    color: #8aff8a;
+  /* Coração customizado */
+  #confirmacao-presenca label::before {
+    content: "♡"; /* coração vazio */
+    font-size: 1.8rem;
+    color: #d1b244;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  /* Quando marcado, coração preenchido e pulsante */
+  #confirmacao-presenca input[type="checkbox"]:checked + label::before {
+    content: "❤️";
+    color: #ffd700;
+    animation: pulsar 1.5s infinite;
+    transform-origin: center center;
+  }
+  @keyframes pulsar {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
   }
 
-  /* Scroll barras custom */
-  .recados-lista::-webkit-scrollbar {
-    width: 8px;
-  }
-  .recados-lista::-webkit-scrollbar-thumb {
-    background-color: #bfa234cc;
-    border-radius: 20px;
+  #confirmacao-msg {
+    margin-top: 1.3em;
+    font-weight: 600;
+    color: #8aff8a;
+    min-height: 1.3em;
   }
 
   /* RESPONSIVO */
@@ -216,12 +151,12 @@
     .secao-titulo {
       font-size: 1.4rem;
     }
-    #mural button {
-      font-size: 1rem;
-      padding: 0.5em 1em;
-    }
     #confirmacao-presenca label {
-      font-size: 1rem;
+      font-size: 1.2rem;
+      gap: 0.4em;
+    }
+    #confirmacao-presenca label::before {
+      font-size: 1.4rem;
     }
   }
 </style>
@@ -231,8 +166,8 @@
   <div class="container">
 
     <!-- Localização -->
-    <section id="localizacao">
-      <div class="secao-titulo" aria-label="Localização">
+    <section id="localizacao" aria-label="Localização">
+      <div class="secao-titulo" aria-label="Localização do evento">
         <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
         <span>Localização <span class="brilho">✨</span></span>
       </div>
@@ -243,90 +178,20 @@
       </iframe>
     </section>
 
-    <!-- Mural de Recados -->
-    <section id="mural" aria-label="Mural de Recados Interativo">
-      <div class="secao-titulo">
-        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v16l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
-        <span>Mural de Recados <span class="brilho">✨</span></span>
-      </div>
-
-      <form id="formRecado">
-        <label for="nome">Seu nome:</label>
-        <input type="text" id="nome" name="nome" required placeholder="Como deseja ser lembrado" autocomplete="off"/>
-
-        <label for="mensagem">Seu recado:</label>
-        <textarea id="mensagem" name="mensagem" rows="4" required placeholder="Deixe sua mensagem para a Aghatta"></textarea>
-
-        <label>
-          <input type="checkbox" id="confirmacao" name="confirmacao" />
-          Confirmo minha presença no evento
-        </label>
-
-        <button type="submit">Enviar Recado</button>
-      </form>
-
-      <div class="recados-lista" id="recados"></div>
-    </section>
-
     <!-- Confirmação de Presença -->
     <section id="confirmacao-presenca" aria-label="Confirmação de Presença">
       <div class="secao-titulo">
         <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 16.17l-3.5-3.5-1.42 1.42L9 19 20.5 7.5 19.08 6.08z"/></svg>
         <span>Confirmação de Presença (RSVP) <span class="brilho">✨</span></span>
       </div>
-      <label>
-        <input type="checkbox" id="rsvpCheck" />
-        Estou confirmando minha presença com alegria
-      </label>
+      <input type="checkbox" id="rsvpCheck" />
+      <label for="rsvpCheck">Estou confirmando minha presença com alegria</label>
       <div id="confirmacao-msg" role="alert" aria-live="polite"></div>
     </section>
+
   </div>
 
 <script>
-  // --- MURAL DE RECADOS ---
-  const form = document.getElementById('formRecado');
-  const recadosDiv = document.getElementById('recados');
-
-  let recados = JSON.parse(localStorage.getItem('recadosAghatta')) || [];
-
-  function renderizarRecados() {
-    recadosDiv.innerHTML = '';
-    if (recados.length === 0) {
-      recadosDiv.innerHTML = '<p style="text-align:center; opacity:0.6;">Nenhum recado ainda. Seja o primeiro!</p>';
-      return;
-    }
-    recados.forEach(({nome, mensagem, confirmado}, i) => {
-      const div = document.createElement('div');
-      div.className = 'recado';
-      div.innerHTML = `
-        <div class="nome">${nome}</div>
-        <div class="mensagem">${mensagem}</div>
-        ${confirmado ? '<div class="confirmacao">✅ Confirmou presença</div>' : ''}
-      `;
-      recadosDiv.appendChild(div);
-    });
-  }
-
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const nome = form.nome.value.trim();
-    const mensagem = form.mensagem.value.trim();
-    const confirmado = form.confirmacao.checked;
-
-    if (!nome || !mensagem) {
-      alert('Por favor, preencha seu nome e recado.');
-      return;
-    }
-
-    recados.push({ nome, mensagem, confirmado });
-    localStorage.setItem('recadosAghatta', JSON.stringify(recados));
-
-    form.reset();
-    renderizarRecados();
-  });
-
-  renderizarRecados();
-
   // --- CONFIRMAÇÃO DE PRESENÇA ---
   const rsvpCheck = document.getElementById('rsvpCheck');
   const confirmacaoMsg = document.getElementById('confirmacao-msg');

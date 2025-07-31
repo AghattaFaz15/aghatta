@@ -6,116 +6,106 @@
 <title>Segunda Experiência - Livro Celestial Aghatta XV</title>
 <style>
   html, body {
-    height: 100%;
-    margin: 0; padding: 0;
+    margin: 0; padding: 0; height: 100%; width: 100%;
     background: url('Aghatta.png') no-repeat center center fixed;
     background-size: cover;
+    overflow: hidden;
     font-family: 'Georgia', serif;
-    color: #ffd700;
+  }
+
+  #container {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
   }
-  #book {
-    width: 90vw;
-    max-width: 900px;
-    height: 600px;
-    background: rgba(16, 33, 83, 0.85);
-    box-shadow: 0 0 30px #bfa234cc;
-    border-radius: 15px;
-    position: relative;
-  }
+
   iframe {
-    width: 100%;
-    height: 100%;
+    width: 90vw;
+    height: 90vh;
     border: none;
     border-radius: 15px;
-    display: none;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
+    background: rgba(0,0,50,0.3);
   }
-  iframe.active {
-    display: block;
-  }
-  .nav-buttons {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 1.5rem;
-  }
+
   button {
-    background: #bfa234;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 215, 0, 0.7);
     border: none;
-    padding: 0.8em 2em;
-    font-weight: 700;
-    color: #0f183b;
-    border-radius: 12px;
+    color: #001170;
+    font-weight: bold;
+    font-size: 1.8rem;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
     cursor: pointer;
-    box-shadow: 0 0 15px #bfa234cc;
     user-select: none;
     transition: background-color 0.3s ease;
-    min-width: 130px;
+    z-index: 1000;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
   }
+
   button:hover {
-    background-color: #a98b2a;
+    background-color: rgba(255, 215, 0, 0.9);
   }
-  button:disabled {
-    background: rgba(191, 162, 52, 0.5);
-    cursor: default;
-    box-shadow: none;
+
+  #btn-prev {
+    left: 10px;
   }
+
+  #btn-next {
+    right: 10px;
+  }
+
 </style>
 </head>
 <body>
 
-  <div id="book">
-    <iframe id="page1" src="galeria.html" class="active" title="Galeria de Memórias"></iframe>
-    <iframe id="page2" src="livro.html" title="Livro Celestial"></iframe>
-    <iframe id="page3" src="contador.html" title="Contador"></iframe>
-    <iframe id="page4" src="icones.html" title="Ícones e Confirmação"></iframe>
+<div id="container">
+  <button id="btn-prev" aria-label="Página Anterior">&#8592;</button>
+  <iframe id="iframe-pagina" src="galeria.html" aria-live="polite"></iframe>
+  <button id="btn-next" aria-label="Próxima Página">&#8594;</button>
+</div>
 
-    <div class="nav-buttons">
-      <button id="prevBtn" disabled>&larr; Página Anterior</button>
-      <button id="nextBtn">Próxima Página &rarr;</button>
-    </div>
-  </div>
+<script>
+  const paginas = [
+    'galeria.html',
+    'livro.html',
+    'contador.html',
+    'icones.html'
+  ];
 
-  <script>
-    const iframes = [
-      document.getElementById('page1'),
-      document.getElementById('page2'),
-      document.getElementById('page3'),
-      document.getElementById('page4')
-    ];
-    let currentIndex = 0;
+  let indice = 0;
+  const iframe = document.getElementById('iframe-pagina');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
 
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
+  function atualizarPagina() {
+    iframe.src = paginas[indice];
+    btnPrev.disabled = indice === 0;
+    btnNext.disabled = indice === paginas.length -1;
+  }
 
-    function showPage(index) {
-      iframes.forEach((iframe, i) => {
-        iframe.classList.toggle('active', i === index);
-      });
-      prevBtn.disabled = index === 0;
-      nextBtn.disabled = index === iframes.length - 1;
-      currentIndex = index;
+  btnPrev.addEventListener('click', () => {
+    if (indice > 0) {
+      indice--;
+      atualizarPagina();
     }
+  });
 
-    prevBtn.addEventListener('click', () => {
-      if(currentIndex > 0) {
-        showPage(currentIndex - 1);
-      }
-    });
-    nextBtn.addEventListener('click', () => {
-      if(currentIndex < iframes.length - 1) {
-        showPage(currentIndex + 1);
-      }
-    });
+  btnNext.addEventListener('click', () => {
+    if (indice < paginas.length -1) {
+      indice++;
+      atualizarPagina();
+    }
+  });
 
-    // Inicializa mostrando a primeira página
-    showPage(0);
-  </script>
+  atualizarPagina();
+</script>
 
 </body>
 </html>

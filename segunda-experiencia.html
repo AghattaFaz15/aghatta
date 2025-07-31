@@ -3,160 +3,181 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Segunda Experiência - Aghatta XV</title>
+  <title>Segunda Experiência - Livro Celestial Aghatta XV</title>
   <style>
+    /* Reset básico */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
-    body {
-      background: url('Aghatta.png') no-repeat center center fixed;
-      background-size: cover;
+    body, html {
+      height: 100%;
+      background: linear-gradient(135deg, #0a163f, #2a2e6a);
       font-family: 'Georgia', serif;
-      color: white;
-      scroll-behavior: smooth;
-    }
-
-    audio {
-      display: none;
-    }
-
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 20px 0;
-      text-align: center;
-      z-index: 1000;
-      transition: opacity 0.6s ease;
-    }
-
-    header.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    header h1 {
-      font-size: 2.5rem;
-      color: gold;
-      text-shadow: 2px 2px 4px royalblue;
-      user-select: none;
-    }
-
-    main {
-      padding-top: 120px;
-      max-width: 1100px;
-      margin: 0 auto;
+      color: #ffd700;
       display: flex;
-      flex-direction: column;
-      gap: 80px;
-      padding-bottom: 60px;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
     }
 
-    section {
-      background: rgba(65, 105, 225, 0.9);
-      padding: 60px 40px;
-      border-radius: 30px;
-      border: 4px solid gold;
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
-      min-height: 800px; /* aumentei para conforto */
-      display: flex;
-      flex-direction: column;
+    /* Container do livro */
+    #book {
+      width: 90vw;
+      max-width: 900px;
+      height: 600px;
+      background: #102153dd;
+      box-shadow: 0 0 30px #bfa234cc;
+      border-radius: 15px;
     }
 
-    iframe {
+    /* Cada página do livro */
+    .page {
       width: 100%;
       height: 100%;
-      border: none;
-      border-radius: 20px;
-      display: block;
+      padding: 2rem 3rem;
+      color: white;
+      background: linear-gradient(135deg, #1e2a6a, #0f183b);
+      box-shadow: inset 0 0 20px #bfa234aa;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      border-radius: 15px;
+    }
+    .page h2 {
+      color: gold;
+      text-shadow: 0 0 10px #d1b244cc;
+      margin-bottom: 1rem;
+      user-select: none;
+    }
+    .page p {
       flex-grow: 1;
-      box-shadow: 0 0 20px #bfa234bb;
-      background: #102153dd; /* leve fundo para destaque */
+      font-size: 1.15rem;
+      line-height: 1.4;
+      user-select: text;
+      overflow-y: auto;
+      padding-right: 5px;
     }
 
-    /* Botão do Livro Celestial */
-    .botao-livro {
-      text-align: center;
-      margin: 0 auto;
+    /* Botões de navegação */
+    .nav-buttons {
+      margin-top: 15px;
+      display: flex;
+      justify-content: space-between;
     }
-    .botao-livro a {
+    button {
       background: #bfa234;
-      color: #0f183b;
-      padding: 18px 40px;
-      border-radius: 16px;
+      border: none;
+      padding: 0.8em 2em;
       font-weight: 700;
-      font-size: 1.4rem;
-      box-shadow: 0 0 20px #bfa234cc;
-      text-decoration: none;
-      display: inline-block;
-      transition: background-color 0.3s ease;
+      color: #0f183b;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #bfa234cc;
       user-select: none;
-      width: max-content;
+      transition: background-color 0.3s ease;
     }
-    .botao-livro a:hover {
+    button:hover {
       background-color: #a98b2a;
     }
 
-    /* Responsividade */
-    @media (max-width: 720px) {
-      section {
-        min-height: 600px;
-        padding: 40px 20px;
-        border-radius: 20px;
-      }
-      header h1 {
-        font-size: 2rem;
-      }
-      .botao-livro a {
-        font-size: 1.2rem;
-        padding: 15px 30px;
-      }
+    /* Scrollbar discreta para texto */
+    .page p::-webkit-scrollbar {
+      width: 6px;
     }
+    .page p::-webkit-scrollbar-thumb {
+      background-color: #bfa234cc;
+      border-radius: 3px;
+    }
+
   </style>
+
+  <!-- JQuery e Turn.js CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/turn.js@4/turn.min.js"></script>
 </head>
 <body>
-  <audio autoplay loop>
-    <source src="audio.mp3" type="audio/mpeg" />
-  </audio>
 
-  <header id="topo">
-    <h1>👑 Aghatta XV 👑</h1>
-  </header>
+  <div id="book">
+    <!-- Página 1 - Contador -->
+    <div class="page" id="page1">
+      <h2>⏳ Contador para Aghatta XV</h2>
+      <p id="contadorTexto">Calculando o tempo sagrado...</p>
+      <div class="nav-buttons">
+        <button id="next1">Próxima Página &rarr;</button>
+      </div>
+    </div>
 
-  <main>
-    <section>
-      <iframe src="contador.html" title="Contador do Evento"></iframe>
-    </section>
+    <!-- Página 2 - Galeria -->
+    <div class="page" id="page2">
+      <h2>📸 Galeria de Memórias</h2>
+      <p>Em breve fotos especiais estarão aqui, para revivermos momentos de luz e alegria juntos.</p>
+      <div class="nav-buttons">
+        <button id="prev2">&larr; Página Anterior</button>
+        <button id="next2">Próxima Página &rarr;</button>
+      </div>
+    </div>
 
-    <section>
-      <iframe src="galeria.html" title="Galeria de Fotos"></iframe>
-    </section>
+    <!-- Página 3 - Ícones e Confirmação -->
+    <div class="page" id="page3">
+      <h2>✨ Mural de Recados e Confirmação</h2>
+      <p>Aqui, você poderá deixar seu recado de amor e confirmar sua presença na festa.</p>
+      <div class="nav-buttons">
+        <button id="prev3">&larr; Página Anterior</button>
+        <button id="next3">Próxima Página &rarr;</button>
+      </div>
+    </div>
 
-    <section>
-      <iframe src="icones.html" title="Ícones e Confirmação"></iframe>
-    </section>
-
-    <section class="botao-livro">
-      <a href="livro.html" target="_blank" rel="noopener noreferrer" aria-label="Abrir o Livro Celestial de Recados">
-        ✨ Abrir Livro Celestial de Recados ✨
-      </a>
-    </section>
-  </main>
+    <!-- Página 4 - Livro Celestial -->
+    <div class="page" id="page4">
+      <h2>📖 Livro Celestial</h2>
+      <p>Todos os recados estarão guardados aqui, eternamente abençoados.</p>
+      <div class="nav-buttons">
+        <button id="prev4">&larr; Página Anterior</button>
+      </div>
+    </div>
+  </div>
 
   <script>
-    const header = document.getElementById('topo');
-
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        header.classList.add('hidden');
-      } else {
-        header.classList.remove('hidden');
-      }
+    // Inicializar turn.js no #book
+    $(function(){
+      $('#book').turn({
+        width: $('#book').width(),
+        height: $('#book').height(),
+        autoCenter: true,
+        display: 'single', // página única (pode mudar para 'double' se quiser efeito livro aberto)
+        acceleration: true,
+        gradients: true,
+      });
     });
+
+    // Funções para navegação pelos botões
+    $('#next1').click(() => $('#book').turn('next'));
+    $('#prev2').click(() => $('#book').turn('previous'));
+    $('#next2').click(() => $('#book').turn('next'));
+    $('#prev3').click(() => $('#book').turn('previous'));
+    $('#next3').click(() => $('#book').turn('next'));
+    $('#prev4').click(() => $('#book').turn('previous'));
+
+    // Contador dinâmico exemplo (você pode personalizar a data)
+    function atualizarContador() {
+      const evento = new Date('2025-09-12T19:00:00'); // data e hora do evento
+      const agora = new Date();
+      const diff = evento - agora;
+      if(diff <= 0){
+        $('#contadorTexto').text('A festa da Aghatta já começou! 🎉');
+        return;
+      }
+      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutos = Math.floor((diff / (1000 * 60)) % 60);
+      const segundos = Math.floor((diff / 1000) % 60);
+      $('#contadorTexto').text(`Faltam ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos para a festa.`);
+    }
+    atualizarContador();
+    setInterval(atualizarContador, 1000);
   </script>
+
 </body>
 </html>

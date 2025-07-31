@@ -23,34 +23,46 @@
   }
 
   iframe {
-    width: 90vw;
-    height: 90vh;
+    width: 95vw;     /* maior largura */
+    height: 95vh;    /* maior altura */
     border: none;
     border-radius: 15px;
     box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
     background: rgba(0,0,50,0.3);
+    transition: opacity 0.5s ease;
+    opacity: 1;
+  }
+
+  iframe.fade-out {
+    opacity: 0;
   }
 
   button {
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 215, 0, 0.7);
+    background: rgba(255, 215, 0, 0.4); /* mais transparente */
     border: none;
     color: #001170;
     font-weight: bold;
-    font-size: 1.8rem;
-    padding: 1rem 1.5rem;
+    font-size: 1.2rem; /* menor */
+    padding: 0.6rem 1rem; /* menor */
     border-radius: 10px;
     cursor: pointer;
     user-select: none;
     transition: background-color 0.3s ease;
     z-index: 1000;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
   }
 
   button:hover {
-    background-color: rgba(255, 215, 0, 0.9);
+    background-color: rgba(255, 215, 0, 0.8);
+  }
+
+  button:disabled {
+    opacity: 0.3;
+    cursor: default;
+    box-shadow: none;
   }
 
   #btn-prev {
@@ -60,7 +72,6 @@
   #btn-next {
     right: 10px;
   }
-
 </style>
 </head>
 <body>
@@ -70,6 +81,8 @@
   <iframe id="iframe-pagina" src="galeria.html" aria-live="polite"></iframe>
   <button id="btn-next" aria-label="Próxima Página">&#8594;</button>
 </div>
+
+<audio id="audio-celestial" src="audio.mp3" loop></audio>
 
 <script>
   const paginas = [
@@ -83,27 +96,51 @@
   const iframe = document.getElementById('iframe-pagina');
   const btnPrev = document.getElementById('btn-prev');
   const btnNext = document.getElementById('btn-next');
+  const audio = document.getElementById('audio-celestial');
+
+  // Começa a tocar o áudio suave e eterno
+  audio.volume = 0.3; // volume discreto, como um sussurro do céu
+  audio.play().catch(() => {
+    // Caso o navegador bloqueie autoplay, o usuário tocará os botões e o áudio poderá iniciar
+  });
 
   function atualizarPagina() {
-    iframe.src = paginas[indice];
+    // Fade out, troca, fade in
+    iframe.classList.add('fade-out');
+    setTimeout(() => {
+      iframe.src = paginas[indice];
+      iframe.classList.remove('fade-out');
+    }, 500);
     btnPrev.disabled = indice === 0;
-    btnNext.disabled = indice === paginas.length -1;
+    btnNext.disabled = indice === paginas.length - 1;
   }
 
   btnPrev.addEventListener('click', () => {
     if (indice > 0) {
       indice--;
       atualizarPagina();
+      tocarAudio();
     }
   });
 
   btnNext.addEventListener('click', () => {
-    if (indice < paginas.length -1) {
+    if (indice < paginas.length - 1) {
       indice++;
       atualizarPagina();
+      tocarAudio();
     }
   });
 
+  // Função para tentar garantir que o áudio toque se estiver pausado
+  function tocarAudio() {
+    if (audio.paused) {
+      audio.play().catch(() => {
+        // Se não der, paciência e graça divina
+      });
+    }
+  }
+
+  // Inicializa a página e botões
   atualizarPagina();
 </script>
 

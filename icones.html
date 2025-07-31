@@ -1,208 +1,175 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Conexões da Aghatta XV</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto&display=swap');
-
-  body {
-    margin: 0; padding: 0;
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #0a163f, #2a2e6a);
-    color: #f0e6f6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1.5em 0 3em;
-  }
-
-  .container {
-    width: 90vw;
-    max-width: 900px;
-    background: rgba(15, 24, 59, 0.85);
-    border-radius: 15px;
-    box-shadow: 0 0 25px #bfa234cc;
-    padding: 2em 2.5em;
-    display: flex;
-    flex-direction: column;
-    gap: 3em;
-  }
-
-  /* Ícones e título das seções */
-  .secao-titulo {
-    display: flex;
-    align-items: center;
-    gap: 0.6em;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #d1b244;
-    user-select: none;
-    text-shadow: 0 0 10px #d1b244bb;
-    letter-spacing: 0.06em;
-  }
-
-  .secao-titulo svg {
-    width: 38px;
-    height: 38px;
-    fill: #d1b244;
-    filter: drop-shadow(0 0 6px #d1b244cc);
-    transition: transform 0.3s ease, filter 0.3s ease;
-    animation: brilhoDourado 3s infinite alternate ease-in-out;
-  }
-
-  .secao-titulo:hover svg {
-    transform: scale(1.2) rotate(5deg);
-    filter: drop-shadow(0 0 12px #ffdb4dcc);
-    animation-play-state: paused;
-  }
-
-  @keyframes brilhoDourado {
-    0% {
-      filter: drop-shadow(0 0 6px #d1b244cc);
-      fill: #d1b244;
+  <meta charset="UTF-8">
+  <title>Confirmação de Presença - Aghatta XV</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('Aghatta.png') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Georgia', serif;
+      overflow: hidden;
     }
-    50% {
-      filter: drop-shadow(0 0 15px #ffdb4d);
-      fill: #ffd700;
+
+    #ceu-de-presencas {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 250px;
+      height: 250px;
+      z-index: 10;
+      pointer-events: none;
     }
-    100% {
-      filter: drop-shadow(0 0 6px #d1b244cc);
-      fill: #d1b244;
+
+    .borboleta-fixa {
+      position: absolute;
+      width: 30px;
+      animation: aparecerNoCeu 1s ease-in forwards;
     }
-  }
 
-  .brilho {
-    color: #ffd700;
-    text-shadow: 0 0 6px #ffd700aa, 0 0 12px #fffacd88;
-    animation: piscar 2.5s infinite alternate ease-in-out;
-    user-select: none;
-  }
-
-  @keyframes piscar {
-    0% { opacity: 0.6; }
-    100% { opacity: 1; }
-  }
-
-  /* --- LOCALIZAÇÃO --- */
-  #localizacao iframe {
-    width: 100%;
-    height: 300px;
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 0 15px #bfa234bb;
-  }
-
-  /* --- CONFIRMAÇÃO DE PRESENÇA --- */
-  #confirmacao-presenca {
-    background: rgba(20, 28, 60, 0.85);
-    padding: 1.8em 2em;
-    border-radius: 15px;
-    box-shadow: 0 0 15px #bfa234cc;
-    text-align: center;
-    user-select: none;
-  }
-  #confirmacao-presenca label {
-    cursor: pointer;
-    font-size: 1.4rem;
-    user-select: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.6em;
-    color: #d1b244;
-    font-weight: 700;
-    text-shadow: 0 0 10px #d1b244bb;
-  }
-  /* Esconde checkbox padrão */
-  #confirmacao-presenca input[type="checkbox"] {
-    display: none;
-  }
-  /* Coração customizado */
-  #confirmacao-presenca label::before {
-    content: "♡"; /* coração vazio */
-    font-size: 1.8rem;
-    color: #d1b244;
-    transition: color 0.3s ease, transform 0.3s ease;
-  }
-  /* Quando marcado, coração preenchido e pulsante */
-  #confirmacao-presenca input[type="checkbox"]:checked + label::before {
-    content: "❤️";
-    color: #ffd700;
-    animation: pulsar 1.5s infinite;
-    transform-origin: center center;
-  }
-  @keyframes pulsar {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.3); }
-  }
-
-  #confirmacao-msg {
-    margin-top: 1.3em;
-    font-weight: 600;
-    color: #8aff8a;
-    min-height: 1.3em;
-  }
-
-  /* RESPONSIVO */
-  @media (max-width: 500px) {
-    .secao-titulo {
-      font-size: 1.4rem;
+    .nome-fixo {
+      position: absolute;
+      color: #fff5c2;
+      font-size: 12px;
+      font-style: italic;
+      text-shadow: 0 0 5px #ffd700;
+      transform: translateY(10px);
     }
-    #confirmacao-presenca label {
-      font-size: 1.2rem;
-      gap: 0.4em;
+
+    @keyframes aparecerNoCeu {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
-    #confirmacao-presenca label::before {
-      font-size: 1.4rem;
+
+    .container {
+      position: absolute;
+      bottom: 50px;
+      width: 100%;
+      text-align: center;
     }
-  }
-</style>
+
+    input {
+      padding: 10px;
+      border: none;
+      border-radius: 20px;
+      font-size: 16px;
+      width: 250px;
+      outline: none;
+    }
+
+    .botao-coracao {
+      margin-top: 20px;
+      font-size: 50px;
+      color: #ff4d6d;
+      cursor: pointer;
+      animation: pulse 2s infinite;
+      transition: transform 0.3s;
+    }
+
+    .botao-coracao:hover {
+      transform: scale(1.2);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .mensagem {
+      position: absolute;
+      bottom: 150px;
+      width: 100%;
+      text-align: center;
+      color: #fff7d6;
+      font-size: 22px;
+      opacity: 0;
+      animation: escrever 3s forwards;
+      font-family: 'Brush Script MT', cursive;
+      text-shadow: 0 0 10px #f9d776;
+    }
+
+    @keyframes escrever {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .borboleta {
+      position: absolute;
+      width: 40px;
+      transition: all 3s ease-in-out;
+      z-index: 5;
+    }
+  </style>
 </head>
 <body>
 
-  <div class="container">
+<div id="ceu-de-presencas"></div>
 
-    <!-- Localização -->
-    <section id="localizacao" aria-label="Localização">
-      <div class="secao-titulo" aria-label="Localização do evento">
-        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
-        <span>Localização <span class="brilho">✨</span></span>
-      </div>
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.9965146020674!2d-46.66359648451566!3d-23.56496956775951!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c9c91d5d9d%3A0x8b7b7a093a5b17e0!2sIgreja%20B%C3%ADblica%20das%20Assembleias%20de%20Deus%20do%20Brasil!5e0!3m2!1spt-BR!2sbr!4v1690719037760!5m2!1spt-BR!2sbr"
-        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-        title="Mapa para a localização do evento">
-      </iframe>
-    </section>
+<div class="container">
+  <input type="text" id="nome" placeholder="Digite seu nome..." />
+  <div class="botao-coracao" onclick="confirmarPresenca()">❤️</div>
+</div>
 
-    <!-- Confirmação de Presença -->
-    <section id="confirmacao-presenca" aria-label="Confirmação de Presença">
-      <div class="secao-titulo">
-        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 16.17l-3.5-3.5-1.42 1.42L9 19 20.5 7.5 19.08 6.08z"/></svg>
-        <span>Confirmação de Presença (RSVP) <span class="brilho">✨</span></span>
-      </div>
-      <input type="checkbox" id="rsvpCheck" />
-      <label for="rsvpCheck">Estou confirmando minha presença com alegria</label>
-      <div id="confirmacao-msg" role="alert" aria-live="polite"></div>
-    </section>
-
-  </div>
+<div id="mensagem" class="mensagem"></div>
 
 <script>
-  // --- CONFIRMAÇÃO DE PRESENÇA ---
-  const rsvpCheck = document.getElementById('rsvpCheck');
-  const confirmacaoMsg = document.getElementById('confirmacao-msg');
-
-  rsvpCheck.addEventListener('change', () => {
-    if (rsvpCheck.checked) {
-      confirmacaoMsg.textContent = '🙏 Que bênção ter você conosco!';
-    } else {
-      confirmacaoMsg.textContent = '';
+  function confirmarPresenca() {
+    const nome = document.getElementById('nome').value.trim();
+    if (!nome) {
+      alert("Por favor, digite seu nome para confirmar sua presença.");
+      return;
     }
-  });
+
+    // Mensagem caligráfica animada
+    const msg = document.getElementById('mensagem');
+    msg.innerText = `Presença confirmada: ${nome}`;
+    msg.style.animation = 'none';
+    void msg.offsetWidth; // Reinicia a animação
+    msg.style.animation = 'escrever 3s forwards';
+
+    // Borboleta animada
+    const borboleta = document.createElement('img');
+    borboleta.src = 'https://cdn-icons-png.flaticon.com/512/616/616408.png';
+    borboleta.className = 'borboleta';
+    document.body.appendChild(borboleta);
+
+    const startX = Math.random() * window.innerWidth;
+    const startY = window.innerHeight - 100;
+    borboleta.style.left = startX + 'px';
+    borboleta.style.top = startY + 'px';
+
+    setTimeout(() => {
+      borboleta.style.top = '100px';
+      borboleta.style.left = '85%';
+      borboleta.style.opacity = '0';
+
+      // Após animação, adiciona borboleta fixa ao céu
+      setTimeout(() => {
+        borboleta.remove();
+
+        const ceu = document.getElementById('ceu-de-presencas');
+        const borboletaFixa = document.createElement('img');
+        borboletaFixa.src = 'https://cdn-icons-png.flaticon.com/512/616/616408.png';
+        borboletaFixa.className = 'borboleta-fixa';
+        const posX = Math.random() * 200;
+        const posY = Math.random() * 200;
+        borboletaFixa.style.left = posX + 'px';
+        borboletaFixa.style.top = posY + 'px';
+
+        const nomeFixo = document.createElement('div');
+        nomeFixo.className = 'nome-fixo';
+        nomeFixo.innerText = nome;
+        nomeFixo.style.left = posX + 'px';
+        nomeFixo.style.top = (posY + 30) + 'px';
+
+        ceu.appendChild(borboletaFixa);
+        ceu.appendChild(nomeFixo);
+      }, 3000);
+    }, 100);
+  }
 </script>
 
 </body>

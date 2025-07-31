@@ -50,22 +50,27 @@
       padding-top: 120px;
       max-width: 1000px;
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+      padding-bottom: 60px;
     }
 
     section {
       background: rgba(65, 105, 225, 0.85);
-      margin: 60px 0;
       padding: 40px 20px;
       border-radius: 20px;
       border: 3px solid gold;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      min-height: 650px;
     }
 
     iframe {
       width: 100%;
-      min-height: 600px;
+      height: 100%;
       border: none;
       border-radius: 12px;
+      display: block;
     }
 
     .sem-balao {
@@ -73,12 +78,35 @@
       border: none;
       box-shadow: none;
       padding: 0;
+      min-height: auto;
+    }
+
+    /* Botão do Livro Celestial */
+    .botao-livro {
+      text-align: center;
+      margin: 0 auto;
+    }
+    .botao-livro a {
+      background: #bfa234;
+      color: #0f183b;
+      padding: 15px 30px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 0 15px #bfa234cc;
+      text-decoration: none;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    .botao-livro a:hover {
+      background-color: #a98b2a;
     }
   </style>
 </head>
 <body>
   <audio autoplay loop>
-    <source src="audio.mp3" type="audio/mpeg">
+    <source src="audio.mp3" type="audio/mpeg" />
   </audio>
 
   <header id="topo">
@@ -86,16 +114,22 @@
   </header>
 
   <main>
-    <section class="sem-balao">
-      <iframe src="contador.html"></iframe>
+    <section>
+      <iframe src="contador.html" title="Contador do Evento"></iframe>
     </section>
 
-    <section class="sem-balao">
-      <iframe src="galeria.html"></iframe>
+    <section>
+      <iframe src="galeria.html" title="Galeria de Fotos"></iframe>
     </section>
 
-    <section class="sem-balao">
-      <iframe src="icones.html"></iframe>
+    <section>
+      <iframe src="icones.html" title="Ícones e Confirmação"></iframe>
+    </section>
+
+    <section class="botao-livro">
+      <a href="livro.html" target="_blank" rel="noopener noreferrer" aria-label="Abrir o Livro Celestial de Recados">
+        ✨ Abrir Livro Celestial de Recados ✨
+      </a>
     </section>
   </main>
 

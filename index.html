@@ -59,56 +59,59 @@
 
     /* TELA 2 */
     #tela2 {
-      width: 600px;
-      height: 90vh;
-      display: flex;
-      justify-content: center;
+      background: white;
+      flex-direction: column;
       align-items: center;
-      background: transparent;
+      justify-content: center;
+      transform: scale(1.15); /* Zoom mais forte */
     }
 
-    #roloAbertoWrapper {
-      position: relative;
-      width: 100%;
-      height: 100%;
+    .rolo-container {
       background: url('roloaberto.png') no-repeat center center;
       background-size: contain;
-      transform: scale(1.2);
-      transform-origin: center center;
+      width: 90vw;
+      max-width: 600px;
+      height: 90vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      padding: 60px 80px 70px 80px; /* ajuste para margem interna do pergaminho */
-      box-sizing: border-box;
+      justify-content: center;
+      position: relative;
+    }
+
+    #texto-titulo {
+      color: goldenrod;
+      font-size: 1.6em;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 2vh;
     }
 
     #textoConvite {
       color: black;
       font-family: 'Lucida Handwriting', cursive;
-      font-size: 1.25em;
+      font-size: 1.2em;
       line-height: 1.6em;
+      width: 72%;
+      height: 60%;
       overflow-y: auto;
-      width: 100%;
-      height: 70vh;
+      margin-top: 2vh;
       background: transparent;
       scrollbar-width: thin;
-      scrollbar-color: transparent transparent;
+      scrollbar-color: #999 transparent;
     }
 
     #textoConvite::-webkit-scrollbar {
       width: 6px;
     }
 
-    #textoConvite::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
     #textoConvite::-webkit-scrollbar-thumb {
-      background: transparent;
+      background: #999;
+      border-radius: 3px;
     }
 
     #botaoAvancar {
-      margin-top: 1.5vh;
+      margin-top: 2vh;
       background: gold;
       color: black;
       border: none;
@@ -121,7 +124,6 @@
       pointer-events: none;
       transition: opacity 0.4s ease;
       cursor: pointer;
-      align-self: center;
     }
 
     #botaoAvancar.mostrar {
@@ -135,7 +137,6 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      cursor: pointer;
     }
 
     #mensagemCapa {
@@ -146,7 +147,6 @@
       font-family: 'Georgia', serif;
       animation: pulse 2s infinite;
       text-shadow: 2px 2px 10px black;
-      user-select: none;
     }
 
     @keyframes pulse {
@@ -165,8 +165,6 @@
     #videoMensagem {
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      background: black;
     }
   </style>
 </head>
@@ -181,8 +179,9 @@
 
   <!-- TELA 2 -->
   <div class="tela oculto" id="tela2">
-    <div id="roloAbertoWrapper">
-      <div id="textoConvite" tabindex="0" aria-label="Texto do convite">
+    <div class="rolo-container">
+      <div id="texto-titulo">Convite Celestial</div>
+      <div id="textoConvite">
         <p><em>“Antes que eu nascesse… o Céu já sabia quem caminharia comigo.”</em></p>
         <p>Em silêncio eterno, Deus já escrevia meu nome… e o seu, lado a lado.</p>
         <p>Por isso, <strong>se este convite chegou até você</strong>, não pense que foi acaso — foi propósito.</p>
@@ -195,82 +194,67 @@
         <p><em>Então venha! Traga seu riso, sua lembrança, sua fé. Traga quem você é — porque é assim, exatamente assim, que você faz parte da minha história.</em></p>
         <p><em>— Aghatta, filha sonhada e separada pelo Pai 👑✨</em></p>
       </div>
+      <button id="botaoAvancar" onclick="irParaTela3()">Avançar</button>
     </div>
-    <button id="botaoAvancar" onclick="irParaTela3()" aria-label="Avançar para a próxima etapa">Avançar</button>
   </div>
 
   <!-- TELA 3 -->
-  <div class="tela oculto" id="tela3" role="button" tabindex="0" aria-label="Clique para ouvir o chamado">
+  <div class="tela oculto" id="tela3">
     <div id="mensagemCapa">Os céus batem à porta...<br><small>Toque para abrir...</small></div>
   </div>
 
   <!-- TELA 4 -->
   <div class="tela oculto" id="tela4">
-    <video id="videoMensagem" muted playsinline>
+    <video id="videoMensagem" autoplay playsinline>
       <source src="mensagem.mp4" type="video/mp4" />
       Seu navegador não suporta vídeo.
     </video>
-    <audio id="audioPorta" src="porta.mp3" preload="auto"></audio>
+    <audio id="somPorta" src="porta.mp3" autoplay></audio>
   </div>
 
-<script>
-  const tela1 = document.getElementById('tela1');
-  const tela2 = document.getElementById('tela2');
-  const tela3 = document.getElementById('tela3');
-  const tela4 = document.getElementById('tela4');
-  const textoConvite = document.getElementById('textoConvite');
-  const botaoAvancar = document.getElementById('botaoAvancar');
-  const videoMensagem = document.getElementById('videoMensagem');
-  const audioPorta = document.getElementById('audioPorta');
+  <script>
+    const textoConvite = document.getElementById('textoConvite');
+    const botaoAvancar = document.getElementById('botaoAvancar');
+    let audioToctoc;
 
-  textoConvite.addEventListener('scroll', () => {
-    if (textoConvite.scrollTop + textoConvite.clientHeight >= textoConvite.scrollHeight - 5) {
-      botaoAvancar.classList.add('mostrar');
+    textoConvite.addEventListener('scroll', () => {
+      if (textoConvite.scrollTop + textoConvite.clientHeight >= textoConvite.scrollHeight - 5) {
+        botaoAvancar.classList.add('mostrar');
+      }
+    });
+
+    function abrirPergaminho() {
+      document.getElementById('tela1').classList.add('oculto');
+      document.getElementById('tela2').classList.remove('oculto');
     }
-  });
 
-  function abrirPergaminho() {
-    tela1.classList.add('oculto');
-    tela2.classList.remove('oculto');
-  }
+    function irParaTela3() {
+      document.getElementById('tela2').classList.add('oculto');
+      document.getElementById('tela3').classList.remove('oculto');
 
-  function irParaTela3() {
-    tela2.classList.add('oculto');
-    tela3.classList.remove('oculto');
-    
-    const audioToctoc = new Audio('toctoc.mp3');
-    audioToctoc.loop = true;
-    audioToctoc.play();
+      audioToctoc = new Audio('toctoc.mp3');
+      audioToctoc.loop = true;
+      audioToctoc.play();
 
-    function handler() {
-      audioToctoc.pause();
-      tela3.classList.add('oculto');
-      tela4.classList.remove('oculto');
+      document.getElementById('tela3').addEventListener('click', irParaTela4);
+    }
 
-      audioPorta.play();
+    function irParaTela4() {
+      if (audioToctoc) audioToctoc.pause();
+      document.getElementById('tela3').classList.add('oculto');
+      document.getElementById('tela4').classList.remove('oculto');
 
-      videoMensagem.muted = true;
-      videoMensagem.play();
+      const video = document.getElementById('videoMensagem');
+      const somPorta = document.getElementById('somPorta');
 
-      videoMensagem.onended = () => {
+      video.muted = true;
+      video.play();
+      somPorta.play();
+
+      video.onended = () => {
         window.location.href = "segunda-experiencia.html";
       };
-
-      tela3.removeEventListener('click', handler);
-      tela3.removeEventListener('keydown', keyHandler);
     }
-
-    function keyHandler(e) {
-      if(e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        handler();
-      }
-    }
-
-    tela3.addEventListener('click', handler);
-    tela3.addEventListener('keydown', keyHandler);
-  }
-</script>
-
+  </script>
 </body>
 </html>

@@ -2,9 +2,10 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Localização - Aniversário Aghatta XV</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Localização - Aniversário Aghatta XV</title>
   <style>
+    /* --- Fundo e fonte --- */
     body, html {
       margin: 0; padding: 0; height: 100%;
       font-family: 'Georgia', serif;
@@ -15,16 +16,20 @@
       align-items: center;
       justify-content: flex-start;
       user-select: none;
+      overflow-x: hidden;
     }
 
+    /* --- Cabeçalho --- */
     header {
       padding: 3rem 1rem 1rem;
       text-align: center;
       text-shadow: 0 0 10px gold;
+      max-width: 450px;
+      width: 90vw;
     }
 
     header h1 {
-      font-size: 3rem;
+      font-size: 2.8rem;
       letter-spacing: 0.15em;
       margin-bottom: 0.3rem;
       font-weight: 700;
@@ -32,25 +37,52 @@
     }
 
     header p {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-style: italic;
       opacity: 0.85;
       margin-top: 0;
       font-weight: 500;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
+      max-width: 100%;
     }
 
+    /* --- Endereço --- */
     #endereco {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 600;
       margin-top: 0.8rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       color: #fff8dc;
       text-shadow: 0 0 5px #ffdb4d;
+      line-height: 1.5;
+      user-select: text;
     }
 
+    /* --- Botão "Como Chegar" --- */
+    #botaoComoChegar {
+      display: block;
+      margin: 0 auto 2rem auto;
+      padding: 0.8em 2.5em;
+      font-family: 'Georgia', serif;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: black;
+      background: linear-gradient(45deg, #ffd700, #ffbf00);
+      border-radius: 30px;
+      border: 2px solid #ffd700;
+      box-shadow: 0 0 12px #ffd700aa;
+      cursor: pointer;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+      user-select: none;
+      text-decoration: none;
+      width: max-content;
+    }
+    #botaoComoChegar:hover {
+      background: linear-gradient(45deg, #ffec70, #ffd600);
+      box-shadow: 0 0 20px #ffd700ee;
+    }
+
+    /* --- Container do mapa --- */
     #map-container {
       width: 100vw;
       max-width: 900px;
@@ -58,8 +90,9 @@
       border-radius: 15px;
       box-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
       overflow: hidden;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
       border: 2px solid #ffd700aa;
+      position: relative;
     }
 
     iframe {
@@ -70,12 +103,62 @@
       border-radius: 15px;
     }
 
+    /* --- Borboleta pousada no mapa --- */
+    #borboletaPousada {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background-image: url('borboleta-realista.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      bottom: 18%; /* Ajusta conforme a posição da Chácara no mapa */
+      left: 43%;   /* Ajusta conforme a posição da Chácara no mapa */
+      animation: baterAsas 2.5s ease-in-out infinite;
+      filter: drop-shadow(0 0 8px gold);
+      cursor: default;
+      user-select: none;
+      z-index: 10;
+    }
+
+    @keyframes baterAsas {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(4deg); }
+    }
+
+    /* --- Rodapé com bênção --- */
     footer {
-      font-size: 0.95rem;
-      opacity: 0.6;
+      font-size: 1rem;
+      opacity: 0.7;
       margin-bottom: 1rem;
       user-select: none;
       font-style: italic;
+      color: #fff8dc;
+      text-shadow: 0 0 6px gold;
+      max-width: 90vw;
+      text-align: center;
+    }
+
+    /* --- Responsividade --- */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      header p {
+        font-size: 1rem;
+      }
+      #endereco {
+        font-size: 1.1rem;
+      }
+      #botaoComoChegar {
+        font-size: 1rem;
+        padding: 0.7em 2em;
+      }
+      #borboletaPousada {
+        width: 45px;
+        height: 45px;
+        bottom: 17%;
+        left: 40%;
+      }
     }
   </style>
 </head>
@@ -89,6 +172,16 @@
     Estrada das Paineiras, 1234<br />
     Itupeva, SP - Brasil
   </div>
+
+  <a 
+    href="https://www.google.com/maps/dir/?api=1&destination=Estrada+das+Paineiras+1234+Itupeva+SP+Brasil" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    id="botaoComoChegar"
+    aria-label="Clique para abrir rotas no Google Maps e chegar até a Chácara das Paineiras"
+  >
+    Como Chegar 🦋
+  </a>
 </header>
 
 <div id="map-container" role="region" aria-label="Mapa da Chácara das Paineiras">
@@ -99,10 +192,11 @@
     referrerpolicy="no-referrer-when-downgrade"
     aria-label="Mapa interativo da Chácara das Paineiras"
   ></iframe>
+  <div id="borboletaPousada" aria-hidden="true" title="Borboleta pousada no local do evento"></div>
 </div>
 
 <footer>
-  &copy; 2025 Aghatta XV — Com amor e fé.
+  Que o caminho até aqui seja abençoado e que o reencontro seja repleto de luz e paz.
 </footer>
 
 </body>

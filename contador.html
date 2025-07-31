@@ -3,58 +3,32 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Contador - Aghatta XV</title>
+<title>Aniversário Aghatta XV - Borboletas & Contador</title>
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
   body, html {
-    height: 100%;
+    margin: 0; padding: 0;
+    height: 100vh;
     background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-family: 'Georgia', serif;
-    color: #ffd700;
+    color: gold;
     overflow: hidden;
-    position: relative;
   }
-
   #container {
     position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: visible;
+    max-width: 450px;
+    width: 90vw;
   }
-
-  .imagem-central {
+  /* Imagem da aniversariante */
+  #container img {
     width: 100%;
-    height: 100vh;
-    object-fit: cover;
     display: block;
-    position: relative;
-    z-index: 1;
-  }
-
-  #contador {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(65, 105, 225, 0.6);
-    color: gold;
-    font-size: 3rem;
-    text-align: center;
-    padding: 1em 3em;
-    border-radius: 25px;
-    box-shadow: 0 0 15px 5px rgba(65, 105, 225, 0.8);
-    z-index: 20;
-    font-weight: bold;
     user-select: none;
-    max-width: 90vw;
-    white-space: nowrap;
+    pointer-events: none;
   }
-
+  /* Borboletas */
   .borboleta {
     position: absolute;
     width: 40px;
@@ -62,13 +36,12 @@
     background-image: url('borboleta.png');
     background-size: contain;
     background-repeat: no-repeat;
-    opacity: 0;
     filter: drop-shadow(0 0 6px gold) brightness(1.4);
+    opacity: 0;
     animation: baterAsas 2s infinite ease-in-out;
     pointer-events: none;
-    z-index: 15;
+    z-index: 10;
   }
-
   @keyframes baterAsas {
     0%, 100% {
       transform: scale(1) rotate(0deg);
@@ -77,52 +50,94 @@
       transform: scale(1.1) rotate(10deg);
     }
   }
+  /* Animação das borboletas voando */
+  .voando {
+    animation-name: voar;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+  @keyframes voar {
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      opacity: 0;
+    }
+    30% {
+      opacity: 0.8;
+    }
+    70% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(1.1);
+      opacity: 0;
+    }
+  }
+  /* Contador na base */
+  #contador {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.4rem;
+    background: rgba(0, 0, 50, 0.6);
+    padding: 8px 0;
+    border-radius: 12px;
+    box-shadow: 0 0 10px gold;
+    color: gold;
+    user-select: none;
+    z-index: 20;
+  }
+  @media (max-width: 500px) {
+    #contador {
+      font-size: 1.1rem;
+      bottom: -50px;
+    }
+    .borboleta {
+      width: 30px;
+      height: 30px;
+    }
+  }
 </style>
 </head>
 <body>
   <div id="container">
-    <img src="Aniversário_Aghatta_XV.png" alt="Aniversário Aghatta XV" class="imagem-central" />
-    <div id="contador">Carregando contador...</div>
+    <img src="Aniversário_Aghatta_XV.png" alt="Aniversário Aghatta XV" />
+    <!-- Borboletas -->
   </div>
+  <div id="contador">Carregando contador...</div>
 
 <script>
   const container = document.getElementById('container');
   const totalBorboletas = 15;
 
-  const centerX = container.clientWidth / 2;
-  const centerY = container.clientHeight / 2 + 30;
-
+  // Criar borboletas com posições e animações variadas
   for (let i = 0; i < totalBorboletas; i++) {
     const b = document.createElement('div');
-    b.className = 'borboleta';
+    b.classList.add('borboleta', 'voando');
+    // Borboleta começa em cima da imagem, posição randômica perto do topo da imagem
+    const startX = container.clientWidth / 2 + (Math.random() - 0.5) * 80;
+    const startY = container.clientHeight * 0.15 + (Math.random() - 0.5) * 40;
+    b.style.left = `${startX}px`;
+    b.style.top = `${startY}px`;
 
-    const offsetX = (Math.random() - 0.3) * 40;
-    const offsetY = (Math.random() - 0.3) * 30;
+    // Definir variáveis para animação personalizada
+    const dx = (Math.random() * 200 + 100) * (Math.random() < 0.5 ? -1 : 1);
+    const dy = -(Math.random() * 300 + 150);
+    const rot = (Math.random() * 40 - 20) + 'deg';
 
-    b.style.left = `${centerX + offsetX}px`;
-    b.style.top = `${centerY + offsetY}px`;
+    b.style.setProperty('--dx', dx + 'px');
+    b.style.setProperty('--dy', dy + 'px');
+    b.style.setProperty('--rot', rot);
+
+    // Adicionar delay para que as borboletas saiam em tempos diferentes
+    b.style.animationDuration = `${6 + Math.random() * 4}s`;
+    b.style.animationDelay = `${Math.random() * 5000}ms`;
 
     container.appendChild(b);
-
-    const duration = 12 + Math.random() * 5;
-    const amplitudeX = 100 + Math.random() * 80;
-    const angle = (Math.random() - 0.5) * 60;
-    const delay = Math.random() * 3000;
-
-    b.animate(
-      [
-        { transform: `translate(0, 0) rotate(0deg) scale(1)`, opacity: 0 },
-        { transform: `translate(${amplitudeX}px, -200px) rotate(${angle}deg) scale(1.1)`, opacity: 0.9 },
-        { transform: `translate(${-amplitudeX}px, -400px) rotate(${-angle}deg) scale(1)`, opacity: 0 },
-      ],
-      {
-        duration: duration * 1000,
-        iterations: Infinity,
-        delay: delay,
-        easing: "ease-in-out",
-        direction: "normal",
-      }
-    );
   }
 
   // CONTADOR
@@ -133,7 +148,7 @@
     const agora = new Date();
     const diff = dataEvento - agora;
     if (diff <= 0) {
-      contadorEl.textContent = 'O evento já começou!';
+      contadorEl.textContent = 'O evento já começou! 🎉';
       clearInterval(intervalo);
       return;
     }

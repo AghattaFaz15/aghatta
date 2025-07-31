@@ -59,52 +59,50 @@
 
     /* TELA 2 */
     #tela2 {
-      background: url('roloaberto.png') no-repeat center center;
-      background-size: contain;
       width: 600px;
       height: 90vh;
-      padding: 2vh 2vw;
-      flex-direction: column;
+      display: flex;
+      justify-content: center;
       align-items: center;
-      justify-content: start;
-      transform: scale(1.15); /* mais zoom */
-      transform-origin: center center;
-      margin: 0 auto;
+      background: transparent;
     }
 
-    #texto-titulo {
-      color: goldenrod;
-      font-size: 1.6em;
-      font-weight: bold;
-      text-align: center;
-      margin-bottom: 1vh;
+    #roloAbertoWrapper {
+      position: relative;
       width: 100%;
+      height: 100%;
+      background: url('roloaberto.png') no-repeat center center;
+      background-size: contain;
+      transform: scale(1.2);
+      transform-origin: center center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 80px 70px 80px; /* ajuste para margem interna do pergaminho */
+      box-sizing: border-box;
     }
 
     #textoConvite {
       color: black;
       font-family: 'Lucida Handwriting', cursive;
-      font-size: 1.2em;
+      font-size: 1.25em;
       line-height: 1.6em;
-      width: 80%;
-      height: 45vh;
       overflow-y: auto;
-      margin-top: 12vh;
-      padding-right: 1em;
+      width: 100%;
+      height: 70vh;
       background: transparent;
       scrollbar-width: thin;
       scrollbar-color: transparent transparent;
-      /* Centralizar */
-      margin-left: auto;
-      margin-right: auto;
     }
-    /* Scroll invisível */
+
     #textoConvite::-webkit-scrollbar {
       width: 6px;
     }
+
     #textoConvite::-webkit-scrollbar-track {
       background: transparent;
     }
+
     #textoConvite::-webkit-scrollbar-thumb {
       background: transparent;
     }
@@ -183,19 +181,20 @@
 
   <!-- TELA 2 -->
   <div class="tela oculto" id="tela2">
-    <div id="texto-titulo">Convite Celestial</div>
-    <div id="textoConvite" tabindex="0" aria-label="Texto do convite">
-      <p><em>“Antes que eu nascesse… o Céu já sabia quem caminharia comigo.”</em></p>
-      <p>Em silêncio eterno, Deus já escrevia meu nome… e o seu, lado a lado.</p>
-      <p>Por isso, <strong>se este convite chegou até você</strong>, não pense que foi acaso — foi propósito.</p>
-      <p>Uma <strong>Intimação Celestial</strong> foi emitida... não como obrigação, mas como honra.</p>
-      <p>Porque você não é apenas mais um nome na lista… <strong>Você é memória viva.</strong></p>
-      <p>É história que pulsa. É parte da promessa.</p>
-      <p><strong>Você é um versículo no capítulo mais belo da minha jornada.</strong></p>
-      <p>📌 Sua presença não é apenas esperada… <strong>ela é celebrada.</strong></p>
-      <p>De todas as escolhas que o Céu poderia fazer… Ele escolheu você para estar aqui.</p>
-      <p><em>Então venha! Traga seu riso, sua lembrança, sua fé. Traga quem você é — porque é assim, exatamente assim, que você faz parte da minha história.</em></p>
-      <p><em>— Aghatta, filha sonhada e separada pelo Pai 👑✨</em></p>
+    <div id="roloAbertoWrapper">
+      <div id="textoConvite" tabindex="0" aria-label="Texto do convite">
+        <p><em>“Antes que eu nascesse… o Céu já sabia quem caminharia comigo.”</em></p>
+        <p>Em silêncio eterno, Deus já escrevia meu nome… e o seu, lado a lado.</p>
+        <p>Por isso, <strong>se este convite chegou até você</strong>, não pense que foi acaso — foi propósito.</p>
+        <p>Uma <strong>Intimação Celestial</strong> foi emitida... não como obrigação, mas como honra.</p>
+        <p>Porque você não é apenas mais um nome na lista… <strong>Você é memória viva.</strong></p>
+        <p>É história que pulsa. É parte da promessa.</p>
+        <p><strong>Você é um versículo no capítulo mais belo da minha jornada.</strong></p>
+        <p>📌 Sua presença não é apenas esperada… <strong>ela é celebrada.</strong></p>
+        <p>De todas as escolhas que o Céu poderia fazer… Ele escolheu você para estar aqui.</p>
+        <p><em>Então venha! Traga seu riso, sua lembrança, sua fé. Traga quem você é — porque é assim, exatamente assim, que você faz parte da minha história.</em></p>
+        <p><em>— Aghatta, filha sonhada e separada pelo Pai 👑✨</em></p>
+      </div>
     </div>
     <button id="botaoAvancar" onclick="irParaTela3()" aria-label="Avançar para a próxima etapa">Avançar</button>
   </div>
@@ -224,7 +223,6 @@
   const videoMensagem = document.getElementById('videoMensagem');
   const audioPorta = document.getElementById('audioPorta');
 
-  // Mostrar botão Avançar só ao final do scroll do texto
   textoConvite.addEventListener('scroll', () => {
     if (textoConvite.scrollTop + textoConvite.clientHeight >= textoConvite.scrollHeight - 5) {
       botaoAvancar.classList.add('mostrar');
@@ -240,21 +238,18 @@
     tela2.classList.add('oculto');
     tela3.classList.remove('oculto');
     
-    // Começa o som do convite (toctoc) em loop
     const audioToctoc = new Audio('toctoc.mp3');
     audioToctoc.loop = true;
     audioToctoc.play();
 
-    // Clique para parar o áudio e ir para o vídeo
     function handler() {
       audioToctoc.pause();
       tela3.classList.add('oculto');
       tela4.classList.remove('oculto');
-      
-      // Toca o som da porta
+
       audioPorta.play();
 
-      videoMensagem.muted = true; // som desligado no vídeo
+      videoMensagem.muted = true;
       videoMensagem.play();
 
       videoMensagem.onended = () => {
@@ -265,7 +260,6 @@
       tela3.removeEventListener('keydown', keyHandler);
     }
 
-    // Suporte para teclado (Enter e Espaço)
     function keyHandler(e) {
       if(e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();

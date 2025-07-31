@@ -10,7 +10,7 @@
   }
   html, body {
     height: 100%;
-    background: black;
+    background: white; /* fundo branco na tela 1 */
     color: gold;
     font-family: Georgia, serif;
     overflow: hidden;
@@ -32,31 +32,33 @@
 
   /* Tela 1 */
   #tela1 {
-    background: url('rolofechado.png') no-repeat center/contain;
+    background: white url('rolofechado.png') no-repeat center/contain;
     cursor: pointer;
     font-size: 2.5em;
     text-shadow: 0 0 10px gold;
     color: gold;
   }
   #tela1 span {
-    margin-top: 85vh;
+    margin-top: 75vh; /* texto mais pra cima */
     display: block;
     text-align: center;
+    font-weight: bold;
   }
 
   /* Tela 2 */
   #tela2 {
     background: url('roloaberto.png') no-repeat center/contain;
-    padding: 2em 2em 3em;
+    padding: 1.5em 2em 2em;
     flex-direction: column;
-    overflow: hidden;
     color: gold;
+    overflow: hidden;
+    user-select: text;
   }
   #textoConvite {
     overflow-y: auto;
-    max-height: 65vh;
-    font-size: 1.2em;
-    line-height: 1.5em;
+    max-height: 52vh; /* scroll menor para caber no pergaminho */
+    font-size: 1.3em;
+    line-height: 1.6em;
     padding-right: 1em;
     outline: none;
     background: transparent;
@@ -85,14 +87,18 @@
   #tela3 {
     background: url('imagem-capa.jpg') no-repeat center/cover;
     cursor: pointer;
-    font-size: 2em;
+    font-size: 1.8em;
     text-shadow: 0 0 15px gold;
     color: gold;
     flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 2em;
   }
   #tela3 span {
     user-select: none;
-    margin-bottom: 2em;
+    margin-bottom: 0;
+    font-weight: bold;
+    text-align: center;
   }
 
   /* Tela 4 */
@@ -158,13 +164,13 @@
   const audioToctoc = document.getElementById('audioToctoc');
   const videoMensagem = document.getElementById('videoMensagem');
 
-  // Função para trocar visibilidade das telas
+  // Troca visibilidade das telas
   function mostrarTela(esconder, mostrar) {
     esconder.classList.add('oculto');
     mostrar.classList.remove('oculto');
   }
 
-  // Tela 1: ao clicar, abre o pergaminho (tela 2)
+  // Tela 1: abrir pergaminho (ir para tela 2)
   tela1.addEventListener('click', () => mostrarTela(tela1, tela2));
   tela1.addEventListener('keydown', e => {
     if(e.key === 'Enter' || e.key === ' ') {
@@ -173,21 +179,33 @@
     }
   });
 
-  // Tela 2: mostrar botão avançar só no fim do scroll do texto
+  // Tela 2: mostrar botão avançar só no fim do scroll do texto e tocar áudio ao tocar em textoConvite
   textoConvite.addEventListener('scroll', () => {
     if(textoConvite.scrollTop + textoConvite.clientHeight >= textoConvite.scrollHeight - 5) {
       botaoAvancar.classList.add('mostrar');
     }
   });
 
+  textoConvite.addEventListener('click', () => {
+    if(audioToctoc.paused) {
+      audioToctoc.play().catch(() => {});
+    }
+  });
+
   // Botão avançar para tela 3
   botaoAvancar.addEventListener('click', () => mostrarTela(tela2, tela3));
 
-  // Tela 3: tocar áudio toctoc no clique; no segundo clique pausa áudio e inicia vídeo
+  // Tela 3: tocar áudio em loop no início; ao tocar, pausa o áudio e inicia o vídeo
   let tocouAudio = false;
+
+  // Iniciar áudio em loop assim que a tela 3 aparecer
+  function iniciarAudioToctoc() {
+    audioToctoc.play().catch(() => {});
+  }
+
   tela3.addEventListener('click', () => {
     if (!tocouAudio) {
-      audioToctoc.play().catch(() => {});
+      iniciarAudioToctoc();
       tocouAudio = true;
     } else {
       audioToctoc.pause();
@@ -199,7 +217,7 @@
     if(e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       if (!tocouAudio) {
-        audioToctoc.play().catch(() => {});
+        iniciarAudioToctoc();
         tocouAudio = true;
       } else {
         audioToctoc.pause();
@@ -208,6 +226,16 @@
       }
     }
   });
+
+  // Quando tela 3 for mostrada, começa o áudio
+  const observer = new MutationObserver(mutations => {
+    mutations.forEach(mutation => {
+      if (mutation.target === tela3 && !tela3.classList.contains('oculto')) {
+        iniciarAudioToctoc();
+      }
+    });
+  });
+  observer.observe(tela3, { attributes: true, attributeFilter: ['class'] });
 
   // Tela 4: fim do vídeo redireciona para segunda-experiencia.html
   videoMensagem.addEventListener('ended', () => {

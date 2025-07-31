@@ -15,6 +15,7 @@
       height: 100%;
       background: rgba(0, 0, 139, 0.15);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       font-family: 'Great Vibes', cursive;
@@ -93,11 +94,12 @@
     }
 
     .botoes {
-      position: absolute;
-      bottom: 10px;
+      margin-top: 15px;
       width: 100%;
-      text-align: center;
-      z-index: 30;
+      max-width: 700px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
       user-select: none;
     }
 
@@ -107,7 +109,6 @@
       border: none;
       border-radius: 12px;
       padding: 12px 20px;
-      margin: 0 15px;
       font-family: 'Georgia', serif;
       font-size: 1.2em;
       cursor: pointer;
@@ -135,17 +136,16 @@
     <!-- Páginas do livro -->
     <div class="pagina pagina-atual" id="pagina-atual" tabindex="0" aria-live="polite" aria-atomic="true"></div>
     <div class="pagina pagina-proxima" id="pagina-proxima" tabindex="-1"></div>
+  </div>
 
-    <div class="botoes">
-      <button class="botao" id="voltar" disabled aria-label="Página anterior">⟵ Voltar</button>
-      <button class="botao" id="avancar" aria-label="Próxima página">Avançar ⟶</button>
-    </div>
+  <div class="botoes">
+    <button class="botao" id="voltar" disabled aria-label="Página anterior">⟵ Voltar</button>
+    <button class="botao" id="avancar" aria-label="Próxima página">Avançar ⟶</button>
   </div>
 
   <audio id="som-pergaminho" src="pergaminho.mp3" preload="auto"></audio>
 
   <script>
-    // Lista de imagens
     const imagens = [
       "imagem1.jpeg", "imagem2.jpeg", "imagem3.jpeg", "imagem4.jpeg",
       "imagem5.jpeg", "imagem6.jpeg", "imagem7.jpeg", "imagem8.jpeg",
@@ -161,14 +161,12 @@
     const botaoAvancar = document.getElementById('avancar');
     const somPergaminho = document.getElementById('som-pergaminho');
 
-    // Função para carregar a imagem na página atual
     function carregarPaginaAtual() {
       paginaAtual.style.transform = 'rotateY(0deg)';
       paginaAtual.classList.remove('virada');
       paginaAtual.innerHTML = `<img src="${imagens[indiceAtual]}" alt="Imagem ${indiceAtual + 1} da galeria" />`;
     }
 
-    // Função para carregar a próxima página
     function carregarPaginaProxima() {
       const proximoIndice = indiceAtual + 1;
       if(proximoIndice < imagens.length) {
@@ -181,24 +179,16 @@
       }
     }
 
-    // Inicializa
-    carregarPaginaAtual();
-    carregarPaginaProxima();
-    atualizarBotoes();
-
-    // Função para atualizar estado dos botões
     function atualizarBotoes() {
       botaoVoltar.disabled = indiceAtual === 0;
       botaoAvancar.disabled = indiceAtual >= imagens.length - 1;
     }
 
-    // Função para tocar som de pergaminho
     function tocarSom() {
       somPergaminho.currentTime = 0;
       somPergaminho.play().catch(() => {});
     }
 
-    // Avançar página
     botaoAvancar.addEventListener('click', () => {
       if (indiceAtual < imagens.length -1) {
         tocarSom();
@@ -217,32 +207,29 @@
       }
     });
 
-    // Voltar página
     botaoVoltar.addEventListener('click', () => {
       if (indiceAtual > 0) {
         tocarSom();
 
-        paginaProxima.innerHTML = `<img src="${imagens[indiceAtual - 1]}" alt="Imagem ${indiceAtual} da galeria" />`;
-        paginaProxima.style.visibility = 'visible';
-        paginaProxima.style.transformOrigin = 'right center';
-        paginaProxima.style.transform = 'rotateY(180deg)';
-        paginaProxima.style.transition = 'transform 1s cubic-bezier(0.4, 0, 0.2, 1)';
-        setTimeout(() => {
-          paginaProxima.style.transform = 'rotateY(0deg)';
-        }, 20);
+        // "Desvira" a página atual para frente (0º)
+        paginaAtual.style.transition = 'transform 1s cubic-bezier(0.4, 0, 0.2, 1)';
+        paginaAtual.style.transformOrigin = 'left center';
+        paginaAtual.style.transform = 'rotateY(0deg)';
+        paginaAtual.classList.remove('virada');
 
         setTimeout(() => {
           indiceAtual--;
           carregarPaginaAtual();
           carregarPaginaProxima();
           atualizarBotoes();
-
-          paginaProxima.style.visibility = 'visible';
-          paginaProxima.style.transition = 'none';
-          paginaProxima.style.transform = 'rotateY(0deg)';
         }, 1000);
       }
     });
+
+    // Inicializa tudo
+    carregarPaginaAtual();
+    carregarPaginaProxima();
+    atualizarBotoes();
 
     // Navegação por teclado (setas)
     document.addEventListener('keydown', (e) => {

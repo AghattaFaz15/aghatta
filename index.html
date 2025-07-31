@@ -68,6 +68,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: start;
+      transform: scale(1.08); /* zoom no pergaminho aberto */
+      transform-origin: center center;
     }
 
     #texto-titulo {
@@ -81,24 +83,26 @@
     #textoConvite {
       color: black;
       font-family: 'Lucida Handwriting', cursive;
-      font-size: 1.3em;
-      line-height: 1.6em;
+      font-size: 1.1em;
+      line-height: 1.5em;
       width: 80%;
-      height: 48vh;
+      height: 45vh;
       overflow-y: auto;
       margin-top: 12vh;
-      padding-right: 0.5em;
-      background: transparent;
+      padding-right: 1em;
       scrollbar-width: thin;
-      scrollbar-color: goldenrod transparent;
+      scrollbar-color: transparent transparent;
+      background: transparent;
     }
-
+    /* Scroll invisível */
     #textoConvite::-webkit-scrollbar {
       width: 6px;
     }
+    #textoConvite::-webkit-scrollbar-track {
+      background: transparent;
+    }
     #textoConvite::-webkit-scrollbar-thumb {
-      background-color: goldenrod;
-      border-radius: 10px;
+      background: transparent;
     }
 
     #botaoAvancar {
@@ -128,6 +132,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      cursor: pointer;
     }
 
     #mensagemCapa {
@@ -138,6 +143,7 @@
       font-family: 'Georgia', serif;
       animation: pulse 2s infinite;
       text-shadow: 2px 2px 10px black;
+      user-select: none;
     }
 
     @keyframes pulse {
@@ -156,6 +162,8 @@
     #videoMensagem {
       width: 100%;
       height: 100%;
+      object-fit: contain;
+      background: black;
     }
   </style>
 </head>
@@ -171,7 +179,7 @@
   <!-- TELA 2 -->
   <div class="tela oculto" id="tela2">
     <div id="texto-titulo">Convite Celestial</div>
-    <div id="textoConvite">
+    <div id="textoConvite" tabindex="0" aria-label="Texto do convite">
       <p><em>“Antes que eu nascesse… o Céu já sabia quem caminharia comigo.”</em></p>
       <p>Em silêncio eterno, Deus já escrevia meu nome… e o seu, lado a lado.</p>
       <p>Por isso, <strong>se este convite chegou até você</strong>, não pense que foi acaso — foi propósito.</p>
@@ -184,67 +192,86 @@
       <p><em>Então venha! Traga seu riso, sua lembrança, sua fé. Traga quem você é — porque é assim, exatamente assim, que você faz parte da minha história.</em></p>
       <p><em>— Aghatta, filha sonhada e separada pelo Pai 👑✨</em></p>
     </div>
-    <button id="botaoAvancar" onclick="irParaTela3()">Avançar</button>
+    <button id="botaoAvancar" onclick="irParaTela3()" aria-label="Avançar para a próxima etapa">Avançar</button>
   </div>
 
   <!-- TELA 3 -->
-  <div class="tela oculto" id="tela3">
+  <div class="tela oculto" id="tela3" role="button" tabindex="0" aria-label="Clique para ouvir o chamado">
     <div id="mensagemCapa">Os céus batem à porta...<br><small>Toque para abrir...</small></div>
   </div>
 
   <!-- TELA 4 -->
   <div class="tela oculto" id="tela4">
-    <video id="videoMensagem" autoplay playsinline muted>
+    <video id="videoMensagem" muted playsinline>
       <source src="mensagem.mp4" type="video/mp4" />
       Seu navegador não suporta vídeo.
     </video>
+    <audio id="audioPorta" src="porta.mp3" preload="auto"></audio>
   </div>
 
-  <audio id="somPorta" src="porta.mp3"></audio>
+<script>
+  const tela1 = document.getElementById('tela1');
+  const tela2 = document.getElementById('tela2');
+  const tela3 = document.getElementById('tela3');
+  const tela4 = document.getElementById('tela4');
+  const textoConvite = document.getElementById('textoConvite');
+  const botaoAvancar = document.getElementById('botaoAvancar');
+  const videoMensagem = document.getElementById('videoMensagem');
+  const audioPorta = document.getElementById('audioPorta');
 
-  <script>
-    const textoConvite = document.getElementById('textoConvite');
-    const botaoAvancar = document.getElementById('botaoAvancar');
-    const video = document.getElementById('videoMensagem');
-    const somPorta = document.getElementById('somPorta');
-    let audioToctoc;
-
-    textoConvite.addEventListener('scroll', () => {
-      if (textoConvite.scrollTop + textoConvite.clientHeight >= textoConvite.scrollHeight - 5) {
-        botaoAvancar.classList.add('mostrar');
-      }
-    });
-
-    function abrirPergaminho() {
-      document.getElementById('tela1').classList.add('oculto');
-      document.getElementById('tela2').classList.remove('oculto');
+  // Mostrar botão Avançar só ao final do scroll do texto
+  textoConvite.addEventListener('scroll', () => {
+    if (textoConvite.scrollTop + textoConvite.clientHeight >= textoConvite.scrollHeight - 5) {
+      botaoAvancar.classList.add('mostrar');
     }
+  });
 
-    function irParaTela3() {
-      document.getElementById('tela2').classList.add('oculto');
-      document.getElementById('tela3').classList.remove('oculto');
+  function abrirPergaminho() {
+    tela1.classList.add('oculto');
+    tela2.classList.remove('oculto');
+  }
 
-      audioToctoc = new Audio('toctoc.mp3');
-      audioToctoc.loop = true;
-      audioToctoc.play();
+  function irParaTela3() {
+    tela2.classList.add('oculto');
+    tela3.classList.remove('oculto');
+    
+    // Começa o som do convite (toctoc) em loop
+    const audioToctoc = new Audio('toctoc.mp3');
+    audioToctoc.loop = true;
+    audioToctoc.play();
 
-      document.getElementById('tela3').addEventListener('click', irParaTela4);
-    }
+    // Clique para parar o áudio e ir para o vídeo
+    function handler() {
+      audioToctoc.pause();
+      tela3.classList.add('oculto');
+      tela4.classList.remove('oculto');
+      
+      // Toca o som da porta
+      audioPorta.play();
 
-    function irParaTela4() {
-      if (audioToctoc) audioToctoc.pause();
-      document.getElementById('tela3').classList.add('oculto');
-      document.getElementById('tela4').classList.remove('oculto');
+      videoMensagem.muted = true; // som desligado no vídeo
+      videoMensagem.play();
 
-      somPorta.play();
-      video.play();
-      video.muted = true;
-
-      video.onended = () => {
-        somPorta.pause();
+      videoMensagem.onended = () => {
         window.location.href = "segunda-experiencia.html";
       };
+
+      tela3.removeEventListener('click', handler);
+      tela3.removeEventListener('keydown', keyHandler);
     }
-  </script>
+
+    // Suporte para teclado (Enter e Espaço)
+    function keyHandler(e) {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handler();
+      }
+    }
+
+    tela3.addEventListener('click', handler);
+    tela3.addEventListener('keydown', keyHandler);
+  }
+</script>
+
 </body>
 </html>

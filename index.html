@@ -60,8 +60,6 @@
     #tela2 {
       background: url('roloaberto.png') no-repeat center center;
       background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
       background-color: white;
       padding: 0;
     }
@@ -77,16 +75,22 @@
     #textoConvite {
       color: black;
       font-family: 'Lucida Handwriting', cursive;
-      font-size: 1.1em;
-      line-height: 1.5em;
-      width: 70vw;
-      max-width: 600px;
-      height: 45vh;
+      font-size: 1.3em; /* AUMENTADO */
+      line-height: 1.6em;
+      width: 72vw;
+      max-width: 640px;
+      height: 44vh;
       overflow-y: auto;
       margin: 2vh auto;
       padding: 1em;
       background-color: rgba(255,255,255,0.6);
       border-radius: 10px;
+
+      scrollbar-width: none; /* Firefox */
+    }
+
+    #textoConvite::-webkit-scrollbar {
+      display: none; /* Chrome/Safari */
     }
 
     #botaoAvancar {
@@ -202,8 +206,7 @@
     function abrirPergaminho() {
       document.getElementById('tela1').classList.add('oculto');
       document.getElementById('tela2').classList.remove('oculto');
-      const audio = new Audio('toctoc.mp3');
-      audio.play();
+      // Som removido aqui
     }
 
     function irParaTela3() {

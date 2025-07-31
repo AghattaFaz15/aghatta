@@ -1,175 +1,120 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Segunda Experiência - Livro Celestial Aghatta XV</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    html, body {
-      height: 100%;
-      background: url('Aghatta.png') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Georgia', serif;
-      color: #ffd700;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      user-select: none;
-    }
-
-    #book {
-      width: 100vw;
-      height: 100vh;
-      background: rgba(16, 33, 83, 0.85);
-      box-shadow: 0 0 40px #bfa234cc;
-      cursor: pointer;
-    }
-
-    .page {
-      width: 100%;
-      height: 100%;
-      padding: 3rem 4rem;
-      color: white;
-      background: linear-gradient(135deg, #1e2a6a, #0f183b);
-      box-shadow: inset 0 0 30px #bfa234aa;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      user-select: text;
-      position: relative;
-    }
-    .page h2 {
-      color: gold;
-      text-shadow: 0 0 15px #d1b244cc;
-      margin-bottom: 1.5rem;
-      font-size: 2.5rem;
-      user-select: none;
-    }
-    .page p {
-      flex-grow: 1;
-      font-size: 1.3rem;
-      line-height: 1.5;
-      padding-right: 10px;
-    }
-
-    .nav-buttons {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 30px;
-    }
-    button {
-      background: #bfa234;
-      border: none;
-      padding: 1em 3em;
-      font-weight: 700;
-      color: #0f183b;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: 0 0 20px #bfa234cc;
-      user-select: none;
-      transition: background-color 0.3s ease;
-      font-size: 1.2rem;
-    }
-    button:hover {
-      background-color: #a98b2a;
-    }
-  </style>
-
-  <!-- JQuery e Turn.js -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/turn.js@4/turn.min.js" defer></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Segunda Experiência - Livro Celestial Aghatta XV</title>
+<style>
+  html, body {
+    height: 100%;
+    margin: 0; padding: 0;
+    background: url('Aghatta.png') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Georgia', serif;
+    color: #ffd700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  #book {
+    width: 90vw;
+    max-width: 900px;
+    height: 600px;
+    background: rgba(16, 33, 83, 0.85);
+    box-shadow: 0 0 30px #bfa234cc;
+    border-radius: 15px;
+    position: relative;
+  }
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 15px;
+    display: none;
+  }
+  iframe.active {
+    display: block;
+  }
+  .nav-buttons {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+  }
+  button {
+    background: #bfa234;
+    border: none;
+    padding: 0.8em 2em;
+    font-weight: 700;
+    color: #0f183b;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 0 15px #bfa234cc;
+    user-select: none;
+    transition: background-color 0.3s ease;
+    min-width: 130px;
+  }
+  button:hover {
+    background-color: #a98b2a;
+  }
+  button:disabled {
+    background: rgba(191, 162, 52, 0.5);
+    cursor: default;
+    box-shadow: none;
+  }
+</style>
 </head>
 <body>
 
   <div id="book">
-    <div class="page" id="page1">
-      <h2>📸 Galeria de Memórias</h2>
-      <p>Em breve fotos especiais estarão aqui, para revivermos momentos de luz e alegria juntos.</p>
-      <div class="nav-buttons">
-        <button id="next1" type="button">Próxima Página &rarr;</button>
-      </div>
-    </div>
+    <iframe id="page1" src="galeria.html" class="active" title="Galeria de Memórias"></iframe>
+    <iframe id="page2" src="livro.html" title="Livro Celestial"></iframe>
+    <iframe id="page3" src="contador.html" title="Contador"></iframe>
+    <iframe id="page4" src="icones.html" title="Ícones e Confirmação"></iframe>
 
-    <div class="page" id="page2">
-      <h2>📖 Livro Celestial</h2>
-      <p>Todos os recados estarão guardados aqui, eternamente abençoados.</p>
-      <div class="nav-buttons">
-        <button id="prev2" type="button">&larr; Página Anterior</button>
-        <button id="next2" type="button">Próxima Página &rarr;</button>
-      </div>
-    </div>
-
-    <div class="page" id="page3">
-      <h2>⏳ Contador para Aghatta XV</h2>
-      <p id="contadorTexto">Calculando o tempo sagrado...</p>
-      <div class="nav-buttons">
-        <button id="prev3" type="button">&larr; Página Anterior</button>
-        <button id="next3" type="button">Próxima Página &rarr;</button>
-      </div>
-    </div>
-
-    <div class="page" id="page4">
-      <h2>✨ Mural de Recados e Confirmação</h2>
-      <p>Aqui, você poderá deixar seu recado de amor e confirmar sua presença na festa.</p>
-      <div class="nav-buttons">
-        <button id="prev4" type="button">&larr; Página Anterior</button>
-      </div>
+    <div class="nav-buttons">
+      <button id="prevBtn" disabled>&larr; Página Anterior</button>
+      <button id="nextBtn">Próxima Página &rarr;</button>
     </div>
   </div>
 
   <script>
-    // Aguarda o DOM e o jQuery carregarem para iniciar o livro
-    document.addEventListener('DOMContentLoaded', () => {
-      $('#book').turn({
-        width: window.innerWidth,
-        height: window.innerHeight,
-        autoCenter: true,
-        display: 'single',
-        acceleration: true,
-        gradients: true,
-        duration: 1000
+    const iframes = [
+      document.getElementById('page1'),
+      document.getElementById('page2'),
+      document.getElementById('page3'),
+      document.getElementById('page4')
+    ];
+    let currentIndex = 0;
+
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function showPage(index) {
+      iframes.forEach((iframe, i) => {
+        iframe.classList.toggle('active', i === index);
       });
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index === iframes.length - 1;
+      currentIndex = index;
+    }
 
-      // Botões de navegação com cuidados para funcionar
-      $('#next1').on('click', () => $('#book').turn('next'));
-      $('#prev2').on('click', () => $('#book').turn('previous'));
-      $('#next2').on('click', () => $('#book').turn('next'));
-      $('#prev3').on('click', () => $('#book').turn('previous'));
-      $('#next3').on('click', () => $('#book').turn('next'));
-      $('#prev4').on('click', () => $('#book').turn('previous'));
-
-      // Atualiza contador a cada segundo
-      function atualizarContador() {
-        const evento = new Date('2025-09-12T19:00:00');
-        const agora = new Date();
-        const diff = evento - agora;
-        if (diff <= 0) {
-          $('#contadorTexto').text('A festa da Aghatta já começou! 🎉');
-          return;
-        }
-        const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const minutos = Math.floor((diff / (1000 * 60)) % 60);
-        const segundos = Math.floor((diff / 1000) % 60);
-        $('#contadorTexto').text(`Faltam ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos para a festa.`);
+    prevBtn.addEventListener('click', () => {
+      if(currentIndex > 0) {
+        showPage(currentIndex - 1);
       }
-      atualizarContador();
-      setInterval(atualizarContador, 1000);
-
-      // Ajusta tamanho do livro ao redimensionar a janela
-      window.addEventListener('resize', () => {
-        $('#book').turn('size', window.innerWidth, window.innerHeight);
-      });
     });
+    nextBtn.addEventListener('click', () => {
+      if(currentIndex < iframes.length - 1) {
+        showPage(currentIndex + 1);
+      }
+    });
+
+    // Inicializa mostrando a primeira página
+    showPage(0);
   </script>
 
 </body>

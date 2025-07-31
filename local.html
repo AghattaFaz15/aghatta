@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Localização - Aniversário Aghatta XV</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body, html {
+      margin: 0; padding: 0; height: 100%;
+      font-family: 'Georgia', serif;
+      background: linear-gradient(135deg, #001170, #002080);
+      color: #ffd700;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    header {
+      padding: 2rem 1rem 1rem;
+      text-align: center;
+      text-shadow: 0 0 8px gold;
+    }
+
+    header h1 {
+      margin-bottom: 0.5rem;
+      font-size: 2.5rem;
+      letter-spacing: 0.15em;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      font-style: italic;
+      opacity: 0.8;
+    }
+
+    #map {
+      flex-grow: 1;
+      width: 100vw;
+      max-width: 900px;
+      height: 70vh;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+      margin-bottom: 2rem;
+    }
+
+    footer {
+      font-size: 0.9rem;
+      opacity: 0.6;
+      margin-bottom: 1rem;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Localização</h1>
+  <p>Chácara das Paineiras - O lugar abençoado para celebrar</p>
+</header>
+
+<div id="map"></div>
+
+<footer>
+  &copy; 2025 Aghatta XV - Com amor e fé.
+</footer>
+
+<script>
+  function initMap() {
+    // Coordenadas da Chácara das Paineiras
+    const localEvento = { lat: -23.6241921, lng: -47.0673401 };
+
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 16,
+      center: localEvento,
+      disableDefaultUI: true,
+      styles: [
+        { elementType: 'geometry', stylers: [{color: '#001f3f'}]},
+        { elementType: 'labels.text.fill', stylers: [{color: '#ffd700'}]},
+        { elementType: 'labels.text.stroke', stylers: [{color: '#001f3f'}]},
+        {
+          featureType: 'poi',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#ffdc00'}]
+        },
+        {
+          featureType: 'road',
+          elementType: 'geometry',
+          stylers: [{color: '#003366'}]
+        },
+        {
+          featureType: 'water',
+          elementType: 'geometry',
+          stylers: [{color: '#001b33'}]
+        }
+      ]
+    });
+
+    const marker = new google.maps.Marker({
+      position: localEvento,
+      map,
+      title: "Chácara das Paineiras - Aniversário Aghatta XV",
+      animation: google.maps.Animation.DROP,
+    });
+  }
+</script>
+
+<!-- Google Maps API -->
+<script async
+  src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+</script>
+
+</body>
+</html>

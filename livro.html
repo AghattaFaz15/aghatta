@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Segunda Experiência - Aghatta XV</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('Aghatta.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Georgia', serif;
+      color: #fff;
+    }
+    .bloco {
+      background: rgba(0, 51, 102, 0.7);
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 800px;
+      box-shadow: 0 0 20px gold;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #ffd700;
+    }
+    input, textarea, button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 10px;
+      border: none;
+    }
+    textarea {
+      resize: vertical;
+      height: 100px;
+    }
+    .mensagens {
+      margin-top: 30px;
+    }
+    .mensagem {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid #ffd700;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+  </style>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+</head>
+<body>
+
+  <div class="bloco">
+    <h1>✨ Livro Celestial de Recados ✨</h1>
+    <p>Deixe aqui sua lembrança, oração ou mensagem para Aghatta. Sua palavra se tornará eterna como uma estrela no Céu.</p>
+    <input type="text" id="nome" placeholder="Seu nome" required />
+    <textarea id="mensagem" placeholder="Escreva sua mensagem..."></textarea>
+    <button onclick="enviarMensagem()">Confirmar Recado</button>
+
+    <div class="mensagens" id="mensagens"></div>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
+      authDomain: "livro-aghatta.firebaseapp.com",
+      databaseURL: "https://livro-aghatta-default-rtdb.firebaseio.com",
+      projectId: "livro-aghatta",
+      storageBucket: "livro-aghatta.firebasestorage.app",
+      messagingSenderId: "491625108244",
+      appId: "1:491625108244:web:3afdfda239f9d0904ca801"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function enviarMensagem() {
+      const nome = document.getElementById('nome').value.trim();
+      const mensagem = document.getElementById('mensagem').value.trim();
+
+      if (!nome || !mensagem) return alert('Preencha nome e mensagem.');
+
+      const novaMensagem = db.ref('mensagens').push();
+      novaMensagem.set({ nome, mensagem });
+
+      document.getElementById('nome').value = '';
+      document.getElementById('mensagem').value = '';
+    }
+
+    db.ref('mensagens').on('value', (snapshot) => {
+      const container = document.getElementById('mensagens');
+      container.innerHTML = '';
+      snapshot.forEach((child) => {
+        const dados = child.val();
+        const div = document.createElement('div');
+        div.className = 'mensagem';
+        div.innerHTML = `<strong>${dados.nome}</strong><br>${dados.mensagem}`;
+        container.appendChild(div);
+      });
+    });
+  </script>
+</body>
+</html>

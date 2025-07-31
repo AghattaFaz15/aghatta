@@ -9,59 +9,57 @@
       margin: 0;
       padding: 0;
       font-family: 'Georgia', serif;
-      background: url('aghatta.png') no-repeat center center fixed;
+      background: url('Aghatta.jpeg') no-repeat center center fixed;
       background-size: cover;
       overflow-x: hidden;
+      color: #f0e6f6;
+      text-shadow: 0 0 6px gold;
     }
 
     section {
-      margin: 80px 0;
-      padding: 50px 30px;
+      margin: 100px auto;
+      padding: 60px 40px;
+      max-width: 1100px;
+      background-color: rgba(10, 25, 70, 0.85); /* azul translúcido */
+      border: 3px solid gold;
+      border-radius: 25px;
+      box-shadow: 0 0 40px rgba(212, 175, 55, 0.9);
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      background-color: rgba(10, 25, 70, 0.85); /* azul translúcido */
-      border: 3px solid gold; /* borda dourada */
-      border-radius: 20px;
-      box-shadow: 0 0 30px rgba(212, 175, 55, 0.8); /* brilho dourado */
-      width: 90%;
-      max-width: 1000px;
-      margin-left: auto;
-      margin-right: auto;
-      color: #f0e6f6;
-      text-shadow: 0 0 6px gold;
     }
 
     iframe {
       border: none;
       width: 100%;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+      height: 700px; /* maior para galeria, contador e ícones */
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.7);
     }
 
     .titulo-reinado {
-      font-size: 3.5em;
+      font-size: 3.8em;
       color: gold;
       text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 25px;
-      filter: drop-shadow(0 0 10px gold);
+      gap: 30px;
+      filter: drop-shadow(0 0 12px gold);
       user-select: none;
     }
 
     .titulo-reinado img {
-      width: 60px;
+      width: 70px;
       height: auto;
     }
 
     p.subtitulo {
-      font-size: 1.3em;
-      margin-top: 0.5em;
+      font-size: 1.5em;
+      margin-top: 0.7em;
       color: #d4af37;
-      text-shadow: 0 0 8px #d4af37aa;
+      text-shadow: 0 0 10px #d4af37cc;
       font-style: italic;
       user-select: none;
     }
@@ -72,7 +70,7 @@
   <!-- ÁUDIO DE FUNDO -->
   <audio autoplay loop>
     <source src="audio.mp3" type="audio/mpeg" />
-    Seu navegador não suporta áudio. 😢
+    Seu navegador não suporta áudio. 🙏
   </audio>
 
   <!-- TÍTULO COM COROAS -->
@@ -87,17 +85,17 @@
 
   <!-- GALERIA -->
   <section id="galeria" aria-label="Galeria de fotos da Aghatta">
-    <iframe src="galeria.html" height="600" title="Galeria de fotos"></iframe>
+    <iframe src="galeria.html" title="Galeria de fotos"></iframe>
   </section>
 
   <!-- CONTADOR -->
   <section id="contador" aria-label="Contador regressivo para o evento">
-    <iframe src="contador.html" height="400" title="Contador regressivo"></iframe>
+    <iframe src="contador.html" title="Contador regressivo"></iframe>
   </section>
 
   <!-- ÍCONES -->
   <section id="icones" aria-label="Mural de recados e confirmações">
-    <iframe src="icones.html" height="650" title="Mural de recados e confirmações"></iframe>
+    <iframe src="icones.html" title="Mural de recados e confirmações"></iframe>
   </section>
 
 </body>

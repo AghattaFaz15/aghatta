@@ -1,34 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Confirmação de Presença - Aghatta XV</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       background: url('Aghatta.png') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Georgia', serif;
       overflow: hidden;
     }
-
     #ceu-de-presencas {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 250px;
-      height: 250px;
+      top: 10px; right: 10px;
+      width: 250px; height: 250px;
       z-index: 10;
       pointer-events: none;
     }
-
     .borboleta-fixa {
       position: absolute;
       width: 30px;
       animation: aparecerNoCeu 1s ease-in forwards;
     }
-
     .nome-fixo {
       position: absolute;
       color: #fff5c2;
@@ -37,19 +31,16 @@
       text-shadow: 0 0 5px #ffd700;
       transform: translateY(10px);
     }
-
     @keyframes aparecerNoCeu {
       from { transform: scale(0); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
-
     .container {
       position: absolute;
       bottom: 50px;
       width: 100%;
       text-align: center;
     }
-
     input {
       padding: 10px;
       border: none;
@@ -58,7 +49,6 @@
       width: 250px;
       outline: none;
     }
-
     .botao-coracao {
       margin-top: 20px;
       font-size: 50px;
@@ -66,18 +56,16 @@
       cursor: pointer;
       animation: pulse 2s infinite;
       transition: transform 0.3s;
+      user-select: none;
     }
-
     .botao-coracao:hover {
       transform: scale(1.2);
     }
-
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.2); }
       100% { transform: scale(1); }
     }
-
     .mensagem {
       position: absolute;
       bottom: 150px;
@@ -89,18 +77,18 @@
       animation: escrever 3s forwards;
       font-family: 'Brush Script MT', cursive;
       text-shadow: 0 0 10px #f9d776;
+      user-select: none;
     }
-
     @keyframes escrever {
       0% { opacity: 0; transform: translateY(20px); }
       100% { opacity: 1; transform: translateY(0); }
     }
-
     .borboleta {
       position: absolute;
       width: 40px;
       transition: all 3s ease-in-out;
       z-index: 5;
+      pointer-events: none;
     }
   </style>
 </head>
@@ -108,29 +96,89 @@
 
 <div id="ceu-de-presencas"></div>
 
-<div class="container">
-  <input type="text" id="nome" placeholder="Digite seu nome..." />
-  <div class="botao-coracao" onclick="confirmarPresenca()">❤️</div>
+<div class="container" role="form" aria-label="Confirmação de presença">
+  <input type="text" id="nome" placeholder="Digite seu nome..." aria-required="true" aria-describedby="mensagem-erro" />
+  <div class="botao-coracao" role="button" tabindex="0" aria-pressed="false" aria-label="Confirmar presença" onclick="confirmarPresenca()" onkeypress="if(event.key==='Enter') confirmarPresenca()">❤️</div>
+  <div id="mensagem-erro" style="color:#ff5555; font-size:14px; margin-top:5px; height:18px;"></div>
 </div>
 
-<div id="mensagem" class="mensagem"></div>
+<div id="mensagem" class="mensagem" aria-live="polite" aria-atomic="true"></div>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
 <script>
+  // Config Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
+    authDomain: "livro-aghatta.firebaseapp.com",
+    databaseURL: "https://livro-aghatta-default-rtdb.firebaseio.com",
+    projectId: "livro-aghatta",
+    storageBucket: "livro-aghatta.firebasestorage.app",
+    messagingSenderId: "491625108244",
+    appId: "1:491625108244:web:3afdfda239f9d0904ca801"
+  };
+  // Inicializa Firebase
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+
+  const ceu = document.getElementById('ceu-de-presencas');
+  const mensagem = document.getElementById('mensagem');
+  const erro = document.getElementById('mensagem-erro');
+
+  // Função para criar borboleta fixa com nome no céu
+  function criarBorboletaFixa(nome, x, y) {
+    const borboletaFixa = document.createElement('img');
+    borboletaFixa.src = 'https://cdn-icons-png.flaticon.com/512/616/616408.png';
+    borboletaFixa.className = 'borboleta-fixa';
+    borboletaFixa.style.left = x + 'px';
+    borboletaFixa.style.top = y + 'px';
+
+    const nomeFixo = document.createElement('div');
+    nomeFixo.className = 'nome-fixo';
+    nomeFixo.style.left = x + 'px';
+    nomeFixo.style.top = (y + 30) + 'px';
+    nomeFixo.textContent = nome;
+
+    ceu.appendChild(borboletaFixa);
+    ceu.appendChild(nomeFixo);
+  }
+
+  // Carrega todas presenças do Firebase e exibe no céu
+  function carregarPresencas() {
+    database.ref('presencas').once('value', snapshot => {
+      if(snapshot.exists()) {
+        const dados = snapshot.val();
+        Object.values(dados).forEach(item => {
+          // Gera posições aleatórias dentro do céu
+          const posX = Math.random() * (ceu.clientWidth - 40);
+          const posY = Math.random() * (ceu.clientHeight - 50);
+          criarBorboletaFixa(item.nome, posX, posY);
+        });
+      }
+    });
+  }
+
+  // Função que anima borboleta e salva nome no Firebase
   function confirmarPresenca() {
-    const nome = document.getElementById('nome').value.trim();
+    erro.textContent = '';
+    const inputNome = document.getElementById('nome');
+    const nome = inputNome.value.trim();
+
     if (!nome) {
-      alert("Por favor, digite seu nome para confirmar sua presença.");
+      erro.textContent = "Por favor, digite seu nome para confirmar presença.";
+      inputNome.focus();
       return;
     }
 
-    // Mensagem caligráfica animada
-    const msg = document.getElementById('mensagem');
-    msg.innerText = `Presença confirmada: ${nome}`;
-    msg.style.animation = 'none';
-    void msg.offsetWidth; // Reinicia a animação
-    msg.style.animation = 'escrever 3s forwards';
+    // Mensagem animada
+    mensagem.textContent = `Presença confirmada: ${nome}`;
+    mensagem.style.animation = 'none';
+    void mensagem.offsetWidth; // restart animation
+    mensagem.style.animation = 'escrever 3s forwards';
 
-    // Borboleta animada
+    // Criar borboleta animada
     const borboleta = document.createElement('img');
     borboleta.src = 'https://cdn-icons-png.flaticon.com/512/616/616408.png';
     borboleta.className = 'borboleta';
@@ -141,35 +189,33 @@
     borboleta.style.left = startX + 'px';
     borboleta.style.top = startY + 'px';
 
-    setTimeout(() => {
-      borboleta.style.top = '100px';
-      borboleta.style.left = '85%';
-      borboleta.style.opacity = '0';
+    // Salvar no Firebase
+    database.ref('presencas').push({ nome })
+      .then(() => {
+        // Anima borboleta para o céu e remove
+        setTimeout(() => {
+          borboleta.style.top = '100px';
+          borboleta.style.left = '85%';
+          borboleta.style.opacity = '0';
+          setTimeout(() => {
+            borboleta.remove();
+            // Adiciona borboleta fixa e nome no céu
+            const posX = Math.random() * (ceu.clientWidth - 40);
+            const posY = Math.random() * (ceu.clientHeight - 50);
+            criarBorboletaFixa(nome, posX, posY);
+          }, 3000);
+        }, 100);
+      })
+      .catch(err => {
+        console.error(err);
+        mensagem.textContent = "Erro ao salvar presença. Tente novamente.";
+      });
 
-      // Após animação, adiciona borboleta fixa ao céu
-      setTimeout(() => {
-        borboleta.remove();
-
-        const ceu = document.getElementById('ceu-de-presencas');
-        const borboletaFixa = document.createElement('img');
-        borboletaFixa.src = 'https://cdn-icons-png.flaticon.com/512/616/616408.png';
-        borboletaFixa.className = 'borboleta-fixa';
-        const posX = Math.random() * 200;
-        const posY = Math.random() * 200;
-        borboletaFixa.style.left = posX + 'px';
-        borboletaFixa.style.top = posY + 'px';
-
-        const nomeFixo = document.createElement('div');
-        nomeFixo.className = 'nome-fixo';
-        nomeFixo.innerText = nome;
-        nomeFixo.style.left = posX + 'px';
-        nomeFixo.style.top = (posY + 30) + 'px';
-
-        ceu.appendChild(borboletaFixa);
-        ceu.appendChild(nomeFixo);
-      }, 3000);
-    }, 100);
+    inputNome.value = '';
   }
+
+  // Carregar presenças ao abrir a página
+  window.onload = carregarPresencas;
 </script>
 
 </body>

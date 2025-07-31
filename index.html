@@ -63,7 +63,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      transform: scale(1.15); /* Zoom centralizado */
+      transform: scale(1.15);
     }
 
     .rolo-container {
@@ -77,7 +77,7 @@
       align-items: center;
       justify-content: flex-start;
       position: relative;
-      padding-top: 8vh; /* Abaixado harmoniosamente */
+      padding-top: 10vh; /* ajustado para descer mais o texto */
     }
 
     #texto-titulo {
@@ -94,7 +94,7 @@
       font-size: 1.2em;
       line-height: 1.6em;
       width: 72%;
-      height: 50%; /* scroll ainda menor */
+      height: 52%;
       overflow-y: auto;
       background: transparent;
       scrollbar-width: thin;
@@ -167,28 +167,24 @@
       height: 100%;
     }
 
-    /* TRANSIÇÃO FUMAÇA */
-    #fadeTranslucido {
+    /* TRANSIÇÃO FADE ESCURA */
+    .fade-transicao {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      inset: 0;
       background: rgba(0, 0, 0, 0.6);
+      z-index: 999;
       opacity: 0;
       pointer-events: none;
-      z-index: 9999;
-      transition: opacity 1.5s ease;
+      transition: opacity 1s ease;
     }
 
-    #fadeTranslucido.visivel {
+    .fade-transicao.ativo {
       opacity: 1;
+      pointer-events: auto;
     }
   </style>
 </head>
 <body>
-
-  <div id="fadeTranslucido"></div>
 
   <!-- TELA 1 -->
   <div class="tela" id="tela1">
@@ -232,10 +228,13 @@
     <audio id="somPorta" src="porta.mp3" autoplay></audio>
   </div>
 
+  <!-- FADE DE TRANSIÇÃO -->
+  <div class="fade-transicao" id="fadeTransicao"></div>
+
   <script>
     const textoConvite = document.getElementById('textoConvite');
     const botaoAvancar = document.getElementById('botaoAvancar');
-    const fadeTranslucido = document.getElementById('fadeTranslucido');
+    const fade = document.getElementById('fadeTransicao');
     let audioToctoc;
 
     textoConvite.addEventListener('scroll', () => {
@@ -262,22 +261,28 @@
 
     function irParaTela4() {
       if (audioToctoc) audioToctoc.pause();
-      document.getElementById('tela3').classList.add('oculto');
-      document.getElementById('tela4').classList.remove('oculto');
 
-      const video = document.getElementById('videoMensagem');
-      const somPorta = document.getElementById('somPorta');
+      fade.classList.add('ativo');
 
-      video.muted = true;
-      video.play();
-      somPorta.play();
+      setTimeout(() => {
+        document.getElementById('tela3').classList.add('oculto');
+        document.getElementById('tela4').classList.remove('oculto');
+        fade.classList.remove('ativo');
 
-      video.onended = () => {
-        fadeTranslucido.classList.add('visivel');
-        setTimeout(() => {
-          window.location.href = "segunda-experiencia.html";
-        }, 1500);
-      };
+        const video = document.getElementById('videoMensagem');
+        const somPorta = document.getElementById('somPorta');
+
+        video.muted = true;
+        video.play();
+        somPorta.play();
+
+        video.onended = () => {
+          fade.classList.add('ativo');
+          setTimeout(() => {
+            window.location.href = "segunda-experiencia.html";
+          }, 1200);
+        };
+      }, 1000);
     }
   </script>
 </body>

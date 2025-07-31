@@ -31,8 +31,10 @@
 
     /* TELA 1 */
     #tela1 {
+      background: white;
       text-align: center;
-      padding: 3vh 2vw;
+      justify-content: space-between;
+      padding: 3vh 0;
     }
 
     #tela1 h1 {
@@ -46,8 +48,7 @@
       max-width: 400px;
       height: auto;
       cursor: pointer;
-      margin: 2vh auto;
-      display: block;
+      margin: auto;
     }
 
     #tela1 span {
@@ -60,41 +61,48 @@
     #tela2 {
       background: url('roloaberto.png') no-repeat center center;
       background-size: contain;
-      background-color: white;
-      padding: 0;
+      width: 90vw;
+      max-width: 600px;
+      height: 90vh;
+      padding: 2vh 2vw;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
     }
 
     #texto-titulo {
-      margin-top: 12vh;
       color: goldenrod;
       font-size: 1.6em;
       font-weight: bold;
       text-align: center;
+      margin-bottom: 1vh;
     }
 
     #textoConvite {
       color: black;
       font-family: 'Lucida Handwriting', cursive;
-      font-size: 1.3em; /* AUMENTADO */
+      font-size: 1.3em;
       line-height: 1.6em;
-      width: 72vw;
-      max-width: 640px;
-      height: 44vh;
+      width: 80%;
+      height: 48vh;
       overflow-y: auto;
-      margin: 2vh auto;
-      padding: 1em;
-      background-color: rgba(255,255,255,0.6);
-      border-radius: 10px;
-
-      scrollbar-width: none; /* Firefox */
+      margin-top: 12vh;
+      padding-right: 0.5em;
+      background: transparent;
+      scrollbar-width: thin;
+      scrollbar-color: goldenrod transparent;
     }
 
     #textoConvite::-webkit-scrollbar {
-      display: none; /* Chrome/Safari */
+      width: 6px;
+    }
+    #textoConvite::-webkit-scrollbar-thumb {
+      background-color: goldenrod;
+      border-radius: 10px;
     }
 
     #botaoAvancar {
-      margin: 1.5vh auto;
+      margin-top: 1.5vh;
       background: gold;
       color: black;
       border: none;
@@ -186,15 +194,19 @@
 
   <!-- TELA 4 -->
   <div class="tela oculto" id="tela4">
-    <video id="videoMensagem" autoplay muted playsinline>
+    <video id="videoMensagem" autoplay playsinline muted>
       <source src="mensagem.mp4" type="video/mp4" />
       Seu navegador não suporta vídeo.
     </video>
   </div>
 
+  <audio id="somPorta" src="porta.mp3"></audio>
+
   <script>
     const textoConvite = document.getElementById('textoConvite');
     const botaoAvancar = document.getElementById('botaoAvancar');
+    const video = document.getElementById('videoMensagem');
+    const somPorta = document.getElementById('somPorta');
     let audioToctoc;
 
     textoConvite.addEventListener('scroll', () => {
@@ -206,7 +218,6 @@
     function abrirPergaminho() {
       document.getElementById('tela1').classList.add('oculto');
       document.getElementById('tela2').classList.remove('oculto');
-      // Som removido aqui
     }
 
     function irParaTela3() {
@@ -225,11 +236,12 @@
       document.getElementById('tela3').classList.add('oculto');
       document.getElementById('tela4').classList.remove('oculto');
 
-      const video = document.getElementById('videoMensagem');
-      video.muted = false;
+      somPorta.play();
       video.play();
+      video.muted = true;
 
       video.onended = () => {
+        somPorta.pause();
         window.location.href = "segunda-experiencia.html";
       };
     }

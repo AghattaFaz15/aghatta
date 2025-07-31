@@ -16,6 +16,7 @@
       background-size: cover;
       font-family: 'Georgia', serif;
       color: white;
+      scroll-behavior: smooth;
     }
 
     audio {
@@ -26,29 +27,37 @@
       position: fixed;
       top: 0;
       width: 100%;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.5);
       padding: 20px 0;
       text-align: center;
       z-index: 1000;
+      transition: opacity 0.6s ease;
+    }
+
+    header.hidden {
+      opacity: 0;
+      pointer-events: none;
     }
 
     header h1 {
       font-size: 2.5rem;
       color: gold;
       text-shadow: 2px 2px 4px royalblue;
+      user-select: none;
     }
 
     main {
       padding-top: 120px;
+      max-width: 1000px;
+      margin: 0 auto;
     }
 
     section {
       background: rgba(65, 105, 225, 0.85);
-      margin: 60px auto;
+      margin: 60px 0;
       padding: 40px 20px;
       border-radius: 20px;
       border: 3px solid gold;
-      max-width: 1000px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     }
 
@@ -72,7 +81,7 @@
     <source src="audio.mp3" type="audio/mpeg">
   </audio>
 
-  <header>
+  <header id="topo">
     <h1>👑 Aghatta XV 👑</h1>
   </header>
 
@@ -81,13 +90,25 @@
       <iframe src="contador.html"></iframe>
     </section>
 
-    <section>
+    <section class="sem-balao">
       <iframe src="galeria.html"></iframe>
     </section>
 
-    <section>
+    <section class="sem-balao">
       <iframe src="icones.html"></iframe>
     </section>
   </main>
+
+  <script>
+    const header = document.getElementById('topo');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('hidden');
+      } else {
+        header.classList.remove('hidden');
+      }
+    });
+  </script>
 </body>
 </html>

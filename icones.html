@@ -2,157 +2,159 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Confirmação de Presença Celestial</title>
-  <script type="module">
-    // Importações Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmação Celestial</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(ellipse at center, #000030 0%, #000010 100%);
+      overflow: hidden;
+      font-family: 'Georgia', serif;
+      color: #fff8dc;
+    }
 
-    // Configuração do seu Firebase
+    h1 {
+      position: absolute;
+      top: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: normal;
+      font-style: italic;
+      color: #ffe;
+      text-shadow: 0 0 5px #ffd700;
+    }
+
+    #form-container {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      border-radius: 12px;
+      display: flex;
+      gap: 0.5rem;
+      box-shadow: 0 0 10px rgba(255,255,255,0.2);
+    }
+
+    input {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+
+    button {
+      background: gold;
+      border: none;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #ffd700;
+    }
+
+    .estrela {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background: url('estrela.png') no-repeat center center;
+      background-size: contain;
+      animation: subir 6s linear forwards;
+      cursor: move;
+    }
+
+    @keyframes subir {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0.7; }
+    }
+
+    #confirmados {
+      position: absolute;
+      top: 50px;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .nome-confirmado {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.3rem 0.6rem;
+      border-radius: 8px;
+      color: #ffd;
+      box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <h1>"Há nomes que brilham no céu do coração."</h1>
+  <div id="confirmados"></div>
+  <div id="form-container">
+    <input type="text" id="nome" placeholder="Digite seu nome" />
+    <button onclick="confirmarPresenca()">⭐ Confirmar</button>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
     const firebaseConfig = {
       apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
       authDomain: "livro-aghatta.firebaseapp.com",
       databaseURL: "https://livro-aghatta-default-rtdb.firebaseio.com",
       projectId: "livro-aghatta",
       storageBucket: "livro-aghatta.appspot.com",
-      messagingSenderId: "1087557952930",
-      appId: "1:1087557952930:web:59e5d8cc6ed646ed748eec"
+      messagingSenderId: "137287649516",
+      appId: "1:137287649516:web:61cb4988d5d00a5e59e6b9"
     };
 
-    // Inicializa o Firebase
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
+    const estrelasRef = ref(db, "estrelas");
 
-    // Função de confirmação
-    window.confirmarPresenca = () => {
-      const nome = document.getElementById('nomeConvidado').value.trim();
-      if (nome === '') {
-        alert('Digite seu nome para acender a estrela!');
-        return;
+    onChildAdded(estrelasRef, (data) => {
+      const nome = data.val();
+      mostrarNome(nome);
+      criarEstrela();
+    });
+
+    function confirmarPresenca() {
+      const input = document.getElementById("nome");
+      const nome = input.value.trim();
+      if (nome) {
+        push(estrelasRef, nome);
+        input.value = "";
       }
+    }
 
-      // Animação da estrela
+    function mostrarNome(nome) {
+      const div = document.createElement('div');
+      div.className = 'nome-confirmado';
+      div.textContent = nome;
+      document.getElementById('confirmados').appendChild(div);
+    }
+
+    function criarEstrela() {
       const estrela = document.createElement('div');
       estrela.className = 'estrela';
-      estrela.textContent = `★ ${nome}`;
-      estrela.style.left = Math.random() * 80 + 10 + 'vw';
-      estrela.style.top = '60vh';
-      document.body.appendChild(estrela);
-      setTimeout(() => estrela.remove(), 5000);
-
-      // Envia para o Firebase
-      const confirmacoesRef = ref(db, 'confirmacoes');
-      push(confirmacoesRef, {
-        nome: nome,
-        timestamp: new Date().toISOString()
+      estrela.style.left = `${Math.random() * 95}vw`;
+      estrela.style.top = '90vh';
+      estrela.draggable = true;
+      estrela.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setDragImage(new Image(), 0, 0);
       });
-
-      // Limpa campo
-      document.getElementById('nomeConvidado').value = '';
-    };
+      document.body.appendChild(estrela);
+      setTimeout(() => estrela.remove(), 6000);
+    }
   </script>
-
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: url('https://i.imgur.com/hqQmAxC.jpg') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Georgia', serif;
-      color: #fff;
-      overflow: hidden;
-    }
-
-    .verso {
-      position: absolute;
-      bottom: 20px;
-      right: 30px;
-      font-size: 1.1rem;
-      font-style: italic;
-      color: #fffacd;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    }
-
-    .confirmacao-container {
-      text-align: center;
-      margin-top: 20vh;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 2rem;
-      border-radius: 20px;
-      backdrop-filter: blur(6px);
-      width: 90%;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .confirmacao-container p.instrucoes {
-      font-size: 1.3rem;
-      color: #fffacd;
-      margin-bottom: 1rem;
-    }
-
-    .confirmacao-container input {
-      font-size: 1.2rem;
-      padding: 0.7rem 1.2rem;
-      border: 2px solid #ffd700;
-      border-radius: 10px;
-      outline: none;
-      width: 80%;
-      max-width: 400px;
-      background-color: #fff8dc;
-      color: #4b0082;
-    }
-
-    .confirmacao-container button {
-      font-size: 1.1rem;
-      background-color: #ffd700;
-      color: #4b0082;
-      border: none;
-      padding: 0.8rem 1.6rem;
-      border-radius: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 1rem;
-      font-family: 'Georgia', serif;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .confirmacao-container button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px #ffd700;
-    }
-
-    .estrela {
-      position: absolute;
-      font-size: 1.2rem;
-      color: #ffd700;
-      animation: subir 5s ease-in forwards;
-      pointer-events: none;
-    }
-
-    @keyframes subir {
-      0% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(-500px) scale(1.5);
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <div class="confirmacao-container">
-    <p class="instrucoes">Digite seu nome para confirmar sua presença celestial:</p>
-    <input type="text" id="nomeConvidado" placeholder="Seu nome precioso aqui..." />
-    <br>
-    <button onclick="confirmarPresenca()">Acender minha estrela ✨</button>
-  </div>
-
-  <div class="verso">“Há nomes que brilham no céu do coração —<br>não como lembrança, mas como luz viva da promessa.”</div>
-
 </body>
 </html>

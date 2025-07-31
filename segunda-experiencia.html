@@ -9,15 +9,60 @@
     margin: 0; padding: 0; height: 100%; width: 100%;
     background: url('Aghatta.png') no-repeat center center fixed;
     background-size: cover;
-    overflow: hidden;
     font-family: 'Georgia', serif;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #001233cc; /* leve escurecimento para destaque da capa */
+  }
+
+  #capa-container {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: rgba(0,0,50,0.6);
+    cursor: pointer;
+    transition: opacity 0.8s ease;
+    z-index: 10;
+  }
+
+  #capa-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #capa {
+    max-width: 70vw;
+    max-height: 80vh;
+    border-radius: 20px;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.9);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  #capa:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 80px rgba(255, 215, 0, 1);
+  }
+
+  #texto-toque {
+    margin-top: 20px;
+    color: #ffd700cc;
+    font-style: italic;
+    font-size: 1.3rem;
+    text-shadow: 0 0 10px #ffd700aa;
+    user-select: none;
   }
 
   #container {
     position: relative;
     height: 100vh;
     width: 100vw;
-    display: flex;
+    display: none; /* começa oculto, revelado após abrir capa */
     justify-content: center;
     align-items: center;
   }
@@ -76,9 +121,16 @@
 </head>
 <body>
 
-<div id="container">
+<!-- Capa do livro -->
+<div id="capa-container" role="button" tabindex="0" aria-label="Capa do livro de Aghatta, toque para abrir">
+  <img id="capa" src="Aghatta.png" alt="Capa do Livro - Aghatta XV" />
+  <div id="texto-toque">Toque ou pressione Enter para abrir o livro</div>
+</div>
+
+<!-- Container do livro com iframe e botões, inicialmente oculto -->
+<div id="container" aria-live="polite" aria-atomic="true" aria-relevant="all">
   <button id="btn-prev" aria-label="Página Anterior">&#8592;</button>
-  <iframe id="iframe-pagina" src="galeria.html" aria-live="polite"></iframe>
+  <iframe id="iframe-pagina" src="" title="Livro Celestial da Aghatta XV"></iframe>
   <button id="btn-next" aria-label="Próxima Página">&#8594;</button>
 </div>
 
@@ -93,17 +145,16 @@
     'icones.html'
   ];
 
-  let indice = 0;
+  const capaContainer = document.getElementById('capa-container');
+  const container = document.getElementById('container');
   const iframe = document.getElementById('iframe-pagina');
   const btnPrev = document.getElementById('btn-prev');
   const btnNext = document.getElementById('btn-next');
   const audio = document.getElementById('audio-celestial');
 
-  audio.volume = 0.3;
-  audio.play().catch(() => {
-    // Navegadores modernos podem bloquear autoplay, ficará para tocar no toque do usuário
-  });
+  let indice = 0;
 
+  // Função para atualizar o iframe e botões
   function atualizarPagina() {
     iframe.classList.add('fade-out');
     setTimeout(() => {
@@ -113,6 +164,33 @@
     btnPrev.disabled = indice === 0;
     btnNext.disabled = indice === paginas.length - 1;
   }
+
+  function tocarAudio() {
+    if (audio.paused) {
+      audio.volume = 0.3;
+      audio.play().catch(() => {});
+    }
+  }
+
+  // Quando clicar na capa, escondemos ela e mostramos o livro
+  function abrirLivro() {
+    capaContainer.classList.add('hidden');
+    setTimeout(() => {
+      capaContainer.style.display = 'none';
+      container.style.display = 'flex';
+      indice = 0;
+      atualizarPagina();
+      tocarAudio();
+    }, 800);
+  }
+
+  // Eventos
+  capaContainer.addEventListener('click', abrirLivro);
+  capaContainer.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      abrirLivro();
+    }
+  });
 
   btnPrev.addEventListener('click', () => {
     if (indice > 0) {
@@ -130,15 +208,6 @@
     }
   });
 
-  function tocarAudio() {
-    if (audio.paused) {
-      audio.play().catch(() => {
-        // Se não for possível, deixamos com paciência e fé
-      });
-    }
-  }
-
-  atualizarPagina();
 </script>
 
 </body>

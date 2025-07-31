@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Galeria</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <title>Galeria - Livro Encantado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
   <style>
     * {
       box-sizing: border-box;
@@ -13,11 +13,12 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      background: transparent;
+      background: rgba(0, 0, 139, 0.15);
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: 'Great Vibes', cursive;
+      user-select: none;
     }
 
     .galeria-container {
@@ -25,84 +26,229 @@
       max-width: 700px;
       aspect-ratio: 2 / 3;
       position: relative;
-      border: 8px solid rgba(255, 215, 0, 0.4);
+      border: 8px solid rgba(255, 215, 0, 0.6);
       border-radius: 20px;
-      box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
-      background-color: rgba(0, 0, 139, 0.2); /* azul royal translúcido */
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+      background: linear-gradient(145deg, #001170 0%, #002080 100%);
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      perspective: 1500px;
     }
 
     .frase-topo {
       color: gold;
-      font-size: 2em;
-      font-weight: normal;
-      text-shadow: 0 0 10px gold;
+      font-size: 2.2em;
+      text-shadow: 0 0 12px gold;
       text-align: center;
       padding: 1em 0 0.5em;
-      background: rgba(0, 0, 139, 0.3);
-      width: 100%;
-      z-index: 2;
+      background: rgba(0, 0, 139, 0.4);
+      z-index: 10;
+      user-select: text;
     }
 
-    .slide-container {
-      flex: 1;
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-
-    .slide {
+    .pagina {
       position: absolute;
-      top: 0;
+      top: 50px;
       left: 0;
+      width: 100%;
+      height: calc(100% - 50px);
+      border-radius: 0 0 20px 20px;
+      box-shadow:
+        inset 0 0 20px rgba(255, 215, 0, 0.5),
+        0 8px 15px rgba(0,0,0,0.4);
+      background: white;
+      backface-visibility: hidden;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-origin: left center;
+      transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    .pagina img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-      border-radius: 0 0 12px 12px;
+      border-radius: 0 0 20px 20px;
+      user-select: none;
+      pointer-events: none;
     }
 
-    .slide.ativa {
-      opacity: 1;
-      z-index: 1;
+    .pagina.virada {
+      transform: rotateY(-180deg);
+      box-shadow: none;
+      cursor: default;
+    }
+
+    .pagina-atual {
+      z-index: 20;
+    }
+
+    .pagina-proxima {
+      z-index: 15;
+      transform: rotateY(0deg);
+    }
+
+    .botoes {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      z-index: 30;
+      user-select: none;
+    }
+
+    .botao {
+      background: gold;
+      color: #001170;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 20px;
+      margin: 0 15px;
+      font-family: 'Georgia', serif;
+      font-size: 1.2em;
+      cursor: pointer;
+      box-shadow: 0 0 12px gold;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    .botao:hover:not(:disabled) {
+      background-color: #ffd633;
+    }
+
+    .botao:disabled {
+      background: rgba(255, 215, 0, 0.5);
+      cursor: default;
+      box-shadow: none;
     }
   </style>
 </head>
 <body>
 
-  <div class="galeria-container">
+  <div class="galeria-container" aria-label="Galeria de fotos com efeito de livro">
     <div class="frase-topo">Um pouco da minha história</div>
-    <div class="slide-container" id="slide-container">
-      <img class="slide ativa" src="imagem1.jpeg" alt="Slide 1" />
-      <img class="slide" src="imagem2.jpeg" alt="Slide 2" />
-      <img class="slide" src="imagem3.jpeg" alt="Slide 3" />
-      <img class="slide" src="imagem4.jpeg" alt="Slide 4" />
-      <img class="slide" src="imagem5.jpeg" alt="Slide 5" />
-      <img class="slide" src="imagem6.jpeg" alt="Slide 6" />
-      <img class="slide" src="imagem7.jpeg" alt="Slide 7" />
-      <img class="slide" src="imagem8.jpeg" alt="Slide 8" />
-      <img class="slide" src="imagem9.jpeg" alt="Slide 9" />
-      <img class="slide" src="imagem10.jpeg" alt="Slide 10" />
-      <img class="slide" src="imagem11.jpeg" alt="Slide 11" />
-      <img class="slide" src="imagem12.jpeg" alt="Slide 12" />
-      <img class="slide" src="imagem13.jpeg" alt="Slide 13" />
-      <img class="slide" src="imagem14.jpeg" alt="Slide 14" />
-      <img class="slide" src="imagem15.jpeg" alt="Slide 15" />
+
+    <!-- Páginas do livro -->
+    <div class="pagina pagina-atual" id="pagina-atual" tabindex="0" aria-live="polite" aria-atomic="true"></div>
+    <div class="pagina pagina-proxima" id="pagina-proxima" tabindex="-1"></div>
+
+    <div class="botoes">
+      <button class="botao" id="voltar" disabled aria-label="Página anterior">⟵ Voltar</button>
+      <button class="botao" id="avancar" aria-label="Próxima página">Avançar ⟶</button>
     </div>
   </div>
 
-  <script>
-    const slides = document.querySelectorAll('.slide');
-    let index = 0;
+  <audio id="som-pergaminho" src="pergaminho.mp3" preload="auto"></audio>
 
-    setInterval(() => {
-      slides[index].classList.remove('ativa');
-      index = (index + 1) % slides.length;
-      slides[index].classList.add('ativa');
-    }, 4000);
+  <script>
+    // Lista de imagens
+    const imagens = [
+      "imagem1.jpeg", "imagem2.jpeg", "imagem3.jpeg", "imagem4.jpeg",
+      "imagem5.jpeg", "imagem6.jpeg", "imagem7.jpeg", "imagem8.jpeg",
+      "imagem9.jpeg", "imagem10.jpeg", "imagem11.jpeg", "imagem12.jpeg",
+      "imagem13.jpeg", "imagem14.jpeg", "imagem15.jpeg"
+    ];
+
+    let indiceAtual = 0;
+
+    const paginaAtual = document.getElementById('pagina-atual');
+    const paginaProxima = document.getElementById('pagina-proxima');
+    const botaoVoltar = document.getElementById('voltar');
+    const botaoAvancar = document.getElementById('avancar');
+    const somPergaminho = document.getElementById('som-pergaminho');
+
+    // Função para carregar a imagem na página atual
+    function carregarPaginaAtual() {
+      paginaAtual.style.transform = 'rotateY(0deg)';
+      paginaAtual.classList.remove('virada');
+      paginaAtual.innerHTML = `<img src="${imagens[indiceAtual]}" alt="Imagem ${indiceAtual + 1} da galeria" />`;
+    }
+
+    // Função para carregar a próxima página
+    function carregarPaginaProxima() {
+      const proximoIndice = indiceAtual + 1;
+      if(proximoIndice < imagens.length) {
+        paginaProxima.style.transform = 'rotateY(0deg)';
+        paginaProxima.classList.remove('virada');
+        paginaProxima.innerHTML = `<img src="${imagens[proximoIndice]}" alt="Imagem ${proximoIndice + 1} da galeria" />`;
+        paginaProxima.style.visibility = 'visible';
+      } else {
+        paginaProxima.style.visibility = 'hidden';
+      }
+    }
+
+    // Inicializa
+    carregarPaginaAtual();
+    carregarPaginaProxima();
+    atualizarBotoes();
+
+    // Função para atualizar estado dos botões
+    function atualizarBotoes() {
+      botaoVoltar.disabled = indiceAtual === 0;
+      botaoAvancar.disabled = indiceAtual >= imagens.length - 1;
+    }
+
+    // Função para tocar som de pergaminho
+    function tocarSom() {
+      somPergaminho.currentTime = 0;
+      somPergaminho.play().catch(() => {});
+    }
+
+    // Avançar página
+    botaoAvancar.addEventListener('click', () => {
+      if (indiceAtual < imagens.length -1) {
+        tocarSom();
+
+        paginaAtual.style.transition = 'transform 1s cubic-bezier(0.4, 0, 0.2, 1)';
+        paginaAtual.style.transformOrigin = 'left center';
+        paginaAtual.style.transform = 'rotateY(-180deg)';
+        paginaAtual.classList.add('virada');
+
+        setTimeout(() => {
+          indiceAtual++;
+          carregarPaginaAtual();
+          carregarPaginaProxima();
+          atualizarBotoes();
+        }, 1000);
+      }
+    });
+
+    // Voltar página
+    botaoVoltar.addEventListener('click', () => {
+      if (indiceAtual > 0) {
+        tocarSom();
+
+        paginaProxima.innerHTML = `<img src="${imagens[indiceAtual - 1]}" alt="Imagem ${indiceAtual} da galeria" />`;
+        paginaProxima.style.visibility = 'visible';
+        paginaProxima.style.transformOrigin = 'right center';
+        paginaProxima.style.transform = 'rotateY(180deg)';
+        paginaProxima.style.transition = 'transform 1s cubic-bezier(0.4, 0, 0.2, 1)';
+        setTimeout(() => {
+          paginaProxima.style.transform = 'rotateY(0deg)';
+        }, 20);
+
+        setTimeout(() => {
+          indiceAtual--;
+          carregarPaginaAtual();
+          carregarPaginaProxima();
+          atualizarBotoes();
+
+          paginaProxima.style.visibility = 'visible';
+          paginaProxima.style.transition = 'none';
+          paginaProxima.style.transform = 'rotateY(0deg)';
+        }, 1000);
+      }
+    });
+
+    // Navegação por teclado (setas)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') botaoAvancar.click();
+      if (e.key === 'ArrowLeft') botaoVoltar.click();
+    });
   </script>
 
 </body>

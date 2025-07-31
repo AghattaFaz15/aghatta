@@ -18,15 +18,13 @@
       flex-direction: column;
       align-items: center;
       justify-content: start;
-      position: relative;
-      overflow-x: hidden;
       min-height: 100vh;
+      overflow: hidden;
     }
 
     #container {
       width: 100vw;
       text-align: center;
-      position: relative;
       user-select: none;
       margin-bottom: 40px;
     }
@@ -36,12 +34,10 @@
       height: auto;
       max-height: 95vh;
       object-fit: contain;
-      position: relative;
       z-index: 1;
       pointer-events: none;
     }
 
-    /* Borboletas em container separado para evitar travar rolagem */
     #borboletas-container {
       position: fixed;
       top: 0;
@@ -51,7 +47,7 @@
       pointer-events: none;
       overflow: visible;
       z-index: 9999;
-      mix-blend-mode: screen; /* deixa mais suave */
+      mix-blend-mode: screen;
     }
 
     .borboleta {
@@ -76,6 +72,26 @@
       }
     }
 
+    .po-dourado {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, gold 60%, transparent 80%);
+      border-radius: 50%;
+      opacity: 1;
+      pointer-events: none;
+      filter: drop-shadow(0 0 3px gold);
+      animation: fadePo 1.5s forwards;
+      will-change: transform, opacity;
+    }
+
+    @keyframes fadePo {
+      to {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.5);
+      }
+    }
+
     #contador-box {
       position: relative;
       margin: 0 auto;
@@ -89,7 +105,7 @@
       max-width: 320px;
       text-align: center;
       font-size: 1.2rem;
-      margin-top: -60px; /* sobe o contador mais próximo da base da imagem */
+      margin-top: -60px;
       z-index: 5;
     }
 
@@ -156,19 +172,16 @@
         const b = document.createElement('div');
         b.className = 'borboleta';
 
-        // Posicionar borboletas surgindo da região da imagem (mais ou menos centro horizontal, topo próximo da imagem)
-        // Como o container é fixo e fullscreen, calculamos posição com base na janela
         const baseX = window.innerWidth / 2;
-        const baseY = window.innerHeight * 0.75; // mais para baixo, perto da imagem
+        const baseY = window.innerHeight * 0.65;
 
-        const offsetX = (Math.random() - 0.5) * 200; // ±100px horizontal
-        const offsetY = Math.random() * 40; // 0 a 40px vertical
+        const offsetX = (Math.random() - 0.5) * 200;
+        const offsetY = Math.random() * 40;
 
         b.style.left = `${baseX + offsetX}px`;
         b.style.top = `${baseY + offsetY}px`;
         b.style.opacity = 0;
 
-        // Animação de voo suave, subindo e oscilando levemente
         const duration = 12000 + Math.random() * 5000;
         const amplitudeX = 90 + Math.random() * 70;
         const angle = (Math.random() - 0.5) * 40;
@@ -185,11 +198,42 @@
             iterations: Infinity,
             delay: delay,
             easing: "ease-in-out",
-            direction: "normal",
           }
         );
 
         borboletasContainer.appendChild(b);
+
+        // ✨ Rastro de pó dourado ✨
+        let lastX = 0, lastY = 0;
+
+        function criarPoDourado(x, y) {
+          const po = document.createElement('div');
+          po.className = 'po-dourado';
+          po.style.left = `${x}px`;
+          po.style.top = `${y}px`;
+          borboletasContainer.appendChild(po);
+
+          setTimeout(() => {
+            po.remove();
+          }, 1500);
+        }
+
+        function acompanhar() {
+          const rect = b.getBoundingClientRect();
+          const x = rect.left + rect.width / 2;
+          const y = rect.top + rect.height / 2;
+
+          const dist = Math.hypot(x - lastX, y - lastY);
+          if (dist > 4) {
+            criarPoDourado(x, y);
+            lastX = x;
+            lastY = y;
+          }
+
+          requestAnimationFrame(acompanhar);
+        }
+
+        acompanhar();
       }
     }
 
@@ -199,14 +243,14 @@
       const agora = new Date();
       const diff = dataEvento - agora;
       if (diff <= 0) {
-        tempoEl.textContent = 'O evento já começou!';
+        tempoEl.textContent = '✨ O momento chegou! ✨';
         return;
       }
       const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
       const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const segundos = Math.floor((diff % (1000 * 60)) / 1000);
-      tempoEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+      tempoEl.textContent = `Faltam ${dias} dias, ${horas}h ${minutos}m ${segundos}s`;
     }
 
     window.addEventListener('DOMContentLoaded', () => {

@@ -23,8 +23,8 @@
   }
 
   iframe {
-    width: 95vw;     /* maior largura */
-    height: 95vh;    /* maior altura */
+    width: 95vw;
+    height: 95vh;
     border: none;
     border-radius: 15px;
     box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
@@ -41,12 +41,12 @@
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 215, 0, 0.4); /* mais transparente */
+    background: rgba(255, 215, 0, 0.4);
     border: none;
     color: #001170;
     font-weight: bold;
-    font-size: 1.2rem; /* menor */
-    padding: 0.6rem 1rem; /* menor */
+    font-size: 1.2rem;
+    padding: 0.6rem 1rem;
     border-radius: 10px;
     cursor: pointer;
     user-select: none;
@@ -89,6 +89,7 @@
     'galeria.html',
     'livro.html',
     'contador.html',
+    'local.html',
     'icones.html'
   ];
 
@@ -98,14 +99,12 @@
   const btnNext = document.getElementById('btn-next');
   const audio = document.getElementById('audio-celestial');
 
-  // Começa a tocar o áudio suave e eterno
-  audio.volume = 0.3; // volume discreto, como um sussurro do céu
+  audio.volume = 0.3;
   audio.play().catch(() => {
-    // Caso o navegador bloqueie autoplay, o usuário tocará os botões e o áudio poderá iniciar
+    // Navegadores modernos podem bloquear autoplay, ficará para tocar no toque do usuário
   });
 
   function atualizarPagina() {
-    // Fade out, troca, fade in
     iframe.classList.add('fade-out');
     setTimeout(() => {
       iframe.src = paginas[indice];
@@ -131,16 +130,14 @@
     }
   });
 
-  // Função para tentar garantir que o áudio toque se estiver pausado
   function tocarAudio() {
     if (audio.paused) {
       audio.play().catch(() => {
-        // Se não der, paciência e graça divina
+        // Se não for possível, deixamos com paciência e fé
       });
     }
   }
 
-  // Inicializa a página e botões
   atualizarPagina();
 </script>
 

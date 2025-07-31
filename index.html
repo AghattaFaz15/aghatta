@@ -10,7 +10,7 @@
   }
   html, body {
     height: 100%;
-    background: white;
+    background: black;
     color: gold;
     font-family: Georgia, serif;
     overflow: hidden;
@@ -32,34 +32,34 @@
 
   /* Tela 1 */
   #tela1 {
-    background: url('rolofechado.png') no-repeat center center;
-    background-size: contain;
+    background: url('rolofechado.png') no-repeat center/contain;
     cursor: pointer;
-    font-size: 2.2em;
+    font-size: 2.5em;
     text-shadow: 0 0 10px gold;
-    text-align: center;
+    color: gold;
   }
   #tela1 span {
     margin-top: 85vh;
     display: block;
+    text-align: center;
   }
 
   /* Tela 2 */
   #tela2 {
-    background: url('roloaberto.png') no-repeat center center;
-    background-size: contain;
+    background: url('roloaberto.png') no-repeat center/contain;
     padding: 2em 2em 3em;
     flex-direction: column;
     overflow: hidden;
+    color: gold;
   }
   #textoConvite {
     overflow-y: auto;
-    max-height: 60vh;
-    font-size: 1.3em;
-    line-height: 1.6em;
+    max-height: 65vh;
+    font-size: 1.2em;
+    line-height: 1.5em;
     padding-right: 1em;
     outline: none;
-    text-shadow: 0 0 5px black;
+    background: transparent;
   }
   #botaoAvancar {
     margin-top: 1em;
@@ -74,23 +74,25 @@
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.4s ease;
+    cursor: pointer;
   }
   #botaoAvancar.mostrar {
     opacity: 1;
     pointer-events: auto;
-    cursor: pointer;
   }
 
   /* Tela 3 */
   #tela3 {
-    background: url('imagem-capa.jpg') no-repeat center center;
-    background-size: cover;
+    background: url('imagem-capa.jpg') no-repeat center/cover;
     cursor: pointer;
-    font-size: 2.2em;
+    font-size: 2em;
     text-shadow: 0 0 15px gold;
     color: gold;
-    text-align: center;
-    padding: 2em;
+    flex-direction: column;
+  }
+  #tela3 span {
+    user-select: none;
+    margin-bottom: 2em;
   }
 
   /* Tela 4 */
@@ -103,6 +105,7 @@
     width: 100vw;
     height: 100vh;
     object-fit: cover;
+    background: black;
   }
 </style>
 </head>
@@ -110,7 +113,7 @@
 
   <!-- Tela 1 -->
   <div class="tela" id="tela1" role="button" tabindex="0" aria-label="Toque para abrir o pergaminho">
-    <span>🕊️ Os Céus batem à porta...<br><br>TOQUE PARA ABRIR</span>
+    <span>TOQUE PARA ABRIR...</span>
   </div>
 
   <!-- Tela 2 -->
@@ -133,7 +136,7 @@
 
   <!-- Tela 3 -->
   <div class="tela oculto" id="tela3" role="button" tabindex="0" aria-label="Clique para ouvir o som e continuar">
-    <span>🌟 Os Céus batem à porta...<br><br>TOQUE PARA OUVIR</span>
+    <span>Toque para ouvir o chamado</span>
     <audio id="audioToctoc" src="toctoc.mp3" loop preload="auto"></audio>
   </div>
 
@@ -155,14 +158,14 @@
   const audioToctoc = document.getElementById('audioToctoc');
   const videoMensagem = document.getElementById('videoMensagem');
 
+  // Função para trocar visibilidade das telas
   function mostrarTela(esconder, mostrar) {
     esconder.classList.add('oculto');
     mostrar.classList.remove('oculto');
   }
 
-  tela1.addEventListener('click', () => {
-    mostrarTela(tela1, tela2);
-  });
+  // Tela 1: ao clicar, abre o pergaminho (tela 2)
+  tela1.addEventListener('click', () => mostrarTela(tela1, tela2));
   tela1.addEventListener('keydown', e => {
     if(e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -170,16 +173,17 @@
     }
   });
 
+  // Tela 2: mostrar botão avançar só no fim do scroll do texto
   textoConvite.addEventListener('scroll', () => {
     if(textoConvite.scrollTop + textoConvite.clientHeight >= textoConvite.scrollHeight - 5) {
       botaoAvancar.classList.add('mostrar');
     }
   });
 
-  botaoAvancar.addEventListener('click', () => {
-    mostrarTela(tela2, tela3);
-  });
+  // Botão avançar para tela 3
+  botaoAvancar.addEventListener('click', () => mostrarTela(tela2, tela3));
 
+  // Tela 3: tocar áudio toctoc no clique; no segundo clique pausa áudio e inicia vídeo
   let tocouAudio = false;
   tela3.addEventListener('click', () => {
     if (!tocouAudio) {
@@ -205,6 +209,7 @@
     }
   });
 
+  // Tela 4: fim do vídeo redireciona para segunda-experiencia.html
   videoMensagem.addEventListener('ended', () => {
     window.location.href = 'segunda-experiencia.html';
   });

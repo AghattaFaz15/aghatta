@@ -1,191 +1,175 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Intimação Celestial</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convite Celestial</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body, html {
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
       width: 100%;
       height: 100%;
+      font-family: 'Segoe UI', cursive;
       overflow: hidden;
-      font-family: 'Segoe Script', cursive;
-      background-color: white;
     }
     .tela {
+      display: none;
       position: absolute;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+    .ativa { display: block; }
+    .centro {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
+      height: 100%;
+      background: white;
     }
-    .oculto {
-      display: none;
-    }
-    #tela1 img {
-      max-width: 60%;
-    }
-    #tela1 h1 {
-      font-size: 2em;
-      margin-bottom: 1em;
-      color: #333;
-    }
-    #tela1 p {
-      font-size: 1.2em;
-      margin-top: 0.5em;
-      color: #555;
+    #rolofechado {
+      max-width: 90vw;
+      height: auto;
     }
     button {
       padding: 10px 20px;
-      font-size: 1em;
-      border-radius: 12px;
-      background: gold;
-      border: none;
-      color: #000;
-      margin-top: 1em;
-      cursor: pointer;
-      box-shadow: 0 0 10px rgba(255,215,0,0.6);
-    }
-    .rolo-container {
-      background: url('roloaberto.png') no-repeat center center;
-      background-size: contain;
-      width: 90%;
-      height: 90%;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding-top: 8%;
-    }
-    #textoConvite {
-      overflow-y: scroll;
-      width: 60%;
-      height: 52%;
-      font-size: 1.1em;
-      padding-right: 10px;
-      color: #000;
-      background: none;
-      scrollbar-width: thin;
-      scrollbar-color: gold transparent;
-    }
-    #textoConvite::-webkit-scrollbar {
-      width: 6px;
-    }
-    #textoConvite::-webkit-scrollbar-thumb {
       background-color: gold;
-      border-radius: 3px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-top: 20px;
     }
-    #tela3 {
-      background: url('imagem-capa.jpg') no-repeat center center;
-      background-size: cover;
-      color: white;
+    .texto-rolo {
+      position: absolute;
+      top: 12%;
+      width: 70%;
+      height: 60%;
+      overflow-y: scroll;
+      padding-right: 10px;
+      font-size: 1.4rem;
+      line-height: 1.6;
+      color: black;
+      font-family: 'Brush Script MT', cursive;
+      border: none;
+      background: transparent;
+      scrollbar-width: thin;
+    }
+    #botao-avancar {
+      display: none;
+      position: absolute;
+      bottom: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: gold;
+      color: black;
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    #tela3-texto {
+      position: absolute;
+      top: 10%;
+      width: 100%;
       text-align: center;
-    }
-    #tela3 h2 {
-      font-size: 2em;
+      font-size: 2rem;
+      color: white;
+      text-shadow: 2px 2px 4px #000;
       animation: pulsar 2s infinite;
-      text-shadow: 0 0 10px black;
     }
     @keyframes pulsar {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
     }
     video {
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       object-fit: cover;
     }
   </style>
 </head>
 <body>
   <!-- TELA 1 -->
-  <div class="tela" id="tela1">
-    <h1>Mensagem de Deus para você</h1>
-    <img src="rolofechado.png" alt="Pergaminho Fechado" onclick="mostrarTela2()">
-    <p>Toque para abrir</p>
-  </div>
-
-  <!-- TELA 2 -->
-  <div class="tela oculto" id="tela2">
-    <div class="rolo-container">
-      <div id="texto-titulo" style="margin-bottom: 1vh; font-size: 1.6em;">Convite Celestial</div>
-      <div id="textoConvite">
-        <p><em>“Antes que eu nascesse… o Céu já sabia quem caminharia comigo.”</em></p>
-        <p>Em silêncio eterno, Deus já escrevia meu nome… e o seu, lado a lado.</p>
-        <p>Por isso, <strong>se este convite chegou até você</strong>, não pense que foi acaso — foi propósito.</p>
-        <p>Uma <strong>Intimação Celestial</strong> foi emitida... não como obrigação, mas como honra.</p>
-        <p>Porque você não é apenas mais um nome na lista… <strong>Você é memória viva.</strong></p>
-        <p>É história que pulsa. É parte da promessa.</p>
-        <p><strong>Você é um versículo no capítulo mais belo da minha jornada.</strong></p>
-        <p>📌 Sua presença não é apenas esperada… <strong>ela é celebrada.</strong></p>
-        <p>De todas as escolhas que o Céu poderia fazer… Ele escolheu você para estar aqui.</p>
-        <p><em>Então venha! Traga seu riso, sua lembrança, sua fé. Traga quem você é — porque é assim, exatamente assim, que você faz parte da minha história.</em></p>
-        <p><em>— Aghatta, filha sonhada e separada pelo Pai 👑✨</em></p>
-      </div>
-      <button id="botaoAvancar" onclick="irParaTela3()">Avançar</button>
+  <div class="tela ativa" id="tela1">
+    <div class="centro">
+      <h2 style="margin-bottom: 10px;">Mensagem de Deus para você</h2>
+      <img id="rolofechado" src="rolofechado.png" alt="Rolo Fechado">
+      <button onclick="abrirRolo()">TOQUE PARA ABRIR</button>
     </div>
   </div>
 
+  <!-- TELA 2 -->
+  <div class="tela" id="tela2">
+    <img src="roloaberto.png" style="width: 100vw; height: 100vh; object-fit: cover;">
+    <div class="texto-rolo" id="textoRolo" onscroll="verificarScroll()">
+      <h2 style="text-align: center; margin-bottom: 15px;">Convite Celestial</h2>
+      <p>
+        Antes que eu nascesse… o Céu já sabia quem caminharia comigo.<br><br>
+        E foi assim… Em silêncio eterno, Deus já escrevia meu nome… e o seu, lado a lado.<br><br>
+        Por isso, se este convite chegou até você, não pense que foi acaso — foi propósito.<br><br>
+        Uma Intimação Celestial foi emitida... não como obrigação, mas como honra.<br><br>
+        Porque você não é apenas mais um nome na lista… Você é memória viva. É história que pulsa.<br><br>
+        Você é um versículo no capítulo mais belo da minha jornada.<br><br>
+        Sua presença não é apenas esperada… ela é celebrada.<br><br>
+        De todas as escolhas que o Céu poderia fazer… Ele escolheu você para estar aqui.<br><br>
+        Então venha! Traga seu riso, sua lembrança, sua fé.<br>
+        Traga quem você é — porque é assim, exatamente assim, que você faz parte da minha história.<br><br>
+        — Aghatta, filha sonhada e separada pelo Pai 👑✨.
+      </p>
+    </div>
+    <button id="botao-avancar" onclick="mostrarTela3()">AVANÇAR</button>
+  </div>
+
   <!-- TELA 3 -->
-  <div class="tela oculto" id="tela3" onclick="iniciarVideo()">
-    <h2>Os céus batem à porta...<br>Toque para abrir...</h2>
+  <div class="tela" id="tela3">
+    <img src="imagem-capa.jpg" style="width: 100vw; height: 100vh; object-fit: cover;">
+    <h2 id="tela3-texto">Os céus batem à porta...<br>Toque para abrir...</h2>
     <audio id="audioToque" src="toctoc.mp3" autoplay loop></audio>
   </div>
 
   <!-- TELA 4 -->
-  <div class="tela oculto" id="tela4">
-    <video id="videoMensagem" autoplay muted playsinline>
-      <source src="mensagem.mp4" type="video/mp4" />
+  <div class="tela" id="tela4">
+    <video id="videoMensagem" autoplay muted>
+      <source src="mensagem.mp4" type="video/mp4">
     </video>
-    <audio id="audioPorta" src="porta.mp3" autoplay></audio>
+    <audio id="somPorta" src="porta.mp3" autoplay></audio>
   </div>
 
   <script>
-    const tela1 = document.getElementById('tela1');
-    const tela2 = document.getElementById('tela2');
-    const tela3 = document.getElementById('tela3');
-    const tela4 = document.getElementById('tela4');
-    const video = document.getElementById('videoMensagem');
-    const audioToque = document.getElementById('audioToque');
-    const audioPorta = document.getElementById('audioPorta');
-    const botaoAvancar = document.getElementById('botaoAvancar');
-    const textoConvite = document.getElementById('textoConvite');
+    const textoRolo = document.getElementById("textoRolo");
+    const botaoAvancar = document.getElementById("botao-avancar");
 
-    botaoAvancar.style.display = 'none';
+    function abrirRolo() {
+      document.getElementById("tela1").classList.remove("ativa");
+      document.getElementById("tela2").classList.add("ativa");
+    }
 
-    textoConvite.addEventListener('scroll', () => {
-      if (textoConvite.scrollTop + textoConvite.clientHeight >= textoConvite.scrollHeight - 10) {
+    function verificarScroll() {
+      const { scrollTop, scrollHeight, clientHeight } = textoRolo;
+      if (scrollTop + clientHeight >= scrollHeight - 10) {
         botaoAvancar.style.display = 'block';
       }
+    }
+
+    function mostrarTela3() {
+      document.getElementById("tela2").classList.remove("ativa");
+      document.getElementById("tela3").classList.add("ativa");
+    }
+
+    // Ao clicar na tela3, parar som e mostrar vídeo
+    document.getElementById("tela3").addEventListener("click", () => {
+      document.getElementById("audioToque").pause();
+      document.getElementById("tela3").classList.remove("ativa");
+      document.getElementById("tela4").classList.add("ativa");
+      document.getElementById("videoMensagem").muted = true;
+      document.getElementById("somPorta").play();
     });
 
-    function mostrarTela2() {
-      tela1.classList.add('oculto');
-      tela2.classList.remove('oculto');
-    }
-
-    function irParaTela3() {
-      tela2.classList.add('oculto');
-      tela3.classList.remove('oculto');
-    }
-
-    function iniciarVideo() {
-      audioToque.pause();
-      tela3.classList.add('oculto');
-      tela4.classList.remove('oculto');
-      video.play();
-      audioPorta.play();
-    }
-
-    video.addEventListener('ended', () => {
+    // Redireciona após o vídeo
+    document.getElementById("videoMensagem").addEventListener("ended", () => {
       window.location.href = "segunda-experiencia.html";
     });
   </script>

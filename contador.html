@@ -20,12 +20,15 @@
       justify-content: start;
       position: relative;
       overflow-x: hidden;
+      min-height: 100vh;
     }
 
     #container {
       width: 100vw;
       text-align: center;
       position: relative;
+      user-select: none;
+      margin-bottom: 40px;
     }
 
     .imagem-central {
@@ -33,9 +36,22 @@
       height: auto;
       max-height: 95vh;
       object-fit: contain;
-      user-select: none;
-      z-index: 1;
       position: relative;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Borboletas em container separado para evitar travar rolagem */
+    #borboletas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 9999;
+      mix-blend-mode: screen; /* deixa mais suave */
     }
 
     .borboleta {
@@ -47,8 +63,8 @@
       background-repeat: no-repeat;
       opacity: 0;
       animation: baterAsas 2s infinite ease-in-out;
-      pointer-events: none;
-      z-index: 10;
+      will-change: transform, opacity;
+      filter: drop-shadow(0 0 6px gold) brightness(1.4);
     }
 
     @keyframes baterAsas {
@@ -61,30 +77,30 @@
     }
 
     #contador-box {
-      margin-top: -10px;
-      background: rgba(65, 105, 225, 0.6);
+      position: relative;
+      margin: 0 auto;
+      background: rgba(65, 105, 225, 0.7);
       color: gold;
-      border-radius: 10px;
-      box-shadow: 0 0 8px 2px rgba(65, 105, 225, 0.5);
-      padding: 0.5em 1em;
+      border-radius: 12px;
+      box-shadow: 0 0 8px 2px rgba(65, 105, 225, 0.6);
+      padding: 0.8em 1.2em;
       font-weight: bold;
       user-select: none;
-      width: auto;
-      max-width: 90%;
+      max-width: 320px;
       text-align: center;
+      font-size: 1.2rem;
+      margin-top: -60px; /* sobe o contador mais próximo da base da imagem */
       z-index: 5;
-      position: relative;
     }
 
     #contador-titulo {
-      font-size: 1.2rem;
-      margin-bottom: 0.5em;
-      letter-spacing: 0.1em;
-      text-shadow: 0 0 5px gold;
+      font-size: 1.3rem;
+      margin-bottom: 0.6em;
+      letter-spacing: 0.15em;
+      text-shadow: 0 0 6px gold;
     }
 
     #contador {
-      font-size: 1.2rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -93,7 +109,7 @@
 
     .coracao {
       color: #ff4d6d;
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       animation: pulsar 1.5s ease-in-out infinite;
       user-select: none;
       filter: drop-shadow(0 0 6px #ff4d6d);
@@ -118,21 +134,21 @@
 <body>
   <div id="container">
     <img src="Aniversário_Aghatta_XV.png" alt="Aniversário Aghatta XV" class="imagem-central" />
-
-    <!-- Borboletas surgindo automaticamente -->
   </div>
 
-  <div id="contador-box">
+  <div id="contador-box" aria-live="polite" role="timer">
     <div id="contador-titulo">FALTA</div>
     <div id="contador">
-      <div class="coracao">❤️</div>
+      <div class="coracao" aria-hidden="true">❤️</div>
       <div id="tempo">Carregando...</div>
-      <div class="coracao direito">❤️</div>
+      <div class="coracao direito" aria-hidden="true">❤️</div>
     </div>
   </div>
 
+  <div id="borboletas-container"></div>
+
   <script>
-    const container = document.getElementById('container');
+    const borboletasContainer = document.getElementById('borboletas-container');
     const totalBorboletas = 15;
 
     function criarBorboletas() {
@@ -140,24 +156,29 @@
         const b = document.createElement('div');
         b.className = 'borboleta';
 
-        const offsetX = (Math.random() - 0.5) * window.innerWidth * 0.6;
-        const offsetY = Math.random() * 40;
+        // Posicionar borboletas surgindo da região da imagem (mais ou menos centro horizontal, topo próximo da imagem)
+        // Como o container é fixo e fullscreen, calculamos posição com base na janela
+        const baseX = window.innerWidth / 2;
+        const baseY = window.innerHeight * 0.75; // mais para baixo, perto da imagem
 
-        b.style.left = `${window.innerWidth / 2 + offsetX}px`;
-        b.style.top = `${container.offsetTop + offsetY}px`;
+        const offsetX = (Math.random() - 0.5) * 200; // ±100px horizontal
+        const offsetY = Math.random() * 40; // 0 a 40px vertical
 
-        container.appendChild(b);
+        b.style.left = `${baseX + offsetX}px`;
+        b.style.top = `${baseY + offsetY}px`;
+        b.style.opacity = 0;
 
-        const duration = 11000 + Math.random() * 5000;
-        const amplitudeX = 80 + Math.random() * 60;
+        // Animação de voo suave, subindo e oscilando levemente
+        const duration = 12000 + Math.random() * 5000;
+        const amplitudeX = 90 + Math.random() * 70;
         const angle = (Math.random() - 0.5) * 40;
         const delay = Math.random() * 3000;
 
         b.animate(
           [
             { transform: `translate(0, 0) rotate(0deg) scale(1)`, opacity: 0 },
-            { transform: `translate(${amplitudeX}px, -200px) rotate(${angle}deg) scale(1.1)`, opacity: 0.9 },
-            { transform: `translate(${-amplitudeX}px, -400px) rotate(${-angle}deg) scale(1)`, opacity: 0 },
+            { transform: `translate(${amplitudeX}px, -220px) rotate(${angle}deg) scale(1.1)`, opacity: 0.9 },
+            { transform: `translate(${-amplitudeX}px, -450px) rotate(${-angle}deg) scale(1)`, opacity: 0 },
           ],
           {
             duration: duration,
@@ -167,6 +188,8 @@
             direction: "normal",
           }
         );
+
+        borboletasContainer.appendChild(b);
       }
     }
 

@@ -12,7 +12,6 @@
 
     body {
       background: transparent;
-      overflow-x: hidden;
       font-family: 'Georgia', serif;
       color: #ffd700;
       display: flex;
@@ -20,6 +19,7 @@
       align-items: center;
       justify-content: start;
       position: relative;
+      overflow-x: hidden;
     }
 
     #container {
@@ -29,9 +29,10 @@
     }
 
     .imagem-central {
-      width: 100vw;
+      width: 100%;
       height: auto;
-      display: block;
+      max-height: 95vh;
+      object-fit: contain;
       user-select: none;
       z-index: 1;
       position: relative;
@@ -61,42 +62,43 @@
 
     #contador-box {
       margin-top: -10px;
-      background: rgba(65, 105, 225, 0.5);
+      background: rgba(65, 105, 225, 0.6);
       color: gold;
-      border-radius: 14px;
-      box-shadow: 0 0 8px 2px rgba(65, 105, 225, 0.7);
-      padding: 1em 1.2em;
+      border-radius: 10px;
+      box-shadow: 0 0 8px 2px rgba(65, 105, 225, 0.5);
+      padding: 0.5em 1em;
       font-weight: bold;
       user-select: none;
-      width: 80%;
-      max-width: 400px;
+      width: auto;
+      max-width: 90%;
       text-align: center;
       z-index: 5;
       position: relative;
     }
 
     #contador-titulo {
-      font-size: 1.5rem;
-      margin-bottom: 0.6em;
-      letter-spacing: 0.12em;
+      font-size: 1.2rem;
+      margin-bottom: 0.5em;
+      letter-spacing: 0.1em;
       text-shadow: 0 0 5px gold;
     }
 
     #contador {
-      font-size: 2rem;
+      font-size: 1.2rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1.2em;
+      gap: 0.8em;
     }
 
     .coracao {
       color: #ff4d6d;
-      font-size: 2.5rem;
+      font-size: 1.6rem;
       animation: pulsar 1.5s ease-in-out infinite;
       user-select: none;
       filter: drop-shadow(0 0 6px #ff4d6d);
     }
+
     .coracao.direito {
       animation-delay: 0.75s;
     }
@@ -117,7 +119,7 @@
   <div id="container">
     <img src="Aniversário_Aghatta_XV.png" alt="Aniversário Aghatta XV" class="imagem-central" />
 
-    <!-- Borboletas -->
+    <!-- Borboletas surgindo automaticamente -->
   </div>
 
   <div id="contador-box">
@@ -138,17 +140,17 @@
         const b = document.createElement('div');
         b.className = 'borboleta';
 
-        const offsetX = (Math.random() - 0.5) * window.innerWidth * 0.8;
-        const offsetY = (Math.random() * 60) + 20;
+        const offsetX = (Math.random() - 0.5) * window.innerWidth * 0.6;
+        const offsetY = Math.random() * 40;
 
         b.style.left = `${window.innerWidth / 2 + offsetX}px`;
         b.style.top = `${container.offsetTop + offsetY}px`;
 
         container.appendChild(b);
 
-        const duration = 12000 + Math.random() * 5000;
-        const amplitudeX = 100 + Math.random() * 80;
-        const angle = (Math.random() - 0.5) * 60;
+        const duration = 11000 + Math.random() * 5000;
+        const amplitudeX = 80 + Math.random() * 60;
+        const angle = (Math.random() - 0.5) * 40;
         const delay = Math.random() * 3000;
 
         b.animate(

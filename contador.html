@@ -18,20 +18,18 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      height: 100vh;
-      justify-content: center;
+      justify-content: start;
       position: relative;
     }
 
     #container {
-      position: relative;
-      width: 100%;
-      max-width: 800px;
+      width: 100vw;
       text-align: center;
+      position: relative;
     }
 
     .imagem-central {
-      width: 100%;
+      width: 100vw;
       height: auto;
       display: block;
       user-select: none;
@@ -39,7 +37,6 @@
       position: relative;
     }
 
-    /* Borboletas surgindo mais abaixo da imagem */
     .borboleta {
       position: absolute;
       width: 40px;
@@ -48,10 +45,9 @@
       background-size: contain;
       background-repeat: no-repeat;
       opacity: 0;
-      filter: drop-shadow(0 0 6px gold) brightness(1.4);
       animation: baterAsas 2s infinite ease-in-out;
       pointer-events: none;
-      z-index: 20;
+      z-index: 10;
     }
 
     @keyframes baterAsas {
@@ -64,7 +60,7 @@
     }
 
     #contador-box {
-      margin-top: 10px;
+      margin-top: -10px;
       background: rgba(65, 105, 225, 0.5);
       color: gold;
       border-radius: 14px;
@@ -75,7 +71,8 @@
       width: 80%;
       max-width: 400px;
       text-align: center;
-      z-index: 10;
+      z-index: 5;
+      position: relative;
     }
 
     #contador-titulo {
@@ -120,7 +117,7 @@
   <div id="container">
     <img src="Aniversário_Aghatta_XV.png" alt="Aniversário Aghatta XV" class="imagem-central" />
 
-    <!-- Borboletas surgindo abaixo da imagem -->
+    <!-- Borboletas -->
   </div>
 
   <div id="contador-box">
@@ -141,11 +138,11 @@
         const b = document.createElement('div');
         b.className = 'borboleta';
 
-        const offsetX = (Math.random() - 0.5) * 200;
-        const offsetY = (Math.random() - 0.3) * 30 + 30;
+        const offsetX = (Math.random() - 0.5) * window.innerWidth * 0.8;
+        const offsetY = (Math.random() * 60) + 20;
 
-        b.style.left = `${container.clientWidth / 2 + offsetX}px`;
-        b.style.top = `${container.clientHeight / 2 + offsetY}px`;
+        b.style.left = `${window.innerWidth / 2 + offsetX}px`;
+        b.style.top = `${container.offsetTop + offsetY}px`;
 
         container.appendChild(b);
 

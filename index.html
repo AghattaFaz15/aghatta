@@ -2,68 +2,47 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Intimação Celestial - Aghatta XV</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Intimação Celestial</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      height: 100%;
-      background: white;
-      font-family: Georgia, serif;
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background-color: white;
       overflow: hidden;
     }
 
     .tela {
-      position: fixed;
+      position: absolute;
       inset: 0;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      transition: opacity 0.6s ease;
+      justify-content: center;
+      flex-direction: column;
       background: white;
+      transition: opacity 1s ease;
     }
 
     .oculto {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    /* TELA 1 */
-    #tela1 {
-      background: white;
-      text-align: center;
-      justify-content: space-between;
-      padding: 3vh 0;
-    }
-
-    #tela1 h1 {
-      font-size: 2em;
-      color: #222;
-      margin-bottom: 2vh;
+      display: none;
     }
 
     #roloFechado {
-      width: 70vw;
+      width: 60vw;
       max-width: 400px;
-      height: auto;
       cursor: pointer;
-      margin: auto;
     }
 
-    #tela1 span {
+    .mensagem-topo {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .mensagem-baixo {
       font-size: 1.2em;
-      color: #444;
-      margin-top: 2vh;
-    }
-
-    /* TELA 2 */
-    #tela2 {
-      background: white;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transform: scale(1.15);
+      margin-top: 20px;
+      text-align: center;
     }
 
     .rolo-container {
@@ -75,99 +54,74 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: flex-end;
       position: relative;
-      padding-top: 10vh; /* ajustado para descer mais o texto */
-    }
-
-    #texto-titulo {
-      color: goldenrod;
-      font-size: 1.6em;
-      font-weight: bold;
-      text-align: center;
-      margin-bottom: 1vh;
+      padding-bottom: 9vh;
     }
 
     #textoConvite {
       color: black;
       font-family: 'Lucida Handwriting', cursive;
-      font-size: 1.2em;
+      font-size: 1.3em;
       line-height: 1.6em;
       width: 72%;
       height: 52%;
       overflow-y: auto;
       background: transparent;
+      border: none;
       scrollbar-width: thin;
-      scrollbar-color: #999 transparent;
-    }
-
-    #textoConvite::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    #textoConvite::-webkit-scrollbar-thumb {
-      background: #999;
-      border-radius: 3px;
+      scrollbar-color: #ccc transparent;
     }
 
     #botaoAvancar {
-      margin-top: 2vh;
-      background: gold;
-      color: black;
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 1.1em;
+      background: goldenrod;
+      color: white;
       border: none;
-      padding: 0.8em 1.5em;
-      border-radius: 15px;
-      font-weight: bold;
-      font-size: 1.2em;
-      box-shadow: 0 0 10px gold;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
+      border-radius: 10px;
       cursor: pointer;
+      display: none;
     }
 
     #botaoAvancar.mostrar {
-      opacity: 1;
-      pointer-events: auto;
+      display: block;
     }
 
-    /* TELA 3 */
     #tela3 {
-      background: url('imagem-capa.jpg') center/cover no-repeat;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #mensagemCapa {
+      background: url('imagem-capa.jpg') no-repeat center center;
+      background-size: cover;
       color: white;
-      font-size: 2em;
+      font-size: 1.8em;
       text-align: center;
+      cursor: pointer;
       padding: 20px;
-      font-family: 'Georgia', serif;
-      animation: pulse 2s infinite;
-      text-shadow: 2px 2px 10px black;
     }
 
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 0.9; }
-      50% { transform: scale(1.03); opacity: 1; }
-      100% { transform: scale(1); opacity: 0.9; }
+    .frase-tela3 {
+      animation: pulsar 2s infinite;
+      text-shadow: 0 0 10px #fff;
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 15px;
+      border-radius: 12px;
     }
 
-    /* TELA 4 */
+    @keyframes pulsar {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.85; }
+    }
+
     #tela4 {
       background: black;
-      justify-content: center;
-      align-items: center;
     }
 
     #videoMensagem {
       width: 100%;
       height: 100%;
+      object-fit: cover;
     }
 
-    /* TRANSIÇÃO FADE ESCURA */
     .fade-transicao {
       position: fixed;
       inset: 0;
@@ -175,7 +129,7 @@
       z-index: 999;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 1s ease;
+      transition: opacity 2.5s ease;
     }
 
     .fade-transicao.ativo {
@@ -187,48 +141,43 @@
 <body>
 
   <!-- TELA 1 -->
-  <div class="tela" id="tela1">
-    <h1>Mensagem de Deus para você</h1>
-    <img id="roloFechado" src="rolofechado.png" alt="Pergaminho Fechado" onclick="abrirPergaminho()" />
-    <span>Toque para abrir</span>
+  <div id="tela1" class="tela">
+    <div class="mensagem-topo">Mensagem de Deus para você</div>
+    <img src="rolofechado.png" alt="Rolo Fechado" id="roloFechado" onclick="abrirPergaminho()" />
+    <div class="mensagem-baixo">Toque para abrir</div>
   </div>
 
   <!-- TELA 2 -->
-  <div class="tela oculto" id="tela2">
+  <div id="tela2" class="tela oculto">
     <div class="rolo-container">
-      <div id="texto-titulo">Convite Celestial</div>
       <div id="textoConvite">
-        <p><em>“Antes que eu nascesse… o Céu já sabia quem caminharia comigo.”</em></p>
-        <p>Em silêncio eterno, Deus já escrevia meu nome… e o seu, lado a lado.</p>
-        <p>Por isso, <strong>se este convite chegou até você</strong>, não pense que foi acaso — foi propósito.</p>
-        <p>Uma <strong>Intimação Celestial</strong> foi emitida... não como obrigação, mas como honra.</p>
-        <p>Porque você não é apenas mais um nome na lista… <strong>Você é memória viva.</strong></p>
-        <p>É história que pulsa. É parte da promessa.</p>
-        <p><strong>Você é um versículo no capítulo mais belo da minha jornada.</strong></p>
-        <p>📌 Sua presença não é apenas esperada… <strong>ela é celebrada.</strong></p>
+        <p>“Antes que eu nascesse… o Céu já sabia quem caminharia comigo.”</p>
+        <p>E foi assim… Em silêncio eterno, Deus já escrevia meu nome… e o seu, lado a lado.</p>
+        <p>Por isso, se este convite chegou até você, não pense que foi acaso — foi propósito.</p>
+        <p>Uma Intimação Celestial foi emitida... não como obrigação, mas como honra.</p>
+        <p>Porque você não é apenas mais um nome na lista… Você é memória viva. É história que pulsa. É parte da promessa.</p>
+        <p>Você é um versículo no capítulo mais belo da minha jornada.</p>
+        <p>Sua presença não é apenas esperada… ela é celebrada.</p>
         <p>De todas as escolhas que o Céu poderia fazer… Ele escolheu você para estar aqui.</p>
-        <p><em>Então venha! Traga seu riso, sua lembrança, sua fé. Traga quem você é — porque é assim, exatamente assim, que você faz parte da minha história.</em></p>
-        <p><em>— Aghatta, filha sonhada e separada pelo Pai 👑✨</em></p>
+        <p>Então venha! Traga seu riso, sua lembrança, sua fé. Traga quem você é — porque é assim, exatamente assim, que você faz parte da minha história.</p>
+        <p>— Aghatta, filha sonhada e separada pelo Pai 👑✨</p>
       </div>
       <button id="botaoAvancar" onclick="irParaTela3()">Avançar</button>
     </div>
   </div>
 
   <!-- TELA 3 -->
-  <div class="tela oculto" id="tela3">
-    <div id="mensagemCapa">Os céus batem à porta...<br><small>Toque para abrir...</small></div>
+  <div id="tela3" class="tela oculto">
+    <div class="frase-tela3">Os céus batem à porta...<br>Toque para abrir...</div>
   </div>
 
   <!-- TELA 4 -->
-  <div class="tela oculto" id="tela4">
-    <video id="videoMensagem" autoplay playsinline>
-      <source src="mensagem.mp4" type="video/mp4" />
-      Seu navegador não suporta vídeo.
-    </video>
-    <audio id="somPorta" src="porta.mp3" autoplay></audio>
+  <div id="tela4" class="tela oculto">
+    <video id="videoMensagem" src="mensagem.mp4" autoplay muted></video>
+    <audio id="somPorta" src="porta.mp3"></audio>
   </div>
 
-  <!-- FADE DE TRANSIÇÃO -->
+  <!-- TRANSIÇÃO -->
   <div class="fade-transicao" id="fadeTransicao"></div>
 
   <script>
@@ -280,9 +229,9 @@
           fade.classList.add('ativo');
           setTimeout(() => {
             window.location.href = "segunda-experiencia.html";
-          }, 1200);
+          }, 3000);
         };
-      }, 1000);
+      }, 2500);
     }
   </script>
 </body>

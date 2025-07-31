@@ -1,214 +1,144 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Segunda Experiência - Livro Celestial Aghatta XV</title>
-<style>
-  html, body {
-    margin: 0; padding: 0; height: 100%; width: 100%;
-    background: url('Aghatta.png') no-repeat center center fixed;
-    background-size: cover;
-    font-family: 'Georgia', serif;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #001233cc; /* leve escurecimento para destaque da capa */
-  }
+  <meta charset="UTF-8" />
+  <title>Aghatta XV - Livro da Vida</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  #capa-container {
-    position: absolute;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background: rgba(0,0,50,0.6);
-    cursor: pointer;
-    transition: opacity 0.8s ease;
-    z-index: 10;
-  }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Georgia', serif;
+    }
 
-  #capa-container.hidden {
-    opacity: 0;
-    pointer-events: none;
-  }
+    /* CAPA */
+    #capa {
+      position: fixed;
+      z-index: 999;
+      width: 100%;
+      height: 100%;
+      background: url('Aghatta.png') no-repeat center center;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1s ease;
+    }
 
-  #capa {
-    max-width: 70vw;
-    max-height: 80vh;
-    border-radius: 20px;
-    box-shadow: 0 0 50px rgba(255, 215, 0, 0.9);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
+    #botao-abrir {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      font-size: 1.5rem;
+      background: rgba(255, 215, 0, 0.9);
+      color: #001170;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 0 20px gold;
+      font-weight: bold;
+      text-shadow: 1px 1px white;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
 
-  #capa:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 80px rgba(255, 215, 0, 1);
-  }
+    #botao-abrir:hover {
+      transform: scale(1.1);
+      background: gold;
+    }
 
-  #texto-toque {
-    margin-top: 20px;
-    color: #ffd700cc;
-    font-style: italic;
-    font-size: 1.3rem;
-    text-shadow: 0 0 10px #ffd700aa;
-    user-select: none;
-  }
+    /* CONTEÚDO LIVRO */
+    #conteudo-livro {
+      width: 100%;
+      height: 100%;
+      display: none;
+      background: url('Aghatta.png') no-repeat center center;
+      background-size: cover;
+    }
 
-  #container {
-    position: relative;
-    height: 100vh;
-    width: 100vw;
-    display: none; /* começa oculto, revelado após abrir capa */
-    justify-content: center;
-    align-items: center;
-  }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
 
-  iframe {
-    width: 95vw;
-    height: 95vh;
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
-    background: rgba(0,0,50,0.3);
-    transition: opacity 0.5s ease;
-    opacity: 1;
-  }
+    .botoes-navegacao {
+      position: absolute;
+      bottom: 2rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      z-index: 10;
+    }
 
-  iframe.fade-out {
-    opacity: 0;
-  }
+    .botoes-navegacao button {
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      background: rgba(0, 0, 80, 0.7);
+      color: white;
+      border: 2px solid gold;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      text-shadow: 1px 1px black;
+    }
 
-  button {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 215, 0, 0.4);
-    border: none;
-    color: #001170;
-    font-weight: bold;
-    font-size: 1.2rem;
-    padding: 0.6rem 1rem;
-    border-radius: 10px;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.3s ease;
-    z-index: 1000;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
-  }
-
-  button:hover {
-    background-color: rgba(255, 215, 0, 0.8);
-  }
-
-  button:disabled {
-    opacity: 0.3;
-    cursor: default;
-    box-shadow: none;
-  }
-
-  #btn-prev {
-    left: 10px;
-  }
-
-  #btn-next {
-    right: 10px;
-  }
-</style>
+    .botoes-navegacao button:hover {
+      background: rgba(0, 0, 100, 0.9);
+    }
+  </style>
 </head>
 <body>
 
-<!-- Capa do livro -->
-<div id="capa-container" role="button" tabindex="0" aria-label="Capa do livro de Aghatta, toque para abrir">
-  <img id="capa" src="Aghatta.png" alt="Capa do Livro - Aghatta XV" />
-  <div id="texto-toque">Toque ou pressione Enter para abrir o livro</div>
-</div>
+  <!-- CAPA -->
+  <div id="capa">
+    <button id="botao-abrir">📖 Abrir o Livro</button>
+  </div>
 
-<!-- Container do livro com iframe e botões, inicialmente oculto -->
-<div id="container" aria-live="polite" aria-atomic="true" aria-relevant="all">
-  <button id="btn-prev" aria-label="Página Anterior">&#8592;</button>
-  <iframe id="iframe-pagina" src="" title="Livro Celestial da Aghatta XV"></iframe>
-  <button id="btn-next" aria-label="Próxima Página">&#8594;</button>
-</div>
+  <!-- CONTEÚDO DO LIVRO -->
+  <div id="conteudo-livro">
+    <iframe id="iframe" src="galeria.html"></iframe>
 
-<audio id="audio-celestial" src="audio.mp3" loop></audio>
+    <div class="botoes-navegacao">
+      <button onclick="paginaAnterior()">Página Anterior</button>
+      <button onclick="proximaPagina()">Próxima Página</button>
+    </div>
+  </div>
 
-<script>
-  const paginas = [
-    'galeria.html',
-    'livro.html',
-    'contador.html',
-    'local.html',
-    'icones.html'
-  ];
+  <script>
+    const paginas = ['galeria.html', 'livro.html', 'contador.html', 'icones.html'];
+    let indice = 0;
 
-  const capaContainer = document.getElementById('capa-container');
-  const container = document.getElementById('container');
-  const iframe = document.getElementById('iframe-pagina');
-  const btnPrev = document.getElementById('btn-prev');
-  const btnNext = document.getElementById('btn-next');
-  const audio = document.getElementById('audio-celestial');
+    const iframe = document.getElementById('iframe');
 
-  let indice = 0;
-
-  // Função para atualizar o iframe e botões
-  function atualizarPagina() {
-    iframe.classList.add('fade-out');
-    setTimeout(() => {
+    function proximaPagina() {
+      indice = (indice + 1) % paginas.length;
       iframe.src = paginas[indice];
-      iframe.classList.remove('fade-out');
-    }, 500);
-    btnPrev.disabled = indice === 0;
-    btnNext.disabled = indice === paginas.length - 1;
-  }
-
-  function tocarAudio() {
-    if (audio.paused) {
-      audio.volume = 0.3;
-      audio.play().catch(() => {});
     }
-  }
 
-  // Quando clicar na capa, escondemos ela e mostramos o livro
-  function abrirLivro() {
-    capaContainer.classList.add('hidden');
-    setTimeout(() => {
-      capaContainer.style.display = 'none';
-      container.style.display = 'flex';
-      indice = 0;
-      atualizarPagina();
-      tocarAudio();
-    }, 800);
-  }
-
-  // Eventos
-  capaContainer.addEventListener('click', abrirLivro);
-  capaContainer.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      abrirLivro();
+    function paginaAnterior() {
+      indice = (indice - 1 + paginas.length) % paginas.length;
+      iframe.src = paginas[indice];
     }
-  });
 
-  btnPrev.addEventListener('click', () => {
-    if (indice > 0) {
-      indice--;
-      atualizarPagina();
-      tocarAudio();
-    }
-  });
-
-  btnNext.addEventListener('click', () => {
-    if (indice < paginas.length - 1) {
-      indice++;
-      atualizarPagina();
-      tocarAudio();
-    }
-  });
-
-</script>
+    // ABRIR LIVRO
+    const capa = document.getElementById('capa');
+    const conteudo = document.getElementById('conteudo-livro');
+    document.getElementById('botao-abrir').addEventListener('click', () => {
+      capa.style.opacity = 0;
+      setTimeout(() => {
+        capa.style.display = 'none';
+        conteudo.style.display = 'block';
+      }, 1000);
+    });
+  </script>
 
 </body>
 </html>

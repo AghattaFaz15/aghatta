@@ -1,106 +1,272 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Confirmação Celestial</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: radial-gradient(ellipse at center, #000030 0%, #000010 100%);
-      overflow: hidden;
-      font-family: 'Georgia', serif;
-      color: #fff8dc;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Confirmação Celestial</title>
+<style>
+  body {
+    margin: 0; padding: 0;
+    background: radial-gradient(ellipse at center, #000030 0%, #000010 100%);
+    font-family: 'Georgia', serif;
+    color: #fff8dc;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    user-select: none;
+    text-align: center;
+    position: relative;
+  }
 
-    h1 {
-      position: absolute;
-      top: 10px;
+  h1 {
+    font-style: italic;
+    font-weight: normal;
+    font-size: 1.3rem;
+    margin: 1rem 1rem 0.5rem 1rem;
+    color: #ffe;
+    text-shadow: 0 0 7px #ffd700;
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  form#form-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem 1.2rem;
+    border-radius: 14px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    display: flex;
+    gap: 0.8rem;
+    max-width: 600px;
+    width: 90vw;
+    margin: 0 auto 0.8rem auto;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  input[type="text"] {
+    flex-grow: 1;
+    padding: 0.6rem 1rem;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Georgia', serif;
+    color: #222;
+    outline-offset: 2px;
+    outline-color: gold;
+    transition: outline-color 0.3s ease;
+    min-width: 180px;
+    background-color: #fffde7;
+  }
+  input[type="text"]:focus {
+    outline-color: #ffd700;
+  }
+  input::placeholder {
+    color: #999;
+    font-style: italic;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: #fff8dc;
+    font-family: 'Georgia', serif;
+    cursor: pointer;
+    user-select: none;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: gold;
+  }
+
+  button, #addAcompanhante {
+    background: gold;
+    border: none;
+    padding: 0.6rem 1.4rem;
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    color: #222;
+    box-shadow: 0 0 8px #ffd700aa;
+    user-select: none;
+    min-width: 110px;
+    flex-shrink: 0;
+  }
+  button:hover, button:focus,
+  #addAcompanhante:hover, #addAcompanhante:focus {
+    background: #ffd700;
+    box-shadow: 0 0 16px #fff266;
+    outline: none;
+  }
+
+  #confirmados {
+    background: rgba(0,0,0,0.25);
+    max-height: 20vh;
+    overflow-y: auto;
+    width: 100%;
+    padding: 0.7rem 0.5rem;
+    box-shadow: inset 0 0 15px #ffd700aa;
+    color: #fff8dc;
+    text-shadow: 0 0 6px #ffd700bb;
+    font-size: 1rem;
+    user-select: text;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex-shrink: 0;
+  }
+
+  .confirmado-item {
+    padding: 0.2rem 0.5rem;
+    background: rgba(255, 215, 0, 0.15);
+    border-radius: 8px;
+    box-shadow: 0 0 6px #ffd70099;
+    display: inline-block;
+    text-align: left;
+  }
+
+  .acompanhantes-lista {
+    margin-left: 1rem;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #fff7b5;
+  }
+
+  /* Estrela com nome dentro, subindo */
+  .estrela {
+    position: fixed;
+    bottom: 80px; /* início da subida, acima do rodapé */
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: rgba(255, 215, 0, 0.9);
+    border-radius: 24px;
+    font-family: 'Georgia', serif;
+    color: #222;
+    font-weight: 700;
+    font-size: 1rem;
+    pointer-events: none;
+    animation: subir 6s linear forwards;
+    user-select: none;
+    box-shadow: 0 0 14px #ffd700dd;
+    white-space: nowrap;
+    z-index: 9999;
+    filter: drop-shadow(0 0 6px gold);
+  }
+
+  .estrela-icon {
+    width: 24px;
+    height: 24px;
+    background: url('estrela.png') no-repeat center center;
+    background-size: contain;
+    filter: drop-shadow(0 0 6px #ffd700cc);
+    flex-shrink: 0;
+  }
+
+  @keyframes subir {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+  }
+
+  /* Container para acompanhantes */
+  #acompanhaContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex-grow: 1;
+    min-width: 200px;
+    max-width: 300px;
+  }
+
+  #acompanhaContainer input {
+    background-color: #fffde7;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    border: none;
+    font-family: 'Georgia', serif;
+    color: #222;
+    font-size: 1rem;
+    outline-offset: 2px;
+    outline-color: gold;
+  }
+
+  #acompanhaContainer input:focus {
+    outline-color: #ffd700;
+  }
+
+  #addAcompanhante {
+    margin-top: 0.3rem;
+    align-self: flex-start;
+  }
+
+  /* Scrollbar estilizada */
+  #confirmados::-webkit-scrollbar {
+    width: 8px;
+  }
+  #confirmados::-webkit-scrollbar-thumb {
+    background: #ffd700aa;
+    border-radius: 10px;
+  }
+
+  @media (max-width: 480px) {
+    form#form-container {
+      flex-direction: column;
+      max-width: 90vw;
+    }
+    button, #addAcompanhante {
       width: 100%;
-      text-align: center;
-      font-size: 1rem;
-      font-weight: normal;
-      font-style: italic;
-      color: #ffe;
-      text-shadow: 0 0 5px #ffd700;
+      min-width: auto;
     }
-
-    #form-container {
-      position: absolute;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255, 255, 255, 0.1);
-      padding: 1rem;
-      border-radius: 12px;
-      display: flex;
-      gap: 0.5rem;
-      box-shadow: 0 0 10px rgba(255,255,255,0.2);
-    }
-
-    input {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
-    }
-
-    button {
-      background: gold;
-      border: none;
-      padding: 0.5rem 1rem;
-      font-weight: bold;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background: #ffd700;
-    }
-
-    .estrela {
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      background: url('estrela.png') no-repeat center center;
-      background-size: contain;
-      animation: subir 6s linear forwards;
-      cursor: move;
-    }
-
-    @keyframes subir {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-100vh); opacity: 0.7; }
-    }
-
-    #confirmados {
-      position: absolute;
-      top: 50px;
+    input[type="text"], #acompanhaContainer {
+      min-width: auto;
       width: 100%;
-      display: flex;
-      flex-wrap: wrap;
+    }
+    label {
       justify-content: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
     }
-
-    .nome-confirmado {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 0.3rem 0.6rem;
-      border-radius: 8px;
-      color: #ffd;
-      box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
   <h1>"Há nomes que brilham no céu do coração."</h1>
-  <div id="confirmados"></div>
-  <div id="form-container">
-    <input type="text" id="nome" placeholder="Digite seu nome" />
-    <button onclick="confirmarPresenca()">⭐ Confirmar</button>
+  <form id="form-container" aria-label="Confirmação de presença">
+    <input
+      type="text"
+      id="nome"
+      placeholder="Digite seu nome"
+      aria-required="true"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="words"
+      spellcheck="false"
+      required
+    />
+    <label for="acompanhaCheck">
+      <input type="checkbox" id="acompanhaCheck" />
+      Vou com acompanhante(s)
+    </label>
+    <div id="acompanhaContainer" hidden>
+      <!-- Inputs para acompanhantes vão aqui -->
+    </div>
+    <button type="submit" aria-label="Confirmar presença">⭐ Confirmar</button>
+  </form>
+
+  <div id="confirmados" aria-live="polite" aria-atomic="true" aria-relevant="additions" tabindex="0" role="region" aria-label="Lista de confirmações">
+    <!-- Lista de confirmados aparecerá aqui -->
   </div>
 
   <script type="module">
@@ -121,38 +287,139 @@
     const db = getDatabase(app);
     const estrelasRef = ref(db, "estrelas");
 
+    const form = document.getElementById('form-container');
+    const inputNome = document.getElementById('nome');
+    const acompanhaCheck = document.getElementById('acompanhaCheck');
+    const acompanhaContainer = document.getElementById('acompanhaContainer');
+    const confirmadosDiv = document.getElementById('confirmados');
+
+    // Controle dos inputs de acompanhantes
+    let acompanhantesInputs = [];
+
+    // Função para criar input acompanhante
+    function criarInputAcompanhante() {
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.placeholder = 'Nome do acompanhante';
+      input.autocomplete = 'off';
+      input.autocorrect = 'off';
+      input.autocapitalize = 'words';
+      input.spellcheck = false;
+      input.classList.add('acompanha-nome');
+      acompanhaContainer.appendChild(input);
+      acompanhantesInputs.push(input);
+      input.focus();
+    }
+
+    // Mostrar/esconder acompanhantes
+    acompanhaCheck.addEventListener('change', () => {
+      if (acompanhaCheck.checked) {
+        acompanhaContainer.hidden = false;
+        // Se ainda não tem input, cria um
+        if (acompanhantesInputs.length === 0) {
+          criarInputAcompanhante();
+        }
+        criarBotaoAdicionar();
+      } else {
+        acompanhaContainer.hidden = true;
+        acompanhantesInputs = [];
+        acompanhaContainer.innerHTML = '';
+        removerBotaoAdicionar();
+      }
+    });
+
+    // Botão para adicionar mais acompanhantes
+    function criarBotaoAdicionar() {
+      if (document.getElementById('addAcompanhante')) return;
+      const btn = document.createElement('button');
+      btn.id = 'addAcompanhante';
+      btn.type = 'button';
+      btn.textContent = '+ Acompanhar';
+      btn.title = 'Adicionar mais acompanhantes';
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        criarInputAcompanhante();
+      });
+      acompanhaContainer.appendChild(btn);
+    }
+    function removerBotaoAdicionar() {
+      const btn = document.getElementById('addAcompanhante');
+      if (btn) btn.remove();
+    }
+
+    // Mostrar nomes confirmados e estrelas
     onChildAdded(estrelasRef, (data) => {
-      const nome = data.val();
-      mostrarNome(nome);
-      criarEstrela();
+      const { nome, acompanhantes } = data.val();
+      mostrarConfirmacao(nome, acompanhantes || []);
+      criarEstrelas(nome, acompanhantes || []);
+    });
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      confirmarPresenca();
     });
 
     function confirmarPresenca() {
-      const input = document.getElementById("nome");
-      const nome = input.value.trim();
-      if (nome) {
-        push(estrelasRef, nome);
-        input.value = "";
-      }
+      const nome = inputNome.value.trim();
+      if (!nome) return alert("Por favor, digite seu nome.");
+
+      let acompanhantes = acompanhantesInputs
+        .map(input => input.value.trim())
+        .filter(n => n.length > 0);
+
+      push(estrelasRef, { nome, acompanhantes });
+
+      // Resetar form
+      inputNome.value = '';
+      acompanhaCheck.checked = false;
+      acompanhaContainer.hidden = true;
+      acompanhaContainer.innerHTML = '';
+      acompanhantesInputs = [];
+      inputNome.focus();
+      removerBotaoAdicionar();
     }
 
-    function mostrarNome(nome) {
+    function mostrarConfirmacao(nome, acompanhantes) {
       const div = document.createElement('div');
-      div.className = 'nome-confirmado';
-      div.textContent = nome;
-      document.getElementById('confirmados').appendChild(div);
+      div.className = 'confirmado-item';
+
+      let texto = nome;
+      if (acompanhantes.length > 0) {
+        texto += ': ';
+      }
+
+      div.textContent = texto;
+
+      if (acompanhantes.length > 0) {
+        const lista = document.createElement('div');
+        lista.className = 'acompanhantes-lista';
+        lista.textContent = acompanhantes.join(', ');
+        div.appendChild(lista);
+      }
+      confirmadosDiv.appendChild(div);
     }
 
-    function criarEstrela() {
+    function criarEstrelas(nome, acompanhantes) {
+      const textoBase = acompanhantes.length > 0
+        ? `${nome} +${acompanhantes.length}`
+        : nome;
+
       const estrela = document.createElement('div');
       estrela.className = 'estrela';
-      estrela.style.left = `${Math.random() * 95}vw`;
-      estrela.style.top = '90vh';
-      estrela.draggable = true;
-      estrela.addEventListener('dragstart', (e) => {
-        e.dataTransfer.setDragImage(new Image(), 0, 0);
-      });
+      estrela.style.left = `${Math.random() * 85}vw`;
+      estrela.style.bottom = '80px';
+
+      const icon = document.createElement('div');
+      icon.className = 'estrela-icon';
+
+      const texto = document.createElement('span');
+      texto.textContent = textoBase;
+
+      estrela.appendChild(icon);
+      estrela.appendChild(texto);
+
       document.body.appendChild(estrela);
+
       setTimeout(() => estrela.remove(), 6000);
     }
   </script>

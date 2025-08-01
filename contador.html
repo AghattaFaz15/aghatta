@@ -61,21 +61,22 @@
       transition: transform 12s ease;
       transform-origin: center center;
       animation: pulsarLento 12s infinite ease-in-out alternate;
-      margin-bottom: 50px; /* desceu mais */
+      margin-bottom: 50px;
+      transform: translateX(5%); /* Move a imagem para a direita */
     }
 
     @keyframes pulsarLento {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.22); } /* zoom maior */
+      0% { transform: scale(1.22) translateX(5%); }
+      100% { transform: scale(1.3) translateX(5%); }
     }
 
     #contador-box {
       position: absolute;
-      bottom: 1.5%; /* desceu mais */
+      bottom: 5%; /* Subiu um pouco */
       left: 50%;
       transform: translateX(-50%);
       width: auto;
-      padding: 10px 22px; /* diminuiu mais */
+      padding: 10px 22px;
       background-color: rgba(10, 10, 10, 0.6);
       border-radius: 18px;
       display: flex;
@@ -86,7 +87,7 @@
       z-index: 10;
       box-shadow: 0 0 12px gold;
       user-select: none;
-      font-size: 1rem; /* diminuiu mais o texto */
+      font-size: 1rem;
       white-space: nowrap;
     }
 
@@ -101,7 +102,7 @@
 
     .coracao {
       color: #ff4d6d;
-      font-size: 1.1rem; /* diminuiu corações */
+      font-size: 1.1rem;
       animation: pulsar 1.5s ease-in-out infinite;
       user-select: none;
       filter: drop-shadow(0 0 4px #ff4d6d);

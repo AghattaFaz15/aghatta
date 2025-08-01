@@ -21,9 +21,13 @@
       max-width: 800px;
       box-shadow: 0 0 20px gold;
     }
-    h1, h2 {
+    h1 {
       text-align: center;
       color: #ffd700;
+      text-shadow: 0 0 12px rgba(0, 191, 255, 0.6);
+    }
+    p {
+      text-align: center;
     }
     input, textarea, button {
       width: 100%;
@@ -34,8 +38,13 @@
       border: none;
     }
     textarea {
+      background: url('https://www.transparenttextures.com/patterns/lined-paper.png');
+      font-family: 'Great Vibes', cursive;
+      line-height: 1.8;
+      color: #222;
       resize: vertical;
       height: 100px;
+      border: 1px solid #ccc;
     }
     .mensagens {
       margin-top: 30px;
@@ -47,7 +56,32 @@
       border-radius: 10px;
       margin-bottom: 10px;
     }
+    .envelope {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      opacity: 0;
+      animation: subirEnvelope 15s ease-in-out forwards;
+      pointer-events: none;
+    }
+    @keyframes subirEnvelope {
+      0% {
+        bottom: 30px;
+        opacity: 0;
+      }
+      20% {
+        opacity: 1;
+      }
+      100% {
+        bottom: 90%;
+        opacity: 0;
+      }
+    }
   </style>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
@@ -56,13 +90,15 @@
 
   <div class="bloco">
     <h1>✨ Livro Celestial de Recados ✨</h1>
-    <p>Deixe aqui sua lembrança, oração ou mensagem para Aghatta. Sua palavra se tornará eterna como uma estrela no Céu.</p>
+    <p>Palavras que se tornam eternidade nas páginas do Céu. Deixe sua mensagem para Aghatta.</p>
     <input type="text" id="nome" placeholder="Seu nome" required />
     <textarea id="mensagem" placeholder="Escreva sua mensagem..."></textarea>
     <button onclick="enviarMensagem()">Confirmar Recado</button>
 
     <div class="mensagens" id="mensagens"></div>
   </div>
+
+  <img src="envelope.png" id="envelope" class="envelope" style="display: none;" />
 
   <script>
     const firebaseConfig = {
@@ -89,6 +125,12 @@
 
       document.getElementById('nome').value = '';
       document.getElementById('mensagem').value = '';
+
+      const envelope = document.getElementById('envelope');
+      envelope.style.display = 'block';
+      envelope.classList.remove('envelope');
+      void envelope.offsetWidth;
+      envelope.classList.add('envelope');
     }
 
     db.ref('mensagens').on('value', (snapshot) => {

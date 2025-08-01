@@ -60,62 +60,42 @@
       display: none;
       background: url('Aghatta.png') no-repeat center center;
       background-size: cover;
-      position: relative;
     }
 
     iframe {
       width: 100%;
       height: 100%;
       border: none;
-      transition: transform 0.8s ease, opacity 0.8s ease;
     }
 
-    iframe.page-flip {
-      transform: rotateY(180deg);
-      opacity: 0;
-    }
-
-    /* Botões nas laterais */
-    .navegador-lateral {
+    .botoes-navegacao {
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 60px;
-      height: 60px;
-      background: rgba(0, 0, 80, 0.5);
-      border: 2px solid gold;
-      border-radius: 50%;
-      color: white;
-      font-size: 2rem;
-      font-weight: bold;
-      cursor: pointer;
+      bottom: 2rem;
+      width: 100%;
       display: flex;
-      align-items: center;
       justify-content: center;
+      gap: 1rem;
       z-index: 10;
+    }
+
+    .botoes-navegacao button {
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      background: rgba(0, 0, 80, 0.7);
+      color: white;
+      border: 2px solid gold;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
       text-shadow: 1px 1px black;
     }
 
-    .navegador-lateral:hover {
+    .botoes-navegacao button:hover {
       background: rgba(0, 0, 100, 0.9);
-    }
-
-    #btn-anterior {
-      left: 1rem;
-    }
-
-    #btn-proximo {
-      right: 1rem;
     }
   </style>
 </head>
 <body>
-
-  <!-- ÁUDIO -->
-  <audio id="audioLivro" preload="auto">
-    <source src="audio1.mp3" type="audio/mpeg">
-    Seu navegador não suporta áudio.
-  </audio>
 
   <!-- CAPA -->
   <div id="capa">
@@ -124,51 +104,54 @@
 
   <!-- CONTEÚDO DO LIVRO -->
   <div id="conteudo-livro">
-    <iframe id="iframe" src="galeria.html"></iframe>
+    <iframe id="iframe" src="contador.html"></iframe>
 
-    <!-- Botões Laterais -->
-    <div class="navegador-lateral" id="btn-anterior" onclick="paginaAnterior()">&#8592;</div>
-    <div class="navegador-lateral" id="btn-proximo" onclick="proximaPagina()">&#8594;</div>
+    <div class="botoes-navegacao">
+      <button onclick="paginaAnterior()">Página Anterior</button>
+      <button onclick="proximaPagina()">Próxima Página</button>
+    </div>
   </div>
 
+  <!-- 🎵 ÁUDIO -->
+  <audio id="audioLivro" src="audio.mp3" preload="auto" loop></audio>
+
   <script>
-    const paginas = ['galeria.html', 'livro.html', 'contador.html', 'icones.html'];
+    const paginas = [
+      'contador.html',
+      'galeria.html',
+      'icones.html',
+      'livro.html',
+      'local.html'
+    ];
     let indice = 0;
 
     const iframe = document.getElementById('iframe');
-    const capa = document.getElementById('capa');
-    const conteudo = document.getElementById('conteudo-livro');
-    const audio = document.getElementById('audioLivro');
-
-    // Função para mudar de página com efeito
-    function trocarPagina(novoIndice) {
-      iframe.classList.add('page-flip');
-      setTimeout(() => {
-        indice = (novoIndice + paginas.length) % paginas.length;
-        iframe.src = paginas[indice];
-        iframe.classList.remove('page-flip');
-      }, 800);
-    }
+    const audioLivro = document.getElementById('audioLivro');
 
     function proximaPagina() {
-      trocarPagina(indice + 1);
+      indice = (indice + 1) % paginas.length;
+      iframe.src = paginas[indice];
     }
 
     function paginaAnterior() {
-      trocarPagina(indice - 1);
+      indice = (indice - 1 + paginas.length) % paginas.length;
+      iframe.src = paginas[indice];
     }
 
-    // Ao clicar em "Abrir o Livro"
+    // ABRIR LIVRO + TOCAR ÁUDIO
+    const capa = document.getElementById('capa');
+    const conteudo = document.getElementById('conteudo-livro');
     document.getElementById('botao-abrir').addEventListener('click', () => {
-      // Toca o áudio
-      audio.play().catch(e => console.log('Falha ao iniciar áudio:', e));
-
-      // Esconde capa e mostra conteúdo
       capa.style.opacity = 0;
       setTimeout(() => {
         capa.style.display = 'none';
         conteudo.style.display = 'block';
       }, 1000);
+
+      // TOCAR ÁUDIO
+      audioLivro.play().catch(err => {
+        console.warn("⚠️ O áudio não pôde ser iniciado automaticamente:", err);
+      });
     });
   </script>
 

@@ -2,257 +2,121 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Galeria - Livro Leve</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+  <title>Galeria - Aghatta XV</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
-      height: 100%;
-      background: linear-gradient(to bottom, #001170, #000033);
-      font-family: 'Great Vibes', cursive;
+      background: url('aghatta.png') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Georgia', serif;
+      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: gold;
-      overflow: hidden;
-      user-select: none;
+      overflow-x: hidden;
+      padding: 5vh 0;
     }
-    .frase-topo {
-      font-size: 2.2em;
-      text-shadow: 0 0 12px gold;
-      text-align: center;
-      margin-bottom: 1.5rem;
-      padding: 0 1rem;
-      user-select: text;
-      max-width: 90vw;
-      font-weight: 600;
-    }
+
     .galeria-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8vw;
       width: 90vw;
-      max-width: 700px;
-      aspect-ratio: 2 / 3;
       position: relative;
-      border: 6px solid rgba(255, 215, 0, 0.6);
-      border-radius: 18px;
-      box-shadow:
-        0 0 25px rgba(255, 215, 0, 0.5),
-        inset 0 0 15px rgba(255, 215, 0, 0.3);
-      background: white;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      perspective: 1200px;
-      margin-bottom: 100px;
     }
-    .pagina {
-      width: 90%;
-      height: 95%;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+
+    .coroa {
+      width: 70px;
+      margin-bottom: -16px;
+      filter: drop-shadow(0 0 6px gold);
+    }
+
+    .seta {
+      width: 50px;
+      margin-top: 6px;
       cursor: pointer;
-      backface-visibility: hidden;
-      border-radius: 18px;
-      box-shadow:
-        inset 0 0 25px rgba(255, 215, 0, 0.5),
-        0 6px 10px rgba(0, 0, 50, 0.3);
-      user-select: none;
-      transform-style: preserve-3d;
-      will-change: opacity, transform;
-      overflow: visible;
-      transition: opacity 1s ease;
+      transition: transform 0.3s ease;
     }
-    .pagina img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      border-radius: 16px;
-      pointer-events: none;
-      user-select: none;
-      user-drag: none;
-      -webkit-user-drag: none;
-      filter: drop-shadow(0 0 8px rgba(218, 165, 32, 0.6));
-      transition: filter 0.4s ease;
+
+    .seta:hover {
+      transform: scale(1.1);
+      filter: brightness(1.3);
     }
-    .pagina img:hover {
-      filter: drop-shadow(0 0 20px rgba(255, 223, 77, 0.9));
+
+    .imagem-galeria {
+      width: 70vw;
+      max-width: 400px;
+      height: auto;
+      border-radius: 14px;
+      box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+      transition: opacity 1s ease-in-out;
     }
-    .botoes {
-      margin-top: 0;
-      display: flex;
-      gap: 120px;
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-40%);
-      z-index: 20;
-      user-select: none;
-    }
-    .botao-coroa-container {
-      position: relative;
-      width: 220px;
-      height: 220px;
-      cursor: pointer;
-      user-select: none;
-      perspective: 600px;
-      margin-bottom: 0;
+
+    .lado {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
     }
-    .botao-coroa {
-      width: 100%;
-      height: 100%;
-      filter: drop-shadow(0 0 16px gold);
-      transition: transform 0.3s ease, filter 0.3s ease;
-      user-select: none;
-      transform-style: preserve-3d;
-      backface-visibility: hidden;
-    }
-    .botao-coroa:hover {
-      transform: scale(1.3);
-      filter: drop-shadow(0 0 35px #ffd700);
-    }
-    .seta-sobreposta {
-      font-size: 3em;
-      color: rgba(0, 123, 255, 0.9);
-      pointer-events: none;
-      user-select: none;
-      text-shadow: 0 0 10px white;
-      font-weight: 700;
-      margin-top: 5px;
-      transform: none;
-    }
-    .botao-coroa[disabled] {
-      opacity: 0.4;
-      pointer-events: none;
+
+    @media (min-width: 768px) {
+      .coroa {
+        width: 90px;
+      }
+
+      .seta {
+        width: 60px;
+      }
+
+      .imagem-galeria {
+        width: 60vw;
+        max-width: 600px;
+      }
+
+      .galeria-container {
+        gap: 60px;
+      }
     }
   </style>
 </head>
 <body>
-
-  <div class="frase-topo" aria-live="polite" role="heading" aria-level="1">
-    Imagens que contam a misericórdia que me persegue e a Mão que me guia
-  </div>
-
-  <div class="galeria-container" aria-label="Galeria de fotos leve">
-    <div class="pagina" id="pagina-atual" tabindex="0" aria-live="polite" aria-atomic="true" aria-describedby="descricao-imagem" role="img">
-      <!-- imagem aqui -->
-    </div>
-  </div>
-
-  <div class="botoes" role="group" aria-label="Navegação da galeria">
-    <div id="voltar" class="botao-coroa-container" tabindex="0" role="button" aria-label="Página anterior">
-      <img src="coroa.png" class="botao-coroa" alt="Coroa anterior" />
-      <div class="seta-sobreposta">←</div>
+  <div class="galeria-container">
+    <div class="lado">
+      <img src="coroa.png" class="coroa" alt="Coroa esquerda" />
+      <img src="esquerda.png" class="seta" alt="Anterior" onclick="voltarImagem()" />
     </div>
 
-    <div id="avancar" class="botao-coroa-container" tabindex="0" role="button" aria-label="Próxima página">
-      <img src="coroa.png" class="botao-coroa" alt="Coroa próxima" />
-      <div class="seta-sobreposta">→</div>
+    <img src="1.jpg" id="imagemGaleria" class="imagem-galeria" alt="Imagem da galeria" />
+
+    <div class="lado">
+      <img src="coroa.png" class="coroa" alt="Coroa direita" />
+      <img src="direita.png" class="seta" alt="Próxima" onclick="proximaImagem()" />
     </div>
   </div>
-
-  <audio id="som-pergaminho" src="pergaminho.mp3" preload="auto"></audio>
 
   <script>
-    const imagens = [
-      "imagem1.jpeg", "imagem2.jpeg", "imagem3.jpeg", "imagem4.jpeg",
-      "imagem5.jpeg", "imagem6.jpeg", "imagem7.jpeg", "imagem8.jpeg",
-      "imagem9.jpeg", "imagem10.jpeg", "imagem11.jpeg", "imagem12.jpeg",
-      "imagem13.jpeg", "imagem14.jpeg", "imagem15.jpeg"
-    ];
+    const imagens = ["1.jpg", "2.jpg", "3.jpg", "4.jpg"];
+    let index = 0;
+    const imagemGaleria = document.getElementById("imagemGaleria");
 
-    let indiceAtual = 0;
-    const paginaAtual = document.getElementById('pagina-atual');
-    const botaoAvancar = document.getElementById('avancar');
-    const botaoVoltar = document.getElementById('voltar');
-    const somPergaminho = document.getElementById('som-pergaminho');
-
-    function animarTrocaPagina(novoIndice, sentido) {
-      // sentido: 'direita' para voltar, 'esquerda' para avançar
-      paginaAtual.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
-      paginaAtual.style.opacity = 0;
-
-      if (sentido === 'esquerda') {
-        paginaAtual.style.transform = 'rotateY(-90deg)';
-      } else {
-        paginaAtual.style.transform = 'rotateY(90deg)';
-      }
-
+    function atualizarImagem() {
+      imagemGaleria.style.opacity = 0;
       setTimeout(() => {
-        indiceAtual = novoIndice;
-        paginaAtual.innerHTML = `<img src="${imagens[indiceAtual]}" alt="Imagem ${indiceAtual + 1} da galeria" />`;
-        // Inicia do lado oposto para virar na direção contrária
-        if (sentido === 'esquerda') {
-          paginaAtual.style.transform = 'rotateY(90deg)';
-        } else {
-          paginaAtual.style.transform = 'rotateY(-90deg)';
-        }
-        paginaAtual.style.opacity = 0;
-
-        setTimeout(() => {
-          paginaAtual.style.transition = 'opacity 1s ease, transform 1s ease';
-          paginaAtual.style.transform = 'rotateY(0deg)';
-          paginaAtual.style.opacity = 1;
-        }, 50);
-
-        atualizarBotoes();
-      }, 700);
+        imagemGaleria.src = imagens[index];
+        imagemGaleria.style.opacity = 1;
+      }, 300);
     }
 
-    function tocarSom() {
-      somPergaminho.currentTime = 0;
-      somPergaminho.play().catch(() => {});
+    function proximaImagem() {
+      index = (index + 1) % imagens.length;
+      atualizarImagem();
     }
 
-    function atualizarBotoes() {
-      botaoVoltar.style.opacity = (indiceAtual === 0) ? 0.4 : 1;
-      botaoAvancar.style.opacity = (indiceAtual === imagens.length - 1) ? 0.4 : 1;
-      botaoVoltar.style.pointerEvents = (indiceAtual === 0) ? 'none' : 'auto';
-      botaoAvancar.style.pointerEvents = (indiceAtual === imagens.length - 1) ? 'none' : 'auto';
+    function voltarImagem() {
+      index = (index - 1 + imagens.length) % imagens.length;
+      atualizarImagem();
     }
-
-    botaoAvancar.addEventListener('click', () => {
-      if (indiceAtual < imagens.length - 1) {
-        tocarSom();
-        animarTrocaPagina(indiceAtual + 1, 'esquerda');
-      }
-    });
-
-    botaoVoltar.addEventListener('click', () => {
-      if (indiceAtual > 0) {
-        tocarSom();
-        animarTrocaPagina(indiceAtual - 1, 'direita');
-      }
-    });
-
-    // Inicializa com a primeira imagem
-    paginaAtual.innerHTML = `<img src="${imagens[indiceAtual]}" alt="Imagem ${indiceAtual + 1} da galeria" />`;
-    atualizarBotoes();
-
-    // Acessibilidade: navegação por teclado
-    botaoAvancar.addEventListener('keydown', e => {
-      if(e.key === 'Enter' || e.key === ' '){
-        e.preventDefault();
-        botaoAvancar.click();
-      }
-    });
-    botaoVoltar.addEventListener('keydown', e => {
-      if(e.key === 'Enter' || e.key === ' '){
-        e.preventDefault();
-        botaoVoltar.click();
-      }
-    });
   </script>
-
 </body>
 </html>

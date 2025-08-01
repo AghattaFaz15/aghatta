@@ -1,3 +1,5 @@
+<!-- ALTERAÇÕES: contador subido + imagem movida bastante para a esquerda -->
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -62,17 +64,17 @@
       transform-origin: center center;
       animation: pulsarLento 12s infinite ease-in-out alternate;
       margin-bottom: 50px;
-      transform: translateX(5%); /* Move a imagem para a direita */
+      transform: translateX(-20%); /* imagem puxada bastante para a esquerda */
     }
 
     @keyframes pulsarLento {
-      0% { transform: scale(1.22) translateX(5%); }
-      100% { transform: scale(1.3) translateX(5%); }
+      0% { transform: scale(1.22) translateX(-20%); }
+      100% { transform: scale(1.3) translateX(-20%); }
     }
 
     #contador-box {
       position: absolute;
-      bottom: 5%; /* Subiu um pouco */
+      bottom: 12%; /* subiu mais o contador */
       left: 50%;
       transform: translateX(-50%);
       width: auto;
@@ -113,14 +115,8 @@
     }
 
     @keyframes pulsar {
-      0%, 100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-      50% {
-        transform: scale(1.3);
-        opacity: 0.7;
-      }
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.7; }
     }
 
     .fim-evento {
@@ -149,20 +145,10 @@
     .borboleta:nth-child(3) { top: 76%; left: 48%; animation-delay: 2s; }
 
     @keyframes voar {
-      0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      50% {
-        transform: translate(-50px, -150px) scale(1.2);
-      }
-      100% {
-        transform: translate(60px, -300px) scale(1);
-        opacity: 0;
-      }
+      0% { transform: translate(0, 0) scale(1); opacity: 0; }
+      10% { opacity: 1; }
+      50% { transform: translate(-50px, -150px) scale(1.2); }
+      100% { transform: translate(60px, -300px) scale(1); opacity: 0; }
     }
   </style>
 </head>

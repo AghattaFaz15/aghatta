@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Galeria Aghatta - Luz e Misericórdia</title>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet" />
 <style>
   * {
     margin: 0; padding: 0; box-sizing: border-box;
@@ -63,53 +63,6 @@
     user-select: none;
   }
 
-  .botoes {
-    width: 90vw;
-    max-width: 700px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin: 0 auto 20px;
-  }
-
-  .botao-coroa {
-    width: 160px;
-    cursor: pointer;
-    filter: drop-shadow(0 0 20px gold);
-    animation: pulsar 2s ease-in-out infinite;
-    transition: transform 0.3s ease;
-    position: relative;
-    margin-top: -100px; /* subi mais ainda para base da galeria */
-  }
-
-  .botao-coroa:hover {
-    transform: scale(1.2);
-    filter: drop-shadow(0 0 40px #ffd700);
-  }
-
-  .seta-baixo {
-    width: 160px;
-    text-align: center;
-    color: gold;
-    font-weight: 900;
-    font-size: 3.2rem;
-    margin-top: 12px;
-    user-select: none;
-    text-shadow:
-      0 0 8px gold,
-      0 0 16px #fffacd,
-      0 0 24px #ffd700;
-    position: relative;
-    top: -90px; /* sobe mais as setas junto coroas */
-  }
-
-  .seta-esquerda::before {
-    content: '⯇';
-  }
-  .seta-direita::before {
-    content: '⯈';
-  }
-
   .contador {
     font-size: 1.3rem;
     color: gold;
@@ -117,21 +70,50 @@
     margin-bottom: 10px;
   }
 
+  .botoes {
+    width: 90vw;
+    max-width: 700px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: -160px auto 20px;
+  }
+
+  .botao-coroa {
+    width: 240px;
+    cursor: pointer;
+    filter: drop-shadow(0 0 15px gold);
+    animation: pulsar 2s ease-in-out infinite;
+    transition: transform 0.3s ease;
+    position: relative;
+  }
+
+  .botao-coroa:hover {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 30px #ffd700);
+  }
+
+  .texto-botao {
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 1.7rem;
+    color: royalblue;
+    user-select: none;
+    text-shadow: 0 0 6px #87cefa, 0 0 12px #1e90ff;
+    pointer-events: none;
+  }
+
   @keyframes pulsar {
-    0%, 100% { filter: drop-shadow(0 0 20px gold); }
-    50% { filter: drop-shadow(0 0 60px #fffacd); }
+    0%, 100% { filter: drop-shadow(0 0 15px gold); }
+    50% { filter: drop-shadow(0 0 40px #fffacd); }
   }
 
   @media (max-width: 480px) {
     .botao-coroa {
-      width: 120px;
-      margin-top: -75px;
-    }
-    .seta-baixo {
-      width: 120px;
-      font-size: 2.4rem;
-      top: -70px;
-      margin-top: 10px;
+      width: 180px;
     }
     .frase-topo {
       font-size: 1.7rem;
@@ -153,13 +135,13 @@
   <div class="contador" id="contador">Imagem 1 de 15</div>
 
   <div class="botoes" role="group" aria-label="Navegação da galeria">
-    <div>
+    <div class="botao-wrapper">
       <img src="coroa.png" alt="Botão anterior" class="botao-coroa" id="btn-voltar" tabindex="0" role="button" aria-label="Imagem anterior" />
-      <div class="seta-baixo seta-esquerda" aria-hidden="true"></div>
+      <div class="texto-botao">Voltar</div>
     </div>
-    <div>
+    <div class="botao-wrapper">
       <img src="coroa.png" alt="Botão próximo" class="botao-coroa" id="btn-avancar" tabindex="0" role="button" aria-label="Próxima imagem" />
-      <div class="seta-baixo seta-direita" aria-hidden="true"></div>
+      <div class="texto-botao">Passar</div>
     </div>
   </div>
 
@@ -206,7 +188,6 @@
         btnAvancar.click();
       }
     });
-
   </script>
 </body>
 </html>

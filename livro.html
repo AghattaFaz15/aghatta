@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Segunda Experiência - Aghatta XV</title>
+  <title>Livro de Recados - Aghatta XV</title>
   <style>
     body {
       margin: 0;
@@ -20,31 +20,57 @@
       border-radius: 20px;
       max-width: 800px;
       box-shadow: 0 0 20px gold;
+      background-image: url('roloaberto.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
     }
-    h1 {
+    h1, h2 {
       text-align: center;
       color: #ffd700;
-      text-shadow: 0 0 12px rgba(0, 191, 255, 0.6);
+      text-shadow: 0 0 15px rgba(0, 128, 255, 0.6);
     }
-    p {
-      text-align: center;
-    }
-    input, textarea, button {
+    input {
       width: 100%;
       margin-top: 10px;
       padding: 10px;
-      font-size: 1em;
+      font-size: 1.1em;
       border-radius: 10px;
       border: none;
+      font-family: 'Georgia', serif;
     }
     textarea {
-      background: url('https://www.transparenttextures.com/patterns/lined-paper.png');
-      font-family: 'Great Vibes', cursive;
-      line-height: 1.8;
-      color: #222;
+      width: 100%;
+      margin-top: 10px;
+      padding: 15px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      border: 2px solid gold;
+      background: url('folha.png') repeat-y;
+      background-size: 100% auto;
+      font-family: 'Brush Script MT', cursive;
+      color: #000;
       resize: vertical;
-      height: 100px;
-      border: 1px solid #ccc;
+      height: 200px;
+      line-height: 1.6em;
+    }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 15px;
+      font-size: 1.3em;
+      border-radius: 15px;
+      border: none;
+      background: linear-gradient(145deg, #ffdf00, #fff5b7);
+      color: #003366;
+      font-weight: bold;
+      box-shadow: 0 0 15px gold, 0 0 30px #003366 inset;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    button:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 25px gold, 0 0 45px #005599 inset;
     }
     .mensagens {
       margin-top: 30px;
@@ -55,33 +81,22 @@
       padding: 15px;
       border-radius: 10px;
       margin-bottom: 10px;
+      font-size: 1.1em;
     }
     .envelope {
       position: fixed;
-      bottom: 30px;
+      bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 60px;
       opacity: 0;
-      animation: subirEnvelope 15s ease-in-out forwards;
-      pointer-events: none;
+      transition: opacity 15s ease-in-out, bottom 15s ease-in-out;
+      z-index: 1000;
     }
-    @keyframes subirEnvelope {
-      0% {
-        bottom: 30px;
-        opacity: 0;
-      }
-      20% {
-        opacity: 1;
-      }
-      100% {
-        bottom: 90%;
-        opacity: 0;
-      }
+    .envelope.ativo {
+      opacity: 1;
+      bottom: 100%;
     }
   </style>
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
@@ -89,16 +104,18 @@
 <body>
 
   <div class="bloco">
-    <h1>✨ Livro Celestial de Recados ✨</h1>
-    <p>Palavras que se tornam eternidade nas páginas do Céu. Deixe sua mensagem para Aghatta.</p>
+    <h1>✨ Livro de Recados ✨</h1>
+    <p style="text-align: center; font-style: italic; font-size: 1.2em; color: #e0e0ff;">
+      “O que se escreve com o coração, o Céu recolhe como perfume. Palavras sagradas não se perdem: elas voam. Deixe aqui sua mensagem para Aghatta...”
+    </p>
     <input type="text" id="nome" placeholder="Seu nome" required />
     <textarea id="mensagem" placeholder="Escreva sua mensagem..."></textarea>
-    <button onclick="enviarMensagem()">Confirmar Recado</button>
+    <button onclick="enviarMensagem()">📜 Que esta palavra voe ao Céu</button>
 
     <div class="mensagens" id="mensagens"></div>
   </div>
 
-  <img src="envelope.png" id="envelope" class="envelope" style="display: none;" />
+  <img src="envelope.png" id="envelope" class="envelope" width="100" alt="Envelope celestial">
 
   <script>
     const firebaseConfig = {
@@ -127,10 +144,8 @@
       document.getElementById('mensagem').value = '';
 
       const envelope = document.getElementById('envelope');
-      envelope.style.display = 'block';
-      envelope.classList.remove('envelope');
-      void envelope.offsetWidth;
-      envelope.classList.add('envelope');
+      envelope.classList.add('ativo');
+      setTimeout(() => envelope.classList.remove('ativo'), 15000);
     }
 
     db.ref('mensagens').on('value', (snapshot) => {

@@ -1,188 +1,188 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Galeria Aghatta - Luz e Misericórdia</title>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet" />
-<style>
-  * {
-    margin: 0; padding: 0; box-sizing: border-box;
-  }
-  body {
-    background: url('aghatta.png') no-repeat center center fixed;
-    background-size: cover;
-    font-family: 'Georgia', serif;
-    color: gold;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
-    min-height: 100vh;
-    padding: 15px 10px 10px;
-    overflow-y: auto;
-    position: relative;
-  }
-
-  .frase-topo {
-    font-family: 'Great Vibes', cursive;
-    font-size: 2.2rem;
-    color: gold;
-    text-align: center;
-    padding: 12px 20px;
-    background: rgba(0, 10, 40, 0.7);
-    border-radius: 12px;
-    box-shadow: 0 0 15px gold;
-    margin-bottom: 15px;
-    user-select: none;
-    max-width: 95vw;
-  }
-
-  .galeria-container {
-    width: 90vw;
-    max-width: 700px;
-    aspect-ratio: 2 / 3;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 18px;
-    box-shadow:
-      0 0 30px rgba(255, 215, 0, 0.7),
-      inset 0 0 20px rgba(255, 215, 0, 0.4);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    margin-bottom: 10px;
-  }
-
-  .imagem-galeria {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 16px;
-    filter: drop-shadow(0 0 12px gold);
-    user-select: none;
-    transition: opacity 0.6s ease, transform 8s ease;
-    opacity: 1;
-    position: relative;
-    z-index: 1;
-  }
-
-  .imagem-galeria.fade-out {
-    opacity: 0;
-  }
-
-  .imagem-galeria.zoom {
-    transform: scale(1.05);
-  }
-
-  #contador {
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.3rem;
-    color: gold;
-    text-shadow: 0 0 5px gold;
-    background: rgba(0, 0, 0, 0.4);
-    padding: 4px 12px;
-    border-radius: 12px;
-    user-select: none;
-    z-index: 10;
-    max-width: 90vw;
-    text-align: center;
-  }
-
-  .botoes {
-    width: 90vw;
-    max-width: 700px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin: -160px auto 20px;
-    position: relative;
-    z-index: 10;
-  }
-
-  .botao-wrapper {
-    position: relative;
-    width: 240px;
-  }
-
-  .botao-coroa {
-    width: 100%;
-    cursor: pointer;
-    filter: drop-shadow(0 0 15px gold);
-    animation: pulsar 2s ease-in-out infinite;
-    transition: transform 0.3s ease, filter 0.3s ease;
-    border-radius: 12px;
-    outline-offset: 4px;
-    display: block;
-  }
-
-  .botao-coroa:hover,
-  .botao-coroa:focus-visible {
-    transform: scale(1.15);
-    filter: drop-shadow(0 0 30px #ffd700);
-    outline: 3px solid #ffd700;
-  }
-
-  .texto-botao {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Cinzel Decorative', cursive;
-    font-size: 1.7rem;
-    color: royalblue;
-    user-select: none;
-    text-shadow: 0 0 6px #87cefa, 0 0 12px #1e90ff;
-    pointer-events: none;
-    white-space: nowrap;
-  }
-
-  @keyframes pulsar {
-    0%, 100% { filter: drop-shadow(0 0 15px gold); }
-    50% { filter: drop-shadow(0 0 40px #fffacd); }
-  }
-
-  /* Borboletas saindo de dentro da imagem */
-  .borboleta {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    background: url('borboleta.png') no-repeat center center;
-    background-size: contain;
-    pointer-events: none;
-    animation: subirBorboleta 6s ease-in forwards;
-    opacity: 0;
-    z-index: 20;
-  }
-
-  @keyframes subirBorboleta {
-    0% {
-      opacity: 0;
-      transform: translateY(0) scale(0.5) rotate(0deg);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galeria Aghatta - Luz e Misericórdia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
     }
-    10% {
-      opacity: 1;
+    body {
+      background: url('aghatta.png') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Georgia', serif;
+      color: gold;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      min-height: 100vh;
+      padding: 15px 10px 10px;
+      overflow-y: auto;
+      position: relative;
     }
-    100% {
-      opacity: 0;
-      transform: translateY(-400px) scale(1.2) rotate(360deg);
-    }
-  }
 
-  @media (max-width: 480px) {
-    .botao-wrapper {
-      width: 180px;
-    }
     .frase-topo {
-      font-size: 1.7rem;
-      padding: 8px 14px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.2rem;
+      color: gold;
+      text-align: center;
+      padding: 12px 20px;
+      background: rgba(0, 10, 40, 0.7);
+      border-radius: 12px;
+      box-shadow: 0 0 15px gold;
+      margin-bottom: 15px;
+      user-select: none;
+      max-width: 95vw;
     }
-  }
-</style>
+
+    .galeria-container {
+      width: 90vw;
+      max-width: 700px;
+      aspect-ratio: 2 / 3;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 18px;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.7), inset 0 0 20px rgba(255, 215, 0, 0.4);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 10px;
+    }
+
+    .imagem-galeria {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 16px;
+      filter: drop-shadow(0 0 12px gold);
+      user-select: none;
+      transition: opacity 0.6s ease, transform 8s ease;
+      opacity: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .imagem-galeria.fade-out {
+      opacity: 0;
+    }
+
+    .imagem-galeria.zoom {
+      transform: scale(1.05);
+    }
+
+    #contador {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.3rem;
+      color: gold;
+      text-shadow: 0 0 5px gold;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 4px 12px;
+      border-radius: 12px;
+      user-select: none;
+      z-index: 10;
+      max-width: 90vw;
+      text-align: center;
+    }
+
+    .botoes {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 20px auto 30px;
+      position: relative;
+      z-index: 10;
+      flex-wrap: wrap;
+    }
+
+    .botao-wrapper {
+      position: relative;
+      text-align: center;
+    }
+
+    .botao-coroa {
+      width: 260px;
+      max-width: 90vw;
+      cursor: pointer;
+      filter: drop-shadow(0 0 18px gold);
+      animation: pulsar 2s ease-in-out infinite;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      border-radius: 14px;
+      outline-offset: 5px;
+      display: block;
+    }
+
+    .botao-coroa:hover,
+    .botao-coroa:focus-visible {
+      transform: scale(1.15);
+      filter: drop-shadow(0 0 30px #ffd700);
+      outline: 3px solid #ffd700;
+    }
+
+    .texto-botao {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 1.8rem;
+      color: royalblue;
+      user-select: none;
+      text-shadow: 0 0 6px #87cefa, 0 0 12px #1e90ff;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    @keyframes pulsar {
+      0%, 100% { filter: drop-shadow(0 0 15px gold); }
+      50% { filter: drop-shadow(0 0 40px #fffacd); }
+    }
+
+    .borboleta {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: url('borboleta.png') no-repeat center center;
+      background-size: contain;
+      pointer-events: none;
+      animation: subirBorboleta 6s ease-in forwards;
+      opacity: 0;
+      z-index: 20;
+    }
+
+    @keyframes subirBorboleta {
+      0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.5) rotate(0deg);
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-400px) scale(1.2) rotate(360deg);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .botao-coroa {
+        width: 180px;
+      }
+      .frase-topo {
+        font-size: 1.7rem;
+        padding: 8px 14px;
+      }
+      .texto-botao {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -218,14 +218,12 @@
   function criarBorboleta() {
     const borboleta = document.createElement('div');
     borboleta.className = 'borboleta';
-    // posiciona na base da imagem, um pouco aleatório em largura
     const rect = galeriaContainer.getBoundingClientRect();
     const x = rect.left + Math.random() * rect.width;
-    const y = rect.bottom - 50; // perto da base
+    const y = rect.bottom - 50;
     borboleta.style.left = `${x}px`;
     borboleta.style.top = `${y}px`;
     document.body.appendChild(borboleta);
-    // Remove após animação
     setTimeout(() => borboleta.remove(), 6000);
   }
 
@@ -242,39 +240,27 @@
   }
 
   btnVoltar.addEventListener('click', () => {
-    if (indice > 0) {
-      indice--;
-    } else {
-      indice = imagens.length - 1; // loop para última imagem
-    }
+    indice = (indice > 0) ? indice - 1 : imagens.length - 1;
     atualizarImagem();
   });
 
   btnAvancar.addEventListener('click', () => {
-    if (indice < imagens.length -1) {
-      indice++;
-    } else {
-      indice = 0; // loop para primeira imagem
-    }
+    indice = (indice < imagens.length - 1) ? indice + 1 : 0;
     atualizarImagem();
   });
 
-  btnVoltar.addEventListener('keydown', e => {
-    if(e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      btnVoltar.click();
-    }
-  });
-  btnAvancar.addEventListener('keydown', e => {
-    if(e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      btnAvancar.click();
-    }
+  [btnVoltar, btnAvancar].forEach(btn => {
+    btn.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        btn.click();
+      }
+    });
   });
 
-  // Inicializa com zoom e borboleta
   imgGaleria.classList.add('zoom');
   criarBorboleta();
 </script>
+
 </body>
 </html>

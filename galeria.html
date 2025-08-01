@@ -23,7 +23,6 @@
     overflow-y: auto;
   }
 
-  /* Título com caixa azul escura translúcida e manuscrito dourado */
   .frase-topo {
     font-family: 'Great Vibes', cursive;
     font-size: 2.2rem;
@@ -38,7 +37,6 @@
     max-width: 95vw;
   }
 
-  /* Container da galeria responsivo mantendo proporção */
   .galeria-container {
     width: 90vw;
     max-width: 700px;
@@ -65,14 +63,13 @@
     user-select: none;
   }
 
-  /* Botões de coroas */
   .botoes {
     width: 90vw;
     max-width: 700px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin: 0 auto 25px; /* margem inferior maior para dar espaço */
+    margin: 0 auto 20px;
   }
 
   .botao-coroa {
@@ -82,6 +79,7 @@
     animation: pulsar 2s ease-in-out infinite;
     transition: transform 0.3s ease;
     position: relative;
+    margin-top: -100px; /* subi mais ainda para base da galeria */
   }
 
   .botao-coroa:hover {
@@ -89,27 +87,27 @@
     filter: drop-shadow(0 0 40px #ffd700);
   }
 
-  /* Setas elegantes e reais abaixo das coroas */
   .seta-baixo {
     width: 160px;
     text-align: center;
     color: gold;
     font-weight: 900;
     font-size: 3.2rem;
-    margin-top: 6px;
+    margin-top: 12px;
     user-select: none;
     text-shadow:
       0 0 8px gold,
       0 0 16px #fffacd,
       0 0 24px #ffd700;
+    position: relative;
+    top: -90px; /* sobe mais as setas junto coroas */
   }
 
-  /* Flechas personalizadas para esquerda e direita */
   .seta-esquerda::before {
-    content: '⯇'; /* Unicode de flecha esquerda estilizada */
+    content: '⯇';
   }
   .seta-direita::before {
-    content: '⯈'; /* Unicode de flecha direita estilizada */
+    content: '⯈';
   }
 
   .contador {
@@ -127,10 +125,13 @@
   @media (max-width: 480px) {
     .botao-coroa {
       width: 120px;
+      margin-top: -75px;
     }
     .seta-baixo {
       width: 120px;
       font-size: 2.4rem;
+      top: -70px;
+      margin-top: 10px;
     }
     .frase-topo {
       font-size: 1.7rem;

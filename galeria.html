@@ -12,7 +12,8 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      background: linear-gradient(to bottom, #001170, #000033);
+      background: url('Aghatta.png') no-repeat center center fixed;
+      background-size: cover;
       font-family: 'Great Vibes', cursive;
       display: flex;
       flex-direction: column;
@@ -89,7 +90,7 @@
       display: flex;
       gap: 120px;
       position: fixed;
-      bottom: 30px;
+      bottom: 80px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 20;
@@ -97,8 +98,8 @@
     }
     .botao-coroa-container {
       position: relative;
-      width: 150px;
-      height: 150px;
+      width: 200px;
+      height: 200px;
       cursor: pointer;
       user-select: none;
       perspective: 600px;
@@ -175,25 +176,14 @@
     const somPergaminho = document.getElementById('som-pergaminho');
 
     function animarTrocaPagina(novoIndice, sentido) {
-      // sentido: 'direita' para voltar, 'esquerda' para avançar
       paginaAtual.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
       paginaAtual.style.opacity = 0;
-
-      if (sentido === 'esquerda') {
-        paginaAtual.style.transform = 'rotateY(-90deg)';
-      } else {
-        paginaAtual.style.transform = 'rotateY(90deg)';
-      }
+      paginaAtual.style.transform = sentido === 'esquerda' ? 'rotateY(-90deg)' : 'rotateY(90deg)';
 
       setTimeout(() => {
         indiceAtual = novoIndice;
         paginaAtual.innerHTML = `<img src="${imagens[indiceAtual]}" alt="Imagem ${indiceAtual + 1} da galeria" />`;
-        // Inicia do lado oposto para virar na direção contrária
-        if (sentido === 'esquerda') {
-          paginaAtual.style.transform = 'rotateY(90deg)';
-        } else {
-          paginaAtual.style.transform = 'rotateY(-90deg)';
-        }
+        paginaAtual.style.transform = sentido === 'esquerda' ? 'rotateY(90deg)' : 'rotateY(-90deg)';
         paginaAtual.style.opacity = 0;
 
         setTimeout(() => {
@@ -232,11 +222,9 @@
       }
     });
 
-    // Inicializa com a primeira imagem
     paginaAtual.innerHTML = `<img src="${imagens[indiceAtual]}" alt="Imagem ${indiceAtual + 1} da galeria" />`;
     atualizarBotoes();
 
-    // Acessibilidade: navegação por teclado
     botaoAvancar.addEventListener('keydown', e => {
       if(e.key === 'Enter' || e.key === ' '){
         e.preventDefault();

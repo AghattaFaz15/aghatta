@@ -8,18 +8,6 @@
     * {
       box-sizing: border-box;
     }
-
-    html, body {
-      margin: 0;<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <title>Galeria - Livro Leve</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
-  <style>
-    * {
-      box-sizing: border-box;
-    }
     html, body {
       margin: 0;
       padding: 0;
@@ -58,6 +46,7 @@
       align-items: center;
       justify-content: center;
       perspective: 1200px;
+      margin-bottom: 100px; /* espaço maior para coroas */
     }
     .pagina {
       width: 100%;
@@ -88,42 +77,46 @@
       -webkit-user-drag: none;
     }
     .botoes {
-      margin-top: 1rem;
+      margin-top: 0;
       display: flex;
       gap: 120px;
-      position: relative;
-      z-index: 10;
+      position: fixed; /* fixar na tela */
+      bottom: 30px; /* subir coroas */
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
       user-select: none;
     }
     .botao-coroa-container {
       position: relative;
-      width: 130px;
-      height: 130px;
+      width: 150px;  /* aumentei o tamanho para mais imponência */
+      height: 150px;
       cursor: pointer;
       user-select: none;
     }
     .botao-coroa {
       width: 100%;
       height: 100%;
-      filter: drop-shadow(0 0 10px gold);
+      filter: drop-shadow(0 0 12px gold);
       transition: transform 0.3s ease;
       user-select: none;
     }
     .botao-coroa:hover {
-      transform: scale(1.15);
-      filter: drop-shadow(0 0 18px #ffd700);
+      transform: scale(1.2);
+      filter: drop-shadow(0 0 20px #ffd700);
     }
     .seta-sobreposta {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 3.5em;
-      color: rgba(0, 123, 255, 0.8);
+      font-size: 4em;
+      color: rgba(0, 123, 255, 0.85);
       pointer-events: none;
       user-select: none;
-      text-shadow: 0 0 6px white;
+      text-shadow: 0 0 8px white;
       font-weight: 700;
+      user-select: none;
     }
     .botao-coroa[disabled] {
       opacity: 0.4;
@@ -171,7 +164,6 @@
     const botaoVoltar = document.getElementById('voltar');
     const somPergaminho = document.getElementById('som-pergaminho');
 
-    // Função para carregar imagem e descrever para leitores de tela
     function carregarImagem(indice) {
       paginaAtual.style.transition = 'none';
       paginaAtual.style.transform = 'rotateY(0deg)';
@@ -185,7 +177,6 @@
       atualizarBotoes();
     }
 
-    // Função para animação virar página realista (3D flip)
     function virarPagina(direction) {
       paginaAtual.style.transition = 'transform 0.4s ease-in-out';
       if(direction === 'proximo'){
@@ -247,163 +238,6 @@
         botaoVoltar.click();
       }
     });
-  </script>
-
-</body>
-</html>
-
-      padding: 0;
-      height: 100%;
-      background: linear-gradient(to bottom, #001170, #000033);
-      font-family: 'Great Vibes', cursive;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: gold;
-    }
-
-    .frase-topo {
-      font-size: 2.2em;
-      text-shadow: 0 0 10px gold;
-      text-align: center;
-      margin-bottom: 1rem;
-      user-select: text;
-    }
-
-    .galeria-container {
-      width: 90vw;
-      max-width: 700px;
-      aspect-ratio: 2 / 3;
-      position: relative;
-      border: 6px solid rgba(255, 215, 0, 0.5);
-      border-radius: 18px;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-      background: white;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .pagina {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.6s ease-in-out;
-      cursor: pointer;
-    }
-
-    .pagina img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-    }
-
-    .botoes {
-      margin-top: 1rem;
-      display: flex;
-      gap: 60px;
-    }
-
-    .botao-coroa {
-      width: 64px;
-      height: 64px;
-      cursor: pointer;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      filter: drop-shadow(0 0 5px gold);
-      user-select: none;
-    }
-
-    .botao-coroa:hover {
-      transform: scale(1.15);
-      filter: drop-shadow(0 0 10px #ffd700);
-    }
-
-    .botao-coroa:active {
-      transform: scale(1.05);
-    }
-
-    .botao-coroa[disabled] {
-      opacity: 0.4;
-      pointer-events: none;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="frase-topo">Um pouco da minha história</div>
-
-  <div class="galeria-container" aria-label="Galeria de fotos leve">
-    <div class="pagina" id="pagina-atual" tabindex="0" aria-live="polite" aria-atomic="true">
-      <!-- imagem aqui -->
-    </div>
-  </div>
-
-  <div class="botoes">
-    <img src="coroa.png" id="voltar" class="botao-coroa" alt="Página anterior" />
-    <img src="coroa.png" id="avancar" class="botao-coroa" alt="Próxima página" />
-  </div>
-
-  <audio id="som-pergaminho" src="pergaminho.mp3" preload="auto"></audio>
-
-  <script>
-    const imagens = [
-      "imagem1.jpeg", "imagem2.jpeg", "imagem3.jpeg", "imagem4.jpeg",
-      "imagem5.jpeg", "imagem6.jpeg", "imagem7.jpeg", "imagem8.jpeg",
-      "imagem9.jpeg", "imagem10.jpeg", "imagem11.jpeg", "imagem12.jpeg",
-      "imagem13.jpeg", "imagem14.jpeg", "imagem15.jpeg"
-    ];
-
-    let indiceAtual = 0;
-
-    const paginaAtual = document.getElementById('pagina-atual');
-    const botaoAvancar = document.getElementById('avancar');
-    const botaoVoltar = document.getElementById('voltar');
-    const somPergaminho = document.getElementById('som-pergaminho');
-
-    function carregarImagem(indice) {
-      paginaAtual.style.opacity = 0;
-      setTimeout(() => {
-        paginaAtual.innerHTML = `<img src="${imagens[indice]}" alt="Imagem ${indice + 1} da galeria" />`;
-        paginaAtual.style.opacity = 1;
-        atualizarBotoes();
-      }, 300);
-    }
-
-    function tocarSom() {
-      somPergaminho.currentTime = 0;
-      somPergaminho.play().catch(() => {});
-    }
-
-    function atualizarBotoes() {
-      botaoVoltar.setAttribute('disabled', indiceAtual === 0 ? 'true' : '');
-      botaoAvancar.setAttribute('disabled', indiceAtual === imagens.length - 1 ? 'true' : '');
-    }
-
-    botaoAvancar.addEventListener('click', () => {
-      if (indiceAtual < imagens.length - 1) {
-        indiceAtual++;
-        carregarImagem(indiceAtual);
-        tocarSom();
-      }
-    });
-
-    botaoVoltar.addEventListener('click', () => {
-      if (indiceAtual > 0) {
-        indiceAtual--;
-        carregarImagem(indiceAtual);
-        tocarSom();
-      }
-    });
-
-    // Inicializa
-    carregarImagem(indiceAtual);
   </script>
 
 </body>

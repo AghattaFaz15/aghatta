@@ -27,11 +27,11 @@
     #titulo-topo {
       background-color: rgba(0, 60, 120, 0.6);
       border: 2px solid gold;
-      padding: 12px 20px;
+      padding: 8px 20px;
       border-radius: 12px;
       text-align: center;
       font-weight: bold;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       line-height: 1.2;
       margin-bottom: 16px;
       color: gold;
@@ -42,7 +42,7 @@
     }
 
     #titulo-topo span {
-      font-size: 1.3rem;
+      font-size: 1rem;
     }
 
     #container {
@@ -52,50 +52,55 @@
     }
 
     .imagem-central {
-      width: 105%;
+      width: 110%;
       height: auto;
       max-height: 78vh;
       object-fit: contain;
       pointer-events: none;
       z-index: 1;
+      transition: transform 8s ease;
+      transform-origin: center center;
+      animation: zoomSuave 8s infinite alternate ease-in-out;
+    }
+
+    @keyframes zoomSuave {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
     }
 
     #contador-box {
       position: absolute;
-      bottom: 9%;
+      bottom: 5%;
       left: 50%;
       transform: translateX(-50%);
       width: auto;
-      padding: 12px 20px;
-      background-color: rgba(10, 10, 10, 0.5);
-      border-radius: 15px;
+      padding: 20px 35px;
+      background-color: rgba(10, 10, 10, 0.6);
+      border-radius: 20px;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       color: #ffd700;
       font-weight: bold;
       z-index: 10;
-      box-shadow: 0 0 10px gold;
-    }
-
-    #contador-titulo {
-      font-size: 1.1rem;
-      margin-bottom: 0.4em;
-      letter-spacing: 0.1em;
-      text-shadow: 0 0 4px gold;
+      box-shadow: 0 0 12px gold;
+      user-select: none;
     }
 
     #contador {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.6em;
+      gap: 10px; /* espaço menor entre corações e texto */
+      font-size: 1.3rem;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 6px gold;
+      white-space: nowrap; /* evitar quebra de linha */
     }
 
     .coracao {
       color: #ff4d6d;
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       animation: pulsar 1.5s ease-in-out infinite;
       user-select: none;
       filter: drop-shadow(0 0 4px #ff4d6d);
@@ -169,7 +174,6 @@
     <img src="Aniversário_Aghatta_XV.png" alt="Aniversário Aghatta XV" class="imagem-central" />
 
     <div id="contador-box">
-      <div id="contador-titulo">FALTA</div>
       <div id="contador">
         <div class="coracao">❤️</div>
         <div id="tempo">Carregando...</div>

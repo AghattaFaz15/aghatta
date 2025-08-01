@@ -52,7 +52,7 @@
     }
 
     .imagem-central {
-      width: 120%; /* ampliei ainda mais */
+      width: 130%;
       height: auto;
       max-height: 85vh;
       object-fit: contain;
@@ -61,23 +61,23 @@
       transition: transform 12s ease;
       transform-origin: center center;
       animation: pulsarLento 12s infinite ease-in-out alternate;
-      margin-bottom: 30px; /* espaço maior para o contador mais baixo */
+      margin-bottom: 50px; /* desceu mais */
     }
 
     @keyframes pulsarLento {
       0% { transform: scale(1); }
-      100% { transform: scale(1.08); }
+      100% { transform: scale(1.22); } /* zoom maior */
     }
 
     #contador-box {
       position: absolute;
-      bottom: 2.5%; /* desceu mais */
+      bottom: 1.5%; /* desceu mais */
       left: 50%;
       transform: translateX(-50%);
       width: auto;
-      padding: 14px 28px; /* diminuiu um pouco */
+      padding: 10px 22px; /* diminuiu mais */
       background-color: rgba(10, 10, 10, 0.6);
-      border-radius: 20px;
+      border-radius: 18px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -86,7 +86,7 @@
       z-index: 10;
       box-shadow: 0 0 12px gold;
       user-select: none;
-      font-size: 1.1rem; /* diminuiu o tamanho do texto do contador */
+      font-size: 1rem; /* diminuiu mais o texto */
       white-space: nowrap;
     }
 
@@ -94,14 +94,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       letter-spacing: 0.1em;
       text-shadow: 0 0 6px gold;
     }
 
     .coracao {
       color: #ff4d6d;
-      font-size: 1.3rem; /* diminuiu corações */
+      font-size: 1.1rem; /* diminuiu corações */
       animation: pulsar 1.5s ease-in-out infinite;
       user-select: none;
       filter: drop-shadow(0 0 4px #ff4d6d);

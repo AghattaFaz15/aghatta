@@ -17,12 +17,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: start;
       min-height: 100vh;
       overflow: hidden;
       padding-top: 40px;
       position: relative;
-      user-select: none;
     }
 
     #titulo-topo {
@@ -33,42 +32,33 @@
       margin-bottom: 30px;
       color: gold;
       text-shadow: 0 0 8px gold;
+      user-select: none;
       letter-spacing: 0.12em;
       max-width: 90vw;
-      z-index: 20;
-      position: relative;
     }
 
     #container {
+      width: 100%;
+      text-align: center;
       position: relative;
-      width: 90vw;
-      max-width: 600px;
-      display: flex;
-      justify-content: center;
-      align-items: flex-end; /* alinhando o contador na base da imagem */
-      margin-bottom: 0;
     }
 
     .imagem-central {
       width: 100%;
+      height: auto;
       max-height: 85vh;
       object-fit: contain;
-      border-radius: 12px;
-      box-shadow: 0 0 30px gold;
       pointer-events: none;
-      position: relative;
       z-index: 1;
-      user-select: none;
-      display: block;
     }
 
     #contador-box {
       position: absolute;
-      bottom: 0;
+      bottom: 3%;
       left: 50%;
-      transform: translateX(-50%) translateY(50%);
-      width: 90%;
-      max-width: 560px;
+      transform: translateX(-50%);
+      width: 90vw;
+      max-width: 600px;
       height: 150px;
       background: url('rolofechado.png') no-repeat center / contain;
       display: flex;
@@ -79,22 +69,18 @@
       color: #ffd700;
       font-family: 'Georgia', serif;
       font-weight: bold;
-      padding: 2em 2em 1.5em;
+      padding: 2em;
       animation: pulsarPergaminho 3s ease-in-out infinite;
-      box-shadow: 0 0 20px gold;
-      border-radius: 12px;
-      pointer-events: none;
       z-index: 10;
-      user-select: none;
     }
 
     @keyframes pulsarPergaminho {
       0%, 100% {
-        transform: scale(1);
+        transform: translateX(-50%) scale(1);
         filter: drop-shadow(0 0 10px gold);
       }
       50% {
-        transform: scale(1.02);
+        transform: translateX(-50%) scale(1.02);
         filter: drop-shadow(0 0 20px #fffacd);
       }
     }
@@ -111,14 +97,13 @@
       align-items: center;
       justify-content: center;
       gap: 0.8em;
-      font-size: 1.1rem;
-      text-shadow: 0 0 5px gold;
     }
 
     .coracao {
       color: #ff4d6d;
       font-size: 1.8rem;
       animation: pulsar 1.5s ease-in-out infinite;
+      user-select: none;
       filter: drop-shadow(0 0 6px #ff4d6d);
     }
 
@@ -148,53 +133,61 @@
       50% { opacity: 0.5; }
     }
 
-    /* Borboletas saindo de dentro da imagem */
+    /* Borboletas */
     .borboleta {
       position: absolute;
       width: 40px;
       height: 40px;
-      background: url('borboleta.png') no-repeat center center;
-      background-size: contain;
-      pointer-events: none;
-      animation: subirBorboleta 6s ease-in forwards;
-      opacity: 0;
+      background: url('borboleta.png') no-repeat center / contain;
+      animation: voar 6s ease-in-out infinite;
       z-index: 15;
-      filter: drop-shadow(0 0 8px gold);
-      user-select: none;
-      border-radius: 50%;
+      pointer-events: none;
     }
 
-    @keyframes subirBorboleta {
+    .borboleta:nth-child(1) { top: 70%; left: 50%; animation-delay: 0s; }
+    .borboleta:nth-child(2) { top: 72%; left: 52%; animation-delay: 1s; }
+    .borboleta:nth-child(3) { top: 74%; left: 48%; animation-delay: 2s; }
+
+    @keyframes voar {
       0% {
+        transform: translate(0, 0) scale(1);
         opacity: 0;
-        transform: translateY(0) scale(0.5) rotate(0deg);
       }
       10% {
         opacity: 1;
       }
+      50% {
+        transform: translate(-50px, -150px) scale(1.2);
+      }
       100% {
+        transform: translate(60px, -300px) scale(1);
         opacity: 0;
-        transform: translateY(-300px) scale(1.3) rotate(360deg);
       }
     }
   </style>
 </head>
 <body>
-  <div id="titulo-topo" aria-label="Salve a data">
+  <div id="titulo-topo">
     Salve a data<br />
     <span style="font-size: 1.6rem;">12 de Setembro de 2025</span>
   </div>
 
   <div id="container">
-    <img src="Aniversário_Aghatta_XV.png" alt="Aniversário Aghatta XV" class="imagem-central" id="imagem-central" />
-    <div id="contador-box" role="region" aria-live="polite" aria-atomic="true">
+    <img src="Aniversário_Aghatta_XV.png" alt="Aniversário Aghatta XV" class="imagem-central" />
+    
+    <div id="contador-box">
       <div id="contador-titulo">FALTA</div>
       <div id="contador">
-        <div class="coracao" aria-hidden="true">❤️</div>
+        <div class="coracao">❤️</div>
         <div id="tempo">Carregando...</div>
-        <div class="coracao direito" aria-hidden="true">❤️</div>
+        <div class="coracao direito">❤️</div>
       </div>
     </div>
+
+    <!-- Borboletas -->
+    <div class="borboleta"></div>
+    <div class="borboleta"></div>
+    <div class="borboleta"></div>
   </div>
 
   <script>
@@ -216,38 +209,9 @@
       tempoEl.textContent = `Faltam ${dias} dias, ${horas}h ${minutos}m ${segundos}s`;
     }
 
-    // Criar borboletas saindo da base da imagem e subindo
-    function criarBorboleta() {
-      const container = document.getElementById('container');
-      const img = document.getElementById('imagem-central');
-      const rect = img.getBoundingClientRect();
-      const containerRect = container.getBoundingClientRect();
-
-      const borboleta = document.createElement('div');
-      borboleta.className = 'borboleta';
-
-      // Posição horizontal aleatória dentro da imagem
-      const offsetX = Math.random() * (rect.width - 40);
-      const posX = offsetX + (rect.left - containerRect.left);
-
-      // Posição vertical na base da imagem, um pouco acima do fim para sair "de dentro"
-      const posY = rect.height - 50;
-
-      borboleta.style.left = `${posX}px`;
-      borboleta.style.top = `${posY}px`;
-
-      container.appendChild(borboleta);
-
-      // Remove a borboleta após a animação
-      setTimeout(() => borboleta.remove(), 6000);
-    }
-
     window.addEventListener('DOMContentLoaded', () => {
       atualizarContador();
       setInterval(atualizarContador, 1000);
-
-      criarBorboleta();
-      setInterval(criarBorboleta, 2000);
     });
   </script>
 </body>

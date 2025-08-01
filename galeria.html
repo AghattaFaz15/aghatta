@@ -61,6 +61,16 @@
     border-radius: 16px;
     filter: drop-shadow(0 0 12px gold);
     user-select: none;
+    transition: opacity 0.6s ease, transform 8s ease;
+    opacity: 1;
+  }
+
+  .imagem-galeria.fade-out {
+    opacity: 0;
+  }
+
+  .imagem-galeria.zoom {
+    transform: scale(1.05);
   }
 
   .contador {
@@ -68,6 +78,7 @@
     color: gold;
     text-shadow: 0 0 5px gold;
     margin-bottom: 10px;
+    user-select: none;
   }
 
   .botoes {
@@ -79,23 +90,32 @@
     margin: -160px auto 20px;
   }
 
-  .botao-coroa {
+  .botao-wrapper {
+    position: relative;
     width: 240px;
+  }
+
+  .botao-coroa {
+    width: 100%;
     cursor: pointer;
     filter: drop-shadow(0 0 15px gold);
     animation: pulsar 2s ease-in-out infinite;
-    transition: transform 0.3s ease;
-    position: relative;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    border-radius: 12px;
+    outline-offset: 4px;
+    display: block;
   }
 
-  .botao-coroa:hover {
+  .botao-coroa:hover,
+  .botao-coroa:focus-visible {
     transform: scale(1.15);
     filter: drop-shadow(0 0 30px #ffd700);
+    outline: 3px solid #ffd700;
   }
 
   .texto-botao {
     position: absolute;
-    top: 48%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-family: 'Cinzel Decorative', cursive;
@@ -104,6 +124,7 @@
     user-select: none;
     text-shadow: 0 0 6px #87cefa, 0 0 12px #1e90ff;
     pointer-events: none;
+    white-space: nowrap;
   }
 
   @keyframes pulsar {
@@ -112,7 +133,7 @@
   }
 
   @media (max-width: 480px) {
-    .botao-coroa {
+    .botao-wrapper {
       width: 180px;
     }
     .frase-topo {
@@ -154,26 +175,32 @@
     const btnAvancar = document.getElementById('btn-avancar');
 
     function atualizarImagem() {
-      imgGaleria.style.opacity = 0;
+      imgGaleria.classList.remove('zoom');
+      imgGaleria.classList.add('fade-out');
       setTimeout(() => {
         imgGaleria.src = imagens[indice];
         contador.textContent = `Imagem ${indice + 1} de ${imagens.length}`;
-        imgGaleria.style.opacity = 1;
-      }, 400);
+        imgGaleria.classList.remove('fade-out');
+        imgGaleria.classList.add('zoom');
+      }, 600);
     }
 
     btnVoltar.addEventListener('click', () => {
       if (indice > 0) {
         indice--;
-        atualizarImagem();
+      } else {
+        indice = imagens.length - 1; // loop para última imagem
       }
+      atualizarImagem();
     });
 
     btnAvancar.addEventListener('click', () => {
       if (indice < imagens.length -1) {
         indice++;
-        atualizarImagem();
+      } else {
+        indice = 0; // loop para primeira imagem
       }
+      atualizarImagem();
     });
 
     btnVoltar.addEventListener('keydown', e => {
@@ -188,6 +215,9 @@
         btnAvancar.click();
       }
     });
+
+    // Inicializa com zoom na primeira imagem
+    imgGaleria.classList.add('zoom');
   </script>
 </body>
 </html>

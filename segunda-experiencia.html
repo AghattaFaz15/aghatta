@@ -60,6 +60,7 @@
       display: none;
       background: url('Aghatta.png') no-repeat center center;
       background-size: cover;
+      position: relative;
     }
 
     iframe {
@@ -68,30 +69,32 @@
       border: none;
     }
 
-    .botoes-navegacao {
+    /* BOTÕES LATERAIS */
+    .botao-lateral {
       position: absolute;
-      bottom: 2rem;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      z-index: 10;
-    }
-
-    .botoes-navegacao button {
-      padding: 0.7rem 1.5rem;
-      font-size: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 1rem;
+      font-size: 1.2rem;
       background: rgba(0, 0, 80, 0.7);
       color: white;
       border: 2px solid gold;
-      border-radius: 10px;
+      border-radius: 50%;
       cursor: pointer;
       font-weight: bold;
-      text-shadow: 1px 1px black;
+      z-index: 10;
     }
 
-    .botoes-navegacao button:hover {
+    .botao-lateral:hover {
       background: rgba(0, 0, 100, 0.9);
+    }
+
+    #anterior {
+      left: 1rem;
+    }
+
+    #proximo {
+      right: 1rem;
     }
   </style>
 </head>
@@ -106,10 +109,8 @@
   <div id="conteudo-livro">
     <iframe id="iframe" src="contador.html"></iframe>
 
-    <div class="botoes-navegacao">
-      <button onclick="paginaAnterior()">Página Anterior</button>
-      <button onclick="proximaPagina()">Próxima Página</button>
-    </div>
+    <button class="botao-lateral" id="anterior" onclick="paginaAnterior()">⬅</button>
+    <button class="botao-lateral" id="proximo" onclick="proximaPagina()">➡</button>
   </div>
 
   <!-- 🎵 ÁUDIO -->
@@ -148,7 +149,6 @@
         conteudo.style.display = 'block';
       }, 1000);
 
-      // TOCAR ÁUDIO
       audioLivro.play().catch(err => {
         console.warn("⚠️ O áudio não pôde ser iniciado automaticamente:", err);
       });

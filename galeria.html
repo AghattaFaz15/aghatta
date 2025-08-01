@@ -23,14 +23,13 @@
     overflow-y: auto;
   }
 
-  /* Título com caixa azul translúcido e manuscrito dourado */
   .frase-topo {
     font-family: 'Great Vibes', cursive;
     font-size: 2.2rem;
     color: gold;
     text-align: center;
     padding: 12px 20px;
-    background: rgba(0, 30, 90, 0.5);
+    background: rgba(0, 0, 40, 0.8);
     border-radius: 12px;
     box-shadow: 0 0 15px gold;
     margin-bottom: 15px;
@@ -38,11 +37,10 @@
     max-width: 95vw;
   }
 
-  /* Container da galeria responsivo mantendo proporção */
   .galeria-container {
     width: 90vw;
     max-width: 700px;
-    aspect-ratio: 2 / 3; /* altura e largura proporcional */
+    aspect-ratio: 2 / 3;
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 18px;
     box-shadow:
@@ -53,10 +51,9 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 
-  /* Imagem na galeria, máxima e proporcional */
   .imagem-galeria {
     width: 100%;
     height: 100%;
@@ -66,18 +63,25 @@
     user-select: none;
   }
 
-  /* Botões de coroas, grandes, brilhantes, pulsantes, base da galeria */
+  .contador {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: white;
+    text-shadow: 0 0 8px gold;
+    font-weight: bold;
+  }
+
   .botoes {
     width: 90vw;
     max-width: 700px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 auto 30px;
+    margin: 0 auto 10px;
   }
 
   .botao-coroa {
-    width: 110px;
+    width: 130px;
     cursor: pointer;
     filter: drop-shadow(0 0 15px gold);
     animation: pulsar 2s ease-in-out infinite;
@@ -104,10 +108,9 @@
     50% { filter: drop-shadow(0 0 40px #fffacd); }
   }
 
-  /* Responsividade para telas pequenas */
   @media (max-width: 480px) {
     .botao-coroa {
-      width: 80px;
+      width: 100px;
     }
     .frase-topo {
       font-size: 1.7rem;
@@ -123,8 +126,10 @@
   </div>
 
   <div class="galeria-container" role="region" aria-label="Galeria de imagens de Aghatta">
-    <img src="imagem1.jpg" alt="Imagem da galeria" class="imagem-galeria" id="galeria-img" />
+    <img src="imagem1.jpeg" alt="Imagem da galeria" class="imagem-galeria" id="galeria-img" />
   </div>
+
+  <div class="contador" id="contador">Imagem 1 de 15</div>
 
   <div class="botoes" role="group" aria-label="Navegação da galeria">
     <div>
@@ -139,18 +144,23 @@
 
   <script>
     const imagens = [
-      'imagem1.jpg', 'imagem2.jpg', 'imagem3.jpg', 'imagem4.jpg', 'imagem5.jpg'
+      'imagem1.jpeg', 'imagem2.jpeg', 'imagem3.jpeg', 'imagem4.jpeg', 'imagem5.jpeg',
+      'imagem6.jpeg', 'imagem7.jpeg', 'imagem8.jpeg', 'imagem9.jpeg', 'imagem10.jpeg',
+      'imagem11.jpeg', 'imagem12.jpeg', 'imagem13.jpeg', 'imagem14.jpeg', 'imagem15.jpeg'
     ];
+
     let indice = 0;
     const imgGaleria = document.getElementById('galeria-img');
     const btnVoltar = document.getElementById('btn-voltar');
     const btnAvancar = document.getElementById('btn-avancar');
+    const contador = document.getElementById('contador');
 
     function atualizarImagem() {
       imgGaleria.style.opacity = 0;
       setTimeout(() => {
         imgGaleria.src = imagens[indice];
         imgGaleria.style.opacity = 1;
+        contador.textContent = `Imagem ${indice + 1} de ${imagens.length}`;
       }, 400);
     }
 
@@ -162,26 +172,26 @@
     });
 
     btnAvancar.addEventListener('click', () => {
-      if (indice < imagens.length -1) {
+      if (indice < imagens.length - 1) {
         indice++;
         atualizarImagem();
       }
     });
 
-    // Teclado para acessibilidade
     btnVoltar.addEventListener('keydown', e => {
-      if(e.key === 'Enter' || e.key === ' ') {
+      if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         btnVoltar.click();
       }
     });
     btnAvancar.addEventListener('keydown', e => {
-      if(e.key === 'Enter' || e.key === ' ') {
+      if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         btnAvancar.click();
       }
     });
 
+    contador.textContent = `Imagem ${indice + 1} de ${imagens.length}`;
   </script>
 </body>
 </html>

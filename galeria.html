@@ -21,6 +21,7 @@
     min-height: 100vh;
     padding: 15px 10px 10px;
     overflow-y: auto;
+    position: relative;
   }
 
   .frase-topo {
@@ -63,6 +64,8 @@
     user-select: none;
     transition: opacity 0.6s ease, transform 8s ease;
     opacity: 1;
+    position: relative;
+    z-index: 1;
   }
 
   .imagem-galeria.fade-out {
@@ -73,12 +76,21 @@
     transform: scale(1.05);
   }
 
-  .contador {
+  #contador {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
     font-size: 1.3rem;
     color: gold;
     text-shadow: 0 0 5px gold;
-    margin-bottom: 10px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 4px 12px;
+    border-radius: 12px;
     user-select: none;
+    z-index: 10;
+    max-width: 90vw;
+    text-align: center;
   }
 
   .botoes {
@@ -88,6 +100,8 @@
     justify-content: space-between;
     align-items: flex-start;
     margin: -160px auto 20px;
+    position: relative;
+    z-index: 10;
   }
 
   .botao-wrapper {
@@ -132,6 +146,33 @@
     50% { filter: drop-shadow(0 0 40px #fffacd); }
   }
 
+  /* Borboletas saindo de dentro da imagem */
+  .borboleta {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: url('borboleta.png') no-repeat center center;
+    background-size: contain;
+    pointer-events: none;
+    animation: subirBorboleta 6s ease-in forwards;
+    opacity: 0;
+    z-index: 20;
+  }
+
+  @keyframes subirBorboleta {
+    0% {
+      opacity: 0;
+      transform: translateY(0) scale(0.5) rotate(0deg);
+    }
+    10% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-400px) scale(1.2) rotate(360deg);
+    }
+  }
+
   @media (max-width: 480px) {
     .botao-wrapper {
       width: 180px;
@@ -149,11 +190,10 @@
     Imagens que contam a misericórdia que me persegue e a Mão que me guia
   </div>
 
-  <div class="galeria-container" role="region" aria-label="Galeria de imagens de Aghatta">
+  <div class="galeria-container" role="region" aria-label="Galeria de imagens de Aghatta" id="galeria-container">
     <img src="imagem1.jpeg" alt="Imagem da galeria" class="imagem-galeria" id="galeria-img" />
+    <div id="contador">Imagem 1 de 15</div>
   </div>
-
-  <div class="contador" id="contador">Imagem 1 de 15</div>
 
   <div class="botoes" role="group" aria-label="Navegação da galeria">
     <div class="botao-wrapper">
@@ -166,58 +206,75 @@
     </div>
   </div>
 
-  <script>
-    const imagens = Array.from({length: 15}, (_, i) => `imagem${i + 1}.jpeg`);
-    let indice = 0;
-    const imgGaleria = document.getElementById('galeria-img');
-    const contador = document.getElementById('contador');
-    const btnVoltar = document.getElementById('btn-voltar');
-    const btnAvancar = document.getElementById('btn-avancar');
+<script>
+  const imagens = Array.from({length: 15}, (_, i) => `imagem${i + 1}.jpeg`);
+  let indice = 0;
+  const imgGaleria = document.getElementById('galeria-img');
+  const contador = document.getElementById('contador');
+  const galeriaContainer = document.getElementById('galeria-container');
+  const btnVoltar = document.getElementById('btn-voltar');
+  const btnAvancar = document.getElementById('btn-avancar');
 
-    function atualizarImagem() {
-      imgGaleria.classList.remove('zoom');
-      imgGaleria.classList.add('fade-out');
-      setTimeout(() => {
-        imgGaleria.src = imagens[indice];
-        contador.textContent = `Imagem ${indice + 1} de ${imagens.length}`;
-        imgGaleria.classList.remove('fade-out');
-        imgGaleria.classList.add('zoom');
-      }, 600);
+  function criarBorboleta() {
+    const borboleta = document.createElement('div');
+    borboleta.className = 'borboleta';
+    // posiciona na base da imagem, um pouco aleatório em largura
+    const rect = galeriaContainer.getBoundingClientRect();
+    const x = rect.left + Math.random() * rect.width;
+    const y = rect.bottom - 50; // perto da base
+    borboleta.style.left = `${x}px`;
+    borboleta.style.top = `${y}px`;
+    document.body.appendChild(borboleta);
+    // Remove após animação
+    setTimeout(() => borboleta.remove(), 6000);
+  }
+
+  function atualizarImagem() {
+    imgGaleria.classList.remove('zoom');
+    imgGaleria.classList.add('fade-out');
+    setTimeout(() => {
+      imgGaleria.src = imagens[indice];
+      contador.textContent = `Imagem ${indice + 1} de ${imagens.length}`;
+      imgGaleria.classList.remove('fade-out');
+      imgGaleria.classList.add('zoom');
+      criarBorboleta();
+    }, 600);
+  }
+
+  btnVoltar.addEventListener('click', () => {
+    if (indice > 0) {
+      indice--;
+    } else {
+      indice = imagens.length - 1; // loop para última imagem
     }
+    atualizarImagem();
+  });
 
-    btnVoltar.addEventListener('click', () => {
-      if (indice > 0) {
-        indice--;
-      } else {
-        indice = imagens.length - 1; // loop para última imagem
-      }
-      atualizarImagem();
-    });
+  btnAvancar.addEventListener('click', () => {
+    if (indice < imagens.length -1) {
+      indice++;
+    } else {
+      indice = 0; // loop para primeira imagem
+    }
+    atualizarImagem();
+  });
 
-    btnAvancar.addEventListener('click', () => {
-      if (indice < imagens.length -1) {
-        indice++;
-      } else {
-        indice = 0; // loop para primeira imagem
-      }
-      atualizarImagem();
-    });
+  btnVoltar.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      btnVoltar.click();
+    }
+  });
+  btnAvancar.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      btnAvancar.click();
+    }
+  });
 
-    btnVoltar.addEventListener('keydown', e => {
-      if(e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        btnVoltar.click();
-      }
-    });
-    btnAvancar.addEventListener('keydown', e => {
-      if(e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        btnAvancar.click();
-      }
-    });
-
-    // Inicializa com zoom na primeira imagem
-    imgGaleria.classList.add('zoom');
-  </script>
+  // Inicializa com zoom e borboleta
+  imgGaleria.classList.add('zoom');
+  criarBorboleta();
+</script>
 </body>
 </html>

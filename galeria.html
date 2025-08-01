@@ -1,300 +1,187 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Galeria Aghatta - Livro de Vida</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
-  <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
-    body {
-      background: url('aghatta.png') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Georgia', serif;
-      color: gold;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: start;
-      min-height: 100vh;
-      padding: 20px;
-      position: relative;
-      overflow-x: hidden;
-    }
-    #frase-topo {
-      font-size: 2.2rem;
-      font-family: 'Great Vibes', cursive;
-      text-shadow: 0 0 12px gold;
-      text-align: center;
-      margin-bottom: 1.5rem;
-      max-width: 90vw;
-      user-select: text;
-      font-weight: 600;
-    }
-    .galeria-container {
-      position: relative;
-      width: 90vw;
-      max-width: 700px;
-      aspect-ratio: 2 / 3;
-      perspective: 1200px;
-      margin-bottom: 100px;
-    }
-    .pagina {
-      width: 100%;
-      height: 100%;
-      border-radius: 18px;
-      box-shadow: inset 0 0 25px rgba(255, 215, 0, 0.5), 0 6px 10px rgba(0, 0, 50, 0.3);
-      background: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      backface-visibility: hidden;
-      transform-style: preserve-3d;
-      transition: opacity 1s ease, transform 1s ease;
-      overflow: hidden;
-    }
-    .pagina img {
-      max-width: 90%;
-      max-height: 90%;
-      border-radius: 16px;
-      filter: drop-shadow(0 0 8px rgba(218, 165, 32, 0.6));
-      transition: filter 0.4s ease;
-      pointer-events: none;
-      user-select: none;
-      user-drag: none;
-      -webkit-user-drag: none;
-    }
-    .pagina img:hover {
-      filter: drop-shadow(0 0 20px rgba(255, 223, 77, 0.9));
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Galeria Aghatta - Luz e Misericórdia</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+<style>
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    background: url('aghatta.png') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Georgia', serif;
+    color: gold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    min-height: 100vh;
+    padding: 15px 10px 10px;
+    overflow-y: auto;
+  }
 
-    .coroas-container {
-      width: 90vw;
-      max-width: 700px;
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 15px;
-      position: relative;
-      z-index: 20;
-    }
-    .coroa {
-      width: 120px;
-      cursor: default;
-      user-select: none;
-      pointer-events: none;
-      filter: drop-shadow(0 0 15px gold);
-      position: relative;
-      top: -60px; /* coroas "flutuando" sobre a imagem */
-      transition: filter 0.3s ease;
-    }
-    .coroa:hover {
-      filter: drop-shadow(0 0 30px #ffd700);
-      transform: scale(1.1);
-    }
-    .seta-sobreposta {
-      position: absolute;
-      top: 100%; /* imediatamente abaixo das coroas */
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 2.8rem;
-      color: gold;
-      filter: drop-shadow(0 0 8px gold);
-      user-select: none;
-      pointer-events: none;
-      font-weight: 700;
-    }
-    .botoes {
-      width: 90vw;
-      max-width: 700px;
-      display: flex;
-      justify-content: space-between;
-      position: relative;
-      margin-bottom: 50px;
-      z-index: 25;
-    }
-    .botao-coroa-container {
-      position: relative;
-      width: 140px;
-      height: 140px;
-      cursor: pointer;
-      perspective: 600px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
+  /* Título com caixa azul translúcido e manuscrito dourado */
+  .frase-topo {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.2rem;
+    color: gold;
+    text-align: center;
+    padding: 12px 20px;
+    background: rgba(0, 30, 90, 0.5);
+    border-radius: 12px;
+    box-shadow: 0 0 15px gold;
+    margin-bottom: 15px;
+    user-select: none;
+    max-width: 95vw;
+  }
+
+  /* Container da galeria responsivo mantendo proporção */
+  .galeria-container {
+    width: 90vw;
+    max-width: 700px;
+    aspect-ratio: 2 / 3; /* altura e largura proporcional */
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 18px;
+    box-shadow:
+      0 0 30px rgba(255, 215, 0, 0.7),
+      inset 0 0 20px rgba(255, 215, 0, 0.4);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  /* Imagem na galeria, máxima e proporcional */
+  .imagem-galeria {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 16px;
+    filter: drop-shadow(0 0 12px gold);
+    user-select: none;
+  }
+
+  /* Botões de coroas, grandes, brilhantes, pulsantes, base da galeria */
+  .botoes {
+    width: 90vw;
+    max-width: 700px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto 30px;
+  }
+
+  .botao-coroa {
+    width: 110px;
+    cursor: pointer;
+    filter: drop-shadow(0 0 15px gold);
+    animation: pulsar 2s ease-in-out infinite;
+    transition: transform 0.3s ease;
+  }
+
+  .botao-coroa:hover {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 30px #ffd700);
+  }
+
+  .seta-baixo {
+    text-align: center;
+    color: #00aaff;
+    font-weight: 900;
+    font-size: 2.5rem;
+    margin-top: 4px;
+    user-select: none;
+    text-shadow: 0 0 6px #00aaff, 0 0 12px #66ccff;
+  }
+
+  @keyframes pulsar {
+    0%, 100% { filter: drop-shadow(0 0 15px gold); }
+    50% { filter: drop-shadow(0 0 40px #fffacd); }
+  }
+
+  /* Responsividade para telas pequenas */
+  @media (max-width: 480px) {
     .botao-coroa {
-      width: 100%;
-      height: 100%;
-      filter: drop-shadow(0 0 20px gold);
-      transition: transform 0.3s ease, filter 0.3s ease;
-      user-select: none;
-      transform-style: preserve-3d;
-      backface-visibility: hidden;
+      width: 80px;
     }
-    .botao-coroa:hover {
-      transform: scale(1.2);
-      filter: drop-shadow(0 0 30px #ffd700);
+    .frase-topo {
+      font-size: 1.7rem;
+      padding: 8px 14px;
     }
-    .botao-coroa[disabled] {
-      opacity: 0.4;
-      pointer-events: none;
-    }
-    .seta-abaixo {
-      margin-top: 5px;
-      font-size: 2.5rem;
-      color: gold;
-      filter: drop-shadow(0 0 8px gold);
-      font-weight: 700;
-      user-select: none;
-      pointer-events: none;
-      text-align: center;
-      line-height: 1;
-    }
-    @media (max-width: 768px) {
-      #frase-topo {
-        font-size: 1.8rem;
-      }
-      .coroa {
-        width: 90px;
-        top: -45px;
-      }
-      .botao-coroa-container {
-        width: 110px;
-        height: 110px;
-      }
-      .seta-abaixo {
-        font-size: 2rem;
-        margin-top: 3px;
-      }
-      .botoes {
-        width: 95vw;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <div id="frase-topo" aria-live="polite" role="heading" aria-level="1">
+
+  <div class="frase-topo" aria-live="polite" role="heading" aria-level="1">
     Imagens que contam a misericórdia que me persegue e a Mão que me guia
   </div>
 
-  <div class="coroas-container" aria-label="Coroas sobre a galeria">
-    <img src="coroa_esquerda.png" alt="Coroa Esquerda" class="coroa" />
-    <img src="coroa_direita.png" alt="Coroa Direita" class="coroa" />
-  </div>
-
-  <div class="galeria-container" aria-label="Galeria de fotos leve">
-    <div class="pagina" id="pagina-atual" tabindex="0" aria-live="polite" aria-atomic="true" aria-describedby="descricao-imagem" role="img">
-      <!-- imagem aqui -->
-    </div>
+  <div class="galeria-container" role="region" aria-label="Galeria de imagens de Aghatta">
+    <img src="imagem1.jpg" alt="Imagem da galeria" class="imagem-galeria" id="galeria-img" />
   </div>
 
   <div class="botoes" role="group" aria-label="Navegação da galeria">
-    <div id="voltar" class="botao-coroa-container" tabindex="0" role="button" aria-label="Página anterior">
-      <img src="coroa.png" class="botao-coroa" alt="Coroa anterior" />
-      <div class="seta-abaixo">←</div>
+    <div>
+      <img src="coroa.png" alt="Botão anterior" class="botao-coroa" id="btn-voltar" tabindex="0" role="button" aria-label="Imagem anterior" />
+      <div class="seta-baixo">⬇️</div>
     </div>
-
-    <div id="avancar" class="botao-coroa-container" tabindex="0" role="button" aria-label="Próxima página">
-      <img src="coroa.png" class="botao-coroa" alt="Coroa próxima" />
-      <div class="seta-abaixo">→</div>
+    <div>
+      <img src="coroa.png" alt="Botão próximo" class="botao-coroa" id="btn-avancar" tabindex="0" role="button" aria-label="Próxima imagem" />
+      <div class="seta-baixo">⬇️</div>
     </div>
   </div>
 
-  <audio id="som-pergaminho" src="pergaminho.mp3" preload="auto"></audio>
-
   <script>
     const imagens = [
-      "imagem1.jpeg", "imagem2.jpeg", "imagem3.jpeg", "imagem4.jpeg",
-      "imagem5.jpeg", "imagem6.jpeg", "imagem7.jpeg", "imagem8.jpeg",
-      "imagem9.jpeg", "imagem10.jpeg", "imagem11.jpeg", "imagem12.jpeg",
-      "imagem13.jpeg", "imagem14.jpeg", "imagem15.jpeg"
+      'imagem1.jpg', 'imagem2.jpg', 'imagem3.jpg', 'imagem4.jpg', 'imagem5.jpg'
     ];
+    let indice = 0;
+    const imgGaleria = document.getElementById('galeria-img');
+    const btnVoltar = document.getElementById('btn-voltar');
+    const btnAvancar = document.getElementById('btn-avancar');
 
-    let indiceAtual = 0;
-    const paginaAtual = document.getElementById('pagina-atual');
-    const botaoAvancar = document.getElementById('avancar');
-    const botaoVoltar = document.getElementById('voltar');
-    const somPergaminho = document.getElementById('som-pergaminho');
-
-    function animarTrocaPagina(novoIndice, sentido) {
-      // sentido: 'direita' para voltar, 'esquerda' para avançar
-      paginaAtual.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
-      paginaAtual.style.opacity = 0;
-
-      if (sentido === 'esquerda') {
-        paginaAtual.style.transform = 'rotateY(-90deg)';
-      } else {
-        paginaAtual.style.transform = 'rotateY(90deg)';
-      }
-
+    function atualizarImagem() {
+      imgGaleria.style.opacity = 0;
       setTimeout(() => {
-        indiceAtual = novoIndice;
-        paginaAtual.innerHTML = `<img src="${imagens[indiceAtual]}" alt="Imagem ${indiceAtual + 1} da galeria" />`;
-        // Inicia do lado oposto para virar na direção contrária
-        if (sentido === 'esquerda') {
-          paginaAtual.style.transform = 'rotateY(90deg)';
-        } else {
-          paginaAtual.style.transform = 'rotateY(-90deg)';
-        }
-        paginaAtual.style.opacity = 0;
-
-        setTimeout(() => {
-          paginaAtual.style.transition = 'opacity 1s ease, transform 1s ease';
-          paginaAtual.style.transform = 'rotateY(0deg)';
-          paginaAtual.style.opacity = 1;
-        }, 50);
-
-        atualizarBotoes();
-      }, 700);
+        imgGaleria.src = imagens[indice];
+        imgGaleria.style.opacity = 1;
+      }, 400);
     }
 
-    function tocarSom() {
-      somPergaminho.currentTime = 0;
-      somPergaminho.play().catch(() => {});
-    }
-
-    function atualizarBotoes() {
-      botaoVoltar.style.opacity = (indiceAtual === 0) ? 0.4 : 1;
-      botaoAvancar.style.opacity = (indiceAtual === imagens.length - 1) ? 0.4 : 1;
-      botaoVoltar.style.pointerEvents = (indiceAtual === 0) ? 'none' : 'auto';
-      botaoAvancar.style.pointerEvents = (indiceAtual === imagens.length - 1) ? 'none' : 'auto';
-    }
-
-    botaoAvancar.addEventListener('click', () => {
-      if (indiceAtual < imagens.length - 1) {
-        tocarSom();
-        animarTrocaPagina(indiceAtual + 1, 'esquerda');
+    btnVoltar.addEventListener('click', () => {
+      if (indice > 0) {
+        indice--;
+        atualizarImagem();
       }
     });
 
-    botaoVoltar.addEventListener('click', () => {
-      if (indiceAtual > 0) {
-        tocarSom();
-        animarTrocaPagina(indiceAtual - 1, 'direita');
+    btnAvancar.addEventListener('click', () => {
+      if (indice < imagens.length -1) {
+        indice++;
+        atualizarImagem();
       }
     });
 
-    // Inicializa com a primeira imagem
-    paginaAtual.innerHTML = `<img src="${imagens[indiceAtual]}" alt="Imagem ${indiceAtual + 1} da galeria" />`;
-    atualizarBotoes();
-
-    // Acessibilidade: navegação por teclado
-    botaoAvancar.addEventListener('keydown', e => {
-      if(e.key === 'Enter' || e.key === ' '){
+    // Teclado para acessibilidade
+    btnVoltar.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        botaoAvancar.click();
+        btnVoltar.click();
       }
     });
-    botaoVoltar.addEventListener('keydown', e => {
-      if(e.key === 'Enter' || e.key === ' '){
+    btnAvancar.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        botaoVoltar.click();
+        btnAvancar.click();
       }
     });
+
   </script>
 </body>
 </html>

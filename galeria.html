@@ -39,18 +39,20 @@
       position: relative;
       border: 6px solid rgba(255, 215, 0, 0.6);
       border-radius: 18px;
-      box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+      box-shadow:
+        0 0 25px rgba(255, 215, 0, 0.5),
+        inset 0 0 15px rgba(255, 215, 0, 0.3);
       background: white;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       perspective: 1200px;
-      margin-bottom: 100px; /* espaço maior para coroas */
+      margin-bottom: 100px;
     }
     .pagina {
-      width: 100%;
-      height: 100%;
+      width: 90%;
+      height: 95%;
       position: relative;
       display: flex;
       align-items: center;
@@ -58,30 +60,36 @@
       cursor: pointer;
       backface-visibility: hidden;
       border-radius: 18px;
-      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow:
-        inset 0 0 15px rgba(255, 215, 0, 0.3),
+        inset 0 0 25px rgba(255, 215, 0, 0.5),
         0 6px 10px rgba(0, 0, 50, 0.3);
       user-select: none;
       transform-style: preserve-3d;
-      will-change: transform;
+      will-change: opacity, transform;
+      overflow: visible;
+      transition: opacity 1s ease;
     }
     .pagina img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 18px;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 16px;
       pointer-events: none;
       user-select: none;
       user-drag: none;
       -webkit-user-drag: none;
+      filter: drop-shadow(0 0 8px rgba(218, 165, 32, 0.6));
+      transition: filter 0.4s ease;
+    }
+    .pagina img:hover {
+      filter: drop-shadow(0 0 20px rgba(255, 223, 77, 0.9));
     }
     .botoes {
       margin-top: 0;
       display: flex;
       gap: 120px;
-      position: fixed; /* fixar na tela */
-      bottom: 30px; /* subir coroas */
+      position: fixed;
+      bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 20;
@@ -89,21 +97,24 @@
     }
     .botao-coroa-container {
       position: relative;
-      width: 150px;  /* aumentei o tamanho para mais imponência */
+      width: 150px;
       height: 150px;
       cursor: pointer;
       user-select: none;
+      perspective: 600px;
     }
     .botao-coroa {
       width: 100%;
       height: 100%;
       filter: drop-shadow(0 0 12px gold);
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, filter 0.3s ease;
       user-select: none;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
     }
     .botao-coroa:hover {
       transform: scale(1.2);
-      filter: drop-shadow(0 0 20px #ffd700);
+      filter: drop-shadow(0 0 25px #ffd700);
     }
     .seta-sobreposta {
       position: absolute;
@@ -111,12 +122,11 @@
       left: 50%;
       transform: translate(-50%, -50%);
       font-size: 4em;
-      color: rgba(0, 123, 255, 0.85);
+      color: rgba(0, 123, 255, 0.9);
       pointer-events: none;
       user-select: none;
       text-shadow: 0 0 8px white;
       font-weight: 700;
-      user-select: none;
     }
     .botao-coroa[disabled] {
       opacity: 0.4;
@@ -164,36 +174,36 @@
     const botaoVoltar = document.getElementById('voltar');
     const somPergaminho = document.getElementById('som-pergaminho');
 
-    function carregarImagem(indice) {
-      paginaAtual.style.transition = 'none';
-      paginaAtual.style.transform = 'rotateY(0deg)';
+    function animarTrocaPagina(novoIndice, sentido) {
+      // sentido: 'direita' para voltar, 'esquerda' para avançar
+      paginaAtual.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
       paginaAtual.style.opacity = 0;
-      setTimeout(() => {
-        paginaAtual.innerHTML = `<img src="${imagens[indice]}" alt="Imagem ${indice + 1} da galeria" />`;
-        paginaAtual.setAttribute('aria-describedby', `descricao-imagem`);
-        paginaAtual.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-in-out';
-        paginaAtual.style.opacity = 1;
-      }, 300);
-      atualizarBotoes();
-    }
 
-    function virarPagina(direction) {
-      paginaAtual.style.transition = 'transform 0.4s ease-in-out';
-      if(direction === 'proximo'){
+      if (sentido === 'esquerda') {
         paginaAtual.style.transform = 'rotateY(-90deg)';
-        setTimeout(() => {
-          indiceAtual++;
-          carregarImagem(indiceAtual);
-          paginaAtual.style.transform = 'rotateY(0deg)';
-        }, 400);
-      } else if(direction === 'anterior'){
+      } else {
         paginaAtual.style.transform = 'rotateY(90deg)';
-        setTimeout(() => {
-          indiceAtual--;
-          carregarImagem(indiceAtual);
-          paginaAtual.style.transform = 'rotateY(0deg)';
-        }, 400);
       }
+
+      setTimeout(() => {
+        indiceAtual = novoIndice;
+        paginaAtual.innerHTML = `<img src="${imagens[indiceAtual]}" alt="Imagem ${indiceAtual + 1} da galeria" />`;
+        // Inicia do lado oposto para virar na direção contrária
+        if (sentido === 'esquerda') {
+          paginaAtual.style.transform = 'rotateY(90deg)';
+        } else {
+          paginaAtual.style.transform = 'rotateY(-90deg)';
+        }
+        paginaAtual.style.opacity = 0;
+
+        setTimeout(() => {
+          paginaAtual.style.transition = 'opacity 1s ease, transform 1s ease';
+          paginaAtual.style.transform = 'rotateY(0deg)';
+          paginaAtual.style.opacity = 1;
+        }, 50);
+
+        atualizarBotoes();
+      }, 700);
     }
 
     function tocarSom() {
@@ -211,21 +221,22 @@
     botaoAvancar.addEventListener('click', () => {
       if (indiceAtual < imagens.length - 1) {
         tocarSom();
-        virarPagina('proximo');
+        animarTrocaPagina(indiceAtual + 1, 'esquerda');
       }
     });
 
     botaoVoltar.addEventListener('click', () => {
       if (indiceAtual > 0) {
         tocarSom();
-        virarPagina('anterior');
+        animarTrocaPagina(indiceAtual - 1, 'direita');
       }
     });
 
-    // Carregar imagem inicial
-    carregarImagem(indiceAtual);
+    // Inicializa com a primeira imagem
+    paginaAtual.innerHTML = `<img src="${imagens[indiceAtual]}" alt="Imagem ${indiceAtual + 1} da galeria" />`;
+    atualizarBotoes();
 
-    // Acessibilidade: navegação com teclado (Enter e Espaço)
+    // Acessibilidade: navegação por teclado
     botaoAvancar.addEventListener('keydown', e => {
       if(e.key === 'Enter' || e.key === ' '){
         e.preventDefault();

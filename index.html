@@ -2,134 +2,90 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Convite Celestial</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&display=swap" rel="stylesheet">
+  <title>Convite Celestial - Aghatta XV</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Alice&display=swap" rel="stylesheet">
   <style>
     * {
-      margin: 0;
-      padding: 0;
       box-sizing: border-box;
     }
 
-    body {
-      width: 100%;
-      height: 100vh;
-      background: linear-gradient(to bottom, #000428, #004e92);
-      font-family: 'Cormorant Garamond', 'Georgia', serif;
-      color: #fff;
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Alice', serif;
+      background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77);
+      color: gold;
       overflow: hidden;
-      position: relative;
     }
 
-    .envelope {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -60%);
-      width: 80vw;
-      max-width: 360px;
-      animation: cairDoCeu 3s ease forwards;
-    }
-
-    @keyframes cairDoCeu {
-      0% {
-        top: -100px;
-        opacity: 0;
-      }
-      100% {
-        top: 50%;
-        opacity: 1;
-      }
-    }
-
-    .texto {
-      position: absolute;
-      top: 20%;
-      left: 50%;
-      transform: translateX(-50%);
+    .tela {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      font-size: 1.6rem;
-      line-height: 1.4;
-      max-width: 90vw;
-      opacity: 0;
-      animation: aparecer 3s ease forwards;
-      animation-delay: 3.2s;
-      text-shadow: 1px 1px 3px #000;
+      padding: 1rem;
     }
 
-    @keyframes aparecer {
-      to {
-        opacity: 1;
-      }
+    #envelope {
+      width: 80vmin;
+      max-width: 350px;
+      margin-bottom: 1rem;
     }
 
-    .botao {
+    #botao-abrir {
       position: absolute;
-      top: 75%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100px;
-      height: 100px;
-      background: url('selo.png') no-repeat center center;
-      background-size: contain;
+      width: 90px;
+      height: 90px;
       border: none;
+      background: url('selo.png') no-repeat center center;
+      background-size: cover;
       cursor: pointer;
-      opacity: 0;
-      animation: aparecer 2s ease forwards, pulsar 2s infinite ease-in-out;
-      animation-delay: 5s;
+      animation: pulsar 2.2s infinite;
+      z-index: 5;
+      transform: translateY(-60%);
     }
 
     @keyframes pulsar {
       0%, 100% {
-        transform: translate(-50%, -50%) scale(1);
+        transform: translateY(-60%) scale(1);
+        box-shadow: 0 0 15px gold, 0 0 30px #ffd700aa;
       }
       50% {
-        transform: translate(-50%, -50%) scale(1.15);
+        transform: translateY(-60%) scale(1.15);
+        box-shadow: 0 0 35px gold, 0 0 60px #ffd700aa;
       }
     }
 
-    .fade-branco {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: white;
-      opacity: 0;
-      z-index: 9999;
-      transition: opacity 2s ease;
-      pointer-events: none;
-    }
-
-    .fade-branco.mostrar {
-      opacity: 1;
+    #convite-texto {
+      font-size: 1.4rem;
+      max-width: 85%;
+      margin-top: 2.5rem;
+      text-shadow: 0 0 5px gold;
+      color: #fffde7;
     }
   </style>
 </head>
 <body>
-
-  <div class="texto">
-    <p>Não é só um convite... é um chamado.<br />Toque para abrir</p>
+  <div class="tela">
+    <div style="position: relative; display: flex; flex-direction: column; align-items: center;">
+      <img id="envelope" src="envelope.png" alt="Envelope do convite">
+      <button id="botao-abrir" aria-label="Abrir o convite"></button>
+    </div>
+    <div id="convite-texto">
+      Não é só um convite... é um chamado.<br/>
+      Toque para abrir.
+    </div>
   </div>
 
-  <img src="envelope.png" alt="Envelope Celestial" class="envelope" />
-
-  <button class="botao" id="botao-abrir" aria-label="Abrir Convite Celestial"></button>
-
-  <div class="fade-branco" id="fade"></div>
-
   <script>
-    const botao = document.getElementById('botao-abrir');
-    const fade = document.getElementById('fade');
-
-    botao.addEventListener('click', () => {
-      fade.classList.add('mostrar');
-      setTimeout(() => {
-        window.location.href = 'segunda-experiencia.html';
-      }, 2000);
+    const botaoAbrir = document.getElementById('botao-abrir');
+    botaoAbrir.addEventListener('click', () => {
+      window.location.href = 'segunda-experiencia.html';
     });
   </script>
-
 </body>
 </html>

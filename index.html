@@ -7,87 +7,64 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Georgia&display=swap');
 
+    * {
+      box-sizing: border-box;
+    }
+
     body, html {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       height: 100%;
-      background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77);
       overflow: hidden;
       font-family: 'Georgia', serif;
-      display: flex;
+      background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77);
+      color: gold;
+    }
+
+    .tela {
+      display: none;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      color: gold;
-      user-select: none;
-      position: relative;
+      height: 100%;
+      text-align: center;
+      padding: 1rem;
     }
 
-    #nevoa {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      pointer-events: none;
-      background: radial-gradient(circle at center, #ffd70033, transparent 70%);
-      opacity: 0;
-      transition: opacity 2s ease;
-      z-index: 10;
-    }
-
-    .estrela {
-      position: absolute;
-      background: gold;
-      border-radius: 50%;
-      opacity: 0.8;
-      filter: drop-shadow(0 0 5px gold);
-      animation: estrelaMove 3s linear forwards;
-    }
-
-    @keyframes estrelaMove {
-      from {
-        transform: translate3d(calc(var(--x) * 1vw), 100vh, 0) scale(0.5);
-        opacity: 0.8;
-      }
-      to {
-        transform: translate3d(calc(var(--x) * 1vw), 0vh, 0) scale(1);
-        opacity: 0;
-      }
+    .ativa {
+      display: flex;
     }
 
     #envelope {
-      width: 120vmin;
+      width: 80vmin;
       max-width: 400px;
+      animation: envelopeDesce 5s ease forwards;
       opacity: 0;
-      position: relative;
-      animation: envelopeFadeIn 5s ease forwards;
-      z-index: 20;
     }
 
-    @keyframes envelopeFadeIn {
+    @keyframes envelopeDesce {
       0% {
-        opacity: 0;
         transform: translateY(-150vh) rotate(-15deg);
+        opacity: 0;
       }
       100% {
-        opacity: 1;
         transform: translateY(0) rotate(0deg);
+        opacity: 1;
       }
     }
 
     #convite-texto {
-      margin-top: 2rem;
       font-family: 'Great Vibes', cursive;
-      font-size: 2.4rem;
-      text-align: center;
-      max-width: 350px;
+      font-size: 2.2rem;
+      margin-top: 1rem;
+      max-width: 80%;
       opacity: 0;
-      animation: textoFadeIn 2.5s ease forwards;
+      animation: fadeInTexto 2s ease forwards;
       animation-delay: 5s;
-      z-index: 25;
-      text-shadow:
-        0 0 5px gold,
-        0 0 10px gold;
+      text-shadow: 0 0 5px gold, 0 0 10px gold;
     }
 
-    @keyframes textoFadeIn {
+    @keyframes fadeInTexto {
       to {
         opacity: 1;
       }
@@ -95,158 +72,105 @@
 
     #botao-abrir {
       display: none;
-      margin-top: -5rem;
-      margin-bottom: 2rem;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: linear-gradient(135deg, #0044cc, #ffcc00);
+      border: 3px solid gold;
       width: 80px;
       height: 80px;
       border-radius: 50%;
-      background: linear-gradient(45deg, #0044cc, #ffcc00);
-      border: 3px solid gold;
-      box-shadow:
-        0 0 15px gold,
-        0 0 30px #ffd700cc;
-      cursor: pointer;
-      font-size: 2.5rem;
+      font-size: 2rem;
       color: #001170;
-      font-weight: bold;
-      user-select: none;
-      align-items: center;
-      justify-content: center;
-      animation: pulsarZoom 2.5s infinite;
-      position: absolute;
-      z-index: 30;
-      transition: box-shadow 0.3s ease;
+      animation: pulsar 2s infinite;
+      box-shadow: 0 0 20px gold;
+      cursor: pointer;
+      z-index: 10;
     }
 
-    #botao-abrir:hover {
-      box-shadow:
-        0 0 30px gold,
-        0 0 50px #ffd700cc;
-    }
-
-    @keyframes pulsarZoom {
+    @keyframes pulsar {
       0%, 100% {
-        transform: scale(1);
+        transform: translateY(-50%) scale(1);
       }
       50% {
-        transform: scale(1.15);
+        transform: translateY(-50%) scale(1.15);
       }
     }
 
     /* Segunda tela */
-    #segunda-tela {
-      display: none;
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: linear-gradient(135deg, #f8f9fa, #ffffff);
-      color: #001170;
-      font-family: 'Georgia', serif;
-      font-size: 1.5rem;
-      text-align: center;
-      padding: 3rem 1rem;
-      z-index: 40;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      transition: opacity 1.5s ease;
+    #segunda-tela p {
+      font-size: 1.3rem;
+      max-width: 600px;
+      font-style: italic;
+      color: #fff5cc;
+      text-shadow: 0 0 5px #ffd700;
     }
 
-    #segunda-tela h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 3rem;
-      margin-bottom: 1rem;
+    #botao-avancar {
+      margin-top: 2rem;
+      padding: 0.8rem 2rem;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      border: none;
+      background: linear-gradient(to right, #001170, #ffcc00);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 15px gold;
+      transition: transform 0.3s ease;
+    }
+
+    #botao-avancar:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px gold;
     }
   </style>
 </head>
 <body>
 
-  <!-- Envelope -->
-  <img id="envelope" src="envelope.png" alt="Envelope do convite" />
-
-  <!-- Texto convite -->
-  <div id="convite-texto">
-    Venha se perder na magia da imersão interativa,<br/>
-    onde festa e fé dançam juntas em luz e esperança.
+  <!-- Primeira tela -->
+  <div id="primeira-tela" class="tela ativa">
+    <div style="position: relative; display: flex; flex-direction: column; align-items: center;">
+      <img id="envelope" src="envelope.png" alt="Envelope do convite">
+      <button id="botao-abrir" aria-label="Abrir o convite">📩</button>
+    </div>
+    <div id="convite-texto">
+      Venha se perder na magia da imersão interativa,<br/>
+      onde festa e fé dançam juntas em luz e esperança.
+    </div>
   </div>
 
-  <!-- Botão sobre o envelope -->
-  <button id="botao-abrir" aria-label="Abrir o convite">📩</button>
-
-  <!-- Neblina e estrelas -->
-  <div id="nevoa"></div>
-
   <!-- Segunda tela -->
-  <div id="segunda-tela">
-    <div style="max-width: 500px;">
-      <h1>Aghatta XV</h1>
-      <p>
-        Este convite não é apenas para uma festa.<br/>
-        É um chamado à luz, à alegria e à celebração da vida.<br/><br/>
-        Em cada detalhe, um toque de fé.<br/>
-        Em cada presença, um brilho eterno.<br/><br/>
-        Prepare-se para viver a segunda experiência.
-      </p>
-    </div>
+  <div id="segunda-tela" class="tela">
+    <p>
+      Você está prestes a entrar num universo onde os céus se curvam em celebração, <br/>
+      onde cada detalhe foi sonhado para tocar o coração.<br/><br/>
+      Que este convite não seja apenas visual,<br/>
+      mas espiritual... um mergulho em algo eterno.
+    </p>
+    <button id="botao-avancar">Avançar</button>
   </div>
 
   <script>
     const envelope = document.getElementById('envelope');
+    const botaoAbrir = document.getElementById('botao-abrir');
     const texto = document.getElementById('convite-texto');
-    const botao = document.getElementById('botao-abrir');
-    const nevoa = document.getElementById('nevoa');
+    const primeiraTela = document.getElementById('primeira-tela');
     const segundaTela = document.getElementById('segunda-tela');
+    const botaoAvancar = document.getElementById('botao-avancar');
 
+    // Mostrar botão após texto aparecer
     texto.addEventListener('animationend', () => {
-      botao.style.display = 'flex';
-      botao.style.top = `${envelope.offsetTop + envelope.offsetHeight / 2 - 40}px`;
-      botao.style.left = `50%`;
-      botao.style.transform = 'translateX(-50%)';
+      botaoAbrir.style.display = 'block';
     });
 
-    function criarEstrela() {
-      const estrela = document.createElement('div');
-      estrela.classList.add('estrela');
-      estrela.style.setProperty('--x', Math.random() * 100);
-      estrela.style.width = `${Math.random() * 6 + 4}px`;
-      estrela.style.height = estrela.style.width;
-      estrela.style.left = `${Math.random() * 100}vw`;
-      nevoa.appendChild(estrela);
+    botaoAbrir.addEventListener('click', () => {
+      primeiraTela.classList.remove('ativa');
+      segundaTela.classList.add('ativa');
+    });
 
-      estrela.addEventListener('animationend', () => {
-        estrela.remove();
-      });
-    }
-
-    function iniciarEstrelas() {
-      nevoa.style.opacity = 1;
-      setInterval(criarEstrela, 350);
-    }
-
-    botao.addEventListener('click', () => {
-      nevoa.style.opacity = 1;
-      document.body.style.transition = 'background 2s ease';
-      document.body.style.background = '#fff';
-
-      envelope.style.transition = 'opacity 2s ease';
-      texto.style.transition = 'opacity 2s ease';
-      botao.style.transition = 'opacity 2s ease';
-      envelope.style.opacity = 0;
-      texto.style.opacity = 0;
-      botao.style.opacity = 0;
-
-      iniciarEstrelas();
-
-      setTimeout(() => {
-        segundaTela.style.display = 'flex';
-        setTimeout(() => {
-          segundaTela.style.opacity = 1;
-        }, 100);
-
-        setTimeout(() => {
-          window.location.href = 'segunda-experiencia.html';
-        }, 5000);
-      }, 2500);
+    botaoAvancar.addEventListener('click', () => {
+      window.location.href = 'segunda-experiencia.html';
     });
   </script>
 

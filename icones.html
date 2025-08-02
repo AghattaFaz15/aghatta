@@ -6,45 +6,28 @@
 <title>Confirmação Celestial</title>
 <style>
   body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100vh;
     margin: 0; padding: 0;
     background: radial-gradient(ellipse at center, #000030 0%, #000010 100%);
     font-family: 'Georgia', serif;
     color: #fff8dc;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    height: 100vh;
     user-select: none;
     text-align: center;
+    overflow-x: hidden;
     position: relative;
-    display: flex;
-    flex-direction: column;
   }
 
   h1 {
     font-style: italic;
     font-weight: normal;
     font-size: 1.3rem;
-    margin: 1rem;
+    margin: 1rem 1rem 0.5rem 1rem;
     color: #ffe;
     text-shadow: 0 0 7px #ffd700;
     user-select: none;
-    flex-shrink: 0;
-  }
-
-  #base-container {
-    position: fixed;
-    bottom: 0;
-    left: 0; right: 0;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 1rem 0.8rem;
-    box-shadow: 0 -2px 15px #ffd700aa;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.6rem;
-    max-height: 45vh;
-    overflow: hidden;
-    z-index: 1000;
   }
 
   form#form-container {
@@ -56,10 +39,10 @@
     gap: 0.8rem;
     max-width: 600px;
     width: 90vw;
+    margin: 0 auto 1rem auto;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    flex-shrink: 0;
     position: relative;
     z-index: 10;
   }
@@ -95,7 +78,6 @@
     cursor: pointer;
     user-select: none;
     font-size: 1rem;
-    flex-shrink: 0;
   }
 
   input[type="checkbox"] {
@@ -118,7 +100,6 @@
     box-shadow: 0 0 8px #ffd700aa;
     user-select: none;
     min-width: 110px;
-    flex-shrink: 0;
   }
   button:hover, button:focus,
   #addAcompanhante:hover, #addAcompanhante:focus {
@@ -127,160 +108,61 @@
     outline: none;
   }
 
-  #confirmados {
-    background: rgba(0,0,0,0.25);
-    max-height: 15vh;
-    overflow-y: auto;
-    width: 100%;
-    padding: 0.7rem 0.5rem;
-    box-shadow: inset 0 0 15px #ffd700aa;
-    color: #fff8dc;
-    text-shadow: 0 0 6px #ffd700bb;
-    font-size: 1rem;
-    user-select: text;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    flex-shrink: 0;
-    border-radius: 12px;
-  }
-
-  .confirmado-item {
-    padding: 0.2rem 0.5rem;
-    background: rgba(255, 215, 0, 0.15);
-    border-radius: 8px;
-    box-shadow: 0 0 6px #ffd70099;
-    display: inline-block;
-    text-align: left;
-  }
-
-  .acompanhantes-lista {
-    margin-left: 1rem;
-    font-size: 0.9rem;
-    font-style: italic;
-    color: #fff7b5;
-  }
-
-  /* Estrela animada que sobe do formulário */
-  .estrela {
+  /* Container das estrelas fixas no topo */
+  #ceu-estrelas {
     position: fixed;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 120px;
-    height: 120px;
-    background: url('estrela.png') no-repeat center center;
-    background-size: contain;
-    box-shadow: 0 0 14px #ffd700dd;
-    filter: drop-shadow(0 0 6px gold);
-    border-radius: 50%;
-    font-family: 'Georgia', serif;
-    font-weight: 700;
-    color: #222;
-    user-select: none;
-    cursor: default;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    height: 60px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start; /* topo */
-    padding-top: 15px;
-    text-shadow: 0 0 8px #ffd700cc;
-    z-index: 1050;
-  }
-
-  .estrela span.nome-estrela {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #222;
-    margin-top: 5px;
-    max-width: 100%;
-    word-wrap: break-word;
-    text-align: center;
-    /* Para posicionar no topo dentro da estrela */
-    user-select: none;
-  }
-
-  /* Container fixo no topo para estrelas que já subiram */
-  #estrelas-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
-    background: rgba(0,0,0,0.35);
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    gap: 10px;
+    flex-wrap: nowrap;
     overflow-x: auto;
-    z-index: 1100;
+    gap: 10px;
+    z-index: 10000;
+    pointer-events: none;
   }
 
-  .estrela-fixa {
+  /* Cada estrela */
+  .estrela {
     position: relative;
-    width: 80px;
-    height: 80px;
-    background: url('estrela.png') no-repeat center center;
-    background-size: contain;
-    box-shadow: 0 0 14px #ffd700dd;
-    filter: drop-shadow(0 0 6px gold);
-    border-radius: 50%;
-    font-family: 'Georgia', serif;
+    flex-shrink: 0;
+    width: 180px;
+    height: 40px;
+    background-image: url('estrela.png');
+    background-repeat: no-repeat;
+    background-size: 40px 40px;
+    background-position: left center;
+    padding-left: 50px;
+    color: #222;
     font-weight: 700;
-    color: #222;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding-top: 12px;
-    user-select: none;
-    cursor: default;
-  }
-
-  .estrela-fixa span.nome-estrela {
-    font-size: 0.85rem;
-    margin-top: 4px;
-    max-width: 90%;
-    word-wrap: break-word;
-    text-align: center;
-  }
-
-  /* Container para acompanhantes */
-  #acompanhaContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    flex-grow: 1;
-    min-width: 200px;
-    max-width: 300px;
-  }
-
-  #acompanhaContainer input {
-    background-color: #fffde7;
-    padding: 0.5rem 1rem;
-    border-radius: 12px;
-    border: none;
     font-family: 'Georgia', serif;
-    color: #222;
     font-size: 1rem;
-    outline-offset: 2px;
-    outline-color: gold;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 10px #ffd700cc;
+    border-radius: 20px;
+    opacity: 0;
+    animation: subirFadeIn 1.5s forwards;
+    user-select: none;
   }
 
-  #acompanhaContainer input:focus {
-    outline-color: #ffd700;
+  @keyframes subirFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
-  #addAcompanhante {
-    margin-top: 0.3rem;
-    align-self: flex-start;
+  /* Scrollbar estilizada para o céu */
+  #ceu-estrelas::-webkit-scrollbar {
+    height: 8px;
   }
-
-  /* Scrollbar estilizada */
-  #confirmados::-webkit-scrollbar {
-    width: 8px;
-  }
-  #confirmados::-webkit-scrollbar-thumb {
+  #ceu-estrelas::-webkit-scrollbar-thumb {
     background: #ffd700aa;
     border-radius: 10px;
   }
@@ -301,210 +183,161 @@
     label {
       justify-content: center;
     }
+    #ceu-estrelas {
+      height: 80px;
+    }
+    .estrela {
+      width: 140px;
+      font-size: 0.9rem;
+      background-size: 30px 30px;
+      padding-left: 40px;
+    }
   }
 </style>
 </head>
 <body>
   <h1>"Há nomes que brilham no céu do coração."</h1>
 
-  <div id="estrelas-container" aria-label="Estrelas dos convidados confirmados"></div>
+  <div id="ceu-estrelas" aria-label="Nomes das estrelas confirmadas"></div>
 
-  <div id="base-container">
-    <form id="form-container" aria-label="Confirmação de presença">
-      <input
-        type="text"
-        id="nome"
-        placeholder="Digite seu nome"
-        aria-required="true"
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="words"
-        spellcheck="false"
-        required
-      />
-      <label for="acompanhaCheck">
-        <input type="checkbox" id="acompanhaCheck" />
-        Vou com acompanhante(s)
-      </label>
-      <div id="acompanhaContainer" hidden>
-        <!-- Inputs para acompanhantes vão aqui -->
-      </div>
-      <button type="submit" aria-label="Confirmar presença">⭐ Confirmar</button>
-    </form>
-
-    <div id="confirmados" aria-live="polite" aria-atomic="true" aria-relevant="additions" tabindex="0" role="region" aria-label="Lista de confirmações">
-      <!-- Lista de confirmados aparecerá aqui -->
+  <form id="form-container" aria-label="Confirmação de presença">
+    <input
+      type="text"
+      id="nome"
+      placeholder="Digite seu nome"
+      aria-required="true"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="words"
+      spellcheck="false"
+      required
+    />
+    <label for="acompanhaCheck">
+      <input type="checkbox" id="acompanhaCheck" />
+      Vou com acompanhante(s)
+    </label>
+    <div id="acompanhaContainer" hidden>
+      <!-- Inputs para acompanhantes vão aqui -->
     </div>
-  </div>
+    <button type="submit" aria-label="Confirmar presença">⭐ Confirmar</button>
+  </form>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
-    authDomain: "livro-aghatta.firebaseapp.com",
-    databaseURL: "https://livro-aghatta-default-rtdb.firebaseio.com",
-    projectId: "livro-aghatta",
-    storageBucket: "livro-aghatta.appspot.com",
-    messagingSenderId: "137287649516",
-    appId: "1:137287649516:web:61cb4988d5d00a5e59e6b9"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
+      authDomain: "livro-aghatta.firebaseapp.com",
+      databaseURL: "https://livro-aghatta-default-rtdb.firebaseio.com",
+      projectId: "livro-aghatta",
+      storageBucket: "livro-aghatta.appspot.com",
+      messagingSenderId: "137287649516",
+      appId: "1:137287649516:web:61cb4988d5d00a5e59e6b9"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  const estrelasRef = ref(db, "estrelas");
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const estrelasRef = ref(db, "estrelas");
 
-  const form = document.getElementById('form-container');
-  const inputNome = document.getElementById('nome');
-  const acompanhaCheck = document.getElementById('acompanhaCheck');
-  const acompanhaContainer = document.getElementById('acompanhaContainer');
-  const confirmadosDiv = document.getElementById('confirmados');
-  const estrelasContainer = document.getElementById('estrelas-container');
+    const form = document.getElementById('form-container');
+    const inputNome = document.getElementById('nome');
+    const acompanhaCheck = document.getElementById('acompanhaCheck');
+    const acompanhaContainer = document.getElementById('acompanhaContainer');
+    const ceuEstrelasDiv = document.getElementById('ceu-estrelas');
 
-  let acompanhantesInputs = [];
+    let acompanhantesInputs = [];
 
-  function criarInputAcompanhante() {
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.placeholder = 'Nome do acompanhante';
-    input.autocomplete = 'off';
-    input.autocorrect = 'off';
-    input.autocapitalize = 'words';
-    input.spellcheck = false;
-    input.classList.add('acompanha-nome');
-    acompanhaContainer.appendChild(input);
-    acompanhantesInputs.push(input);
-    input.focus();
-  }
+    function criarInputAcompanhante() {
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.placeholder = 'Nome do acompanhante';
+      input.autocomplete = 'off';
+      input.autocorrect = 'off';
+      input.autocapitalize = 'words';
+      input.spellcheck = false;
+      input.classList.add('acompanha-nome');
+      acompanhaContainer.appendChild(input);
+      acompanhantesInputs.push(input);
+      input.focus();
+    }
 
-  acompanhaCheck.addEventListener('change', () => {
-    if (acompanhaCheck.checked) {
-      acompanhaContainer.hidden = false;
-      if (acompanhantesInputs.length === 0) {
-        criarInputAcompanhante();
+    acompanhaCheck.addEventListener('change', () => {
+      if (acompanhaCheck.checked) {
+        acompanhaContainer.hidden = false;
+        if (acompanhantesInputs.length === 0) {
+          criarInputAcompanhante();
+        }
+        criarBotaoAdicionar();
+      } else {
+        acompanhaContainer.hidden = true;
+        acompanhantesInputs = [];
+        acompanhaContainer.innerHTML = '';
+        removerBotaoAdicionar();
       }
-      criarBotaoAdicionar();
-    } else {
+    });
+
+    function criarBotaoAdicionar() {
+      if (document.getElementById('addAcompanhante')) return;
+      const btn = document.createElement('button');
+      btn.id = 'addAcompanhante';
+      btn.type = 'button';
+      btn.textContent = '+ Acompanhar';
+      btn.title = 'Adicionar mais acompanhantes';
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        criarInputAcompanhante();
+      });
+      acompanhaContainer.appendChild(btn);
+    }
+    function removerBotaoAdicionar() {
+      const btn = document.getElementById('addAcompanhante');
+      if (btn) btn.remove();
+    }
+
+    onChildAdded(estrelasRef, (data) => {
+      const { nome, acompanhantes } = data.val();
+      criarEstrelaFixa(nome, acompanhantes || []);
+    });
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      confirmarPresenca();
+    });
+
+    function confirmarPresenca() {
+      const nome = inputNome.value.trim();
+      if (!nome) return alert("Por favor, digite seu nome.");
+
+      let acompanhantes = acompanhantesInputs
+        .map(input => input.value.trim())
+        .filter(n => n.length > 0);
+
+      push(estrelasRef, { nome, acompanhantes });
+
+      inputNome.value = '';
+      acompanhaCheck.checked = false;
       acompanhaContainer.hidden = true;
-      acompanhantesInputs = [];
       acompanhaContainer.innerHTML = '';
+      acompanhantesInputs = [];
+      inputNome.focus();
       removerBotaoAdicionar();
     }
-  });
 
-  function criarBotaoAdicionar() {
-    if (document.getElementById('addAcompanhante')) return;
-    const btn = document.createElement('button');
-    btn.id = 'addAcompanhante';
-    btn.type = 'button';
-    btn.textContent = '+ Acompanhar';
-    btn.title = 'Adicionar mais acompanhantes';
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      criarInputAcompanhante();
-    });
-    acompanhaContainer.appendChild(btn);
-  }
-  function removerBotaoAdicionar() {
-    const btn = document.getElementById('addAcompanhante');
-    if (btn) btn.remove();
-  }
+    function criarEstrelaFixa(nome, acompanhantes) {
+      const textoBase = acompanhantes.length > 0
+        ? `${nome} +${acompanhantes.length}`
+        : nome;
 
-  onChildAdded(estrelasRef, (data) => {
-    const { nome, acompanhantes } = data.val();
-    mostrarConfirmacao(nome, acompanhantes || []);
-    criarEstrelas(nome, acompanhantes || []);
-  });
+      const estrela = document.createElement('div');
+      estrela.className = 'estrela';
+      estrela.textContent = textoBase;
 
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    confirmarPresenca();
-  });
+      ceuEstrelasDiv.appendChild(estrela);
 
-  function confirmarPresenca() {
-    const nome = inputNome.value.trim();
-    if (!nome) return alert("Por favor, digite seu nome.");
-
-    let acompanhantes = acompanhantesInputs
-      .map(input => input.value.trim())
-      .filter(n => n.length > 0);
-
-    push(estrelasRef, { nome, acompanhantes });
-
-    inputNome.value = '';
-    acompanhaCheck.checked = false;
-    acompanhaContainer.hidden = true;
-    acompanhaContainer.innerHTML = '';
-    acompanhantesInputs = [];
-    inputNome.focus();
-    removerBotaoAdicionar();
-  }
-
-  function mostrarConfirmacao(nome, acompanhantes) {
-    const div = document.createElement('div');
-    div.className = 'confirmado-item';
-
-    let texto = nome;
-    if (acompanhantes.length > 0) {
-      texto += ': ';
+      // Scrolla para o final para mostrar a estrela nova
+      ceuEstrelasDiv.scrollLeft = ceuEstrelasDiv.scrollWidth;
     }
-
-    div.textContent = texto;
-
-    if (acompanhantes.length > 0) {
-      const lista = document.createElement('div');
-      lista.className = 'acompanhantes-lista';
-      lista.textContent = acompanhantes.join(', ');
-      div.appendChild(lista);
-    }
-    confirmadosDiv.appendChild(div);
-  }
-
-  function criarEstrelas(nome, acompanhantes) {
-    const textoBase = acompanhantes.length > 0
-      ? `${nome} +${acompanhantes.length}`
-      : nome;
-
-    // Estrela que sobe animada
-    const estrela = document.createElement('div');
-    estrela.className = 'estrela';
-
-    const texto = document.createElement('span');
-    texto.className = 'nome-estrela';
-    texto.textContent = textoBase;
-
-    estrela.appendChild(texto);
-
-    document.body.appendChild(estrela);
-
-    let posBottom = 100;
-    const targetTop = 50; // altura do container fixo no topo
-    const speed = 2;
-
-    function animar() {
-      if (posBottom < window.innerHeight - targetTop - 120) {
-        posBottom += speed;
-        estrela.style.bottom = posBottom + 'px';
-        requestAnimationFrame(animar);
-      } else {
-        estrela.remove();
-
-        const estrelaFixa = document.createElement('div');
-        estrelaFixa.className = 'estrela-fixa';
-
-        const textoFixo = document.createElement('span');
-        textoFixo.className = 'nome-estrela';
-        textoFixo.textContent = textoBase;
-
-        estrelaFixa.appendChild(textoFixo);
-        estrelasContainer.appendChild(estrelaFixa);
-
-        estrelasContainer.scrollLeft = estrelasContainer.scrollWidth;
-      }
-    }
-    animar();
-  }
-</script>
+  </script>
 </body>
 </html>

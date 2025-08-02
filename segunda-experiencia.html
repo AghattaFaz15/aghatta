@@ -20,7 +20,6 @@
       position: relative;
     }
 
-    /* Fundo translúcido */
     body::before {
       content: '';
       position: absolute;
@@ -61,19 +60,18 @@
     #textoScroll {
       width: 70%;
       max-width: 260px;
-      height: 30%; /* altura menor */
-      margin-top: -1rem; /* sobe um pouco */
+      height: 30%;
+      margin-top: -1rem;
       background: rgba(255, 255, 255, 0.05);
       border-radius: 12px;
       padding: 1rem;
       color: #001170;
-      font-size: 1.5rem; /* AUMENTO AQUI */
+      font-size: 1.5rem;
       line-height: 1.8;
       overflow-y: auto;
       text-align: center;
       box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
       backdrop-filter: blur(4px);
-      transition: box-shadow 0.3s ease;
     }
 
     #textoScroll::-webkit-scrollbar {
@@ -120,7 +118,7 @@
 </head>
 <body>
 
-  <!-- Estrelas cintilantes -->
+  <!-- Estrelas -->
   <script>
     for (let i = 0; i < 80; i++) {
       const estrela = document.createElement('div');
@@ -154,7 +152,7 @@
       </p>
     </div>
 
-    <button id="botao-abrir" onclick="proximaPagina()">✨ Iniciar a Jornada</button>
+    <button id="botao-abrir">✨ Iniciar a Jornada</button>
   </div>
 
   <script>
@@ -168,9 +166,10 @@
       }
     });
 
-    function proximaPagina() {
+    // Redirecionar ao clicar
+    botaoAbrir.addEventListener('click', () => {
       window.location.href = 'segunda-experiencia.html';
-    }
+    });
   </script>
 
 </body>

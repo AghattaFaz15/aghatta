@@ -2,57 +2,65 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Lista de Confirmados - Aghatta XV</title>
+  <title>Lista de Confirmados</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
-      margin: 0; padding: 2rem;
-      background: radial-gradient(circle at center, #000021 0%, #000011 100%);
-      font-family: 'Georgia', serif;
+      background: #000021;
       color: gold;
+      font-family: 'Georgia', serif;
+      margin: 2rem;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
+      flex-direction: column;
+      align-items: center;
       min-height: 100vh;
       user-select: none;
     }
-    .estrela {
-      position: relative;
-      width: 140px;
-      height: 140px;
-      background: url('estrela.png') no-repeat center center;
-      background-size: contain;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fffacd;
-      font-weight: bold;
-      font-size: 1.1rem;
-      text-align: center;
-      padding: 0 10px;
-      white-space: pre-wrap;
-      box-shadow: 0 0 12px gold;
-      user-select: text;
-      cursor: default;
-    }
+
     h1 {
-      width: 100%;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 8px gold;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      width: 90%;
+      max-width: 400px;
+      background: rgba(255, 215, 0, 0.1);
+      border-radius: 10px;
+      box-shadow: 0 0 12px gold;
+    }
+
+    li {
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid gold;
+      font-size: 1.1rem;
+      user-select: text;
+    }
+
+    li:last-child {
+      border-bottom: none;
+    }
+
+    .vazio {
+      padding: 1rem;
+      font-style: italic;
+      color: #ffd700aa;
       text-align: center;
-      color: gold;
-      text-shadow: 0 0 10px #ffd700;
-      margin-bottom: 2rem;
+      user-select: none;
     }
   </style>
-</head>
-<body>
-  <h1>🌟 Confirmados para Aghatta XV 🌟</h1>
-  <div id="lista-confirmados"></div>
-
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+</head>
+<body>
+  <h1>Confirmados com Amor</h1>
+  <ul id="listaConfirmados">
+    <li class="vazio">Nenhuma confirmação ainda...</li>
+  </ul>
+
   <script>
-    // Configuração Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
       authDomain: "livro-aghatta.firebaseapp.com",
@@ -62,25 +70,26 @@
       messagingSenderId: "491625108244",
       appId: "1:491625108244:web:3afdfda239f9d0904ca801"
     };
-    // Inicializa Firebase
+
     firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+    const database = firebase.database();
+    const listaConfirmados = document.getElementById('listaConfirmados');
 
-    const listaDiv = document.getElementById('lista-confirmados');
-
-    // Atualiza a lista em tempo real
-    db.ref('confirmados').on('value', snapshot => {
-      listaDiv.innerHTML = ''; // limpa
+    database.ref('confirmados').on('value', snapshot => {
       const dados = snapshot.val();
+      listaConfirmados.innerHTML = '';
+
       if (dados) {
-        Object.values(dados).forEach(({ nome }) => {
-          const estrela = document.createElement('div');
-          estrela.classList.add('estrela');
-          estrela.textContent = nome;
-          listaDiv.appendChild(estrela);
+        Object.values(dados).forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = item.nome;
+          listaConfirmados.appendChild(li);
         });
       } else {
-        listaDiv.textContent = 'Nenhuma confirmação ainda... mas a festa está chegando!';
+        const vazio = document.createElement('li');
+        vazio.className = 'vazio';
+        vazio.textContent = 'Nenhuma confirmação ainda...';
+        listaConfirmados.appendChild(vazio);
       }
     });
   </script>

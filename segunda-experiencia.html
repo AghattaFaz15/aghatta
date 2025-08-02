@@ -59,14 +59,14 @@
     }
 
     #textoScroll {
-      width: 80%;
-      max-width: 320px;
-      height: 60%;
+      width: 70%;
+      max-width: 240px;
+      height: 35%;
       background: rgba(255, 255, 255, 0.05);
       border-radius: 12px;
       padding: 1rem;
-      color: #fff6d0;
-      font-size: 1.2rem;
+      color: #001170; /* Azul royal */
+      font-size: 1.3rem;
       line-height: 1.6;
       overflow-y: auto;
       text-align: center;
@@ -159,9 +159,6 @@
   <script>
     const textoScroll = document.getElementById('textoScroll');
     const botaoAbrir = document.getElementById('botao-abrir');
-
-    // Oculta o botão inicialmente
-    botaoAbrir.classList.remove('show');
 
     textoScroll.addEventListener('scroll', () => {
       const { scrollTop, scrollHeight, clientHeight } = textoScroll;

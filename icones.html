@@ -1,342 +1,180 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Confirmação Celestial</title>
-<style>
-  body {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 100vh;
-    margin: 0; padding: 0;
-    background: radial-gradient(ellipse at center, #000030 0%, #000010 100%);
-    font-family: 'Georgia', serif;
-    color: #fff8dc;
-    user-select: none;
-    text-align: center;
-    overflow-x: hidden;
-    position: relative;
-  }
-
-  h1 {
-    font-style: italic;
-    font-weight: normal;
-    font-size: 1.3rem;
-    margin: 1rem 1rem 0.5rem 1rem;
-    color: #ffe;
-    text-shadow: 0 0 7px #ffd700;
-    user-select: none;
-  }
-
-  form#form-container {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 1rem 1.2rem;
-    border-radius: 14px;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-    display: flex;
-    gap: 0.8rem;
-    max-width: 600px;
-    width: 90vw;
-    margin: 0 auto 1rem auto;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 10;
-  }
-
-  input[type="text"] {
-    flex-grow: 1;
-    padding: 0.6rem 1rem;
-    font-size: 1.1rem;
-    border: none;
-    border-radius: 12px;
-    font-family: 'Georgia', serif;
-    color: #222;
-    outline-offset: 2px;
-    outline-color: gold;
-    transition: outline-color 0.3s ease;
-    min-width: 180px;
-    background-color: #fffde7;
-  }
-  input[type="text"]:focus {
-    outline-color: #ffd700;
-  }
-  input::placeholder {
-    color: #999;
-    font-style: italic;
-  }
-
-  label {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    color: #fff8dc;
-    font-family: 'Georgia', serif;
-    cursor: pointer;
-    user-select: none;
-    font-size: 1rem;
-  }
-
-  input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    accent-color: gold;
-  }
-
-  button, #addAcompanhante {
-    background: gold;
-    border: none;
-    padding: 0.6rem 1.4rem;
-    font-weight: bold;
-    font-family: 'Georgia', serif;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: background 0.3s ease, box-shadow 0.3s ease;
-    color: #222;
-    box-shadow: 0 0 8px #ffd700aa;
-    user-select: none;
-    min-width: 110px;
-  }
-  button:hover, button:focus,
-  #addAcompanhante:hover, #addAcompanhante:focus {
-    background: #ffd700;
-    box-shadow: 0 0 16px #fff266;
-    outline: none;
-  }
-
-  /* Container das estrelas fixas no topo */
-  #ceu-estrelas {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    height: 60px;
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: 10px;
-    z-index: 10000;
-    pointer-events: none;
-  }
-
-  /* Cada estrela */
-  .estrela {
-    position: relative;
-    flex-shrink: 0;
-    width: 180px;
-    height: 40px;
-    background-image: url('estrela.png');
-    background-repeat: no-repeat;
-    background-size: 40px 40px;
-    background-position: left center;
-    padding-left: 50px;
-    color: #222;
-    font-weight: 700;
-    font-family: 'Georgia', serif;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    box-shadow: 0 0 10px #ffd700cc;
-    border-radius: 20px;
-    opacity: 0;
-    animation: subirFadeIn 1.5s forwards;
-    user-select: none;
-  }
-
-  @keyframes subirFadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Scrollbar estilizada para o céu */
-  #ceu-estrelas::-webkit-scrollbar {
-    height: 8px;
-  }
-  #ceu-estrelas::-webkit-scrollbar-thumb {
-    background: #ffd700aa;
-    border-radius: 10px;
-  }
-
-  @media (max-width: 480px) {
-    form#form-container {
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Convite Celestial - Aghatta XV</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: radial-gradient(ellipse at center, #000030 0%, #000010 100%);
+      font-family: 'Georgia', serif;
+      color: #fff8dc;
+      display: flex;
       flex-direction: column;
-      max-width: 90vw;
+      justify-content: flex-end;
+      overflow: hidden;
     }
-    button, #addAcompanhante {
-      width: 100%;
-      min-width: auto;
+
+    h1 {
+      text-align: center;
+      color: #ffe;
+      text-shadow: 0 0 7px #ffd700;
+      margin: 0.5rem;
     }
-    input[type="text"], #acompanhaContainer {
-      min-width: auto;
-      width: 100%;
-    }
-    label {
-      justify-content: center;
-    }
+
     #ceu-estrelas {
-      height: 80px;
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      height: 60px;
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      z-index: 10000;
+      pointer-events: none;
     }
-    .estrela {
-      width: 140px;
-      font-size: 0.9rem;
-      background-size: 30px 30px;
-      padding-left: 40px;
+
+    .estrela-fixa {
+      background: url('estrela.png') no-repeat center left;
+      background-size: 40px;
+      padding-left: 50px;
+      width: 180px;
+      height: 40px;
+      color: #222;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      border-radius: 20px;
+      font-size: 1rem;
+      box-shadow: 0 0 10px #ffd700cc;
+      user-select: none;
     }
-  }
-</style>
+
+    .estrela-anim {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: url('estrela.png') no-repeat center left;
+      background-size: 40px;
+      padding-left: 50px;
+      width: 180px;
+      height: 40px;
+      color: #222;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      border-radius: 20px;
+      font-size: 1rem;
+      box-shadow: 0 0 10px #ffd700cc;
+      animation: subir 1.5s forwards;
+      z-index: 9999;
+    }
+
+    @keyframes subir {
+      0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+      100% { transform: translateX(-50%) translateY(-80vh); opacity: 0; }
+    }
+
+    form#form-container {
+      background: rgba(0, 0, 40, 0.8);
+      padding: 1rem;
+      border-top: 2px solid #ffd70055;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    input[type="text"] {
+      padding: 0.6rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+      width: 80%;
+      max-width: 300px;
+    }
+
+    button {
+      background-color: #ffd700;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #000;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background-color: #fff8dc;
+    }
+  </style>
 </head>
 <body>
-  <h1>"Há nomes que brilham no céu do coração."</h1>
+  <h1>"E os nomes brilharão no firmamento..."</h1>
 
-  <div id="ceu-estrelas" aria-label="Nomes das estrelas confirmadas"></div>
+  <div id="ceu-estrelas"></div>
 
-  <form id="form-container" aria-label="Confirmação de presença">
-    <input
-      type="text"
-      id="nome"
-      placeholder="Digite seu nome"
-      aria-required="true"
-      autocomplete="off"
-      autocorrect="off"
-      autocapitalize="words"
-      spellcheck="false"
-      required
-    />
-    <label for="acompanhaCheck">
-      <input type="checkbox" id="acompanhaCheck" />
-      Vou com acompanhante(s)
-    </label>
-    <div id="acompanhaContainer" hidden>
-      <!-- Inputs para acompanhantes vão aqui -->
-    </div>
-    <button type="submit" aria-label="Confirmar presença">⭐ Confirmar</button>
+  <form id="form-container">
+    <input type="text" id="nome" placeholder="Digite seu nome" required />
+    <button type="submit">✨ Confirmar Presença</button>
   </form>
 
   <script type="module">
+    // Firebase setup
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
-      authDomain: "livro-aghatta.firebaseapp.com",
-      databaseURL: "https://livro-aghatta-default-rtdb.firebaseio.com",
-      projectId: "livro-aghatta",
-      storageBucket: "livro-aghatta.appspot.com",
-      messagingSenderId: "137287649516",
-      appId: "1:137287649516:web:61cb4988d5d00a5e59e6b9"
+      apiKey: "SUA_API_KEY",
+      authDomain: "SEU_DOMINIO.firebaseapp.com",
+      databaseURL: "https://SEU_BANCO.firebaseio.com",
+      projectId: "SEU_PROJECT_ID",
+      storageBucket: "SEU_BUCKET.appspot.com",
+      messagingSenderId: "SEU_SENDER_ID",
+      appId: "SEU_APP_ID"
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
     const estrelasRef = ref(db, "estrelas");
 
-    const form = document.getElementById('form-container');
-    const inputNome = document.getElementById('nome');
-    const acompanhaCheck = document.getElementById('acompanhaCheck');
-    const acompanhaContainer = document.getElementById('acompanhaContainer');
-    const ceuEstrelasDiv = document.getElementById('ceu-estrelas');
+    const form = document.getElementById("form-container");
+    const ceu = document.getElementById("ceu-estrelas");
 
-    let acompanhantesInputs = [];
-
-    function criarInputAcompanhante() {
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.placeholder = 'Nome do acompanhante';
-      input.autocomplete = 'off';
-      input.autocorrect = 'off';
-      input.autocapitalize = 'words';
-      input.spellcheck = false;
-      input.classList.add('acompanha-nome');
-      acompanhaContainer.appendChild(input);
-      acompanhantesInputs.push(input);
-      input.focus();
-    }
-
-    acompanhaCheck.addEventListener('change', () => {
-      if (acompanhaCheck.checked) {
-        acompanhaContainer.hidden = false;
-        if (acompanhantesInputs.length === 0) {
-          criarInputAcompanhante();
-        }
-        criarBotaoAdicionar();
-      } else {
-        acompanhaContainer.hidden = true;
-        acompanhantesInputs = [];
-        acompanhaContainer.innerHTML = '';
-        removerBotaoAdicionar();
-      }
-    });
-
-    function criarBotaoAdicionar() {
-      if (document.getElementById('addAcompanhante')) return;
-      const btn = document.createElement('button');
-      btn.id = 'addAcompanhante';
-      btn.type = 'button';
-      btn.textContent = '+ Acompanhar';
-      btn.title = 'Adicionar mais acompanhantes';
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        criarInputAcompanhante();
-      });
-      acompanhaContainer.appendChild(btn);
-    }
-    function removerBotaoAdicionar() {
-      const btn = document.getElementById('addAcompanhante');
-      if (btn) btn.remove();
-    }
-
-    onChildAdded(estrelasRef, (data) => {
-      const { nome, acompanhantes } = data.val();
-      criarEstrelaFixa(nome, acompanhantes || []);
-    });
-
-    form.addEventListener('submit', e => {
+    form.addEventListener("submit", e => {
       e.preventDefault();
-      confirmarPresenca();
+      const nome = document.getElementById("nome").value.trim();
+      if (!nome) return alert("Digite seu nome.");
+      push(estrelasRef, { nome });
+      document.getElementById("nome").value = '';
     });
 
-    function confirmarPresenca() {
-      const nome = inputNome.value.trim();
-      if (!nome) return alert("Por favor, digite seu nome.");
+    onChildAdded(estrelasRef, data => {
+      const { nome } = data.val();
+      subirEstrela(nome);
+    });
 
-      let acompanhantes = acompanhantesInputs
-        .map(input => input.value.trim())
-        .filter(n => n.length > 0);
-
-      push(estrelasRef, { nome, acompanhantes });
-
-      inputNome.value = '';
-      acompanhaCheck.checked = false;
-      acompanhaContainer.hidden = true;
-      acompanhaContainer.innerHTML = '';
-      acompanhantesInputs = [];
-      inputNome.focus();
-      removerBotaoAdicionar();
-    }
-
-    function criarEstrelaFixa(nome, acompanhantes) {
-      const textoBase = acompanhantes.length > 0
-        ? `${nome} +${acompanhantes.length}`
-        : nome;
-
-      const estrela = document.createElement('div');
-      estrela.className = 'estrela';
-      estrela.textContent = textoBase;
-
-      ceuEstrelasDiv.appendChild(estrela);
-
-      // Scrolla para o final para mostrar a estrela nova
-      ceuEstrelasDiv.scrollLeft = ceuEstrelasDiv.scrollWidth;
+    function subirEstrela(nome) {
+      const anim = document.createElement("div");
+      anim.className = "estrela-anim";
+      anim.textContent = nome;
+      document.body.appendChild(anim);
+      anim.addEventListener("animationend", () => {
+        anim.remove();
+        const fixa = document.createElement("div");
+        fixa.className = "estrela-fixa";
+        fixa.textContent = nome;
+        ceu.appendChild(fixa);
+        ceu.scrollLeft = ceu.scrollWidth;
+      });
     }
   </script>
 </body>

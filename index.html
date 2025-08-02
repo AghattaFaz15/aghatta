@@ -95,7 +95,8 @@
 
     #botao-abrir {
       display: none;
-      margin-top: 2rem;
+      margin-top: -5rem;
+      margin-bottom: 2rem;
       width: 80px;
       height: 80px;
       border-radius: 50%;
@@ -112,7 +113,7 @@
       align-items: center;
       justify-content: center;
       animation: pulsarZoom 2.5s infinite;
-      position: relative;
+      position: absolute;
       z-index: 30;
       transition: box-shadow 0.3s ease;
     }
@@ -161,7 +162,7 @@
 <body>
 
   <!-- Envelope -->
-  <img id="envelope" src="https://em-content.zobj.net/source/apple/354/envelope_2709-fe0f.png" alt="Envelope do convite" />
+  <img id="envelope" src="envelope.png" alt="Envelope do convite" />
 
   <!-- Texto convite -->
   <div id="convite-texto">
@@ -198,6 +199,9 @@
 
     texto.addEventListener('animationend', () => {
       botao.style.display = 'flex';
+      botao.style.top = `${envelope.offsetTop + envelope.offsetHeight / 2 - 40}px`;
+      botao.style.left = `50%`;
+      botao.style.transform = 'translateX(-50%)';
     });
 
     function criarEstrela() {

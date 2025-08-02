@@ -30,6 +30,17 @@
       position: relative;
     }
 
+    .titulo {
+      position: absolute;
+      top: 2rem;
+      font-size: 2.5rem;
+      font-weight: bold;
+      text-shadow: 2px 2px #000;
+      background: linear-gradient(to right, #ffd700, #001170);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
     .envelope {
       width: 90%;
       max-width: 380px;
@@ -45,7 +56,7 @@
 
     #selo {
       position: absolute;
-      top: 45%;
+      top: 62%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: 90px;
@@ -61,11 +72,9 @@
     @keyframes pulsar {
       0%, 100% {
         transform: translate(-50%, -50%) scale(1);
-        box-shadow: 0 0 15px gold, 0 0 25px #ffd700aa;
       }
       50% {
         transform: translate(-50%, -50%) scale(1.15);
-        box-shadow: 0 0 35px gold, 0 0 55px #ffd700aa;
       }
     }
 
@@ -74,16 +83,19 @@
       max-width: 85%;
       text-shadow: 0 0 5px gold;
       color: #fffde7;
-      margin-top: 1.5rem;
+      margin-top: 2rem;
     }
   </style>
 </head>
 <body>
   <div class="tela">
+    <div class="titulo">Aghatta XV</div>
+
     <div class="envelope">
       <img src="envelope.png" alt="Envelope Celestial">
       <button id="selo" aria-label="Abrir o convite"></button>
     </div>
+
     <div id="convite-texto">
       Não é só um convite... é um chamado.<br/>
       Toque para abrir.

@@ -1,26 +1,77 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Depuração de Confirmações</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Confirmações - Livro da Vida</title>
   <style>
-    body { background: #000021; color: gold; font-family: Georgia, serif; padding: 1rem; }
-    h1 { font-size: 1.8rem; margin-bottom: 1rem; text-align: center; }
-    #raw, ul { max-width: 90%; margin: 0 auto 1rem; padding: 0; list-style: none; }
-    #raw { background: rgba(255,215,0,0.1); padding: 1rem; border-radius: 8px; font-size: 0.9rem; overflow-x: auto; }
-    li { background: rgba(255,215,0,0.2); margin: 0.5rem 0; padding: 0.8rem; border-radius: 8px; text-align: center; }
-    .empty { font-style: italic; color: #ccc; }
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: linear-gradient(to bottom, #001f3f, #000);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: gold;
+      margin-bottom: 0.5rem;
+      text-shadow: 1px 1px 5px #000;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #ccc;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      width: 100%;
+      max-width: 500px;
+      border: 2px solid gold;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    li {
+      padding: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    li:last-child {
+      border-bottom: none;
+    }
+
+    .vazio {
+      text-align: center;
+      color: #aaa;
+      font-style: italic;
+      margin-top: 2rem;
+    }
   </style>
 </head>
 <body>
-  <h1>🔍 Debug de Confirmações</h1>
-  <div id="raw">Carregando dados brutos do Firebase...</div>
-  <ul id="lista"></ul>
 
+  <h1>🎉 Lista de Confirmados</h1>
+  <p>"Haverá festa na terra, e no céu."</p>
+  <ul id="lista-confirmacoes">
+    <li class="vazio">Carregando confirmações...</li>
+  </ul>
+
+  <!-- Firebase -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
@@ -34,31 +85,29 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
-    const listaEl = document.getElementById("lista");
-    const rawEl = document.getElementById("raw");
+    const lista = document.getElementById("lista-confirmacoes");
+    const refConfirm = ref(db, 'apresentações');
 
-    const refConfirm = ref(db, 'Presenças');
+    onValue(refConfirm, (snapshot) => {
+      lista.innerHTML = ""; // limpa a lista
+      if (snapshot.exists()) {
+        const dados = snapshot.val();
+        const nomes = Object.values(dados).map(item => item.nome).filter(Boolean);
 
-    onValue(refConfirm, snapshot => {
-      rawEl.textContent = JSON.stringify(snapshot.val(), null, 2);
-      listaEl.innerHTML = "";
-      if (!snapshot.exists()) {
-        const li = document.createElement("li");
-        li.textContent = "Nenhum dado em 'Presenças'.";
-        li.className = "empty";
-        listaEl.appendChild(li);
-        return;
+        if (nomes.length === 0) {
+          lista.innerHTML = '<li class="vazio">Nenhuma confirmação ainda...</li>';
+        } else {
+          nomes.forEach(nome => {
+            const li = document.createElement("li");
+            li.textContent = nome;
+            lista.appendChild(li);
+          });
+        }
+      } else {
+        lista.innerHTML = '<li class="vazio">Nenhuma confirmação ainda...</li>';
       }
-      snapshot.forEach(child => {
-        const obj = child.val();
-        const nome = obj.nome || "(sem nome)";
-        const li = document.createElement("li");
-        li.textContent = nome;
-        listaEl.appendChild(li);
-      });
-    }, error => {
-      rawEl.textContent = `Erro: ${error}`;
     });
   </script>
+
 </body>
 </html>

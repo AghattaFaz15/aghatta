@@ -2,180 +2,131 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Convite Celestial - Aghatta XV</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Convite Celestial</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Georgia&display=swap');
-
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
     }
 
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
+    body {
+      width: 100%;
+      height: 100vh;
+      background: linear-gradient(to bottom, #000428, #004e92);
       font-family: 'Georgia', serif;
-      background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77);
-      color: gold;
+      color: #fff;
+      overflow: hidden;
+      position: relative;
     }
 
-    .tela {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      text-align: center;
-      padding: 1rem;
-    }
-
-    .ativa {
-      display: flex;
-    }
-
-    #envelope {
-      width: 80vmin;
+    .envelope {
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80vw;
       max-width: 400px;
-      animation: envelopeDesce 5s ease forwards;
-      opacity: 0;
+      animation: cairDoCeu 4s ease forwards;
     }
 
-    @keyframes envelopeDesce {
+    @keyframes cairDoCeu {
       0% {
-        transform: translateY(-150vh) rotate(-15deg);
+        top: -100px;
         opacity: 0;
       }
       100% {
-        transform: translateY(0) rotate(0deg);
+        top: 30%;
         opacity: 1;
       }
     }
 
-    #convite-texto {
-      font-family: 'Great Vibes', cursive;
-      font-size: 2.4rem;
-      margin-top: 1.5rem;
-      max-width: 85%;
+    .texto {
+      position: absolute;
+      top: 63%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 1.2rem;
+      max-width: 90vw;
       opacity: 0;
-      animation: fadeInTexto 2s ease forwards;
-      animation-delay: 5s;
-      text-shadow: 0 0 5px gold, 0 0 10px gold;
+      animation: aparecer 3s ease forwards;
+      animation-delay: 4.2s;
     }
 
-    @keyframes fadeInTexto {
+    @keyframes aparecer {
       to {
         opacity: 1;
       }
     }
 
-    #botao-abrir {
-      display: none;
+    .botao {
       position: absolute;
-      top: calc(55% + 20px); /* um pouco abaixo do centro */
-      transform: translateY(-50%);
-      background: linear-gradient(135deg, #0044cc, #ffcc00);
-      border: 3px solid gold;
+      top: 80%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       width: 80px;
       height: 80px;
-      border-radius: 50%;
-      font-size: 2rem;
-      color: #001170;
-      animation: zoomBrilho 2.2s infinite;
-      box-shadow: 0 0 20px gold;
+      background: url('selo.png') no-repeat center center;
+      background-size: contain;
+      border: none;
       cursor: pointer;
-      z-index: 10;
+      opacity: 0;
+      animation: aparecer 2s ease forwards, pulsar 2s infinite ease-in-out;
+      animation-delay: 6s;
     }
 
-    @keyframes zoomBrilho {
+    @keyframes pulsar {
       0%, 100% {
-        transform: translateY(-50%) scale(1);
-        box-shadow: 0 0 15px gold, 0 0 30px #ffd700cc;
+        transform: translate(-50%, -50%) scale(1);
       }
       50% {
-        transform: translateY(-50%) scale(1.15);
-        box-shadow: 0 0 40px gold, 0 0 60px #ffd700cc;
+        transform: translate(-50%, -50%) scale(1.1);
       }
     }
 
-    /* Segunda tela */
-    #segunda-tela p {
-      font-size: 1.3rem;
-      max-width: 600px;
-      font-style: italic;
-      color: #fff5cc;
-      text-shadow: 0 0 5px #ffd700;
-      line-height: 1.8;
+    /* Efeito de transição celestial */
+    .fade-branco {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: white;
+      opacity: 0;
+      z-index: 9999;
+      transition: opacity 2s ease;
+      pointer-events: none;
     }
 
-    #botao-avancar {
-      margin-top: 2rem;
-      padding: 0.8rem 2rem;
-      font-size: 1.1rem;
-      border-radius: 30px;
-      border: none;
-      background: linear-gradient(to right, #001170, #ffcc00);
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 0 15px gold;
-      transition: transform 0.3s ease;
-    }
-
-    #botao-avancar:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 25px gold;
+    .fade-branco.mostrar {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
 
-  <!-- Primeira tela -->
-  <div id="primeira-tela" class="tela ativa">
-    <div style="position: relative; display: flex; flex-direction: column; align-items: center;">
-      <img id="envelope" src="envelope.png" alt="Envelope do convite">
-      <button id="botao-abrir" aria-label="Abrir o convite">📩</button>
-    </div>
-    <div id="convite-texto">
-      Venha se perder na magia da imersão interativa,<br/>
-      onde festa e fé dançam juntas em luz e esperança.
-    </div>
+  <img src="envelope.png" alt="Envelope Celestial" class="envelope" />
+
+  <div class="texto">
+    <p>Não é só um convite... é um chamado.<br />Toque para abrir</p>
   </div>
 
-  <!-- Segunda tela -->
-  <div id="segunda-tela" class="tela">
-    <p>
-      Este convite não é apenas um papel que se abre...<br/>
-      É um portal entre o tempo e a eternidade,<br/>
-      onde memórias são sementes e a fé floresce.<br/><br/>
-      Respire fundo...<br/>
-      E permita que cada palavra toque o seu espírito,<br/>
-      pois o que vem a seguir foi preparado com amor, oração e propósito.
-    </p>
-    <button id="botao-avancar">Avançar</button>
-  </div>
+  <button class="botao" id="botao-abrir" aria-label="Abrir Convite Celestial"></button>
+
+  <div class="fade-branco" id="fade"></div>
 
   <script>
-    const envelope = document.getElementById('envelope');
-    const botaoAbrir = document.getElementById('botao-abrir');
-    const texto = document.getElementById('convite-texto');
-    const primeiraTela = document.getElementById('primeira-tela');
-    const segundaTela = document.getElementById('segunda-tela');
-    const botaoAvancar = document.getElementById('botao-avancar');
+    const botao = document.getElementById('botao-abrir');
+    const fade = document.getElementById('fade');
 
-    // Mostrar botão após texto aparecer
-    texto.addEventListener('animationend', () => {
-      botaoAbrir.style.display = 'block';
-    });
+    botao.addEventListener('click', () => {
+      fade.classList.add('mostrar');
 
-    botaoAbrir.addEventListener('click', () => {
-      primeiraTela.classList.remove('ativa');
-      segundaTela.classList.add('ativa');
-    });
-
-    botaoAvancar.addEventListener('click', () => {
-      window.location.href = 'segunda-experiencia.html';
+      setTimeout(() => {
+        window.location.href = 'segunda-experiencia.html';
+      }, 2000);
     });
   </script>
 

@@ -1,138 +1,148 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Confirmação de Presença - Ícones</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <title>Confirmação de Presença</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      background: #000022;
-      color: gold;
+      margin: 0;
       font-family: 'Georgia', serif;
+      background: linear-gradient(to top, #000020, #1a1a3d);
+      color: white;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      padding: 1rem;
+      padding-bottom: 2rem;
     }
+
+    h1 {
+      margin-top: 1rem;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    .estrela-topo {
+      position: fixed;
+      top: 10px;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    .estrela {
+      width: 80px;
+      height: 80px;
+      background-image: url('estrela.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: bold;
+      color: gold;
+      text-align: center;
+      animation: subir 3s ease-out forwards;
+    }
+
+    @keyframes subir {
+      from {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
     form {
-      background: rgba(255, 215, 0, 0.15);
-      border-radius: 1rem;
-      padding: 1.5rem 2rem;
-      box-shadow: 0 0 15px gold;
+      margin-top: auto;
       width: 90%;
       max-width: 400px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 0 20px gold;
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      z-index: 1;
     }
-    input[type="text"] {
-      padding: 0.6rem 1rem;
-      font-size: 1.1rem;
-      border-radius: 12px;
+
+    input {
+      padding: 0.7rem;
+      font-size: 1rem;
+      border-radius: 5px;
       border: none;
       outline: none;
-      font-family: 'Georgia', serif;
     }
+
     button {
-      background: gold;
-      border: none;
-      border-radius: 12px;
+      background-color: gold;
+      color: #000020;
       font-weight: bold;
-      font-size: 1.2rem;
       padding: 0.8rem;
-      cursor: pointer;
-      color: #222;
-      box-shadow: 0 0 10px #ffd700cc;
-      transition: background 0.3s ease;
-    }
-    button:hover {
-      background: #ffd700;
-    }
-    p.frase {
-      text-align: center;
-      font-style: italic;
-      margin: 0;
-      color: #fff8dc;
-      text-shadow: 0 0 5px gold;
-    }
-
-    /* Botão para abrir a lista de confirmações */
-    #btn-abrir-lista {
-      margin-top: 1rem;
-      background: #ffd700cc;
       border: none;
-      border-radius: 12px;
-      font-weight: bold;
-      font-size: 1.1rem;
-      padding: 0.6rem;
+      border-radius: 8px;
       cursor: pointer;
-      box-shadow: 0 0 12px gold;
-      color: #000022;
-      transition: background 0.3s ease;
-      width: 100%;
-    }
-    #btn-abrir-lista:hover {
-      background: gold;
-    }
-
-    /* Modal celestial */
-    #modal-lista {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.85);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-    #modal-lista iframe {
-      width: 90vw;
-      height: 80vh;
-      border: none;
-      border-radius: 1rem;
-      box-shadow: 0 0 20px gold;
-      background: #000011;
-    }
-    #btn-fechar {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: gold;
-      border: none;
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      font-weight: bold;
-      font-size: 1.2rem;
-      cursor: pointer;
-      color: #000022;
       box-shadow: 0 0 10px gold;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #ffe066;
+    }
+
+    #lista-container {
+      margin-top: 2rem;
+      width: 90%;
+      max-width: 400px;
+      display: none;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: center;
+    }
+
+    li {
+      margin: 0.5rem 0;
     }
   </style>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
-  <form id="form-confirmar">
-    <input type="text" id="nome" placeholder="Digite seu nome" required autocomplete="off" autocapitalize="words" />
-    <input type="text" id="acompanhantes" placeholder="Acompanhantes (opcional, separados por vírgula)" autocomplete="off" autocapitalize="words" />
-    <p class="frase">"Haverá festa na terra, e no céu"</p>
+  <h1>“Haverá festa na terra, e no céu”</h1>
+
+  <div class="estrela-topo" id="estrelasTopo"></div>
+
+  <form id="formConfirmacao">
+    <input type="text" id="nome" placeholder="Seu nome" required>
+    <input type="text" id="acompanhante" placeholder="Acompanhante (opcional)">
     <button type="submit">Confirmar Presença</button>
+    <button type="button" onclick="mostrarConfirmados()">Ver quem confirmou 🎉</button>
   </form>
 
-  <button id="btn-abrir-lista">Ver lista de confirmações</button>
-
-  <div id="modal-lista">
-    <button id="btn-fechar" aria-label="Fechar lista">×</button>
-    <iframe src="confirmacao.html" title="Lista de confirmações"></iframe>
+  <div id="lista-container">
+    <h3>Confirmados:</h3>
+    <ul id="listaConfirmados"></ul>
   </div>
 
-  <script>
+  <!-- Firebase -->
+  <script type="module">
+    // Import Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
     const firebaseConfig = {
       apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
       authDomain: "livro-aghatta.firebaseapp.com",
@@ -143,54 +153,53 @@
       appId: "1:491625108244:web:3afdfda239f9d0904ca801"
     };
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const presencaRef = ref(db, 'presencas');
 
-    const form = document.getElementById('form-confirmar');
-    const nomeInput = document.getElementById('nome');
-    const acompanhantesInput = document.getElementById('acompanhantes');
+    const form = document.getElementById('formConfirmacao');
+    const estrelasTopo = document.getElementById('estrelasTopo');
+    const lista = document.getElementById('listaConfirmados');
+    const listaContainer = document.getElementById('lista-container');
 
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const nome = nomeInput.value.trim();
-      const acompanhantesRaw = acompanhantesInput.value.trim();
-      if (!nome) {
-        alert('Por favor, digite seu nome.');
-        return;
+      const nome = document.getElementById('nome').value.trim();
+      const acompanhante = document.getElementById('acompanhante').value.trim();
+      const nomeCompleto = acompanhante ? `${nome} e ${acompanhante}` : nome;
+
+      if (nomeCompleto) {
+        push(presencaRef, { nome: nomeCompleto });
+        criarEstrela(nomeCompleto);
+        form.reset();
       }
-      const acompanhantes = acompanhantesRaw ? acompanhantesRaw.split(',').map(s => s.trim()).filter(Boolean) : [];
-
-      db.ref('confirmados').push({ nome, acompanhantes })
-        .then(() => {
-          nomeInput.value = '';
-          acompanhantesInput.value = '';
-          alert('Sua presença foi confirmada com alegria! 🙌');
-        })
-        .catch(err => {
-          console.error('Erro ao confirmar presença:', err);
-          alert('Ocorreu um erro. Tente novamente, por favor.');
-        });
     });
 
-    // Modal
-    const btnAbrir = document.getElementById('btn-abrir-lista');
-    const modal = document.getElementById('modal-lista');
-    const btnFechar = document.getElementById('btn-fechar');
+    function criarEstrela(nome) {
+      const estrela = document.createElement('div');
+      estrela.classList.add('estrela');
+      estrela.textContent = nome;
+      estrelasTopo.appendChild(estrela);
+    }
 
-    btnAbrir.addEventListener('click', () => {
-      modal.style.display = 'flex';
-    });
+    function mostrarConfirmados() {
+      lista.innerHTML = '';
+      listaContainer.style.display = 'block';
 
-    btnFechar.addEventListener('click', () => {
-      modal.style.display = 'none';
-    });
+      onChildAdded(presencaRef, (snapshot) => {
+        const data = snapshot.val();
+        const li = document.createElement('li');
+        li.textContent = data.nome;
+        lista.appendChild(li);
+      });
+    }
 
-    // Fechar modal com ESC
-    window.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && modal.style.display === 'flex') {
-        modal.style.display = 'none';
-      }
+    // Carregar estrelas existentes
+    onChildAdded(presencaRef, (snapshot) => {
+      const data = snapshot.val();
+      criarEstrela(data.nome);
     });
   </script>
+
 </body>
 </html>

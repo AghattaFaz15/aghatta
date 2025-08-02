@@ -10,7 +10,7 @@
       box-sizing: border-box;
     }
 
-    body, html {
+    html, body {
       margin: 0;
       padding: 0;
       height: 100%;
@@ -27,53 +27,62 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 1rem;
+      position: relative;
     }
 
-    #envelope {
-      width: 80vmin;
-      max-width: 350px;
-      margin-bottom: 1rem;
+    .envelope {
+      width: 90%;
+      max-width: 380px;
+      height: auto;
+      position: relative;
     }
 
-    #botao-abrir {
+    .envelope img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    #selo {
       position: absolute;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       width: 90px;
       height: 90px;
-      border: none;
       background: url('selo.png') no-repeat center center;
-      background-size: cover;
+      background-size: contain;
+      border: none;
       cursor: pointer;
       animation: pulsar 2.2s infinite;
-      z-index: 5;
-      transform: translateY(-60%);
+      z-index: 10;
     }
 
     @keyframes pulsar {
       0%, 100% {
-        transform: translateY(-60%) scale(1);
-        box-shadow: 0 0 15px gold, 0 0 30px #ffd700aa;
+        transform: translate(-50%, -50%) scale(1);
+        box-shadow: 0 0 15px gold, 0 0 25px #ffd700aa;
       }
       50% {
-        transform: translateY(-60%) scale(1.15);
-        box-shadow: 0 0 35px gold, 0 0 60px #ffd700aa;
+        transform: translate(-50%, -50%) scale(1.15);
+        box-shadow: 0 0 35px gold, 0 0 55px #ffd700aa;
       }
     }
 
     #convite-texto {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       max-width: 85%;
-      margin-top: 2.5rem;
       text-shadow: 0 0 5px gold;
       color: #fffde7;
+      margin-top: 1.5rem;
     }
   </style>
 </head>
 <body>
   <div class="tela">
-    <div style="position: relative; display: flex; flex-direction: column; align-items: center;">
-      <img id="envelope" src="envelope.png" alt="Envelope do convite">
-      <button id="botao-abrir" aria-label="Abrir o convite"></button>
+    <div class="envelope">
+      <img src="envelope.png" alt="Envelope Celestial">
+      <button id="selo" aria-label="Abrir o convite"></button>
     </div>
     <div id="convite-texto">
       Não é só um convite... é um chamado.<br/>
@@ -82,8 +91,7 @@
   </div>
 
   <script>
-    const botaoAbrir = document.getElementById('botao-abrir');
-    botaoAbrir.addEventListener('click', () => {
+    document.getElementById('selo').addEventListener('click', () => {
       window.location.href = 'segunda-experiencia.html';
     });
   </script>

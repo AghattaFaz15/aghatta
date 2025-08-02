@@ -18,24 +18,38 @@
       justify-content: flex-end;
       min-height: 100vh;
       overflow-x: hidden;
+      position: relative;
     }
 
-    .estrela-container {
+    /* Contêiner para estrelas fixas no topo */
+    #estrelas-fixas {
       position: fixed;
-      top: 20px;
+      top: 10px;
       width: 100%;
       text-align: center;
-      z-index: 10;
+      z-index: 20;
+      pointer-events: none;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 0 10px;
+      max-height: 140px;
+      overflow-y: auto;
     }
 
     .estrela {
       position: relative;
       display: inline-block;
+      width: 120px;
+      user-select: none;
     }
 
     .estrela img {
-      max-width: 220px;
+      width: 100%;
       height: auto;
+      display: block;
+      filter: drop-shadow(0 0 6px gold);
     }
 
     .nome-na-estrela {
@@ -45,10 +59,38 @@
       transform: translate(-50%, -50%);
       color: #fffacd;
       font-weight: bold;
-      text-shadow: 0 0 10px #000;
+      text-shadow: 0 0 8px #000;
       text-align: center;
       font-size: 1rem;
-      white-space: pre-line;
+      white-space: nowrap;
+      padding: 0 4px;
+      user-select: text;
+      pointer-events: auto;
+    }
+
+    /* Estrela animada que sobe */
+    .estrela-subindo {
+      position: fixed;
+      left: 50%;
+      bottom: 40px;
+      transform: translateX(-50%);
+      width: 120px;
+      animation: subir 6s linear forwards;
+      z-index: 15;
+      user-select: none;
+    }
+
+    @keyframes subir {
+      0% {
+        bottom: 40px;
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+      }
+      100% {
+        bottom: 140px;
+        opacity: 0;
+        transform: translateX(-50%) scale(0.7);
+      }
     }
 
     form {
@@ -57,8 +99,9 @@
       background: rgba(255, 255, 255, 0.05);
       padding: 1.5rem;
       border-radius: 1rem;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
       box-shadow: 0 0 12px gold;
+      user-select: none;
     }
 
     input {
@@ -69,6 +112,7 @@
       border-radius: 8px;
       border: none;
       outline: none;
+      font-family: 'Georgia', serif;
     }
 
     button {
@@ -82,27 +126,45 @@
       border-radius: 8px;
       cursor: pointer;
       transition: 0.3s;
+      font-family: 'Georgia', serif;
     }
 
     button:hover {
       background: #ffdb4d;
     }
 
-    #lista-confirmados {
-      display: none;
+    p.frase {
+      text-align: center;
+      margin-bottom: 1rem;
+      font-style: italic;
+      user-select: none;
+      color: #ffd;
+      text-shadow: 0 0 6px #bfa900cc;
+    }
+
+    /* Scroll barra para estrelas fixas */
+    #estrelas-fixas::-webkit-scrollbar {
+      height: 8px;
+    }
+    #estrelas-fixas::-webkit-scrollbar-thumb {
+      background: #ffd700cc;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="estrela-container" id="estrelas"></div>
 
-  <form id="form-confirmacao">
-    <input type="text" id="nome" placeholder="Seu nome" required />
-    <input type="text" id="acompanhante" placeholder="Acompanhante (opcional)" />
-    <p style="text-align:center; margin-bottom: 1rem;">"Haverá festa na terra, e no céu"</p>
-    <button type="submit">Confirmar Presença</button>
+  <div id="estrelas-fixas" aria-live="polite" aria-label="Lista de confirmações"></div>
+
+  <form id="form-confirmacao" aria-label="Formulário de confirmação de presença">
+    <input type="text" id="nome" placeholder="Seu nome" required autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" />
+    <input type="text" id="acompanhante" placeholder="Acompanhante (opcional)" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" />
+    <p class="frase">"Haverá festa na terra, e no céu"</p>
+    <button type="submit" aria-label="Confirmar presença">Confirmar Presença ⭐</button>
   </form>
 
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
@@ -116,41 +178,74 @@
 
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
+
     const form = document.getElementById('form-confirmacao');
     const nomeInput = document.getElementById('nome');
     const acompanhanteInput = document.getElementById('acompanhante');
-    const estrelasDiv = document.getElementById('estrelas');
+    const estrelasFixasDiv = document.getElementById('estrelas-fixas');
 
     form.addEventListener('submit', e => {
       e.preventDefault();
       const nome = nomeInput.value.trim();
       const acompanhante = acompanhanteInput.value.trim();
-      if (!nome) return;
 
-      const final = acompanhante ? `${nome} e ${acompanhante}` : nome;
+      if (!nome) {
+        alert("Por favor, digite seu nome.");
+        return;
+      }
 
-      const novaRef = database.ref('confirmados').push();
-      novaRef.set({ nome: final });
+      const nomeCompleto = acompanhante ? `${nome} e ${acompanhante}` : nome;
 
+      // Grava no Firebase
+      const novaConfirmacaoRef = database.ref('confirmados').push();
+      novaConfirmacaoRef.set({ nome: nomeCompleto });
+
+      // Cria a estrela animada que sobe e a fixa no topo
+      criarEstrelaSubindo(nomeCompleto);
+
+      // Limpa formulário
       nomeInput.value = '';
       acompanhanteInput.value = '';
+      nomeInput.focus();
     });
 
+    // Atualiza estrelas fixas em tempo real
     database.ref('confirmados').on('value', snapshot => {
-      estrelasDiv.innerHTML = '';
+      estrelasFixasDiv.innerHTML = ''; // limpa estrelas fixas
       const dados = snapshot.val();
       if (dados) {
         Object.values(dados).forEach(dado => {
-          const estrela = document.createElement('div');
-          estrela.classList.add('estrela');
-          estrela.innerHTML = `
-            <img src="estrela.png" alt="Estrela" />
-            <div class="nome-na-estrela">${dado.nome}</div>
-          `;
-          estrelasDiv.appendChild(estrela);
+          criarEstrelaFixa(dado.nome);
         });
       }
     });
+
+    // Cria estrela fixa (permanente)
+    function criarEstrelaFixa(nome) {
+      const estrelaFixa = document.createElement('div');
+      estrelaFixa.classList.add('estrela');
+      estrelaFixa.innerHTML = `
+        <img src="estrela.png" alt="Estrela" />
+        <div class="nome-na-estrela">${nome}</div>
+      `;
+      estrelasFixasDiv.appendChild(estrelaFixa);
+    }
+
+    // Cria estrela animada que sobe e some
+    function criarEstrelaSubindo(nome) {
+      const estrelaSubindo = document.createElement('div');
+      estrelaSubindo.classList.add('estrela-subindo');
+      estrelaSubindo.innerHTML = `
+        <img src="estrela.png" alt="Estrela" />
+        <div class="nome-na-estrela">${nome}</div>
+      `;
+      document.body.appendChild(estrelaSubindo);
+
+      setTimeout(() => {
+        estrelaSubindo.remove();
+      }, 6000);
+    }
   </script>
+
 </body>
 </html>

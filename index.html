@@ -55,9 +55,9 @@
 
     #convite-texto {
       font-family: 'Great Vibes', cursive;
-      font-size: 2.2rem;
-      margin-top: 1rem;
-      max-width: 80%;
+      font-size: 2.4rem;
+      margin-top: 1.5rem;
+      max-width: 85%;
       opacity: 0;
       animation: fadeInTexto 2s ease forwards;
       animation-delay: 5s;
@@ -73,7 +73,7 @@
     #botao-abrir {
       display: none;
       position: absolute;
-      top: 50%;
+      top: calc(55% + 20px); /* um pouco abaixo do centro */
       transform: translateY(-50%);
       background: linear-gradient(135deg, #0044cc, #ffcc00);
       border: 3px solid gold;
@@ -82,18 +82,20 @@
       border-radius: 50%;
       font-size: 2rem;
       color: #001170;
-      animation: pulsar 2s infinite;
+      animation: zoomBrilho 2.2s infinite;
       box-shadow: 0 0 20px gold;
       cursor: pointer;
       z-index: 10;
     }
 
-    @keyframes pulsar {
+    @keyframes zoomBrilho {
       0%, 100% {
         transform: translateY(-50%) scale(1);
+        box-shadow: 0 0 15px gold, 0 0 30px #ffd700cc;
       }
       50% {
         transform: translateY(-50%) scale(1.15);
+        box-shadow: 0 0 40px gold, 0 0 60px #ffd700cc;
       }
     }
 
@@ -104,6 +106,7 @@
       font-style: italic;
       color: #fff5cc;
       text-shadow: 0 0 5px #ffd700;
+      line-height: 1.8;
     }
 
     #botao-avancar {
@@ -143,10 +146,12 @@
   <!-- Segunda tela -->
   <div id="segunda-tela" class="tela">
     <p>
-      Você está prestes a entrar num universo onde os céus se curvam em celebração, <br/>
-      onde cada detalhe foi sonhado para tocar o coração.<br/><br/>
-      Que este convite não seja apenas visual,<br/>
-      mas espiritual... um mergulho em algo eterno.
+      Este convite não é apenas um papel que se abre...<br/>
+      É um portal entre o tempo e a eternidade,<br/>
+      onde memórias são sementes e a fé floresce.<br/><br/>
+      Respire fundo...<br/>
+      E permita que cada palavra toque o seu espírito,<br/>
+      pois o que vem a seguir foi preparado com amor, oração e propósito.
     </p>
     <button id="botao-avancar">Avançar</button>
   </div>

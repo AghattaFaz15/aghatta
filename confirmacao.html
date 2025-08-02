@@ -1,63 +1,44 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Lista de Confirmados</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
   <style>
     body {
       background: #000021;
       color: gold;
       font-family: 'Georgia', serif;
-      margin: 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      user-select: none;
+      padding: 2rem;
+      text-align: center;
     }
 
     h1 {
-      margin-bottom: 1rem;
-      text-shadow: 0 0 8px gold;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      text-shadow: 0 0 10px gold;
     }
 
     ul {
       list-style: none;
-      padding-left: 0;
-      width: 90%;
-      max-width: 400px;
-      background: rgba(255, 215, 0, 0.1);
-      border-radius: 10px;
-      box-shadow: 0 0 12px gold;
+      padding: 0;
     }
 
     li {
-      padding: 0.6rem 1rem;
-      border-bottom: 1px solid gold;
-      font-size: 1.1rem;
-      user-select: text;
-    }
-
-    li:last-child {
-      border-bottom: none;
-    }
-
-    .vazio {
-      padding: 1rem;
-      font-style: italic;
-      color: #ffd700aa;
-      text-align: center;
-      user-select: none;
+      margin: 0.5rem 0;
+      font-size: 1.2rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 0.5rem;
+      box-shadow: 0 0 5px gold;
     }
   </style>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body>
-  <h1>Confirmados com Amor</h1>
-  <ul id="listaConfirmados">
-    <li class="vazio">Nenhuma confirmação ainda...</li>
+  <h1>✨ Confirmados para a Festa ✨</h1>
+  <ul id="lista-confirmados">
+    <li>Carregando nomes...</li>
   </ul>
 
   <script>
@@ -72,24 +53,21 @@
     };
 
     firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-    const listaConfirmados = document.getElementById('listaConfirmados');
+    const db = firebase.database();
 
-    database.ref('confirmados').on('value', snapshot => {
+    const ul = document.getElementById('lista-confirmados');
+
+    db.ref('confirmados').on('value', snapshot => {
+      ul.innerHTML = '';
       const dados = snapshot.val();
-      listaConfirmados.innerHTML = '';
-
       if (dados) {
-        Object.values(dados).forEach(item => {
+        Object.values(dados).forEach(dado => {
           const li = document.createElement('li');
-          li.textContent = item.nome;
-          listaConfirmados.appendChild(li);
+          li.textContent = dado.nome;
+          ul.appendChild(li);
         });
       } else {
-        const vazio = document.createElement('li');
-        vazio.className = 'vazio';
-        vazio.textContent = 'Nenhuma confirmação ainda...';
-        listaConfirmados.appendChild(vazio);
+        ul.innerHTML = '<li>Nenhum confirmado ainda.</li>';
       }
     });
   </script>

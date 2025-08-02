@@ -2,98 +2,76 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Confirmações - Livro da Vida</title>
+  <title>Lista de Presenças Celestiais</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
-      background: linear-gradient(to top, #000428, #004e92);
-      color: white;
-      font-family: 'Georgia', serif;
-      text-align: center;
-      padding: 2rem;
-    }
-
-    h1 {
-      font-size: 2.2rem;
+      background: radial-gradient(circle at top, #000022, #000011);
       color: gold;
-      margin-bottom: 1rem;
+      font-family: 'Georgia', serif;
+      margin: 0;
+      padding: 1rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-      color: #ffe;
+    h1 {
       font-style: italic;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 8px gold;
     }
-
-    ul {
-      list-style: none;
-      padding: 0;
+    p.subtitulo {
+      margin-top: 0;
       margin-bottom: 2rem;
-    }
-
-    li {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 0.8rem 1rem;
-      margin: 0.5rem auto;
-      border-radius: 10px;
-      width: fit-content;
-      max-width: 90%;
       font-size: 1.1rem;
-      text-shadow: 1px 1px black;
-      box-shadow: 0 0 10px gold;
+      color: #ffea85cc;
+      text-align: center;
+      max-width: 320px;
+      font-style: normal;
     }
-
-    form {
-      margin-top: 2rem;
+    #lista-presencas {
+      background: rgba(255, 215, 0, 0.15);
+      border-radius: 1rem;
+      box-shadow: 0 0 12px #ffd700cc;
+      width: 90%;
+      max-width: 400px;
+      padding: 1rem 1.2rem;
+      overflow-y: auto;
+      max-height: 60vh;
+      user-select: text;
     }
-
-    input[type="text"] {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
-      width: 200px;
-      margin-right: 1rem;
+    .item-presenca {
+      border-bottom: 1px solid #ffdb4d88;
+      padding: 0.6rem 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #222100;
+      text-shadow: 0 0 3px #fff6a5cc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-
-    button {
-      background: gold;
-      color: #002;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      font-size: 1rem;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      box-shadow: 0 0 10px #fff;
+    .item-presenca:last-child {
+      border-bottom: none;
     }
-
-    button:hover {
-      background: #ffd700;
+    .item-acompanhante {
+      font-size: 0.9rem;
+      font-style: italic;
+      color: #b08900cc;
+      margin-left: 1rem;
     }
   </style>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body>
+  <h1>Presenças Celestiais</h1>
+  <p class="subtitulo">"Haverá festa na terra, e no céu"</p>
+  <div id="lista-presencas" aria-live="polite" aria-label="Lista de confirmações"></div>
 
-  <h1>Confirmados</h1>
-  <p>Haverá festa na terra, e no céu ✨</p>
-
-  <ul id="lista-confirmacoes">
-    <li>⏳ Aguardando confirmações...</li>
-  </ul>
-
-  <!-- 🌟 Botão de Teste -->
-  <form id="form-teste">
-    <input type="text" id="nome" placeholder="Digite seu nome" required />
-    <button type="submit">Adicionar Nome (Teste)</button>
-  </form>
-
-  <!-- Firebase + Script -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
+  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
       authDomain: "livro-aghatta.firebaseapp.com",
@@ -104,38 +82,39 @@
       appId: "1:491625108244:web:3afdfda239f9d0904ca801"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    const refConfirm = ref(db, 'apresentações');
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-    const lista = document.getElementById('lista-confirmacoes');
+    const lista = document.getElementById('lista-presencas');
 
-    onValue(refConfirm, (snapshot) => {
-      const data = snapshot.val();
+    function atualizarLista(snapshot) {
+      const dados = snapshot.val();
       lista.innerHTML = '';
-
-      if (data) {
-        Object.values(data).forEach(entry => {
-          if (entry.nome) {
-            const li = document.createElement('li');
-            li.textContent = entry.nome;
-            lista.appendChild(li);
-          }
-        });
-      } else {
-        lista.innerHTML = '<li>Nenhuma confirmação ainda...</li>';
+      if (!dados) {
+        lista.innerHTML = '<p>Nenhuma confirmação ainda. Seja o primeiro a celebrar!</p>';
+        return;
       }
-    });
+      Object.values(dados).forEach(({ nome, acompanhantes }) => {
+        const item = document.createElement('div');
+        item.className = 'item-presenca';
 
-    // Formulário de Teste
-    document.getElementById('form-teste').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const nome = document.getElementById('nome').value.trim();
-      if (nome) {
-        push(refConfirm, { nome });
-        document.getElementById('nome').value = '';
-      }
-    });
+        const nomeSpan = document.createElement('span');
+        nomeSpan.textContent = nome;
+
+        item.appendChild(nomeSpan);
+
+        if (acompanhantes && acompanhantes.length > 0) {
+          const acompanhantesSpan = document.createElement('span');
+          acompanhantesSpan.className = 'item-acompanhante';
+          acompanhantesSpan.textContent = 'com ' + acompanhantes.join(', ');
+          item.appendChild(acompanhantesSpan);
+        }
+        lista.appendChild(item);
+      });
+    }
+
+    const presencasRef = db.ref('confirmados');
+    presencasRef.on('value', atualizarLista);
   </script>
 </body>
 </html>

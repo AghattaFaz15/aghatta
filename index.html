@@ -2,45 +2,249 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=segunda-experiencia.html" />
+  <title>Convite Celestial - Aghatta XV</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Redirecionando para o convite...</title>
   <style>
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Georgia&display=swap');
+
+    body, html {
       margin: 0; padding: 0;
-      display: flex; justify-content: center; align-items: center;
-      height: 100vh;
-      background: #001170;
+      height: 100%;
+      background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77);
+      overflow: hidden;
+      font-family: 'Georgia', serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
       color: gold;
-      font-family: Georgia, serif;
-      text-align: center;
       user-select: none;
+      position: relative;
     }
-    .message {
-      max-width: 320px;
-      padding: 1rem;
-      border: 2px solid gold;
-      border-radius: 12px;
-      box-shadow: 0 0 15px gold;
-      background: rgba(0,0,50,0.85);
-      animation: pulse 3s infinite;
+
+    #nevoa {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at center, #ffd70033, transparent 70%);
+      opacity: 0;
+      transition: opacity 2s ease;
+      z-index: 10;
     }
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 15px gold; }
-      50% { box-shadow: 0 0 30px #ffd700cc; }
+
+    .estrela {
+      position: absolute;
+      background: gold;
+      border-radius: 50%;
+      opacity: 0.8;
+      filter: drop-shadow(0 0 5px gold);
+      animation: estrelaMove 3s linear forwards;
+    }
+
+    @keyframes estrelaMove {
+      from {
+        transform: translate3d(calc(var(--x) * 1vw), 100vh, 0) scale(0.5);
+        opacity: 0.8;
+      }
+      to {
+        transform: translate3d(calc(var(--x) * 1vw), 0vh, 0) scale(1);
+        opacity: 0;
+      }
+    }
+
+    #envelope {
+      width: 120vmin;
+      max-width: 400px;
+      opacity: 0;
+      position: relative;
+      animation: envelopeFadeIn 5s ease forwards;
+      z-index: 20;
+    }
+
+    @keyframes envelopeFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-150vh) rotate(-15deg);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg);
+      }
+    }
+
+    #convite-texto {
+      margin-top: 2rem;
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.4rem;
+      text-align: center;
+      max-width: 350px;
+      opacity: 0;
+      animation: textoFadeIn 2.5s ease forwards;
+      animation-delay: 5s;
+      z-index: 25;
+      text-shadow:
+        0 0 5px gold,
+        0 0 10px gold;
+    }
+
+    @keyframes textoFadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    #botao-abrir {
+      display: none;
+      margin-top: 2rem;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #0044cc, #ffcc00);
+      border: 3px solid gold;
+      box-shadow:
+        0 0 15px gold,
+        0 0 30px #ffd700cc;
+      cursor: pointer;
+      font-size: 2.5rem;
+      color: #001170;
+      font-weight: bold;
+      user-select: none;
+      align-items: center;
+      justify-content: center;
+      animation: pulsarZoom 2.5s infinite;
+      position: relative;
+      z-index: 30;
+      transition: box-shadow 0.3s ease;
+    }
+
+    #botao-abrir:hover {
+      box-shadow:
+        0 0 30px gold,
+        0 0 50px #ffd700cc;
+    }
+
+    @keyframes pulsarZoom {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.15);
+      }
+    }
+
+    /* Segunda tela */
+    #segunda-tela {
+      display: none;
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, #f8f9fa, #ffffff);
+      color: #001170;
+      font-family: 'Georgia', serif;
+      font-size: 1.5rem;
+      text-align: center;
+      padding: 3rem 1rem;
+      z-index: 40;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+
+    #segunda-tela h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      margin-bottom: 1rem;
     }
   </style>
 </head>
 <body>
-  <div class="message" role="alert" aria-live="polite">
-    Preparando o convite celestial para você...<br />
-    Se não for redirecionado automaticamente, <br />
-    <a href="segunda-experiencia.html" style="color: gold; text-decoration: underline;">clique aqui</a>.
+
+  <!-- Envelope -->
+  <img id="envelope" src="https://em-content.zobj.net/source/apple/354/envelope_2709-fe0f.png" alt="Envelope do convite" />
+
+  <!-- Texto convite -->
+  <div id="convite-texto">
+    Venha se perder na magia da imersão interativa,<br/>
+    onde festa e fé dançam juntas em luz e esperança.
   </div>
+
+  <!-- Botão sobre o envelope -->
+  <button id="botao-abrir" aria-label="Abrir o convite">📩</button>
+
+  <!-- Neblina e estrelas -->
+  <div id="nevoa"></div>
+
+  <!-- Segunda tela -->
+  <div id="segunda-tela">
+    <div style="max-width: 500px;">
+      <h1>Aghatta XV</h1>
+      <p>
+        Este convite não é apenas para uma festa.<br/>
+        É um chamado à luz, à alegria e à celebração da vida.<br/><br/>
+        Em cada detalhe, um toque de fé.<br/>
+        Em cada presença, um brilho eterno.<br/><br/>
+        Prepare-se para viver a segunda experiência.
+      </p>
+    </div>
+  </div>
+
   <script>
-    setTimeout(() => {
-      window.location.href = 'segunda-experiencia.html';
-    }, 3000);
+    const envelope = document.getElementById('envelope');
+    const texto = document.getElementById('convite-texto');
+    const botao = document.getElementById('botao-abrir');
+    const nevoa = document.getElementById('nevoa');
+    const segundaTela = document.getElementById('segunda-tela');
+
+    texto.addEventListener('animationend', () => {
+      botao.style.display = 'flex';
+    });
+
+    function criarEstrela() {
+      const estrela = document.createElement('div');
+      estrela.classList.add('estrela');
+      estrela.style.setProperty('--x', Math.random() * 100);
+      estrela.style.width = `${Math.random() * 6 + 4}px`;
+      estrela.style.height = estrela.style.width;
+      estrela.style.left = `${Math.random() * 100}vw`;
+      nevoa.appendChild(estrela);
+
+      estrela.addEventListener('animationend', () => {
+        estrela.remove();
+      });
+    }
+
+    function iniciarEstrelas() {
+      nevoa.style.opacity = 1;
+      setInterval(criarEstrela, 350);
+    }
+
+    botao.addEventListener('click', () => {
+      nevoa.style.opacity = 1;
+      document.body.style.transition = 'background 2s ease';
+      document.body.style.background = '#fff';
+
+      envelope.style.transition = 'opacity 2s ease';
+      texto.style.transition = 'opacity 2s ease';
+      botao.style.transition = 'opacity 2s ease';
+      envelope.style.opacity = 0;
+      texto.style.opacity = 0;
+      botao.style.opacity = 0;
+
+      iniciarEstrelas();
+
+      setTimeout(() => {
+        segundaTela.style.display = 'flex';
+        setTimeout(() => {
+          segundaTela.style.opacity = 1;
+        }, 100);
+
+        setTimeout(() => {
+          window.location.href = 'segunda-experiencia.html';
+        }, 5000);
+      }, 2500);
+    });
   </script>
+
 </body>
 </html>

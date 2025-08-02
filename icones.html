@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Confirmação de Presença</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Confirmação com Estrelas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
@@ -46,7 +46,7 @@
       font-weight: bold;
       color: gold;
       text-align: center;
-      animation: subir 3s ease-out forwards;
+      animation: subir 2s ease-out;
     }
 
     @keyframes subir {
@@ -61,7 +61,7 @@
     }
 
     form {
-      margin-top: auto;
+      margin-top: 100px;
       width: 90%;
       max-width: 400px;
       background: rgba(255, 255, 255, 0.1);
@@ -126,10 +126,10 @@
   <div class="estrela-topo" id="estrelasTopo"></div>
 
   <form id="formConfirmacao">
-    <input type="text" id="nome" placeholder="Seu nome" required>
-    <input type="text" id="acompanhante" placeholder="Acompanhante (opcional)">
+    <input type="text" id="nome" placeholder="Seu nome" required />
+    <input type="text" id="acompanhante" placeholder="Acompanhante (opcional)" />
     <button type="submit">Confirmar Presença</button>
-    <button type="button" onclick="mostrarConfirmados()">Ver quem confirmou 🎉</button>
+    <button type="button" id="btnVerLista">Ver quem confirmou 🎉</button>
   </form>
 
   <div id="lista-container">
@@ -139,9 +139,14 @@
 
   <!-- Firebase -->
   <script type="module">
-    // Import Firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import {
+      getDatabase,
+      ref,
+      push,
+      onChildAdded,
+      get
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
@@ -161,6 +166,7 @@
     const estrelasTopo = document.getElementById('estrelasTopo');
     const lista = document.getElementById('listaConfirmados');
     const listaContainer = document.getElementById('lista-container');
+    const btnVerLista = document.getElementById('btnVerLista');
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -170,9 +176,14 @@
 
       if (nomeCompleto) {
         push(presencaRef, { nome: nomeCompleto });
-        criarEstrela(nomeCompleto);
         form.reset();
       }
+    });
+
+    // Adiciona estrela e salva na tela ao carregar
+    onChildAdded(presencaRef, (snapshot) => {
+      const data = snapshot.val();
+      criarEstrela(data.nome);
     });
 
     function criarEstrela(nome) {
@@ -182,24 +193,22 @@
       estrelasTopo.appendChild(estrela);
     }
 
-    function mostrarConfirmados() {
-      lista.innerHTML = '';
+    btnVerLista.addEventListener('click', async () => {
       listaContainer.style.display = 'block';
+      lista.innerHTML = '';
 
-      onChildAdded(presencaRef, (snapshot) => {
-        const data = snapshot.val();
-        const li = document.createElement('li');
-        li.textContent = data.nome;
-        lista.appendChild(li);
-      });
-    }
-
-    // Carregar estrelas existentes
-    onChildAdded(presencaRef, (snapshot) => {
-      const data = snapshot.val();
-      criarEstrela(data.nome);
+      const snapshot = await get(presencaRef);
+      if (snapshot.exists()) {
+        const dados = snapshot.val();
+        Object.values(dados).forEach((item) => {
+          const li = document.createElement('li');
+          li.textContent = item.nome;
+          lista.appendChild(li);
+        });
+      } else {
+        lista.innerHTML = '<li>Ninguém confirmou ainda.</li>';
+      }
     });
   </script>
-
 </body>
 </html>

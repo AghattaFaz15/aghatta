@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Aghatta XV - Carta Aberta</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
@@ -23,16 +23,7 @@
       color: #001170;
     }
 
-    body::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: url('estrelas.gif') repeat; /* estrelas cintilantes */
-      opacity: 0.3;
-      z-index: 0;
-    }
-
+    /* Container geral */
     #capa {
       position: relative;
       z-index: 1;
@@ -47,20 +38,24 @@
       flex-direction: column;
     }
 
+    /* Texto rolante */
     .texto-scroll {
-      max-height: 75%;
-      width: 80%;
+      width: 90vw;
+      max-width: 320px;
+      max-height: 320px;
       overflow-y: auto;
-      background: rgba(255, 255, 255, 0.7);
-      padding: 2rem;
+      background: transparent;
+      padding: 1.5rem 1rem;
       border-radius: 20px;
-      box-shadow: 0 0 20px gold;
-      font-size: 1.4rem;
-      line-height: 1.8;
+      font-size: 1.8rem;
+      line-height: 2.2;
       font-family: 'Great Vibes', cursive;
       text-align: center;
-      backdrop-filter: blur(4px);
       color: #001170;
+      text-shadow: 0 0 5px #f0c530;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+      z-index: 2;
     }
 
     .texto-scroll::-webkit-scrollbar {
@@ -72,10 +67,11 @@
       border-radius: 10px;
     }
 
+    /* Botão iniciar a jornada */
     #botao-abrir {
       margin-top: 1.5rem;
       padding: 1rem 2.5rem;
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       background: rgba(255, 215, 0, 0.9);
       color: #001170;
       border: none;
@@ -88,6 +84,7 @@
       opacity: 0;
       pointer-events: none;
       user-select: none;
+      z-index: 3;
     }
 
     #botao-abrir.show {
@@ -99,12 +96,40 @@
       transform: scale(1.1);
       background: gold;
     }
+
+    /* Constelação: os pontinhos dourados */
+    #constelacao {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .estrela {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: gold;
+      border-radius: 50%;
+      opacity: 0;
+      filter: drop-shadow(0 0 5px gold);
+      animation-name: piscar;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+    }
+
+    @keyframes piscar {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
   </style>
 </head>
 <body>
 
-  <div id="capa">
-    <div class="texto-scroll" id="textoScroll">
+  <div id="constelacao"></div>
+
+  <div id="capa" role="main" aria-label="Convite aberto">
+    <div class="texto-scroll" id="textoScroll" tabindex="0" aria-label="Texto do convite, role para baixo para continuar">
       <p>
         Este convite não é apenas uma mensagem a mais que se abre...<br><br>
         Aqui, memórias se tornam sementes e a fé floresce em cada passo.<br><br>
@@ -118,20 +143,45 @@
       </p>
     </div>
 
-    <button id="botao-abrir" aria-label="Abrir o livro">📖 Abrir o Livro</button>
+    <button id="botao-abrir" aria-label="Iniciar a jornada">Iniciar a Jornada</button>
   </div>
 
   <script>
     const textoScroll = document.getElementById('textoScroll');
     const botaoAbrir = document.getElementById('botao-abrir');
+    const constelacao = document.getElementById('constelacao');
 
-    // Detecta quando o scroll chegou ao final para mostrar o botão
+    // Função para criar estrelas em posições aleatórias e animadas com delay aleatório
+    function criarEstrelas(qtd) {
+      for(let i = 0; i < qtd; i++) {
+        const estrela = document.createElement('div');
+        estrela.classList.add('estrela');
+        estrela.style.top = Math.random() * 100 + '%';
+        estrela.style.left = Math.random() * 100 + '%';
+        estrela.style.width = `${3 + Math.random() * 5}px`;
+        estrela.style.height = estrela.style.width;
+        estrela.style.animationDuration = `${2 + Math.random() * 3}s`;
+        estrela.style.animationDelay = `${Math.random() * 5}s`;
+        constelacao.appendChild(estrela);
+      }
+    }
+
+    criarEstrelas(60); // Quantidade de estrelas na constelação
+
+    // Mostrar botão após o texto ser rolado até o fim
     textoScroll.addEventListener('scroll', () => {
       const scrollTop = textoScroll.scrollTop;
       const scrollHeight = textoScroll.scrollHeight;
       const clientHeight = textoScroll.clientHeight;
 
-      if (scrollTop + clientHeight >= scrollHeight - 5) { // margem de erro pequena
+      if (scrollTop + clientHeight >= scrollHeight - 5) {
+        botaoAbrir.classList.add('show');
+      }
+    });
+
+    // Mostrar botão se não precisar scroll
+    window.addEventListener('load', () => {
+      if (textoScroll.scrollHeight <= textoScroll.clientHeight) {
         botaoAbrir.classList.add('show');
       }
     });

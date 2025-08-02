@@ -2,180 +2,155 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Convite Celestial - Aghatta XV</title>
+  <title>Confirmação de Presença</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
   <style>
     body {
       margin: 0;
       padding: 0;
-      height: 100vh;
-      background: radial-gradient(ellipse at center, #000030 0%, #000010 100%);
+      background: #000021;
       font-family: 'Georgia', serif;
-      color: #fff8dc;
+      color: gold;
       display: flex;
       flex-direction: column;
+      align-items: center;
       justify-content: flex-end;
-      overflow: hidden;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    h1 {
+    .estrela-container {
+      position: fixed;
+      top: 20px;
+      width: 100%;
       text-align: center;
-      color: #ffe;
-      text-shadow: 0 0 7px #ffd700;
-      margin: 0.5rem;
+      z-index: 10;
     }
 
-    #ceu-estrelas {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      right: 10px;
-      height: 60px;
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      z-index: 10000;
-      pointer-events: none;
+    .estrela {
+      position: relative;
+      display: inline-block;
     }
 
-    .estrela-fixa {
-      background: url('estrela.png') no-repeat center left;
-      background-size: 40px;
-      padding-left: 50px;
-      width: 180px;
-      height: 40px;
-      color: #222;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      border-radius: 20px;
-      font-size: 1rem;
-      box-shadow: 0 0 10px #ffd700cc;
-      user-select: none;
+    .estrela img {
+      max-width: 220px;
+      height: auto;
     }
 
-    .estrela-anim {
-      position: fixed;
-      bottom: 80px;
+    .nome-na-estrela {
+      position: absolute;
+      top: 45%;
       left: 50%;
-      transform: translateX(-50%);
-      background: url('estrela.png') no-repeat center left;
-      background-size: 40px;
-      padding-left: 50px;
-      width: 180px;
-      height: 40px;
-      color: #222;
+      transform: translate(-50%, -50%);
+      color: #fffacd;
       font-weight: bold;
-      display: flex;
-      align-items: center;
-      border-radius: 20px;
+      text-shadow: 0 0 10px #000;
+      text-align: center;
       font-size: 1rem;
-      box-shadow: 0 0 10px #ffd700cc;
-      animation: subir 1.5s forwards;
-      z-index: 9999;
+      white-space: pre-line;
     }
 
-    @keyframes subir {
-      0% { transform: translateX(-50%) translateY(0); opacity: 1; }
-      100% { transform: translateX(-50%) translateY(-80vh); opacity: 0; }
+    form {
+      width: 90%;
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 0 12px gold;
     }
 
-    form#form-container {
-      background: rgba(0, 0, 40, 0.8);
-      padding: 1rem;
-      border-top: 2px solid #ffd70055;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    input[type="text"] {
-      padding: 0.6rem;
+    input {
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.7rem;
       font-size: 1rem;
       border-radius: 8px;
       border: none;
-      width: 80%;
-      max-width: 300px;
+      outline: none;
     }
 
     button {
-      background-color: #ffd700;
+      width: 100%;
+      padding: 0.7rem;
+      background: gold;
       border: none;
-      padding: 0.6rem 1.2rem;
-      font-size: 1rem;
       font-weight: bold;
-      color: #000;
+      color: #000021;
+      font-size: 1rem;
       border-radius: 8px;
       cursor: pointer;
-      transition: transform 0.3s ease;
+      transition: 0.3s;
     }
 
     button:hover {
-      transform: scale(1.05);
-      background-color: #fff8dc;
+      background: #ffdb4d;
+    }
+
+    #lista-confirmados {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <h1>"E os nomes brilharão no firmamento..."</h1>
+  <div class="estrela-container" id="estrelas"></div>
 
-  <div id="ceu-estrelas"></div>
-
-  <form id="form-container">
-    <input type="text" id="nome" placeholder="Digite seu nome" required />
-    <button type="submit">✨ Confirmar Presença</button>
+  <form id="form-confirmacao">
+    <input type="text" id="nome" placeholder="Seu nome" required />
+    <input type="text" id="acompanhante" placeholder="Acompanhante (opcional)" />
+    <p style="text-align:center; margin-bottom: 1rem;">"Haverá festa na terra, e no céu"</p>
+    <button type="submit">Confirmar Presença</button>
   </form>
 
-  <script type="module">
-    // Firebase setup
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
+  <script>
     const firebaseConfig = {
-      apiKey: "SUA_API_KEY",
-      authDomain: "SEU_DOMINIO.firebaseapp.com",
-      databaseURL: "https://SEU_BANCO.firebaseio.com",
-      projectId: "SEU_PROJECT_ID",
-      storageBucket: "SEU_BUCKET.appspot.com",
-      messagingSenderId: "SEU_SENDER_ID",
-      appId: "SEU_APP_ID"
+      apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
+      authDomain: "livro-aghatta.firebaseapp.com",
+      databaseURL: "https://livro-aghatta-default-rtdb.firebaseio.com",
+      projectId: "livro-aghatta",
+      storageBucket: "livro-aghatta.appspot.com",
+      messagingSenderId: "491625108244",
+      appId: "1:491625108244:web:3afdfda239f9d0904ca801"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    const estrelasRef = ref(db, "estrelas");
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    const form = document.getElementById('form-confirmacao');
+    const nomeInput = document.getElementById('nome');
+    const acompanhanteInput = document.getElementById('acompanhante');
+    const estrelasDiv = document.getElementById('estrelas');
 
-    const form = document.getElementById("form-container");
-    const ceu = document.getElementById("ceu-estrelas");
-
-    form.addEventListener("submit", e => {
+    form.addEventListener('submit', e => {
       e.preventDefault();
-      const nome = document.getElementById("nome").value.trim();
-      if (!nome) return alert("Digite seu nome.");
-      push(estrelasRef, { nome });
-      document.getElementById("nome").value = '';
+      const nome = nomeInput.value.trim();
+      const acompanhante = acompanhanteInput.value.trim();
+      if (!nome) return;
+
+      const final = acompanhante ? `${nome} e ${acompanhante}` : nome;
+
+      const novaRef = database.ref('confirmados').push();
+      novaRef.set({ nome: final });
+
+      nomeInput.value = '';
+      acompanhanteInput.value = '';
     });
 
-    onChildAdded(estrelasRef, data => {
-      const { nome } = data.val();
-      subirEstrela(nome);
+    database.ref('confirmados').on('value', snapshot => {
+      estrelasDiv.innerHTML = '';
+      const dados = snapshot.val();
+      if (dados) {
+        Object.values(dados).forEach(dado => {
+          const estrela = document.createElement('div');
+          estrela.classList.add('estrela');
+          estrela.innerHTML = `
+            <img src="estrela.png" alt="Estrela" />
+            <div class="nome-na-estrela">${dado.nome}</div>
+          `;
+          estrelasDiv.appendChild(estrela);
+        });
+      }
     });
-
-    function subirEstrela(nome) {
-      const anim = document.createElement("div");
-      anim.className = "estrela-anim";
-      anim.textContent = nome;
-      document.body.appendChild(anim);
-      anim.addEventListener("animationend", () => {
-        anim.remove();
-        const fixa = document.createElement("div");
-        fixa.className = "estrela-fixa";
-        fixa.textContent = nome;
-        ceu.appendChild(fixa);
-        ceu.scrollLeft = ceu.scrollWidth;
-      });
-    }
   </script>
 </body>
 </html>

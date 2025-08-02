@@ -2,169 +2,136 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Confirmação de Presença</title>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <title>Confirmação de Presença - Ícones</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background: #000021;
-      font-family: 'Georgia', serif;
+      background: #000022;
       color: gold;
+      font-family: 'Georgia', serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-end;
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* Contêiner para estrelas fixas no topo */
-    #estrelas-fixas {
-      position: fixed;
-      top: 10px;
-      width: 100%;
-      text-align: center;
-      z-index: 20;
-      pointer-events: none;
-      display: flex;
       justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      padding: 0 10px;
-      max-height: 140px;
-      overflow-y: auto;
+      height: 100vh;
+      margin: 0;
+      padding: 1rem;
     }
-
-    .estrela {
-      position: relative;
-      display: inline-block;
-      width: 120px;
-      user-select: none;
-    }
-
-    .estrela img {
-      width: 100%;
-      height: auto;
-      display: block;
-      filter: drop-shadow(0 0 6px gold);
-    }
-
-    .nome-na-estrela {
-      position: absolute;
-      top: 45%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #fffacd;
-      font-weight: bold;
-      text-shadow: 0 0 8px #000;
-      text-align: center;
-      font-size: 1rem;
-      white-space: nowrap;
-      padding: 0 4px;
-      user-select: text;
-      pointer-events: auto;
-    }
-
-    /* Estrela animada que sobe */
-    .estrela-subindo {
-      position: fixed;
-      left: 50%;
-      bottom: 40px;
-      transform: translateX(-50%);
-      width: 120px;
-      animation: subir 6s linear forwards;
-      z-index: 15;
-      user-select: none;
-    }
-
-    @keyframes subir {
-      0% {
-        bottom: 40px;
-        opacity: 1;
-        transform: translateX(-50%) scale(1);
-      }
-      100% {
-        bottom: 140px;
-        opacity: 0;
-        transform: translateX(-50%) scale(0.7);
-      }
-    }
-
     form {
+      background: rgba(255, 215, 0, 0.15);
+      border-radius: 1rem;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 0 15px gold;
       width: 90%;
       max-width: 400px;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 1.5rem;
-      border-radius: 1rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 0 12px gold;
-      user-select: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      z-index: 1;
     }
-
-    input {
-      width: 100%;
-      margin-bottom: 1rem;
-      padding: 0.7rem;
-      font-size: 1rem;
-      border-radius: 8px;
+    input[type="text"] {
+      padding: 0.6rem 1rem;
+      font-size: 1.1rem;
+      border-radius: 12px;
       border: none;
       outline: none;
       font-family: 'Georgia', serif;
     }
-
     button {
-      width: 100%;
-      padding: 0.7rem;
       background: gold;
       border: none;
+      border-radius: 12px;
       font-weight: bold;
-      color: #000021;
-      font-size: 1rem;
-      border-radius: 8px;
+      font-size: 1.2rem;
+      padding: 0.8rem;
       cursor: pointer;
-      transition: 0.3s;
-      font-family: 'Georgia', serif;
+      color: #222;
+      box-shadow: 0 0 10px #ffd700cc;
+      transition: background 0.3s ease;
     }
-
     button:hover {
-      background: #ffdb4d;
+      background: #ffd700;
     }
-
     p.frase {
       text-align: center;
-      margin-bottom: 1rem;
       font-style: italic;
-      user-select: none;
-      color: #ffd;
-      text-shadow: 0 0 6px #bfa900cc;
+      margin: 0;
+      color: #fff8dc;
+      text-shadow: 0 0 5px gold;
     }
 
-    /* Scroll barra para estrelas fixas */
-    #estrelas-fixas::-webkit-scrollbar {
-      height: 8px;
-    }
-    #estrelas-fixas::-webkit-scrollbar-thumb {
+    /* Botão para abrir a lista de confirmações */
+    #btn-abrir-lista {
+      margin-top: 1rem;
       background: #ffd700cc;
-      border-radius: 10px;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      padding: 0.6rem;
+      cursor: pointer;
+      box-shadow: 0 0 12px gold;
+      color: #000022;
+      transition: background 0.3s ease;
+      width: 100%;
+    }
+    #btn-abrir-lista:hover {
+      background: gold;
+    }
+
+    /* Modal celestial */
+    #modal-lista {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    #modal-lista iframe {
+      width: 90vw;
+      height: 80vh;
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px gold;
+      background: #000011;
+    }
+    #btn-fechar {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: gold;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #000022;
+      box-shadow: 0 0 10px gold;
     }
   </style>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
-  <div id="estrelas-fixas" aria-live="polite" aria-label="Lista de confirmações"></div>
-
-  <form id="form-confirmacao" aria-label="Formulário de confirmação de presença">
-    <input type="text" id="nome" placeholder="Seu nome" required autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" />
-    <input type="text" id="acompanhante" placeholder="Acompanhante (opcional)" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" />
+  <form id="form-confirmar">
+    <input type="text" id="nome" placeholder="Digite seu nome" required autocomplete="off" autocapitalize="words" />
+    <input type="text" id="acompanhantes" placeholder="Acompanhantes (opcional, separados por vírgula)" autocomplete="off" autocapitalize="words" />
     <p class="frase">"Haverá festa na terra, e no céu"</p>
-    <button type="submit" aria-label="Confirmar presença">Confirmar Presença ⭐</button>
+    <button type="submit">Confirmar Presença</button>
   </form>
 
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <button id="btn-abrir-lista">Ver lista de confirmações</button>
+
+  <div id="modal-lista">
+    <button id="btn-fechar" aria-label="Fechar lista">×</button>
+    <iframe src="confirmacao.html" title="Lista de confirmações"></iframe>
+  </div>
+
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
@@ -177,75 +144,53 @@
     };
 
     firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+    const db = firebase.database();
 
-    const form = document.getElementById('form-confirmacao');
+    const form = document.getElementById('form-confirmar');
     const nomeInput = document.getElementById('nome');
-    const acompanhanteInput = document.getElementById('acompanhante');
-    const estrelasFixasDiv = document.getElementById('estrelas-fixas');
+    const acompanhantesInput = document.getElementById('acompanhantes');
 
     form.addEventListener('submit', e => {
       e.preventDefault();
       const nome = nomeInput.value.trim();
-      const acompanhante = acompanhanteInput.value.trim();
-
+      const acompanhantesRaw = acompanhantesInput.value.trim();
       if (!nome) {
-        alert("Por favor, digite seu nome.");
+        alert('Por favor, digite seu nome.');
         return;
       }
+      const acompanhantes = acompanhantesRaw ? acompanhantesRaw.split(',').map(s => s.trim()).filter(Boolean) : [];
 
-      const nomeCompleto = acompanhante ? `${nome} e ${acompanhante}` : nome;
-
-      // Grava no Firebase
-      const novaConfirmacaoRef = database.ref('confirmados').push();
-      novaConfirmacaoRef.set({ nome: nomeCompleto });
-
-      // Cria a estrela animada que sobe e a fixa no topo
-      criarEstrelaSubindo(nomeCompleto);
-
-      // Limpa formulário
-      nomeInput.value = '';
-      acompanhanteInput.value = '';
-      nomeInput.focus();
+      db.ref('confirmados').push({ nome, acompanhantes })
+        .then(() => {
+          nomeInput.value = '';
+          acompanhantesInput.value = '';
+          alert('Sua presença foi confirmada com alegria! 🙌');
+        })
+        .catch(err => {
+          console.error('Erro ao confirmar presença:', err);
+          alert('Ocorreu um erro. Tente novamente, por favor.');
+        });
     });
 
-    // Atualiza estrelas fixas em tempo real
-    database.ref('confirmados').on('value', snapshot => {
-      estrelasFixasDiv.innerHTML = ''; // limpa estrelas fixas
-      const dados = snapshot.val();
-      if (dados) {
-        Object.values(dados).forEach(dado => {
-          criarEstrelaFixa(dado.nome);
-        });
+    // Modal
+    const btnAbrir = document.getElementById('btn-abrir-lista');
+    const modal = document.getElementById('modal-lista');
+    const btnFechar = document.getElementById('btn-fechar');
+
+    btnAbrir.addEventListener('click', () => {
+      modal.style.display = 'flex';
+    });
+
+    btnFechar.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    // Fechar modal com ESC
+    window.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && modal.style.display === 'flex') {
+        modal.style.display = 'none';
       }
     });
-
-    // Cria estrela fixa (permanente)
-    function criarEstrelaFixa(nome) {
-      const estrelaFixa = document.createElement('div');
-      estrelaFixa.classList.add('estrela');
-      estrelaFixa.innerHTML = `
-        <img src="estrela.png" alt="Estrela" />
-        <div class="nome-na-estrela">${nome}</div>
-      `;
-      estrelasFixasDiv.appendChild(estrelaFixa);
-    }
-
-    // Cria estrela animada que sobe e some
-    function criarEstrelaSubindo(nome) {
-      const estrelaSubindo = document.createElement('div');
-      estrelaSubindo.classList.add('estrela-subindo');
-      estrelaSubindo.innerHTML = `
-        <img src="estrela.png" alt="Estrela" />
-        <div class="nome-na-estrela">${nome}</div>
-      `;
-      document.body.appendChild(estrelaSubindo);
-
-      setTimeout(() => {
-        estrelaSubindo.remove();
-      }, 6000);
-    }
   </script>
-
 </body>
 </html>

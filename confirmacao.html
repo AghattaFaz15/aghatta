@@ -1,47 +1,46 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Lista de Confirmados</title>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <meta charset="UTF-8" />
+  <title>Confirmações - Aghatta XV</title>
   <style>
     body {
+      font-family: 'Georgia', serif;
       background: #000021;
       color: gold;
-      font-family: 'Georgia', serif;
       padding: 2rem;
       text-align: center;
     }
 
     h1 {
-      margin-bottom: 2rem;
-      font-size: 2rem;
-      text-shadow: 0 0 10px gold;
+      margin-bottom: 1rem;
     }
 
     ul {
       list-style: none;
       padding: 0;
+      max-width: 600px;
+      margin: auto;
     }
 
     li {
+      background: rgba(255, 215, 0, 0.1);
       margin: 0.5rem 0;
-      font-size: 1.2rem;
-      background: rgba(255, 255, 255, 0.05);
+      padding: 0.8rem;
       border-radius: 10px;
-      padding: 0.5rem;
-      box-shadow: 0 0 5px gold;
+      font-size: 1.2rem;
     }
   </style>
 </head>
 <body>
-  <h1>✨ Confirmados para a Festa ✨</h1>
-  <ul id="lista-confirmados">
-    <li>Carregando nomes...</li>
-  </ul>
+  <h1>🎉 Quem já confirmou presença:</h1>
+  <ul id="lista-confirmados"></ul>
 
-  <script>
+  <!-- Firebase SDKs -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
     const firebaseConfig = {
       apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
       authDomain: "livro-aghatta.firebaseapp.com",
@@ -52,23 +51,23 @@
       appId: "1:491625108244:web:3afdfda239f9d0904ca801"
     };
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const lista = document.getElementById("lista-confirmados");
 
-    const ul = document.getElementById('lista-confirmados');
+    const confirmadosRef = ref(db, "confirmados");
 
-    db.ref('confirmados').on('value', snapshot => {
-      ul.innerHTML = '';
-      const dados = snapshot.val();
-      if (dados) {
-        Object.values(dados).forEach(dado => {
-          const li = document.createElement('li');
-          li.textContent = dado.nome;
-          ul.appendChild(li);
-        });
-      } else {
-        ul.innerHTML = '<li>Nenhum confirmado ainda.</li>';
-      }
+    onValue(confirmadosRef, (snapshot) => {
+      lista.innerHTML = ""; // Limpa antes de adicionar
+
+      snapshot.forEach((childSnapshot) => {
+        const dados = childSnapshot.val();
+        const nome = dados.nome || "Anônimo";
+        const acompanhante = dados.acompanhante ? ` e ${dados.acompanhante}` : "";
+        const item = document.createElement("li");
+        item.textContent = `${nome}${acompanhante}`;
+        lista.appendChild(item);
+      });
     });
   </script>
 </body>

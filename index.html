@@ -4,15 +4,15 @@
   <meta charset="UTF-8" />
   <title>Convite Celestial - Aghatta XV</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Alice&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alice&family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     html, body {
-      margin: 0;
-      padding: 0;
       height: 100%;
       font-family: 'Alice', serif;
       background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77);
@@ -20,81 +20,94 @@
       overflow: hidden;
     }
 
+    .titulo {
+      position: absolute;
+      top: 1.5rem;
+      width: 100%;
+      text-align: center;
+      font-size: 3rem;
+      font-family: 'Great Vibes', cursive;
+      background: linear-gradient(to right, #f9d423, #ff4e50);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: brilho 3s ease-in-out infinite alternate;
+      text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.3);
+      z-index: 10;
+    }
+
+    @keyframes brilho {
+      from {
+        opacity: 0.85;
+        text-shadow: 0 0 5px rgba(255, 215, 0, 0.6);
+      }
+      to {
+        opacity: 1;
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
+      }
+    }
+
     .tela {
-      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      height: 100%;
       text-align: center;
+      padding: 1rem;
       position: relative;
     }
 
-    .titulo {
+    #envelope {
+      width: 70vw;
+      max-width: 400px;
+      z-index: 1;
+    }
+
+    #botao-abrir {
       position: absolute;
-      top: 2rem;
-      font-size: 2.5rem;
-      font-weight: bold;
-      text-shadow: 2px 2px #000;
-      background: linear-gradient(to right, #ffd700, #001170);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .envelope {
-      width: 90%;
-      max-width: 380px;
-      height: auto;
-      position: relative;
-    }
-
-    .envelope img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    #selo {
-      position: absolute;
-      top: 62%;
-      left: 50%;
-      transform: translate(-50%, -50%);
       width: 90px;
       height: 90px;
-      background: url('selo.png') no-repeat center center;
-      background-size: contain;
       border: none;
+      background: transparent;
       cursor: pointer;
-      animation: pulsar 2.2s infinite;
-      z-index: 10;
+      animation: pulsar 2s infinite;
+      z-index: 2;
+      top: 55%;
+      transform: translateY(-50%);
+    }
+
+    #botao-abrir img {
+      width: 100%;
+      height: auto;
     }
 
     @keyframes pulsar {
       0%, 100% {
-        transform: translate(-50%, -50%) scale(1);
+        transform: translateY(-50%) scale(1);
       }
       50% {
-        transform: translate(-50%, -50%) scale(1.15);
+        transform: translateY(-50%) scale(1.15);
       }
     }
 
     #convite-texto {
-      font-size: 1.3rem;
-      max-width: 85%;
-      text-shadow: 0 0 5px gold;
-      color: #fffde7;
+      font-size: 1.4rem;
       margin-top: 2rem;
+      max-width: 85%;
+      text-shadow: 0 0 5px gold, 0 0 10px gold;
     }
   </style>
 </head>
 <body>
+
   <div class="tela">
     <div class="titulo">Aghatta XV</div>
 
-    <div class="envelope">
-      <img src="envelope.png" alt="Envelope Celestial">
-      <button id="selo" aria-label="Abrir o convite"></button>
-    </div>
+    <img id="envelope" src="envelope.png" alt="Envelope do convite" />
+
+    <button id="botao-abrir" aria-label="Abrir o convite">
+      <img src="selo.png" alt="Selo do convite" />
+    </button>
 
     <div id="convite-texto">
       Não é só um convite... é um chamado.<br/>
@@ -103,9 +116,11 @@
   </div>
 
   <script>
-    document.getElementById('selo').addEventListener('click', () => {
+    const botao = document.getElementById('botao-abrir');
+    botao.addEventListener('click', () => {
       window.location.href = 'segunda-experiencia.html';
     });
   </script>
+
 </body>
 </html>

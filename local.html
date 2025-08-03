@@ -2,111 +2,297 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Localização - Aghatta</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Localização - Aniversário Aghatta XV</title>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
+    body, html {
+      margin: 0; padding: 0; height: 100%;
       font-family: 'Georgia', serif;
-      background: radial-gradient(ellipse at center, #001f4d 0%, #000 100%);
-      color: white;
+      background-image: url('aghatta-segundaexperiencia.png');
+      background-repeat: no-repeat;
+      background-position: center top;
+      background-size: contain;
+      color: #ffd700;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      user-select: none;
       overflow-x: hidden;
+      position: relative;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 17, 112, 0.75);
+      z-index: -1;
     }
 
-    .map-container {
+    main {
+      background: rgba(0, 0, 0, 0.45);
+      border: 2px solid #ffd700aa;
+      border-radius: 18px;
+      box-shadow: 0 0 30px #ffd700cc;
+      max-width: 450px;
+      width: 90vw;
+      margin-top: 4rem;
+      padding: 2rem 1.5rem 2.5rem;
+      backdrop-filter: blur(6px);
+      animation: fadeIn 1.8s ease forwards;
+      opacity: 0;
       position: relative;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    header {
+      text-align: center;
+      text-shadow: 0 0 10px gold;
+      margin-bottom: 0.8rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .bussola {
+      font-size: 2.2rem;
+      filter: drop-shadow(0 0 2px gold);
+      user-select: none;
+    }
+
+    .bussola.direita {
+      transform: scaleX(-1);
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      letter-spacing: 0.15em;
+      font-weight: 700;
+      line-height: 1.1;
+      margin: 0;
+      color: #ffd700;
+      user-select: none;
+    }
+
+    header p {
+      font-size: 1.15rem;
+      font-style: italic;
+      opacity: 0.85;
+      margin-top: 0.2rem;
+      font-weight: 500;
+    }
+
+    #endereco {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff8dc;
+      text-shadow: 0 0 6px #ffdb4d;
+      line-height: 1.4;
+      user-select: text;
+      margin-bottom: 1.7rem;
+      text-align: center;
+    }
+
+    #botaoContainer {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    #botaoComoChegar {
+      max-width: 260px;
+      padding: 0.7em 1.8em;
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      background: linear-gradient(135deg, #ffda00, #b88f00);
+      border-radius: 40px;
+      border: 3px solid #ffda00;
+      box-shadow: 0 0 25px #ffda00cc;
+      cursor: pointer;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+      text-align: center;
+      user-select: none;
+      text-decoration: none;
+      width: max-content;
+      filter: drop-shadow(0 0 8px #ffd700);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      white-space: normal;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    #botaoComoChegar:hover {
+      background: linear-gradient(135deg, #fff266, #d1b000);
+      box-shadow: 0 0 35px #fff266ee;
+      color: #111;
+    }
+
+    /* Borboleta na quina superior direita do botão */
+    #borboletaBotao {
+      position: absolute;
+      top: -25px;
+      right: -25px;
+      width: 65px;
+      height: 65px;
+      background-image: url('borboleta.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: baterAsas 2.5s ease-in-out infinite;
+      filter: drop-shadow(0 0 12px gold);
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    @keyframes baterAsas {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(4deg); }
+    }
+
+    #map-container {
       width: 100%;
-      height: 80vh;
-      margin-top: 20px;
-      border-radius: 20px;
+      height: 70vh;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
       overflow: hidden;
-      box-shadow: 0 0 15px gold;
+      margin-bottom: 2rem;
+      border: 2px solid #ffd700aa;
+      position: relative;
     }
 
     iframe {
+      border: 0;
       width: 100%;
       height: 100%;
-      border: none;
+      filter: drop-shadow(0 0 5px gold);
+      border-radius: 15px;
     }
 
-    .borboleta {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      background: url('borboleta.png') no-repeat center center;
-      background-size: contain;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      animation: voar 3s infinite alternate ease-in-out;
-      pointer-events: none;
+    #linkRSVP {
+      font-size: 0.95rem;
+      opacity: 0.85;
+      margin-top: -0.5rem;
+      text-align: center;
+      color: #ffd700;
     }
 
-    @keyframes voar {
-      0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
-      100% { transform: translate(-50%, -55%) scale(1.05) rotate(3deg); }
-    }
-
-    .btn-rota {
-      display: block;
-      margin: 30px auto;
-      padding: 14px 24px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      border: 2px solid gold;
-      border-radius: 30px;
-      background: transparent;
-      color: gold;
+    #linkRSVP a {
+      color: #ffd700;
+      text-decoration: underline;
+      font-weight: 700;
       cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
+      transition: color 0.3s ease;
     }
 
-    .btn-rota:hover {
-      background: gold;
-      color: black;
-      transform: scale(1.05);
+    #linkRSVP a:hover {
+      color: #fff266;
+      text-shadow: 0 0 8px gold;
     }
 
-    .estrela-fundo {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
-      background: url('estrelas.gif') repeat;
-      opacity: 0.3;
+    footer {
+      font-size: 1rem;
+      opacity: 0.7;
+      margin-bottom: 1rem;
+      user-select: none;
+      font-style: italic;
+      color: #fff8dc;
+      text-shadow: 0 0 6px gold;
+      max-width: 90vw;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        margin-top: 2rem;
+        padding: 1.5rem 1rem 2rem;
+      }
+      header h1 {
+        font-size: 2rem;
+      }
+      .bussola {
+        font-size: 1.8rem;
+      }
+      header p {
+        font-size: 1rem;
+      }
+      #endereco {
+        font-size: 0.95rem;
+      }
+      #botaoComoChegar {
+        font-size: 0.95rem;
+        max-width: 220px;
+        padding: 0.65em 1.4em;
+      }
+      #borboletaBotao {
+        width: 48px;
+        height: 48px;
+        top: -18px;
+        right: -18px;
+      }
+      #linkRSVP {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
+  <main>
+    <header>
+      <span class="bussola esquerda">🧭</span>
+      <h1>Localização</h1>
+      <span class="bussola direita">🧭</span>
+    </header>
+    <header>
+      <p>Venha celebrar conosco o momento mais esperado.</p>
+    </header>
+    <div id="endereco">
+      Chácara das Paineiras<br />
+      Estrada do Carmo, 428<br />
+      Bairro do Carmo, São Roque - SP<br />
+      CEP: 18145-340
+    </div>
+    <div id="botaoContainer">
+      <a 
+        href="https://g.co/kgs/PWD8Cct"
+        target="_blank"
+        rel="noopener noreferrer"
+        id="botaoComoChegar"
+      >
+        Traçar rota e voar!
+      </a>
+      <div id="borboletaBotao" title="Borboleta mensageira do Céu"></div>
+    </div>
+    <div id="map-container">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3654.503102157936!2d-47.14492862462014!3d-23.655800465589073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c5e84401000001%3A0xd8763eb759684e20!2sEstrada%20do%20Carmo%2C%20428%20-%20Bairro%20do%20Carmo%2C%20S%C3%A3o%20Roque%20-%20SP%2C%2018145-340!5e0!3m2!1spt-BR!2sbr!4v1690825600000!5m2!1spt-BR!2sbr"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        aria-label="Mapa da localização do evento"
+      ></iframe>
+    </div>
+    <div id="linkRSVP">
+      Já confirmou sua presença? <a href="icones.html">Clique aqui</a>
+    </div>
+  </main>
+  <footer>
+    Que o caminho até aqui seja abençoado e que o reencontro seja repleto de luz e paz.
+  </footer>
 
-  <div class="estrela-fundo"></div>
-
-  <h1 style="text-align: center; color: gold; margin-top: 30px;">
-    🌟 Onde tudo acontecerá...
-  </h1>
-
-  <div class="map-container">
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.6672935069305!2d-47.1415801!3d-23.7233068!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c58e1f289254e5%3A0xd06a3d394b540c3a!2sCh%C3%A1cara%20das%20Paineiras!5e0!3m2!1spt-BR!2sbr!4v1691684609477!5m2!1spt-BR!2sbr" 
-      allowfullscreen=""
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-    ></iframe>
-    <div class="borboleta"></div>
-  </div>
-
-  <a 
-    href="https://g.co/kgs/PWD8Cct" 
-    target="_blank" 
-    class="btn-rota"
-  >
-    🧭 Traçar rota e voar
-  </a>
-
+  <script>
+    const borboleta = document.getElementById('borboletaBotao');
+    borboleta.addEventListener('click', () => {
+      alert('Que o Senhor guie seus passos e abençoe sua chegada.');
+    });
+  </script>
 </body>
 </html>

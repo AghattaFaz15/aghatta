@@ -31,7 +31,9 @@
       background: gold;
       border-radius: 50%;
       opacity: 0.7;
-      animation: piscar infinite ease-in-out;
+      animation-name: piscar;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
     }
 
     @keyframes piscar {
@@ -92,23 +94,22 @@
       border-radius: 3px;
     }
 
-    #seta-scroll {
+    #seta-role {
       position: fixed;
-      bottom: 12vh;
+      bottom: 16vh;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 1.4rem;
-      color: #ffd700;
-      animation: piscarSeta 1.5s infinite;
+      font-size: 1.2rem;
+      color: gold;
+      animation: pulsarSeta 1.6s infinite;
       text-align: center;
+      font-family: 'Georgia', serif;
       z-index: 9;
-      font-weight: bold;
-      text-shadow: 1px 1px 2px black;
     }
 
-    @keyframes piscarSeta {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.2; }
+    @keyframes pulsarSeta {
+      0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      50% { opacity: 0.5; transform: translateX(-50%) translateY(6px); }
     }
 
     #botao-abrir {
@@ -170,24 +171,29 @@
 
     .botao-lateral {
       position: fixed;
-      top: 50%;
+      top: 35%;
       transform: translateY(-50%);
-      background: rgba(0, 0, 80, 0.8);
-      color: white;
+      background: rgba(0, 0, 80, 0.4);
+      color: gold;
+      font-size: 2.5rem;
       border: 2px solid gold;
-      border-radius: 10px;
-      padding: 0.5rem 1rem;
-      font-size: 1.2rem;
+      border-radius: 20px;
+      padding: 1rem 1.5rem;
       font-weight: bold;
       cursor: pointer;
-      text-shadow: 1px 1px black;
+      text-shadow: 1px 1px 2px black;
       z-index: 12;
       user-select: none;
-      transition: background 0.3s ease;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease, transform 0.3s ease;
     }
 
     .botao-lateral:hover {
-      background: rgba(0, 0, 120, 0.95);
+      background: rgba(0, 0, 100, 0.6);
+      transform: translateY(-50%) scale(1.1);
     }
 
     #btn-anterior {
@@ -214,7 +220,7 @@
     </section>
   </main>
 
-  <div id="seta-scroll">⬇<br>Role o texto</div>
+  <div id="seta-role">⬇<br/>Role o texto</div>
 
   <button id="botao-abrir" aria-label="Iniciar a Jornada">Iniciar a Jornada</button>
 
@@ -230,13 +236,13 @@
     const constelacao = document.getElementById('constelacao');
     const textoScroll = document.getElementById('texto-scroll');
     const botaoAbrir = document.getElementById('botao-abrir');
-    const setaScroll = document.getElementById('seta-scroll');
     const carta = document.getElementById('carta');
     const conteudo = document.getElementById('conteudo-livro');
     const iframe = document.getElementById('iframe');
     const audioLivro = document.getElementById('audioLivro');
     const btnAnterior = document.getElementById('btn-anterior');
     const btnProximo = document.getElementById('btn-proximo');
+    const setaRole = document.getElementById('seta-role');
 
     const paginas = ['galeria.html', 'livro.html', 'contador.html', 'local.html', 'icones.html'];
     let indice = 0;
@@ -258,17 +264,15 @@
     criarPontos();
 
     textoScroll.addEventListener('scroll', () => {
-      const fim = textoScroll.scrollTop + textoScroll.clientHeight >= textoScroll.scrollHeight - 5;
-      if (fim) {
+      if (textoScroll.scrollTop + textoScroll.clientHeight >= textoScroll.scrollHeight - 5) {
         botaoAbrir.style.display = 'block';
-        setaScroll.style.display = 'none';
+        setaRole.style.display = 'none';
       }
     });
 
     botaoAbrir.addEventListener('click', () => {
       carta.style.opacity = 0;
       botaoAbrir.style.display = 'none';
-      setaScroll.style.display = 'none';
       setTimeout(() => {
         carta.style.display = 'none';
         conteudo.style.display = 'block';
@@ -295,5 +299,6 @@
       trocarPagina((indice - 1 + paginas.length) % paginas.length);
     });
   </script>
+
 </body>
 </html>

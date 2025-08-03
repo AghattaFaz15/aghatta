@@ -34,9 +34,7 @@
       background: gold;
       border-radius: 50%;
       opacity: 0.7;
-      animation-name: piscar;
-      animation-iteration-count: infinite;
-      animation-timing-function: ease-in-out;
+      animation: piscar 3s infinite ease-in-out;
     }
 
     @keyframes piscar {
@@ -55,13 +53,14 @@
       background-size: contain;
       transform: translate(-50%, -50%);
       z-index: 5;
+      border-radius: 12px;
+      box-shadow: 0 0 30px 8px rgba(255, 215, 0, 0.5);
       display: flex;
-      justify-content: start;
+      flex-direction: column;
       align-items: center;
       padding-top: 8vh;
       padding-left: 1rem;
       padding-right: 1rem;
-      flex-direction: column;
     }
 
     #texto-scroll {
@@ -87,36 +86,17 @@
       width: 6px;
     }
 
-    #texto-scroll::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
     #texto-scroll::-webkit-scrollbar-thumb {
       background-color: #ffd700;
       border-radius: 3px;
     }
 
-    #seta-scroll {
-      position: fixed;
-      bottom: 8vh;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 1.3rem;
-      color: gold;
-      animation: pulsarSeta 1.5s infinite;
-      z-index: 9;
-      text-align: center;
-      user-select: none;
-    }
-
-    @keyframes pulsarSeta {
-      0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); }
-      50% { opacity: 0.4; transform: translateX(-50%) translateY(8px); }
-    }
-
     #botao-abrir {
       display: none;
-      margin: 1.5rem auto 0;
+      position: fixed;
+      left: 50%;
+      bottom: 6vh;
+      transform: translateX(-50%);
       padding: 1rem 2.5rem;
       font-size: 1.4rem;
       background: linear-gradient(135deg, #001f4d, #ffd700);
@@ -127,18 +107,8 @@
       box-shadow: 0 0 25px gold;
       font-weight: bold;
       text-shadow: 1px 1px white;
-      transition: transform 0.3s ease, background 0.3s ease;
-      position: fixed;
-      left: 50%;
-      bottom: 6vh;
-      transform: translateX(-50%) scale(1);
       animation: pulsarZoom 2.5s infinite;
       z-index: 10;
-    }
-
-    #botao-abrir:hover {
-      background: gold;
-      transform: translateX(-50%) scale(1.1);
     }
 
     @keyframes pulsarZoom {
@@ -172,33 +142,56 @@
     }
 
     .botao-lateral {
-      width: 52px;
-      height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      background: rgba(255, 215, 0, 0.2);
+      position: fixed;
+      top: 44%;
+      background: rgba(255, 215, 0, 0.25);
       color: gold;
       border: none;
       border-radius: 50%;
+      padding: 0.8rem 1rem;
+      font-size: 2rem;
+      font-weight: bold;
       cursor: pointer;
-      position: fixed;
-      top: 45%;
-      transform: translateY(-50%);
+      text-shadow: 1px 1px black;
       z-index: 12;
       user-select: none;
-      text-shadow: 1px 1px 2px black;
-      transition: background 0.3s ease, transform 0.2s ease;
+      transition: background 0.3s ease, transform 0.3s ease;
+      width: 55px;
+      height: 55px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .botao-lateral:hover {
-      background: rgba(255, 215, 0, 0.35);
-      transform: translateY(-50%) scale(1.05);
+      background: rgba(255, 215, 0, 0.5);
+      transform: scale(1.1);
     }
 
-    #btn-anterior { left: 1rem; }
-    #btn-proximo { right: 1rem; }
+    #btn-anterior {
+      left: 0.8rem;
+    }
+
+    #btn-proximo {
+      right: 0.8rem;
+    }
+
+    #seta-scroll {
+      position: fixed;
+      bottom: 5vh;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.2rem;
+      color: gold;
+      animation: pulsarSeta 2s infinite;
+      z-index: 9;
+      pointer-events: none;
+    }
+
+    @keyframes pulsarSeta {
+      0%, 100% { opacity: 0.8; transform: translateX(-50%) translateY(0); }
+      50% { opacity: 0.2; transform: translateX(-50%) translateY(5px); }
+    }
   </style>
 </head>
 <body>
@@ -216,14 +209,14 @@
     </section>
   </main>
 
-  <div id="seta-scroll">⬇<br>Role o texto</div>
+  <div id="seta-scroll">⬇️ Role o texto</div>
 
   <button id="botao-abrir" aria-label="Iniciar a Jornada">Iniciar a Jornada</button>
 
   <div id="conteudo-livro" aria-label="Conteúdo da jornada">
     <iframe id="iframe" src="galeria.html" allow="autoplay"></iframe>
-    <button class="botao-lateral" id="btn-anterior" aria-label="Página anterior">⮜</button>
-    <button class="botao-lateral" id="btn-proximo" aria-label="Próxima página">⮞</button>
+    <button class="botao-lateral" id="btn-anterior" aria-label="Página anterior">←</button>
+    <button class="botao-lateral" id="btn-proximo" aria-label="Próxima página">→</button>
   </div>
 
   <audio id="audioLivro" src="audio.mp3" preload="auto" loop></audio>
@@ -232,19 +225,19 @@
     const constelacao = document.getElementById('constelacao');
     const textoScroll = document.getElementById('texto-scroll');
     const botaoAbrir = document.getElementById('botao-abrir');
+    const setaScroll = document.getElementById('seta-scroll');
     const carta = document.getElementById('carta');
     const conteudo = document.getElementById('conteudo-livro');
     const iframe = document.getElementById('iframe');
     const audioLivro = document.getElementById('audioLivro');
     const btnAnterior = document.getElementById('btn-anterior');
     const btnProximo = document.getElementById('btn-proximo');
-    const setaScroll = document.getElementById('seta-scroll');
 
     const paginas = ['galeria.html', 'livro.html', 'contador.html', 'local.html', 'icones.html'];
     let indice = 0;
 
-    function criarPontos(qtd = 30) {
-      for (let i = 0; i < qtd; i++) {
+    function criarPontos(qtd=30) {
+      for(let i=0; i<qtd; i++) {
         const ponto = document.createElement('div');
         ponto.classList.add('ponto');
         const size = Math.random() * 4 + 2;
@@ -269,7 +262,6 @@
     botaoAbrir.addEventListener('click', () => {
       carta.style.opacity = 0;
       botaoAbrir.style.display = 'none';
-      setaScroll.style.display = 'none';
       setTimeout(() => {
         carta.style.display = 'none';
         conteudo.style.display = 'block';
@@ -296,5 +288,6 @@
       trocarPagina((indice - 1 + paginas.length) % paginas.length);
     });
   </script>
+
 </body>
 </html>

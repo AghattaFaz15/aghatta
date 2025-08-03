@@ -2,9 +2,11 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Aghatta XV - Carta Aberta</title>
+  <title>Aghatta XV - Jornada Celestial</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
     * {
       margin: 0;
       padding: 0;
@@ -14,163 +16,258 @@
     html, body {
       width: 100%;
       height: 100%;
+      font-family: 'Georgia', serif;
+      background: #001f4d url('Aghatta.png') no-repeat center center fixed;
+      background-size: cover;
       overflow: hidden;
-      font-family: 'Dancing Script', cursive;
-      background: #001170;
+      color: #0b3d91; /* azul royal */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       position: relative;
     }
 
-    body::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 17, 112, 0.85);
-      z-index: 0;
+    /* Fundo com pontos dourados piscando tipo constelação */
+    #constelacao {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 1;
     }
 
-    .estrela {
+    .ponto {
       position: absolute;
-      width: 3px;
-      height: 3px;
       background: gold;
       border-radius: 50%;
-      opacity: 0;
-      animation: piscar 2s infinite ease-in-out;
+      opacity: 0.7;
+      animation-name: piscar;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
     }
 
     @keyframes piscar {
-      0%, 100% { opacity: 0; }
-      50% { opacity: 1; }
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 0.2; }
     }
 
-    #container {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      background: url('cartaaberta.png') no-repeat center center;
-      background-size: cover;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
+    /* CONTAINER DO TEXTO (CAPA) */
+    #capa {
+      position: fixed;
+      z-index: 10;
+      top: 50%;
+      left: 50%;
+      width: 90vw;
+      max-width: 360px;
+      height: 65vh;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 38, 102, 0.7);
+      border-radius: 15px;
+      padding: 1rem 1.5rem;
+      color: #0b3d91;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.4rem;
+      line-height: 1.6;
+      overflow-y: scroll;
+      text-shadow: 0 0 5px #d4af37;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+      user-select: text;
     }
 
-    #textoScroll {
-      width: 70%;
-      max-width: 260px;
-      height: 30%;
-      margin-top: -1rem;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 1rem;
-      color: #001170;
-      font-size: 1.5rem;
-      line-height: 1.8;
-      overflow-y: auto;
-      text-align: center;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
-      backdrop-filter: blur(4px);
-    }
-
-    #textoScroll::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    #textoScroll::-webkit-scrollbar-thumb {
-      background-color: gold;
-      border-radius: 10px;
-    }
-
+    /* BOTÃO INICIAR JORNADA */
     #botao-abrir {
-      margin-top: 2rem;
+      display: none;
+      margin: 1rem auto 0;
       padding: 1rem 2rem;
       font-size: 1.3rem;
+      background: linear-gradient(135deg, #001f4d, #ffd700);
+      color: #001f4d;
       border: none;
       border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 0 25px gold;
+      font-weight: bold;
+      text-shadow: 1px 1px white;
+      transition: transform 0.3s ease, background 0.3s ease;
+      position: fixed;
+      left: 50%;
+      bottom: 5vh;
+      transform: translateX(-50%) scale(1);
+      animation: pulsarZoom 2.5s infinite;
+      z-index: 20;
+    }
+    #botao-abrir:hover {
       background: gold;
-      color: #001170;
+      transform: translateX(-50%) scale(1.1);
+    }
+
+    @keyframes pulsarZoom {
+      0%, 100% {
+        transform: translateX(-50%) scale(1);
+        box-shadow: 0 0 15px gold, 0 0 30px #ffd700cc;
+      }
+      50% {
+        transform: translateX(-50%) scale(1.15);
+        box-shadow: 0 0 40px gold, 0 0 60px #ffd700cc;
+      }
+    }
+
+    /* CONTEÚDO (IFRAME) */
+    #conteudo-livro {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: #001f4d;
+      z-index: 15;
+      overflow: hidden;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      opacity: 1;
+      transition: opacity 1s ease;
+      background: white;
+    }
+
+    /* Botões laterais para navegação */
+    .botao-lateral {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 80, 0.8);
+      color: white;
+      border: 2px solid gold;
+      border-radius: 10px;
+      padding: 0.5rem 1rem;
+      font-size: 1.2rem;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 0 20px gold;
-      opacity: 0;
-      pointer-events: none;
-      transform: scale(0.9);
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      text-shadow: 1px 1px black;
+      z-index: 30;
+      user-select: none;
+      transition: background 0.3s ease;
     }
 
-    #botao-abrir.show {
-      opacity: 1;
-      pointer-events: all;
-      transform: scale(1.05);
-      animation: pulsar 2s infinite;
+    .botao-lateral:hover {
+      background: rgba(0, 0, 120, 0.95);
     }
 
-    @keyframes pulsar {
-      0%, 100% { transform: scale(1.05); }
-      50% { transform: scale(1.15); }
+    #btn-anterior {
+      left: 1rem;
+    }
+
+    #btn-proximo {
+      right: 1rem;
     }
   </style>
-
-  <!-- Fonte cursiva -->
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <!-- Estrelas -->
-  <script>
-    for (let i = 0; i < 80; i++) {
-      const estrela = document.createElement('div');
-      estrela.className = 'estrela';
-      estrela.style.left = `${Math.random() * 100}%`;
-      estrela.style.top = `${Math.random() * 100}%`;
-      estrela.style.animationDelay = `${Math.random() * 5}s`;
-      estrela.style.width = estrela.style.height = `${Math.random() * 2 + 2}px`;
-      document.body.appendChild(estrela);
-    }
-  </script>
+  <div id="constelacao"></div>
 
-  <div id="container">
-    <div id="textoScroll">
-      <p>
-        Este convite não é apenas uma mensagem a mais que se abre...<br><br>
-        Aqui, memórias se tornam sementes<br>
-        e a fé floresce em cada passo.<br><br>
-        Deus sustentou (e vai continuar a sustentar)<br>
-        cada detalhe dessa jornada,<br>
-        e gostaríamos que soubessem que,<br>
-        se esse convite chegou até você,<br>
-        é porque você faz parte disso tudo...<br><br>
-        O que vem a seguir foi tecido com<br>
-        amor, oração e propósito,<br>
-        para que seu coração sinta<br>
-        a graça em cada instante.<br><br>
-        Ative o áudio do seu celular,<br>
-        respire fundo,<br>
-        e permita que cada palavra toque seu espírito.
-      </p>
-    </div>
-
-    <button id="botao-abrir">✨ Iniciar a Jornada</button>
+  <!-- CAPA POÉTICA -->
+  <div id="capa" tabindex="0">
+    Este convite não é apenas uma mensagem a mais que se abre...<br/><br/>
+    Aqui, memórias se tornam sementes e a fé floresce em cada passo.<br/><br/>
+    Deus sustentou (e vai continuar a sustentar) cada detalhe dessa jornada e gostaríamos que soubessem que, se esse convite chegou até você, é porque você faz parte disso tudo...<br/><br/>
+    O que vem a seguir foi tecido com amor, oração e propósito,<br/>
+    para que seu coração sinta a graça em cada instante.<br/><br/>
+    Ative o áudio do seu celular, respire fundo, permita que cada palavra toque seu espírito.
   </div>
 
-  <script>
-    const textoScroll = document.getElementById('textoScroll');
-    const botaoAbrir = document.getElementById('botao-abrir');
+  <button id="botao-abrir" aria-label="Iniciar a Jornada">Iniciar a Jornada</button>
 
-    textoScroll.addEventListener('scroll', () => {
-      const { scrollTop, scrollHeight, clientHeight } = textoScroll;
-      if (scrollTop + clientHeight >= scrollHeight - 2) {
-        botaoAbrir.classList.add('show');
-      }
-    });
+  <!-- CONTEÚDO: IFRAME + NAVEGAÇÃO -->
+  <div id="conteudo-livro">
+    <iframe id="iframe" src="galeria.html" allow="autoplay"></iframe>
 
-    // Redirecionar ao clicar
-    botaoAbrir.addEventListener('click', () => {
-      window.location.href = 'segunda-experiencia.html';
-    });
-  </script>
+    <button class="botao-lateral" id="btn-anterior" aria-label="Página anterior">⬅</button>
+    <button class="botao-lateral" id="btn-proximo" aria-label="Próxima página">➡</button>
+  </div>
+
+  <!-- ÁUDIO -->
+  <audio id="audioLivro" src="audio.mp3" preload="auto" loop></audio>
+
+<script>
+  const constelacao = document.getElementById('constelacao');
+  const capa = document.getElementById('capa');
+  const botaoAbrir = document.getElementById('botao-abrir');
+  const conteudo = document.getElementById('conteudo-livro');
+  const iframe = document.getElementById('iframe');
+  const audioLivro = document.getElementById('audioLivro');
+  const btnAnterior = document.getElementById('btn-anterior');
+  const btnProximo = document.getElementById('btn-proximo');
+
+  const paginas = [
+    'galeria.html',
+    'livro.html',
+    'contador.html',
+    'local.html',
+    'icones.html'
+  ];
+  let indice = 0;
+
+  // Criar pontos dourados aleatórios para constelação
+  function criarPontos(qtd=30) {
+    for(let i=0; i<qtd; i++) {
+      const ponto = document.createElement('div');
+      ponto.classList.add('ponto');
+      const size = Math.random() * 4 + 2; // 2px a 6px
+      ponto.style.width = `${size}px`;
+      ponto.style.height = `${size}px`;
+      ponto.style.top = `${Math.random() * 100}%`;
+      ponto.style.left = `${Math.random() * 100}%`;
+      ponto.style.animationDuration = `${2 + Math.random() * 3}s`;
+      ponto.style.animationDelay = `${Math.random() * 5}s`;
+      constelacao.appendChild(ponto);
+    }
+  }
+
+  criarPontos();
+
+  // Mostrar botão só quando rolar até o final do texto
+  capa.addEventListener('scroll', () => {
+    if (capa.scrollTop + capa.clientHeight >= capa.scrollHeight - 5) {
+      botaoAbrir.style.display = 'block';
+    }
+  });
+
+  botaoAbrir.addEventListener('click', () => {
+    // Sumir com a capa
+    capa.style.opacity = 0;
+    botaoAbrir.style.display = 'none';
+
+    setTimeout(() => {
+      capa.style.display = 'none';
+      conteudo.style.display = 'block';
+
+      // Tocar áudio em loop
+      audioLivro.play().catch(err => {
+        console.warn("⚠️ O áudio não pôde ser iniciado automaticamente:", err);
+      });
+    }, 1000);
+  });
+
+  // Função para trocar páginas no iframe
+  function trocarPagina(novoIndice) {
+    iframe.style.opacity = 0;
+    setTimeout(() => {
+      indice = novoIndice;
+      iframe.src = paginas[indice];
+      iframe.style.opacity = 1;
+    }, 500);
+  }
+
+  btnProximo.addEventListener('click', () => {
+    let prox = (indice + 1) % paginas.length;
+    trocarPagina(prox);
+  });
+
+  btnAnterior.addEventListener('click', () => {
+    let ant = (indice - 1 + paginas.length) % paginas.length;
+    trocarPagina(ant);
+  });
+</script>
 
 </body>
 </html>

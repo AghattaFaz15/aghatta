@@ -14,19 +14,19 @@
     html, body {
       width: 100%; height: 100%;
       font-family: 'Georgia', serif;
-      background: #001f4d url('Aghatta.png') no-repeat center center fixed;
-      background-size: cover;
+      background: #001f4d; /* Azul Royal profundo */
       overflow: hidden;
-      color: #0b3d91;
       position: relative;
+      color: #0b3d91;
     }
 
-    /* Constelação dourada */
+    /* Constelação dourada pulsante atrás */
     #constelacao {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       pointer-events: none;
       z-index: 1;
+      background: transparent;
     }
 
     .ponto {
@@ -44,47 +44,61 @@
       50% { opacity: 0.2; }
     }
 
-    /* Carta aberta */
+    /* Carta aberta: maior, centralizada e com brilho sutil */
     #carta {
       position: fixed;
       top: 50%; left: 50%;
-      width: 90vw; max-width: 400px;
-      height: 66vh;
-      background: 
-        linear-gradient(rgba(1, 35, 102, 0.85), rgba(1, 35, 102, 0.85)),
+      width: 90vw;
+      max-width: 450px;
+      height: 85vh;
+      background:
+        linear-gradient(rgba(1, 35, 102, 0.8), rgba(1, 35, 102, 0.8)),
         url('cartaaberta.png') no-repeat center center;
       background-size: contain;
       transform: translate(-50%, -50%);
       z-index: 5;
+      border-radius: 12px;
+      box-shadow: 0 0 30px 8px rgba(255, 215, 0, 0.5);
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 2rem;
+      padding: 3rem 2rem 3rem 2rem;
       box-sizing: border-box;
-      border-radius: 12px;
-      box-shadow: 0 0 15px 4px rgba(255, 215, 0, 0.4);
     }
 
-    /* Caixa do texto sobre a carta */
+    /* Caixa de texto sobre a carta, transparente, cursiva, e rolável */
     #texto-scroll {
-      width: 70%; height: 66%; /* aprox 3x2 na tela celular */
+      width: 70%; /* cerca de 3x2 no celular */
+      height: 70%;
       overflow-y: scroll;
       font-family: 'Great Vibes', cursive;
-      font-size: 1.5rem;
-      line-height: 1.6;
+      font-size: 1.6rem;
+      line-height: 1.7;
       color: #cce3ff;
-      text-shadow: 0 0 7px #d4af37;
+      text-shadow: 0 0 8px #d4af37;
       background: transparent;
       user-select: text;
       padding-right: 0.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: #d4af37 transparent;
+    }
+    #texto-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    #texto-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    #texto-scroll::-webkit-scrollbar-thumb {
+      background-color: #d4af37;
+      border-radius: 3px;
     }
 
-    /* Botão iniciar jornada */
+    /* Botão Iniciar Jornada, aparece após o scroll */
     #botao-abrir {
       display: none;
       margin: 1.5rem auto 0;
-      padding: 1rem 2rem;
-      font-size: 1.3rem;
+      padding: 1rem 2.5rem;
+      font-size: 1.4rem;
       background: linear-gradient(135deg, #001f4d, #ffd700);
       color: #001f4d;
       border: none;
@@ -116,11 +130,11 @@
       }
     }
 
-    /* CONTEÚDO (iframe com fundo Aghatta) */
+    /* Conteúdo do livro com fundo aghatta.png */
     #conteudo-livro {
       display: none;
       position: fixed;
-      top: 0; left: 0; right:0; bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       background: #001f4d url('Aghatta.png') no-repeat center center fixed;
       background-size: cover;
       z-index: 8;
@@ -167,18 +181,18 @@
 </head>
 <body>
 
-  <div id="constelacao"></div>
+  <div id="constelacao" aria-hidden="true"></div>
 
-  <div id="carta" role="main" aria-label="Carta aberta com texto do convite">
-    <div id="texto-scroll" tabindex="0" aria-label="Texto do convite rolável">
+  <main id="carta" role="main" aria-label="Carta aberta com convite">
+    <section id="texto-scroll" tabindex="0" aria-label="Texto do convite rolável">
       Este convite não é apenas uma mensagem a mais que se abre...<br/><br/>
       Aqui, memórias se tornam sementes e a fé floresce em cada passo.<br/><br/>
       Deus sustentou (e vai continuar a sustentar) cada detalhe dessa jornada e gostaríamos que soubessem que, se esse convite chegou até você, é porque você faz parte disso tudo...<br/><br/>
       O que vem a seguir foi tecido com amor, oração e propósito,<br/>
       para que seu coração sinta a graça em cada instante.<br/><br/>
       Ative o áudio do seu celular, respire fundo, permita que cada palavra toque seu espírito.
-    </div>
-  </div>
+    </section>
+  </main>
 
   <button id="botao-abrir" aria-label="Iniciar a Jornada">Iniciar a Jornada</button>
 
@@ -193,9 +207,9 @@
 
 <script>
   const constelacao = document.getElementById('constelacao');
-  const carta = document.getElementById('carta');
   const textoScroll = document.getElementById('texto-scroll');
   const botaoAbrir = document.getElementById('botao-abrir');
+  const carta = document.getElementById('carta');
   const conteudo = document.getElementById('conteudo-livro');
   const iframe = document.getElementById('iframe');
   const audioLivro = document.getElementById('audioLivro');
@@ -211,7 +225,7 @@
   ];
   let indice = 0;
 
-  // Criar pontos dourados aleatórios para constelação
+  // Criar pontos dourados aleatórios (constelação)
   function criarPontos(qtd=30) {
     for(let i=0; i<qtd; i++) {
       const ponto = document.createElement('div');
@@ -226,10 +240,9 @@
       constelacao.appendChild(ponto);
     }
   }
-
   criarPontos();
 
-  // Mostrar botão só quando rolar até o final do texto
+  // Mostrar botão só após rolar o texto até o fim
   textoScroll.addEventListener('scroll', () => {
     if (textoScroll.scrollTop + textoScroll.clientHeight >= textoScroll.scrollHeight - 5) {
       botaoAbrir.style.display = 'block';
@@ -239,18 +252,16 @@
   botaoAbrir.addEventListener('click', () => {
     carta.style.opacity = 0;
     botaoAbrir.style.display = 'none';
-
     setTimeout(() => {
       carta.style.display = 'none';
       conteudo.style.display = 'block';
-
       audioLivro.play().catch(err => {
         console.warn("⚠️ O áudio não pôde ser iniciado automaticamente:", err);
       });
     }, 1000);
   });
 
-  // Função para trocar páginas no iframe
+  // Navegação das páginas no iframe
   function trocarPagina(novoIndice) {
     iframe.style.opacity = 0;
     setTimeout(() => {

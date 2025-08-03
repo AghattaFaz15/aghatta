@@ -14,19 +14,16 @@
     html, body {
       width: 100%; height: 100%;
       font-family: 'Georgia', serif;
-      background: #001f4d; /* Azul Royal profundo */
+      background: #001f4d;
       overflow: hidden;
-      position: relative;
       color: #0b3d91;
     }
 
-    /* Constelação dourada pulsante atrás */
     #constelacao {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       pointer-events: none;
       z-index: 1;
-      background: transparent;
     }
 
     .ponto {
@@ -44,13 +41,12 @@
       50% { opacity: 0.2; }
     }
 
-    /* Carta aberta: maior, centralizada e com brilho sutil */
     #carta {
       position: fixed;
       top: 50%; left: 50%;
       width: 90vw;
       max-width: 450px;
-      height: 85vh;
+      height: 90vh;
       background: url('cartaaberta.png') no-repeat center center;
       background-size: contain;
       transform: translate(-50%, -50%);
@@ -60,39 +56,41 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 3rem 2rem;
-      box-sizing: border-box;
+      padding: 1rem;
+      flex-direction: column;
     }
 
-    /* Caixa de texto sobre a carta, transparente, cursiva, e rolável */
     #texto-scroll {
-      width: 80vw;
-      height: 35vh;
+      width: 80%;
+      height: 30vh;
       overflow-y: scroll;
       font-family: 'Great Vibes', cursive;
-      font-size: 1.8rem;
-      line-height: 1.7;
-      color: #4169e1; /* azul royal */
+      font-size: 1.9rem;
+      line-height: 1.8;
+      color: #4169e1;
       text-shadow: 0 0 8px #ffd700;
       background: transparent;
       user-select: text;
-      padding-right: 0.5rem;
+      padding: 0.5rem 1rem;
       z-index: 6;
       scrollbar-width: thin;
       scrollbar-color: #ffd700 transparent;
+      border-radius: 12px;
     }
+
     #texto-scroll::-webkit-scrollbar {
       width: 6px;
     }
+
     #texto-scroll::-webkit-scrollbar-track {
       background: transparent;
     }
+
     #texto-scroll::-webkit-scrollbar-thumb {
       background-color: #ffd700;
       border-radius: 3px;
     }
 
-    /* Botão Iniciar Jornada, aparece após o scroll */
     #botao-abrir {
       display: none;
       margin: 1.5rem auto 0;
@@ -114,22 +112,23 @@
       animation: pulsarZoom 2.5s infinite;
       z-index: 10;
     }
+
     #botao-abrir:hover {
       background: gold;
       transform: translateX(-50%) scale(1.1);
     }
+
     @keyframes pulsarZoom {
       0%, 100% {
         transform: translateX(-50%) scale(1);
         box-shadow: 0 0 15px gold, 0 0 30px #ffd700cc;
       }
-      50% {
+      50 {
         transform: translateX(-50%) scale(1.15);
         box-shadow: 0 0 40px gold, 0 0 60px #ffd700cc;
       }
     }
 
-    /* Conteúdo do livro com fundo aghatta.png */
     #conteudo-livro {
       display: none;
       position: fixed;
@@ -149,7 +148,6 @@
       background: transparent;
     }
 
-    /* Botões laterais para navegação */
     .botao-lateral {
       position: fixed;
       top: 50%;
@@ -167,12 +165,15 @@
       user-select: none;
       transition: background 0.3s ease;
     }
+
     .botao-lateral:hover {
       background: rgba(0, 0, 120, 0.95);
     }
+
     #btn-anterior {
       left: 1rem;
     }
+
     #btn-proximo {
       right: 1rem;
     }
@@ -197,89 +198,77 @@
 
   <div id="conteudo-livro" aria-label="Conteúdo da jornada">
     <iframe id="iframe" src="galeria.html" allow="autoplay"></iframe>
-
     <button class="botao-lateral" id="btn-anterior" aria-label="Página anterior">⬅</button>
     <button class="botao-lateral" id="btn-proximo" aria-label="Próxima página">➡</button>
   </div>
 
   <audio id="audioLivro" src="audio.mp3" preload="auto" loop></audio>
 
-<script>
-  const constelacao = document.getElementById('constelacao');
-  const textoScroll = document.getElementById('texto-scroll');
-  const botaoAbrir = document.getElementById('botao-abrir');
-  const carta = document.getElementById('carta');
-  const conteudo = document.getElementById('conteudo-livro');
-  const iframe = document.getElementById('iframe');
-  const audioLivro = document.getElementById('audioLivro');
-  const btnAnterior = document.getElementById('btn-anterior');
-  const btnProximo = document.getElementById('btn-proximo');
+  <script>
+    const constelacao = document.getElementById('constelacao');
+    const textoScroll = document.getElementById('texto-scroll');
+    const botaoAbrir = document.getElementById('botao-abrir');
+    const carta = document.getElementById('carta');
+    const conteudo = document.getElementById('conteudo-livro');
+    const iframe = document.getElementById('iframe');
+    const audioLivro = document.getElementById('audioLivro');
+    const btnAnterior = document.getElementById('btn-anterior');
+    const btnProximo = document.getElementById('btn-proximo');
 
-  const paginas = [
-    'galeria.html',
-    'livro.html',
-    'contador.html',
-    'local.html',
-    'icones.html'
-  ];
-  let indice = 0;
+    const paginas = ['galeria.html', 'livro.html', 'contador.html', 'local.html', 'icones.html'];
+    let indice = 0;
 
-  // Criar pontos dourados aleatórios (constelação)
-  function criarPontos(qtd=30) {
-    for(let i=0; i<qtd; i++) {
-      const ponto = document.createElement('div');
-      ponto.classList.add('ponto');
-      const size = Math.random() * 4 + 2;
-      ponto.style.width = `${size}px`;
-      ponto.style.height = `${size}px`;
-      ponto.style.top = `${Math.random() * 100}%`;
-      ponto.style.left = `${Math.random() * 100}%`;
-      ponto.style.animationDuration = `${2 + Math.random() * 3}s`;
-      ponto.style.animationDelay = `${Math.random() * 5}s`;
-      constelacao.appendChild(ponto);
+    function criarPontos(qtd=30) {
+      for(let i=0; i<qtd; i++) {
+        const ponto = document.createElement('div');
+        ponto.classList.add('ponto');
+        const size = Math.random() * 4 + 2;
+        ponto.style.width = `${size}px`;
+        ponto.style.height = `${size}px`;
+        ponto.style.top = `${Math.random() * 100}%`;
+        ponto.style.left = `${Math.random() * 100}%`;
+        ponto.style.animationDuration = `${2 + Math.random() * 3}s`;
+        ponto.style.animationDelay = `${Math.random() * 5}s`;
+        constelacao.appendChild(ponto);
+      }
     }
-  }
-  criarPontos();
+    criarPontos();
 
-  // Mostrar botão só após rolar o texto até o fim
-  textoScroll.addEventListener('scroll', () => {
-    if (textoScroll.scrollTop + textoScroll.clientHeight >= textoScroll.scrollHeight - 5) {
-      botaoAbrir.style.display = 'block';
+    textoScroll.addEventListener('scroll', () => {
+      if (textoScroll.scrollTop + textoScroll.clientHeight >= textoScroll.scrollHeight - 5) {
+        botaoAbrir.style.display = 'block';
+      }
+    });
+
+    botaoAbrir.addEventListener('click', () => {
+      carta.style.opacity = 0;
+      botaoAbrir.style.display = 'none';
+      setTimeout(() => {
+        carta.style.display = 'none';
+        conteudo.style.display = 'block';
+        audioLivro.play().catch(err => {
+          console.warn("⚠️ O áudio não pôde ser iniciado automaticamente:", err);
+        });
+      }, 1000);
+    });
+
+    function trocarPagina(novoIndice) {
+      iframe.style.opacity = 0;
+      setTimeout(() => {
+        indice = novoIndice;
+        iframe.src = paginas[indice];
+        iframe.style.opacity = 1;
+      }, 500);
     }
-  });
 
-  botaoAbrir.addEventListener('click', () => {
-    carta.style.opacity = 0;
-    botaoAbrir.style.display = 'none';
-    setTimeout(() => {
-      carta.style.display = 'none';
-      conteudo.style.display = 'block';
-      audioLivro.play().catch(err => {
-        console.warn("⚠️ O áudio não pôde ser iniciado automaticamente:", err);
-      });
-    }, 1000);
-  });
+    btnProximo.addEventListener('click', () => {
+      trocarPagina((indice + 1) % paginas.length);
+    });
 
-  // Navegação das páginas no iframe
-  function trocarPagina(novoIndice) {
-    iframe.style.opacity = 0;
-    setTimeout(() => {
-      indice = novoIndice;
-      iframe.src = paginas[indice];
-      iframe.style.opacity = 1;
-    }, 500);
-  }
-
-  btnProximo.addEventListener('click', () => {
-    let prox = (indice + 1) % paginas.length;
-    trocarPagina(prox);
-  });
-
-  btnAnterior.addEventListener('click', () => {
-    let ant = (indice - 1 + paginas.length) % paginas.length;
-    trocarPagina(ant);
-  });
-</script>
+    btnAnterior.addEventListener('click', () => {
+      trocarPagina((indice - 1 + paginas.length) % paginas.length);
+    });
+  </script>
 
 </body>
 </html>

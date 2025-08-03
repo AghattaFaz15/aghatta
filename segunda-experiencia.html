@@ -50,7 +50,9 @@
       top: 50%; left: 50%;
       width: 90vw; max-width: 400px;
       height: 66vh;
-      background: url('cartaaberta.png') no-repeat center center;
+      background: 
+        linear-gradient(rgba(1, 35, 102, 0.85), rgba(1, 35, 102, 0.85)),
+        url('cartaaberta.png') no-repeat center center;
       background-size: contain;
       transform: translate(-50%, -50%);
       z-index: 5;
@@ -59,6 +61,8 @@
       align-items: center;
       padding: 2rem;
       box-sizing: border-box;
+      border-radius: 12px;
+      box-shadow: 0 0 15px 4px rgba(255, 215, 0, 0.4);
     }
 
     /* Caixa do texto sobre a carta */
@@ -68,7 +72,7 @@
       font-family: 'Great Vibes', cursive;
       font-size: 1.5rem;
       line-height: 1.6;
-      color: #0b3d91;
+      color: #cce3ff;
       text-shadow: 0 0 7px #d4af37;
       background: transparent;
       user-select: text;
@@ -165,7 +169,7 @@
 
   <div id="constelacao"></div>
 
-  <div id="carta">
+  <div id="carta" role="main" aria-label="Carta aberta com texto do convite">
     <div id="texto-scroll" tabindex="0" aria-label="Texto do convite rolável">
       Este convite não é apenas uma mensagem a mais que se abre...<br/><br/>
       Aqui, memórias se tornam sementes e a fé floresce em cada passo.<br/><br/>

@@ -158,7 +158,8 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
-    const presencasRef = ref(db, "apresentações");
+    // Atenção aqui: chave com maiúscula e cedilha corretos
+    const presencasRef = ref(db, "Apresentações");
 
     // Confirmação
     document.getElementById("confirmar").addEventListener("click", () => {

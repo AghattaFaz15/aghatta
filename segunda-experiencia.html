@@ -2,134 +2,291 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Segunda Experiência</title>
+  <title>Aghatta XV - Jornada Celestial</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+    * {
       margin: 0;
       padding: 0;
-      overflow: hidden;
-      background: linear-gradient(to bottom, rgba(0, 0, 139, 0.7), black);
-      font-family: "Georgia", serif;
-      color: white;
+      box-sizing: border-box;
     }
 
-    .estrelas {
-      position: fixed;
+    html, body {
       width: 100%;
       height: 100%;
-      background: transparent url('estrelas.gif') repeat top center;
-      z-index: 1;
-      pointer-events: none;
+      font-family: 'Georgia', serif;
+      background: #001f4d;
+      overflow: hidden;
+      color: #0b3d91;
     }
 
-    .carta-container {
+    #constelacao {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .ponto {
       position: absolute;
-      top: 10%;
+      background: gold;
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: piscar 3s infinite ease-in-out;
+    }
+
+    @keyframes piscar {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 0.2; }
+    }
+
+    #carta {
+      position: fixed;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
-      width: 90%;
-      max-width: 800px;
-      background: url('cartaaberta.png') no-repeat center top;
+      width: 90vw;
+      max-width: 450px;
+      height: 90vh;
+      background: url('cartaaberta.png') no-repeat center center;
       background-size: contain;
-      height: 80vh;
-      z-index: 2;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      border-radius: 12px;
+      box-shadow: 0 0 30px 8px rgba(255, 215, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 8vh;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    #texto-scroll {
+      width: 260px;
+      height: 20vh;
+      overflow-y: scroll;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.9rem;
+      line-height: 1.8;
+      color: #4169e1;
+      text-shadow: 0 0 8px #ffd700;
+      background: transparent;
+      user-select: text;
+      padding: 0.5rem 1rem;
+      z-index: 6;
+      scrollbar-width: thin;
+      scrollbar-color: #ffd700 transparent;
+      border-radius: 12px;
+      margin-top: 140px;
+    }
+
+    #texto-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #texto-scroll::-webkit-scrollbar-thumb {
+      background-color: #ffd700;
+      border-radius: 3px;
+    }
+
+    #botao-abrir {
+      display: none;
+      position: fixed;
+      left: 50%;
+      bottom: 6vh;
+      transform: translateX(-50%);
+      padding: 1rem 2.5rem;
+      font-size: 1.4rem;
+      background: linear-gradient(135deg, #001f4d, #ffd700);
+      color: #001f4d;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 0 25px gold;
+      font-weight: bold;
+      text-shadow: 1px 1px white;
+      animation: pulsarZoom 2.5s infinite;
+      z-index: 10;
+    }
+
+    @keyframes pulsarZoom {
+      0%, 100% {
+        transform: translateX(-50%) scale(1);
+        box-shadow: 0 0 15px gold, 0 0 30px #ffd700cc;
+      }
+      50% {
+        transform: translateX(-50%) scale(1.15);
+        box-shadow: 0 0 40px gold, 0 0 60px #ffd700cc;
+      }
+    }
+
+    #conteudo-livro {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #001f4d url('Aghatta.png') no-repeat center center fixed;
+      background-size: cover;
+      z-index: 8;
       overflow: hidden;
     }
 
-    .texto-carta {
-      position: absolute;
-      top: 100px;
-      left: 0;
-      right: 0;
-      bottom: 100px;
-      overflow-y: scroll;
-      padding: 20px 40px;
-      font-size: 1.1rem;
-      line-height: 1.6;
-      text-align: justify;
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      opacity: 1;
+      transition: opacity 1s ease;
       background: transparent;
-    }
-
-    .texto-carta::-webkit-scrollbar {
-      width: 0;
     }
 
     .botao-lateral {
       position: fixed;
       top: 44%;
+      background: rgba(255, 215, 0, 0.25);
+      color: gold;
+      border: none;
+      border-radius: 50%;
+      padding: 0.8rem 1rem;
+      font-size: 2rem;
+      font-weight: bold;
+      cursor: pointer;
+      text-shadow: 1px 1px black;
+      z-index: 12;
+      user-select: none;
+      transition: background 0.3s ease, transform 0.3s ease;
       width: 55px;
       height: 55px;
       display: flex;
       justify-content: center;
       align-items: center;
-      border: none;
-      border-radius: 50%;
-      font-size: 2rem;
-      font-weight: bold;
-      cursor: pointer;
-      user-select: none;
-      z-index: 12;
-      transition: transform 0.3s ease;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+
+    .botao-lateral:hover {
+      background: rgba(255, 215, 0, 0.5);
+      transform: scale(1.1);
     }
 
     #btn-anterior {
       left: 0.8rem;
-      color: royalblue;
-      background: rgba(65, 105, 225, 0.3);
-      animation: pulsarAzul 2.5s infinite;
-      text-shadow: 1px 1px #000;
     }
 
     #btn-proximo {
       right: 0.8rem;
+    }
+
+    #seta-scroll {
+      position: fixed;
+      bottom: 5vh;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.2rem;
       color: gold;
-      background: rgba(255, 215, 0, 0.25);
-      text-shadow: 1px 1px black;
+      animation: pulsarSeta 2s infinite;
+      z-index: 9;
+      pointer-events: none;
     }
 
-    #btn-anterior:hover,
-    #btn-proximo:hover {
-      transform: scale(1.1);
-    }
-
-    @keyframes pulsarAzul {
-      0%, 100% {
-        box-shadow: 0 0 10px royalblue, 0 0 20px rgba(65, 105, 225, 0.7);
-      }
-      50% {
-        box-shadow: 0 0 30px royalblue, 0 0 50px rgba(65, 105, 225, 0.7);
-      }
+    @keyframes pulsarSeta {
+      0%, 100% { opacity: 0.8; transform: translateX(-50%) translateY(0); }
+      50% { opacity: 0.2; transform: translateX(-50%) translateY(5px); }
     }
   </style>
 </head>
 <body>
 
-  <div class="estrelas"></div>
+  <div id="constelacao" aria-hidden="true"></div>
 
-  <div class="carta-container">
-    <div class="texto-carta">
-      <p>Filho do Senhor,</p>
-      <p>Que tua jornada pelas veredas da eternidade seja guiada por estrelas que cantam salmos, e tua mente habite nos lugares celestiais com Cristo. Que esta carta seja sopro suave em tua alma, anunciando os segredos do Reino com palavras feitas de luz.</p>
-      <p>Há caminhos que só os humildes enxergam, há glórias que apenas os corações quebrantados alcançam. Eis o tempo de abrir o Livro. Eis o tempo de ouvir a Voz. Que cada palavra aqui seja um selo rompido, e cada pausa, uma adoração em silêncio.</p>
-      <p>Prepare-se. O céu chama. A terra estremece. Há festa se aproximando. E você... já está convidado.</p>
-      <p>Com amor eterno,</p>
-      <p>O Autor da Vida</p>
-    </div>
+  <main id="carta" role="main" aria-label="Carta aberta com convite">
+    <section id="texto-scroll" tabindex="0" aria-label="Texto do convite rolável">
+      Este convite não é apenas uma mensagem a mais que se abre...<br/><br/>
+      Aqui, memórias se tornam sementes e a fé floresce em cada passo.<br/><br/>
+      Deus sustentou (e vai continuar a sustentar) cada detalhe dessa jornada e gostaríamos que soubessem que, se esse convite chegou até você, é porque você faz parte disso tudo...<br/><br/>
+      O que vem a seguir foi tecido com amor, oração e propósito,<br/>
+      para que seu coração sinta a graça em cada instante.<br/><br/>
+      Ative o áudio do seu celular, respire fundo, permita que cada palavra toque seu espírito.
+    </section>
+  </main>
+
+  <div id="seta-scroll">⬇️ Role o texto</div>
+
+  <button id="botao-abrir" aria-label="Iniciar a Jornada">Iniciar a Jornada</button>
+
+  <div id="conteudo-livro" aria-label="Conteúdo da jornada">
+    <iframe id="iframe" src="galeria.html" allow="autoplay"></iframe>
+    <button class="botao-lateral" id="btn-anterior" aria-label="Página anterior">←</button>
+    <button class="botao-lateral" id="btn-proximo" aria-label="Próxima página">→</button>
   </div>
 
-  <button id="btn-anterior" class="botao-lateral" onclick="voltarPagina()">❮</button>
-  <button id="btn-proximo" class="botao-lateral" onclick="avancarPagina()">❯</button>
+  <audio id="audioLivro" src="audio.mp3" preload="auto" loop></audio>
 
   <script>
-    function voltarPagina() {
-      window.location.href = "pagina-anterior.html"; // ajuste o link
+    const constelacao = document.getElementById('constelacao');
+    const textoScroll = document.getElementById('texto-scroll');
+    const botaoAbrir = document.getElementById('botao-abrir');
+    const setaScroll = document.getElementById('seta-scroll');
+    const carta = document.getElementById('carta');
+    const conteudo = document.getElementById('conteudo-livro');
+    const iframe = document.getElementById('iframe');
+    const audioLivro = document.getElementById('audioLivro');
+    const btnAnterior = document.getElementById('btn-anterior');
+    const btnProximo = document.getElementById('btn-proximo');
+
+    const paginas = ['galeria.html', 'livro.html', 'contador.html', 'local.html', 'icones.html'];
+    let indice = 0;
+
+    function criarPontos(qtd=30) {
+      for(let i=0; i<qtd; i++) {
+        const ponto = document.createElement('div');
+        ponto.classList.add('ponto');
+        const size = Math.random() * 4 + 2;
+        ponto.style.width = `${size}px`;
+        ponto.style.height = `${size}px`;
+        ponto.style.top = `${Math.random() * 100}%`;
+        ponto.style.left = `${Math.random() * 100}%`;
+        ponto.style.animationDuration = `${2 + Math.random() * 3}s`;
+        ponto.style.animationDelay = `${Math.random() * 5}s`;
+        constelacao.appendChild(ponto);
+      }
+    }
+    criarPontos();
+
+    textoScroll.addEventListener('scroll', () => {
+      if (textoScroll.scrollTop + textoScroll.clientHeight >= textoScroll.scrollHeight - 5) {
+        botaoAbrir.style.display = 'block';
+        setaScroll.style.display = 'none';
+      }
+    });
+
+    botaoAbrir.addEventListener('click', () => {
+      carta.style.opacity = 0;
+      botaoAbrir.style.display = 'none';
+      setTimeout(() => {
+        carta.style.display = 'none';
+        conteudo.style.display = 'block';
+        audioLivro.play().catch(err => {
+          console.warn("⚠️ O áudio não pôde ser iniciado automaticamente:", err);
+        });
+      }, 1000);
+    });
+
+    function trocarPagina(novoIndice) {
+      iframe.style.opacity = 0;
+      setTimeout(() => {
+        indice = novoIndice;
+        iframe.src = paginas[indice];
+        iframe.style.opacity = 1;
+      }, 500);
     }
 
-    function avancarPagina() {
-      window.location.href = "pagina-seguinte.html"; // ajuste o link
-    }
+    btnProximo.addEventListener('click', () => {
+      trocarPagina((indice + 1) % paginas.length);
+    });
+
+    btnAnterior.addEventListener('click', () => {
+      trocarPagina((indice - 1 + paginas.length) % paginas.length);
+    });
   </script>
 
 </body>

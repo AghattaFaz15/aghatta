@@ -226,6 +226,74 @@
         container.appendChild(div);
       });
     });
+
+    // --- Painel para ver mensagens ---
+
+    // Cria dinamicamente o botão "Ver Mensagens" no body
+    const botaoVerMensagens = document.createElement('button');
+    botaoVerMensagens.textContent = '📖 Ver Mensagens';
+    botaoVerMensagens.style = 'margin-top: 20px; padding: 10px 20px; border-radius: 15px; border: none; background: gold; color: #003366; font-weight: bold; cursor: pointer;';
+    botaoVerMensagens.onclick = abrirPainel;
+    document.body.appendChild(botaoVerMensagens);
+
+    // Cria dinamicamente o modal de mensagens
+    const painel = document.createElement('div');
+    painel.id = 'painel';
+    painel.style = `
+      display: none;
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90vw;
+      max-width: 700px;
+      max-height: 80vh;
+      overflow-y: auto;
+      background: #003366ee;
+      border: 2px solid gold;
+      border-radius: 20px;
+      padding: 20px;
+      z-index: 9999;
+      box-shadow: 0 0 30px gold;
+      color: white;
+    `;
+    painel.innerHTML = `
+      <h2 style="color: gold; text-align: center;">📜 Mensagens Salvas</h2>
+      <div id="listaMensagens"></div>
+      <button id="btnFecharPainel" style="
+        margin-top: 20px;
+        width: 100%;
+        padding: 10px;
+        border-radius: 15px;
+        border: none;
+        background: gold;
+        color: #003366;
+        font-weight: bold;
+        cursor: pointer;
+      ">❌ Fechar</button>
+    `;
+    document.body.appendChild(painel);
+
+    document.getElementById('btnFecharPainel').onclick = fecharPainel;
+
+    function abrirPainel() {
+      db.ref('mensagens').once('value', (snapshot) => {
+        const lista = document.getElementById('listaMensagens');
+        lista.innerHTML = '';
+        snapshot.forEach((child) => {
+          const dados = child.val();
+          const item = document.createElement('div');
+          item.style = 'background: rgba(255,255,255,0.1); border: 1px solid #ffd700; border-radius: 10px; padding: 10px; margin-bottom: 10px; word-wrap: break-word;';
+          item.innerHTML = `<strong>${dados.nome}</strong><br>${dados.mensagem}`;
+          lista.appendChild(item);
+        });
+        painel.style.display = 'block';
+      });
+    }
+
+    function fecharPainel() {
+      painel.style.display = 'none';
+    }
   </script>
 </body>
 </html>

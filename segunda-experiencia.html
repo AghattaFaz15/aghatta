@@ -54,8 +54,8 @@
       border-radius: 12px;
       box-shadow: 0 0 30px 8px rgba(255, 215, 0, 0.5);
       display: flex;
-      justify-content: start;
-      align-items: center;
+      justify-content: center; /* centraliza horizontalmente */
+      align-items: center;     /* centraliza verticalmente */
       padding-top: 8vh;
       padding-left: 1rem;
       padding-right: 1rem;
@@ -63,8 +63,8 @@
     }
 
     #texto-scroll {
-      width: 40%; /* estreitando a janela da alma */
-      height: 60vh;
+      width: 80px;
+      height: 30vh;
       overflow-y: scroll;
       font-family: 'Great Vibes', cursive;
       font-size: 1.9rem;
@@ -78,6 +78,7 @@
       scrollbar-width: thin;
       scrollbar-color: #ffd700 transparent;
       border-radius: 12px;
+      text-align: center; /* centraliza o texto */
     }
 
     #texto-scroll::-webkit-scrollbar {

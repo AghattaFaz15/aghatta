@@ -56,12 +56,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 8vh 1rem 1rem 1rem;
       flex-direction: column;
     }
 
     #texto-scroll {
-      width: 80px;
-      height: 80vh;
+      width: 160px;
+      height: 40vh;
       overflow-y: scroll;
       font-family: 'Great Vibes', cursive;
       font-size: 1.9rem;
@@ -218,8 +219,8 @@
     const paginas = ['galeria.html', 'livro.html', 'contador.html', 'local.html', 'icones.html'];
     let indice = 0;
 
-    function criarPontos(qtd=30) {
-      for(let i=0; i<qtd; i++) {
+    function criarPontos(qtd = 30) {
+      for (let i = 0; i < qtd; i++) {
         const ponto = document.createElement('div');
         ponto.classList.add('ponto');
         const size = Math.random() * 4 + 2;

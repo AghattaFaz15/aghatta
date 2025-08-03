@@ -133,36 +133,34 @@
       width: 60px;
       height: 60px;
       background: url('borboleta.png') no-repeat center / contain;
-      animation: voar 6s ease-in-out infinite;
+      animation: voarLento 12s ease-in-out infinite;
       z-index: 15;
       pointer-events: none;
-      /* Subi as borboletas 15% a mais, tirando 15% do top original */
-      top: 30%;       /* antes: 45% */
-      left: 60%;      /* permanece */
+      top: 35%;       
+      left: 60%;      
       opacity: 0;
     }
 
-    /* Delays para as 15 borboletas, espaçados a cada 0.4s */
     .borboleta:nth-child(1) { animation-delay: 0s; }
-    .borboleta:nth-child(2) { animation-delay: 0.4s; }
-    .borboleta:nth-child(3) { animation-delay: 0.8s; }
-    .borboleta:nth-child(4) { animation-delay: 1.2s; }
-    .borboleta:nth-child(5) { animation-delay: 1.6s; }
-    .borboleta:nth-child(6) { animation-delay: 2.0s; }
-    .borboleta:nth-child(7) { animation-delay: 2.4s; }
-    .borboleta:nth-child(8) { animation-delay: 2.8s; }
-    .borboleta:nth-child(9) { animation-delay: 3.2s; }
-    .borboleta:nth-child(10) { animation-delay: 3.6s; }
-    .borboleta:nth-child(11) { animation-delay: 4.0s; }
-    .borboleta:nth-child(12) { animation-delay: 4.4s; }
-    .borboleta:nth-child(13) { animation-delay: 4.8s; }
-    .borboleta:nth-child(14) { animation-delay: 5.2s; }
-    .borboleta:nth-child(15) { animation-delay: 5.6s; }
+    .borboleta:nth-child(2) { animation-delay: 0.6s; }
+    .borboleta:nth-child(3) { animation-delay: 1.2s; }
+    .borboleta:nth-child(4) { animation-delay: 1.8s; }
+    .borboleta:nth-child(5) { animation-delay: 2.4s; }
+    .borboleta:nth-child(6) { animation-delay: 3.0s; }
+    .borboleta:nth-child(7) { animation-delay: 3.6s; }
+    .borboleta:nth-child(8) { animation-delay: 4.2s; }
+    .borboleta:nth-child(9) { animation-delay: 4.8s; }
+    .borboleta:nth-child(10) { animation-delay: 5.4s; }
+    .borboleta:nth-child(11) { animation-delay: 6.0s; }
+    .borboleta:nth-child(12) { animation-delay: 6.6s; }
+    .borboleta:nth-child(13) { animation-delay: 7.2s; }
+    .borboleta:nth-child(14) { animation-delay: 7.8s; }
+    .borboleta:nth-child(15) { animation-delay: 8.4s; }
 
-    @keyframes voar {
+    @keyframes voarLento {
       0% { transform: translate(0, 0) scale(1); opacity: 0; }
       10% { opacity: 1; }
-      50% { transform: translate(calc(-50px + var(--x)), calc(-150px + var(--y))) scale(1.2); }
+      50% { transform: translate(calc(-50px + var(--x)), calc(-150px + var(--y))) scale(1.2); opacity: 1; }
       100% { transform: translate(calc(60px + var(--x)), calc(-300px + var(--y))) scale(1); opacity: 0; }
     }
   </style>
@@ -184,7 +182,7 @@
       </div>
     </div>
 
-    <!-- Borboletas: 15 vezes -->
+    <!-- Borboletas suaves -->
     <div class="borboleta" style="--x: 0px;  --y: 0px;"></div>
     <div class="borboleta" style="--x: 10px; --y: -10px;"></div>
     <div class="borboleta" style="--x: -15px; --y: -5px;"></div>

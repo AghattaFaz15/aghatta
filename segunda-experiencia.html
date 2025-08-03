@@ -94,22 +94,28 @@
       border-radius: 3px;
     }
 
-    #seta-role {
+    #seta-rolar {
       position: fixed;
-      bottom: 16vh;
+      bottom: 8vh;
       left: 50%;
       transform: translateX(-50%);
       font-size: 1.2rem;
       color: gold;
-      animation: pulsarSeta 1.6s infinite;
-      text-align: center;
-      font-family: 'Georgia', serif;
+      text-shadow: 0 0 5px #ffd700;
+      animation: pulsarSeta 2s infinite;
       z-index: 9;
+      pointer-events: none;
     }
 
     @keyframes pulsarSeta {
-      0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); }
-      50% { opacity: 0.5; transform: translateX(-50%) translateY(6px); }
+      0%, 100% {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+      50% {
+        transform: translateX(-50%) translateY(8px);
+        opacity: 0.5;
+      }
     }
 
     #botao-abrir {
@@ -171,37 +177,33 @@
 
     .botao-lateral {
       position: fixed;
-      top: 35%;
+      top: 45%;
       transform: translateY(-50%);
-      background: rgba(0, 0, 80, 0.4);
+      background: rgba(0, 0, 80, 0.5);
       color: gold;
-      font-size: 2.5rem;
       border: 2px solid gold;
       border-radius: 20px;
-      padding: 1rem 1.5rem;
+      padding: 0.3rem 0.7rem;
+      font-size: 1.5rem;
       font-weight: bold;
       cursor: pointer;
-      text-shadow: 1px 1px 2px black;
+      text-shadow: 0 0 5px #ffd700;
       z-index: 12;
       user-select: none;
-      height: 120px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.3s ease, transform 0.3s ease;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
 
     .botao-lateral:hover {
-      background: rgba(0, 0, 100, 0.6);
+      background: rgba(0, 0, 120, 0.6);
       transform: translateY(-50%) scale(1.1);
     }
 
     #btn-anterior {
-      left: 1rem;
+      left: 0.5rem;
     }
 
     #btn-proximo {
-      right: 1rem;
+      right: 0.5rem;
     }
   </style>
 </head>
@@ -218,9 +220,8 @@
       para que seu coração sinta a graça em cada instante.<br/><br/>
       Ative o áudio do seu celular, respire fundo, permita que cada palavra toque seu espírito.
     </section>
+    <div id="seta-rolar">⬇️ Role o texto</div>
   </main>
-
-  <div id="seta-role">⬇<br/>Role o texto</div>
 
   <button id="botao-abrir" aria-label="Iniciar a Jornada">Iniciar a Jornada</button>
 
@@ -236,13 +237,13 @@
     const constelacao = document.getElementById('constelacao');
     const textoScroll = document.getElementById('texto-scroll');
     const botaoAbrir = document.getElementById('botao-abrir');
+    const setaRolar = document.getElementById('seta-rolar');
     const carta = document.getElementById('carta');
     const conteudo = document.getElementById('conteudo-livro');
     const iframe = document.getElementById('iframe');
     const audioLivro = document.getElementById('audioLivro');
     const btnAnterior = document.getElementById('btn-anterior');
     const btnProximo = document.getElementById('btn-proximo');
-    const setaRole = document.getElementById('seta-role');
 
     const paginas = ['galeria.html', 'livro.html', 'contador.html', 'local.html', 'icones.html'];
     let indice = 0;
@@ -266,7 +267,7 @@
     textoScroll.addEventListener('scroll', () => {
       if (textoScroll.scrollTop + textoScroll.clientHeight >= textoScroll.scrollHeight - 5) {
         botaoAbrir.style.display = 'block';
-        setaRole.style.display = 'none';
+        setaRolar.style.display = 'none';
       }
     });
 

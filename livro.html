@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -107,87 +106,77 @@
       transform: scale(1.05);
       box-shadow: 0 0 25px gold, 0 0 40px #005599 inset;
     }
-    .mensagens {
-      margin-top: 30px;
-      width: 100%;
-      max-width: 800px;
-      z-index: 1;
-      position: relative;
-    }
-    .mensagem {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid #ffd700;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      font-size: 1.1em;
-      color: #fff;
-      text-shadow: 0 0 3px #000;
-      word-wrap: break-word;
-    }
-    .envelope {
+    .modal {
+      display: none;
       position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 0;
-      width: 300px;
-      pointer-events: none;
-      z-index: 9999;
-      transition: opacity 15s ease-in-out, bottom 15s ease-in-out, transform 15s ease-in-out;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
     }
-    .envelope.ativo {
-      opacity: 1;
-      animation: vooLivre 15s ease-in-out forwards;
+    .modal-content {
+      background: #001f3f;
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 600px;
+      color: white;
+      box-shadow: 0 0 20px gold;
+      overflow-y: auto;
+      max-height: 80vh;
     }
-    @keyframes vooLivre {
-      0% {
-        transform: translateX(-50%) translateY(0) rotate(0deg);
-        opacity: 1;
-      }
-      20% {
-        transform: translateX(calc(-50% + 100px)) translateY(-25vh) rotate(15deg);
-      }
-      40% {
-        transform: translateX(calc(-50% - 80px)) translateY(-55vh) rotate(-15deg);
-      }
-      60% {
-        transform: translateX(calc(-50% + 120px)) translateY(-80vh) rotate(10deg);
-      }
-      80% {
-        transform: translateX(calc(-50% - 60px)) translateY(-100vh) rotate(-10deg);
-      }
-      100% {
-        transform: translateX(-50%) translateY(-120vh) rotate(0deg);
-        opacity: 0;
-      }
+    .close-btn {
+      float: right;
+      font-size: 1.5em;
+      cursor: pointer;
+      color: gold;
+    }
+    .nome-item {
+      cursor: pointer;
+      margin: 10px 0;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+    .nome-item:hover {
+      background: rgba(255, 215, 0, 0.3);
+    }
+    .mensagem-detalhe {
+      margin-top: 20px;
+      padding: 15px;
+      border-top: 1px solid gold;
     }
   </style>
-  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 </head>
 <body>
-
-  <div class="bloco" role="main" aria-label="Livro de Recados Aghatta XV">
+  <div class="bloco">
     <h1>✨ Livro de Recados ✨</h1>
-    <p class="frase">“O que se escreve com o coração, o Céu recolhe como perfume. Palavras sagradas não se perdem: elas voam. Deixe aqui sua mensagem para Aghatta...”</p>
-    <input type="text" id="nome" placeholder="Seu nome" aria-label="Digite seu nome" required />
-    <textarea id="mensagem" placeholder="Escreva sua mensagem..." aria-label="Digite sua mensagem"></textarea>
-    <button onclick="enviarMensagem()" aria-label="Enviar mensagem">📜 Que esta palavra voe ao Céu</button>
-
-    <div class="mensagens" id="mensagens" aria-live="polite" aria-relevant="additions"></div>
-  </div>
-
-  <img src="envelope.png" id="envelope" class="envelope" alt="Envelope celestial">
-
-  <script>
+    <p class="frase">“O que se escreve com o coração, o Céu recolhe como perfume...”</p>
+    <input type="text" id="nome" placeholder="Seu nome" />
+    <textarea id="mensagem" placeholder="Escreva sua mensagem..."></textarea>
+    <button onclick="enviarMensagem()">📜 Que esta palavra voe ao Céu</button>
+    <button onclick="abrirModal()">👁️ Ver Mensagens</button>
+  </div>  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="fecharModal()">&times;</span>
+      <h2>Mensagens Enviadas</h2>
+      <div id="listaNomes"></div>
+      <div class="mensagem-detalhe" id="mensagemDetalhe"></div>
+    </div>
+  </div>  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCWq5k87voGQHlRPquvI1P5W1eme32E5f4",
       authDomain: "livro-aghatta.firebaseapp.com",
       databaseURL: "https://livro-aghatta-default-rtdb.firebaseio.com",
       projectId: "livro-aghatta",
-      storageBucket: "livro-aghatta.firebasestorage.app",
+      storageBucket: "livro-aghatta.appspot.com",
       messagingSenderId: "491625108244",
       appId: "1:491625108244:web:3afdfda239f9d0904ca801"
     };
@@ -198,102 +187,35 @@
     function enviarMensagem() {
       const nome = document.getElementById('nome').value.trim();
       const mensagem = document.getElementById('mensagem').value.trim();
-
       if (!nome || !mensagem) return alert('Preencha nome e mensagem.');
-
-      const novaMensagem = db.ref('mensagens').push();
-      novaMensagem.set({ nome, mensagem });
-
+      db.ref('mensagens').push({ nome, mensagem });
       document.getElementById('nome').value = '';
       document.getElementById('mensagem').value = '';
-
-      const envelope = document.getElementById('envelope');
-      // Gera uma posição horizontal aleatória em 20% a 80% da largura da tela
-      const randomX = Math.random() * 60 + 20;
-      envelope.style.left = randomX + '%';
-      envelope.classList.add('ativo');
-      setTimeout(() => envelope.classList.remove('ativo'), 15000);
     }
 
-    db.ref('mensagens').on('value', (snapshot) => {
-      const container = document.getElementById('mensagens');
-      container.innerHTML = '';
-      snapshot.forEach((child) => {
-        const dados = child.val();
-        const div = document.createElement('div');
-        div.className = 'mensagem';
-        div.innerHTML = `<strong>${dados.nome}</strong><br>${dados.mensagem}`;
-        container.appendChild(div);
-      });
-    });
+    function abrirModal() {
+      document.getElementById('modal').style.display = 'flex';
+      const lista = document.getElementById('listaNomes');
+      const detalhe = document.getElementById('mensagemDetalhe');
+      lista.innerHTML = '';
+      detalhe.innerHTML = '';
 
-    // --- Painel para ver mensagens ---
-
-    // Cria dinamicamente o botão "Ver Mensagens" no body
-    const botaoVerMensagens = document.createElement('button');
-    botaoVerMensagens.textContent = '📖 Ver Mensagens';
-    botaoVerMensagens.style = 'margin-top: 20px; padding: 10px 20px; border-radius: 15px; border: none; background: gold; color: #003366; font-weight: bold; cursor: pointer;';
-    botaoVerMensagens.onclick = abrirPainel;
-    document.body.appendChild(botaoVerMensagens);
-
-    // Cria dinamicamente o modal de mensagens
-    const painel = document.createElement('div');
-    painel.id = 'painel';
-    painel.style = `
-      display: none;
-      position: fixed;
-      top: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90vw;
-      max-width: 700px;
-      max-height: 80vh;
-      overflow-y: auto;
-      background: #003366ee;
-      border: 2px solid gold;
-      border-radius: 20px;
-      padding: 20px;
-      z-index: 9999;
-      box-shadow: 0 0 30px gold;
-      color: white;
-    `;
-    painel.innerHTML = `
-      <h2 style="color: gold; text-align: center;">📜 Mensagens Salvas</h2>
-      <div id="listaMensagens"></div>
-      <button id="btnFecharPainel" style="
-        margin-top: 20px;
-        width: 100%;
-        padding: 10px;
-        border-radius: 15px;
-        border: none;
-        background: gold;
-        color: #003366;
-        font-weight: bold;
-        cursor: pointer;
-      ">❌ Fechar</button>
-    `;
-    document.body.appendChild(painel);
-
-    document.getElementById('btnFecharPainel').onclick = fecharPainel;
-
-    function abrirPainel() {
-      db.ref('mensagens').once('value', (snapshot) => {
-        const lista = document.getElementById('listaMensagens');
-        lista.innerHTML = '';
-        snapshot.forEach((child) => {
+      db.ref('mensagens').once('value', snapshot => {
+        snapshot.forEach(child => {
           const dados = child.val();
-          const item = document.createElement('div');
-          item.style = 'background: rgba(255,255,255,0.1); border: 1px solid #ffd700; border-radius: 10px; padding: 10px; margin-bottom: 10px; word-wrap: break-word;';
-          item.innerHTML = `<strong>${dados.nome}</strong><br>${dados.mensagem}`;
-          lista.appendChild(item);
+          const div = document.createElement('div');
+          div.className = 'nome-item';
+          div.textContent = dados.nome;
+          div.onclick = () => {
+            detalhe.innerHTML = `<strong>${dados.nome}</strong><br>${dados.mensagem}`;
+          };
+          lista.appendChild(div);
         });
-        painel.style.display = 'block';
       });
     }
 
-    function fecharPainel() {
-      painel.style.display = 'none';
+    function fecharModal() {
+      document.getElementById('modal').style.display = 'none';
     }
-  </script>
-</body>
+  </script></body>
 </html>

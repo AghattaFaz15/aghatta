@@ -46,7 +46,7 @@
       top: 50%; left: 50%;
       width: 90vw;
       max-width: 450px;
-      height: 90vh;
+      height: 85vh;
       background: url('cartaaberta.png') no-repeat center center;
       background-size: contain;
       transform: translate(-50%, -50%);
@@ -92,30 +92,6 @@
     #texto-scroll::-webkit-scrollbar-thumb {
       background-color: #ffd700;
       border-radius: 3px;
-    }
-
-    #seta-rolar {
-      position: fixed;
-      bottom: 8vh;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 1.2rem;
-      color: gold;
-      text-shadow: 0 0 5px #ffd700;
-      animation: pulsarSeta 2s infinite;
-      z-index: 9;
-      pointer-events: none;
-    }
-
-    @keyframes pulsarSeta {
-      0%, 100% {
-        transform: translateX(-50%) translateY(0);
-        opacity: 1;
-      }
-      50% {
-        transform: translateX(-50%) translateY(8px);
-        opacity: 0.5;
-      }
     }
 
     #botao-abrir {
@@ -179,31 +155,31 @@
       position: fixed;
       top: 45%;
       transform: translateY(-50%);
-      background: rgba(0, 0, 80, 0.5);
+      background: rgba(255, 215, 0, 0.2);
       color: gold;
-      border: 2px solid gold;
+      border: none;
       border-radius: 20px;
-      padding: 0.3rem 0.7rem;
-      font-size: 1.5rem;
+      padding: 0.7rem 1rem;
+      font-size: 1.8rem;
       font-weight: bold;
       cursor: pointer;
-      text-shadow: 0 0 5px #ffd700;
       z-index: 12;
       user-select: none;
       transition: background 0.3s ease, transform 0.2s ease;
+      text-shadow: 1px 1px 2px black;
     }
 
     .botao-lateral:hover {
-      background: rgba(0, 0, 120, 0.6);
+      background: rgba(255, 215, 0, 0.4);
       transform: translateY(-50%) scale(1.1);
     }
 
     #btn-anterior {
-      left: 0.5rem;
+      left: 0.4rem;
     }
 
     #btn-proximo {
-      right: 0.5rem;
+      right: 0.4rem;
     }
   </style>
 </head>
@@ -220,15 +196,14 @@
       para que seu coração sinta a graça em cada instante.<br/><br/>
       Ative o áudio do seu celular, respire fundo, permita que cada palavra toque seu espírito.
     </section>
-    <div id="seta-rolar">⬇️ Role o texto</div>
   </main>
 
   <button id="botao-abrir" aria-label="Iniciar a Jornada">Iniciar a Jornada</button>
 
   <div id="conteudo-livro" aria-label="Conteúdo da jornada">
     <iframe id="iframe" src="galeria.html" allow="autoplay"></iframe>
-    <button class="botao-lateral" id="btn-anterior" aria-label="Página anterior">⬅</button>
-    <button class="botao-lateral" id="btn-proximo" aria-label="Próxima página">➡</button>
+    <button class="botao-lateral" id="btn-anterior" aria-label="Página anterior">⮜</button>
+    <button class="botao-lateral" id="btn-proximo" aria-label="Próxima página">⮞</button>
   </div>
 
   <audio id="audioLivro" src="audio.mp3" preload="auto" loop></audio>
@@ -237,7 +212,6 @@
     const constelacao = document.getElementById('constelacao');
     const textoScroll = document.getElementById('texto-scroll');
     const botaoAbrir = document.getElementById('botao-abrir');
-    const setaRolar = document.getElementById('seta-rolar');
     const carta = document.getElementById('carta');
     const conteudo = document.getElementById('conteudo-livro');
     const iframe = document.getElementById('iframe');
@@ -267,7 +241,6 @@
     textoScroll.addEventListener('scroll', () => {
       if (textoScroll.scrollTop + textoScroll.clientHeight >= textoScroll.scrollHeight - 5) {
         botaoAbrir.style.display = 'block';
-        setaRolar.style.display = 'none';
       }
     });
 

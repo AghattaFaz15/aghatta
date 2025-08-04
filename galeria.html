@@ -9,6 +9,7 @@
     * {
       margin: 0; padding: 0; box-sizing: border-box;
     }
+
     body {
       background: url('aghatta.png') no-repeat center center fixed;
       background-size: cover;
@@ -17,9 +18,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: start;
       min-height: 100vh;
-      padding: 15px 10px 10px;
+      padding: 15px 10px 50px;
+      overflow-x: hidden;
       overflow-y: auto;
     }
 
@@ -28,34 +29,13 @@
       font-size: 1.6rem;
       color: gold;
       text-align: center;
-      padding: 10px 15px;
+      padding: 10px 16px;
       background: rgba(0, 10, 40, 0.7);
       border-radius: 12px;
       box-shadow: 0 0 15px gold;
       margin-bottom: 15px;
+      user-select: none;
       max-width: 95vw;
-    }
-
-    .frase-imagem {
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 2rem;
-      font-family: 'Great Vibes', cursive;
-      background: rgba(0, 0, 0, 0.6);
-      color: gold;
-      padding: 16px 24px;
-      border-radius: 16px;
-      text-align: center;
-      max-width: 92%;
-      opacity: 0;
-      transition: opacity 2s ease;
-      z-index: 2;
-    }
-
-    .frase-imagem.mostrar {
-      opacity: 1;
     }
 
     .galeria-container {
@@ -66,11 +46,8 @@
       border-radius: 18px;
       box-shadow: 0 0 30px rgba(255, 215, 0, 0.7), inset 0 0 20px rgba(255, 215, 0, 0.4);
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       position: relative;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
     }
 
     .imagem-galeria {
@@ -80,7 +57,7 @@
       border-radius: 16px;
       filter: drop-shadow(0 0 12px gold);
       user-select: none;
-      transition: opacity 1s ease, transform 10s ease;
+      transition: opacity 1.5s ease, transform 10s ease;
       opacity: 1;
       position: relative;
       z-index: 1;
@@ -92,6 +69,28 @@
 
     .imagem-galeria.zoom {
       transform: scale(1.05);
+    }
+
+    .texto-sobreposto {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: gold;
+      font-size: 1.6rem;
+      text-align: center;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 12px;
+      font-family: 'Cinzel Decorative', cursive;
+      opacity: 1;
+      transition: opacity 1.5s ease;
+      z-index: 2;
+      max-width: 90%;
+    }
+
+    .texto-sobreposto.fade-out {
+      opacity: 0;
     }
 
     #contador {
@@ -115,8 +114,8 @@
       display: flex;
       justify-content: center;
       gap: 40px;
-      margin-top: -10px;
-      margin-bottom: 20px;
+      margin-top: -30px;
+      margin-bottom: 10px;
       position: relative;
       z-index: 10;
       flex-wrap: wrap;
@@ -127,7 +126,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 140px;
+      width: 180px;
       max-width: 90vw;
     }
 
@@ -143,7 +142,6 @@
       border-radius: 12px;
       user-select: none;
       transition: filter 0.3s ease;
-      animation: pulsar 2s infinite;
     }
 
     .botao-coroa img {
@@ -164,7 +162,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       color: royalblue;
       user-select: none;
       text-shadow: 0 0 6px #87cefa, 0 0 12px #1e90ff;
@@ -172,9 +170,10 @@
       white-space: nowrap;
     }
 
-    @keyframes pulsar {
-      0%, 100% { filter: drop-shadow(0 0 15px gold); }
-      50% { filter: drop-shadow(0 0 40px #fffacd); }
+    @keyframes subirBorboleta {
+      0% { opacity: 0; transform: translateY(0) scale(0.5) rotate(0deg); }
+      10% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-400px) scale(1.2) rotate(360deg); }
     }
 
     .borboleta {
@@ -189,21 +188,29 @@
       z-index: 20;
     }
 
-    @keyframes subirBorboleta {
-      0% { opacity: 0; transform: translateY(0) scale(0.5) rotate(0deg); }
-      10% { opacity: 1; }
-      100% { opacity: 0; transform: translateY(-400px) scale(1.2) rotate(360deg); }
+    @media (max-width: 480px) {
+      .botao-wrapper {
+        width: 140px;
+      }
+      .frase-topo {
+        font-size: 1.2rem;
+      }
+      .texto-botao {
+        font-size: 1.5rem;
+      }
+      .texto-sobreposto {
+        font-size: 1.4rem;
+        padding: 8px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="frase-topo">
-    Imagens que contam a misericórdia que me persegue e a Mão que me guia
-  </div>
+  <div class="frase-topo">Imagens que contam a misericórdia que me persegue e a Mão que me guia</div>
 
   <div class="galeria-container" id="galeria-container">
-    <div class="frase-imagem" id="frase"></div>
     <img src="imagem1.jpg" alt="Imagem da galeria" class="imagem-galeria" id="galeria-img" />
+    <div class="texto-sobreposto" id="texto-sobreposto">“Quando nasci, o céu aplaudiu”</div>
     <div id="contador">Imagem 1 de 15</div>
   </div>
 
@@ -216,35 +223,35 @@
     </div>
     <div class="botao-wrapper">
       <button class="botao-coroa" id="btn-avancar">
-        <img src="coroa.png" alt="Passar" />
-        <span class="texto-botao">Passar</span>
+        <img src="coroa.png" alt="Avançar" />
+        <span class="texto-botao">Avançar</span>
       </button>
     </div>
   </div>
 
   <script>
-    const imagens = Array.from({length: 15}, (_, i) => `imagem${i + 1}.jpg`);
+    const imagens = Array.from({ length: 15 }, (_, i) => `imagem${i + 1}.jpg`);
     const frases = [
-      "E no primeiro sopro, o mundo sorriu mais bonito.",
-      "Dois passos de ternura e um universo se abriu nos olhos dela.",
-      "Três fios de cabelo ao vento e já era impossível não se apaixonar.",
-      "Quatro estações passaram, e todas floresceram nela.",
-      "Cinco dedos na mão, cinco razões pra abraçar o mundo com doçura.",
-      "Seis risos por minuto — cada um mais alto que o outro, ecoando alegria.",
-      "Aos sete, o mundo se tornava pequeno demais para tanta imaginação.",
-      "Oito pontas de estrela brilhavam em cada passo dela naquele ano.",
-      "Nove sonhos coloridos pendurados no céu da infância dela.",
-      "Dez dedos, dez desejos, e todos apontando pro céu.",
-      "Onze raios de sol nasceram no seu sorriso naquele dia comum.",
-      "Doze meses onde ela dançou entre a leveza e o futuro.",
-      "Treze passos rumo à juventude, e nenhum deles sem encanto.",
-      "Catorze promessas sussurradas pela eternidade, todas se cumprindo nela.",
-      "Quinze anos de luz… e o mundo inteiro parou para aplaudir."
+      "“Quando nasci, o céu aplaudiu”",
+      "“Primeiros passos em direção à eternidade”",
+      "“Brilho nos olhos que anunciam esperança”",
+      "“A inocência dança com a luz”",
+      "“Corações moldados pelas mãos do Criador”",
+      "“Entre flores, risos e promessas”",
+      "“A graça se revela no cotidiano”",
+      "“Pequenas mãos, grandes planos”",
+      "“O tempo não apaga a essência”",
+      "“Misericórdia a cada estação”",
+      "“Doce alvorada da juventude”",
+      "“A esperança floresce no olhar”",
+      "“Um chamado, uma missão, uma história”",
+      "“Luz que não se apaga com o tempo”",
+      "“XV anos de promessas cumpridas”"
     ];
 
     let indice = 0;
     const imgGaleria = document.getElementById('galeria-img');
-    const fraseDiv = document.getElementById('frase');
+    const texto = document.getElementById('texto-sobreposto');
     const contador = document.getElementById('contador');
     const galeriaContainer = document.getElementById('galeria-container');
 
@@ -261,23 +268,19 @@
     }
 
     function atualizarImagem() {
-      fraseDiv.classList.remove('mostrar');
       imgGaleria.classList.remove('zoom');
       imgGaleria.classList.add('fade-out');
+      texto.classList.add('fade-out');
 
       setTimeout(() => {
-        fraseDiv.textContent = frases[indice];
-        fraseDiv.classList.add('mostrar');
         imgGaleria.src = imagens[indice];
+        texto.textContent = frases[indice];
         contador.textContent = `Imagem ${indice + 1} de ${imagens.length}`;
         imgGaleria.classList.remove('fade-out');
         imgGaleria.classList.add('zoom');
+        texto.classList.remove('fade-out');
         criarBorboleta();
-      }, 1200);
-
-      setTimeout(() => {
-        fraseDiv.classList.remove('mostrar');
-      }, 5200);
+      }, 1500);
     }
 
     document.getElementById('btn-voltar').addEventListener('click', () => {
@@ -290,13 +293,8 @@
       atualizarImagem();
     });
 
-    window.onload = () => {
-      fraseDiv.textContent = frases[indice];
-      fraseDiv.classList.add('mostrar');
-      setTimeout(() => fraseDiv.classList.remove('mostrar'), 5000);
-      imgGaleria.classList.add('zoom');
-      criarBorboleta();
-    }
+    imgGaleria.classList.add('zoom');
+    criarBorboleta();
   </script>
 </body>
 </html>

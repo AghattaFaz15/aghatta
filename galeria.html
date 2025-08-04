@@ -36,28 +36,6 @@
       max-width: 95vw;
     }
 
-    .frase-imagem {
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 2rem;
-      font-family: 'Great Vibes', cursive;
-      background: rgba(0, 0, 0, 0.6);
-      color: gold;
-      padding: 16px 24px;
-      border-radius: 16px;
-      text-align: center;
-      max-width: 92%;
-      opacity: 0;
-      transition: opacity 2s ease;
-      z-index: 2;
-    }
-
-    .frase-imagem.mostrar {
-      opacity: 1;
-    }
-
     .galeria-container {
       width: 90vw;
       max-width: 700px;
@@ -94,26 +72,50 @@
       transform: scale(1.05);
     }
 
+    .frase-imagem {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      font-family: 'Great Vibes', cursive;
+      background: rgba(0, 0, 0, 0.6);
+      color: gold;
+      padding: 16px 24px;
+      border-radius: 16px;
+      text-align: center;
+      max-width: 92%;
+      opacity: 0;
+      transition: opacity 2s ease;
+      z-index: 2;
+    }
+
+    .frase-imagem.mostrar {
+      opacity: 1;
+    }
+
     .base-barra {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
-      width: 100%;
-      max-width: 700px;
-      margin-bottom: 20px;
+      padding: 0 12px;
+      z-index: 3;
     }
 
     #contador {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       color: gold;
       text-shadow: 0 0 5px gold;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 4px 12px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 6px 12px;
       border-radius: 12px;
       user-select: none;
       text-align: center;
-      flex: 1;
+      min-width: 130px;
     }
 
     .botao-wrapper {
@@ -121,7 +123,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 140px;
+      width: 120px;
     }
 
     .botao-coroa {
@@ -156,7 +158,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       color: royalblue;
       user-select: none;
       text-shadow: 0 0 6px #87cefa, 0 0 12px #1e90ff;
@@ -196,21 +198,21 @@
   <div class="galeria-container" id="galeria-container">
     <div class="frase-imagem" id="frase"></div>
     <img src="imagem1.jpg" alt="Imagem da galeria" class="imagem-galeria" id="galeria-img" />
-  </div>
-
-  <div class="base-barra">
-    <div class="botao-wrapper">
-      <button class="botao-coroa" id="btn-voltar">
-        <img src="coroa.png" alt="Voltar" />
-        <span class="texto-botao">Voltar</span>
-      </button>
-    </div>
-    <div id="contador">Imagem 1 de 15</div>
-    <div class="botao-wrapper">
-      <button class="botao-coroa" id="btn-avancar">
-        <img src="coroa.png" alt="Passar" />
-        <span class="texto-botao">Passar</span>
-      </button>
+    
+    <div class="base-barra">
+      <div class="botao-wrapper">
+        <button class="botao-coroa" id="btn-voltar">
+          <img src="coroa.png" alt="Voltar" />
+          <span class="texto-botao">Voltar</span>
+        </button>
+      </div>
+      <div id="contador">Imagem 1 de 15</div>
+      <div class="botao-wrapper">
+        <button class="botao-coroa" id="btn-avancar">
+          <img src="coroa.png" alt="Passar" />
+          <span class="texto-botao">Passar</span>
+        </button>
+      </div>
     </div>
   </div>
 

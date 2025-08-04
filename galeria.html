@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Galeria Aghatta - Luz e Misericórdia</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet" />
+  <!-- Fonte mais fácil de ler: Roboto e Cinzel Decorativa para título -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet" />
   <style>
     * {
       margin: 0; padding: 0; box-sizing: border-box;
@@ -12,7 +13,7 @@
     body {
       background: url('aghatta.png') no-repeat center center fixed;
       background-size: cover;
-      font-family: 'Georgia', serif;
+      font-family: 'Roboto', sans-serif;
       color: gold;
       display: flex;
       flex-direction: column;
@@ -22,7 +23,7 @@
     }
 
     .frase-topo {
-      font-family: 'Great Vibes', cursive;
+      font-family: 'Cinzel Decorative', cursive;
       font-size: 1.8rem;
       color: gold;
       text-align: center;
@@ -62,7 +63,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       color: gold;
-      font-family: 'Great Vibes', cursive;
+      font-family: 'Cinzel Decorative', cursive;
       font-size: 2rem;
       text-align: center;
       text-shadow: 0 0 12px black;
@@ -71,7 +72,7 @@
       border: 2px solid gold;
       border-radius: 12px;
       opacity: 0;
-      transition: opacity 2s ease;
+      transition: opacity 5s ease;
       z-index: 10;
     }
 
@@ -192,7 +193,7 @@
       frase.textContent = frases[indice];
       setTimeout(() => {
         frase.style.opacity = 0;
-      }, 4000);
+      }, 5000);
     }
 
     function atualizarGaleria() {

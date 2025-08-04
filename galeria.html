@@ -6,7 +6,9 @@
   <title>Galeria Aghatta - Luz e Misericórdia</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
     body {
       background: url('aghatta.png') no-repeat center center fixed;
       background-size: cover;
@@ -15,11 +17,21 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: start;
       min-height: 100vh;
-      padding: 15px 10px;
-      overflow-y: auto;
-      position: relative;
+      padding: 12px 10px;
+    }
+
+    .frase-topo {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.8rem;
+      color: gold;
+      text-align: center;
+      background: rgba(0, 10, 40, 0.7);
+      border-radius: 12px;
+      box-shadow: 0 0 15px gold;
+      padding: 10px 20px;
+      margin-bottom: 12px;
+      max-width: 95vw;
     }
 
     .galeria-container {
@@ -30,11 +42,10 @@
       border-radius: 18px;
       box-shadow: 0 0 30px rgba(255, 215, 0, 0.7), inset 0 0 20px rgba(255, 215, 0, 0.4);
       overflow: hidden;
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-      margin-bottom: 10px;
     }
 
     .imagem-galeria {
@@ -42,84 +53,57 @@
       height: 100%;
       object-fit: contain;
       border-radius: 16px;
-      filter: drop-shadow(0 0 12px gold);
-      transition: opacity 0.8s ease, transform 8s ease;
-      opacity: 1;
-      z-index: 1;
+      user-select: none;
     }
 
-    .imagem-galeria.fade-out {
-      opacity: 0;
-    }
-
-    .imagem-galeria.zoom {
-      transform: scale(1.05);
-    }
-
-    .frase-topo {
+    #frase-do-ano {
       position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Great Vibes', cursive;
-      font-size: 2rem;
       color: gold;
-      background: rgba(0, 10, 40, 0.5);
-      padding: 8px 14px;
-      border-radius: 10px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.6rem;
       text-align: center;
-      box-shadow: 0 0 10px gold;
+      text-shadow: 0 0 12px black;
+      padding: 0 12px;
       opacity: 0;
       transition: opacity 2s ease;
-      pointer-events: none;
-      z-index: 2;
-      max-width: 90%;
-    }
-
-    .frase-topo.visible {
-      opacity: 1;
+      z-index: 10;
     }
 
     #contador {
-      position: absolute;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%);
       font-size: 0.9rem;
+      margin-top: 10px;
       background: rgba(0, 0, 0, 0.5);
       padding: 2px 10px;
       border-radius: 10px;
-      text-shadow: 0 0 4px gold;
-      z-index: 3;
+      user-select: none;
+      text-align: center;
     }
 
     .botoes {
-      position: relative;
-      width: 100%;
       display: flex;
-      justify-content: space-around;
-      margin-top: -50px;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 10px;
     }
 
     .botao-wrapper {
+      width: 140px;
       position: relative;
-      width: 120px;
-      height: 120px;
     }
 
     .botao-coroa {
-      width: 100%;
-      height: 100%;
-      border: none;
       background: none;
+      border: none;
       cursor: pointer;
-      filter: drop-shadow(0 0 10px gold);
+      width: 100%;
+      filter: drop-shadow(0 0 18px gold);
       position: relative;
     }
 
     .botao-coroa img {
       width: 100%;
-      height: auto;
+      display: block;
+      pointer-events: none;
     }
 
     .texto-botao {
@@ -128,25 +112,34 @@
       left: 50%;
       transform: translate(-50%, -50%);
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       color: royalblue;
       text-shadow: 0 0 6px #87cefa, 0 0 12px #1e90ff;
       pointer-events: none;
     }
 
     @media (max-width: 480px) {
-      .botao-wrapper { width: 90px; height: 90px; }
-      .texto-botao { font-size: 1rem; }
-      .frase-topo { font-size: 1.4rem; }
+      .frase-topo {
+        font-size: 1.3rem;
+      }
+      .texto-botao {
+        font-size: 1.1rem;
+      }
+      #frase-do-ano {
+        font-size: 1.3rem;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="frase-topo">Imagens que contam a misericórdia que me persegue e a Mão que me guia</div>
+
   <div class="galeria-container">
     <img src="imagem1.jpeg" alt="Imagem da galeria" class="imagem-galeria" id="galeria-img" />
-    <div class="frase-topo" id="frase">Imagens que contam a misericórdia que me persegue e a Mão que me guia</div>
-    <div id="contador">Imagem 1 de 15</div>
+    <div id="frase-do-ano">E no primeiro sopro, o mundo sorriu mais bonito.</div>
   </div>
+
+  <div id="contador">Imagem 1 de 15</div>
 
   <div class="botoes">
     <div class="botao-wrapper">
@@ -184,46 +177,36 @@
     ];
 
     let indice = 0;
-    const imgGaleria = document.getElementById('galeria-img');
-    const fraseTopo = document.getElementById('frase');
+    const img = document.getElementById('galeria-img');
+    const frase = document.getElementById('frase-do-ano');
     const contador = document.getElementById('contador');
 
-    function atualizarConteudo() {
-      imgGaleria.classList.add('fade-out');
-      fraseTopo.classList.remove('visible');
-
+    function mostrarFrase() {
+      frase.style.opacity = 1;
+      frase.textContent = frases[indice];
       setTimeout(() => {
-        imgGaleria.src = imagens[indice];
-        fraseTopo.textContent = frases[indice];
-        contador.textContent = `Imagem ${indice + 1} de ${imagens.length}`;
-        imgGaleria.classList.remove('fade-out');
-        imgGaleria.classList.add('zoom');
-        setTimeout(() => {
-          fraseTopo.classList.add('visible');
-        }, 400);
-        setTimeout(() => {
-          fraseTopo.classList.remove('visible');
-        }, 4400);
-      }, 600);
+        frase.style.opacity = 0;
+      }, 4000);
     }
 
-    document.getElementById('btn-voltar').addEventListener('click', () => {
-      indice = (indice > 0) ? indice - 1 : imagens.length - 1;
-      atualizarConteudo();
-    });
+    function atualizarGaleria() {
+      img.src = imagens[indice];
+      contador.textContent = `Imagem ${indice + 1} de ${imagens.length}`;
+      mostrarFrase();
+    }
 
     document.getElementById('btn-avancar').addEventListener('click', () => {
-      indice = (indice < imagens.length - 1) ? indice + 1 : 0;
-      atualizarConteudo();
+      indice = (indice + 1) % imagens.length;
+      atualizarGaleria();
     });
 
-    // Primeira frase animada
-    setTimeout(() => {
-      fraseTopo.classList.add('visible');
-    }, 500);
-    setTimeout(() => {
-      fraseTopo.classList.remove('visible');
-    }, 4500);
+    document.getElementById('btn-voltar').addEventListener('click', () => {
+      indice = (indice - 1 + imagens.length) % imagens.length;
+      atualizarGaleria();
+    });
+
+    // Primeira exibição
+    mostrarFrase();
   </script>
 </body>
 </html>

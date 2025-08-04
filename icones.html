@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <title>Confirmação de Presença - Aghatta</title>
@@ -12,170 +11,183 @@
       background: url("fundo.png") no-repeat center center;
       background-size: cover;
       overflow-x: hidden;
-    }
+    }.form-container {
+  position: relative;
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.6);
+  margin: 10% auto;
+  max-width: 90%;
+  border-radius: 20px;
+}
 
-    .form-container {
-      position: relative;
-      padding: 20px;
-      text-align: center;
-      color: #fff;
-      background-color: rgba(0, 0, 0, 0.6);
-      margin: 10% auto;
-      max-width: 90%;
-      border-radius: 20px;
-    }
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: gold;
+}
 
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      color: gold;
-    }
+input {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+}
 
-    input {
-      width: 80%;
-      padding: 10px;
-      margin-bottom: 1rem;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
-    }
+button {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: gold;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    button {
-      padding: 10px 20px;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 10px;
-      background-color: gold;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.estrela {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: url('estrela.png') no-repeat center center;
+  background-size: contain;
+  animation: subir 5s ease-out forwards;
+  text-align: center;
+  color: gold;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px black;
+  padding-top: 60px;
+}
 
-    .estrela {
-      position: absolute;
-      width: 100px;
-      height: 100px;
-      background: url('estrela.png') no-repeat center center;
-      background-size: contain;
-      animation: subir 5s ease-out forwards;
-      text-align: center;
-      color: gold;
-      font-weight: bold;
-      text-shadow: 1px 1px 2px black;
-      padding-top: 60px;
-    }
+@keyframes subir {
+  0% { bottom: 50px; opacity: 1; }
+  100% { bottom: 100%; opacity: 0.5; }
+}
 
-    @keyframes subir {
-      0% { bottom: 50px; opacity: 1; }
-      100% { bottom: 100%; opacity: 0.5; }
-    }
+.modal {
+  display: none;
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 30, 0.9);
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
+  z-index: 999;
+  max-height: 70vh;
+  overflow-y: auto;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 0 15px gold;
+}
 
-    /* MODAL */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 30, 0.9);
-      color: white;
-      padding: 20px;
-      border-radius: 20px;
-      z-index: 999;
-      max-height: 70vh;
-      overflow-y: auto;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 0 15px gold;
-    }
+.modal h2 {
+  color: gold;
+  text-align: center;
+}
 
-    .modal h2 {
-      color: gold;
-      text-align: center;
-    }
+.modal div {
+  margin: 5px 0;
+}
 
-    .modal div {
-      margin: 5px 0;
-    }
+.fechar-modal {
+  margin-top: 10px;
+  background-color: crimson;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
 
-    .fechar-modal {
-      margin-top: 10px;
-      background-color: crimson;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+.btn-ver {
+  margin-top: 20px;
+  background: transparent;
+  border: 2px solid gold;
+  color: gold;
+}
 
-    .btn-ver {
-      margin-top: 20px;
-      background: transparent;
-      border: 2px solid gold;
-      color: gold;
-    }
+.btn-ver:hover {
+  background: gold;
+  color: black;
+}
 
-    .btn-ver:hover {
-      background: gold;
-      color: black;
-    }
+.editar-btn, .remover-btn {
+  background: darkblue;
+  color: white;
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  margin-left: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.remover-btn {
+  background: darkred;
+}
+
+.confirmado-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
   </style>
 </head>
-<body>
-
-  <div class="form-container">
+<body>  <div class="form-container">
     <h1>Confirme sua presença</h1>
     <input type="text" id="nome" placeholder="Seu nome" />
-    <input type="text" id="acompanhante" placeholder="Acompanhante (opcional)" />
+    <div id="acompanhantes-container">
+      <input type="text" class="acompanhante" placeholder="Acompanhante 1 (opcional)" />
+    </div>
+    <button onclick="adicionarAcompanhante()">➕ Adicionar Acompanhante</button>
     <br />
     <button id="confirmar">Confirmar Presença</button>
     <br />
     <button class="btn-ver" onclick="abrirModal()">✨ Ver quem confirmou</button>
-  </div>
-
-  <!-- Modal -->
-  <div class="modal" id="modalConfirmados">
+  </div>  <div class="modal" id="modalConfirmados">
     <h2>🎉 Confirmados</h2>
     <div id="listaConfirmados">Carregando...</div>
     <button class="fechar-modal" onclick="fecharModal()">Fechar</button>
-  </div>
-
-  <!-- Firebase + Script -->
-  <script type="module">
-    // Firebase Config
+  </div>  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { getDatabase, ref, push, set, remove, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyCLuTtLSY2pd8kXr5rI4_swn7B9Tw-3aqg",
-      authDomain: "livro-aghatta.firebaseapp.com",
-      databaseURL: "https://livro-aghatta-default-rtdb.firebaseio.com",
-      projectId: "livro-aghatta",
-      storageBucket: "livro-aghatta.appspot.com",
-      messagingSenderId: "431849315595",
-      appId: "1:431849315595:web:91d3dc3c62c1d476a357e8"
-    };
-
+    const firebaseConfig = { /* suas credenciais aqui */ };
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
-    // Atenção aqui: chave com maiúscula e cedilha corretos
     const presencasRef = ref(db, "Apresentações");
 
-    // Confirmação
+    let contadorAcompanhantes = 1;
+    window.adicionarAcompanhante = () => {
+      if (contadorAcompanhantes >= 5) return alert("Limite de 5 acompanhantes.");
+      contadorAcompanhantes++;
+      const container = document.getElementById("acompanhantes-container");
+      const input = document.createElement("input");
+      input.type = "text";
+      input.className = "acompanhante";
+      input.placeholder = `Acompanhante ${contadorAcompanhantes} (opcional)`;
+      container.appendChild(input);
+    };
+
     document.getElementById("confirmar").addEventListener("click", () => {
       const nome = document.getElementById("nome").value.trim();
-      const acompanhante = document.getElementById("acompanhante").value.trim();
+      const acompanhantesInputs = document.querySelectorAll(".acompanhante");
+      const acompanhantes = Array.from(acompanhantesInputs).map(i => i.value.trim()).filter(Boolean);
       if (!nome) return alert("Digite seu nome, querido(a).");
 
-      const nomeFinal = acompanhante ? `${nome} e ${acompanhante}` : nome;
-      push(presencasRef, { nome: nomeFinal });
-
+      const nomeFinal = acompanhantes.length ? `${nome} e ${acompanhantes.join(", ")}` : nome;
+      const novo = push(presencasRef);
+      set(novo, { nome: nomeFinal });
+      localStorage.setItem("minhaChave", novo.key);
       criarEstrelaComNome(nomeFinal);
       document.getElementById("nome").value = "";
-      document.getElementById("acompanhante").value = "";
+      acompanhantesInputs.forEach(i => i.value = "");
     });
 
-    // Criar estrela
     function criarEstrelaComNome(nome) {
       const estrela = document.createElement("div");
       estrela.classList.add("estrela");
@@ -185,7 +197,6 @@
       setTimeout(() => estrela.remove(), 6000);
     }
 
-    // Modal
     function abrirModal() {
       document.getElementById("modalConfirmados").style.display = "block";
     }
@@ -193,26 +204,53 @@
       document.getElementById("modalConfirmados").style.display = "none";
     }
 
-    // Lista em tempo real
     const listaConfirmados = document.getElementById("listaConfirmados");
     onValue(presencasRef, (snapshot) => {
       listaConfirmados.innerHTML = "";
       if (snapshot.exists()) {
         snapshot.forEach((child) => {
           const nome = child.val().nome;
-          const item = document.createElement("div");
-          item.textContent = `🌟 ${nome}`;
-          listaConfirmados.appendChild(item);
+          const key = child.key;
+
+          const div = document.createElement("div");
+          div.className = "confirmado-item";
+
+          const span = document.createElement("span");
+          span.textContent = `🌟 ${nome}`;
+
+          div.appendChild(span);
+
+          if (localStorage.getItem("minhaChave") === key) {
+            const btnEditar = document.createElement("button");
+            btnEditar.textContent = "✏️ Editar";
+            btnEditar.className = "editar-btn";
+            btnEditar.onclick = () => {
+              const novoNome = prompt("Editar nome:", nome);
+              if (novoNome) update(ref(db, `Apresentações/${key}`), { nome: novoNome });
+            };
+
+            const btnRemover = document.createElement("button");
+            btnRemover.textContent = "❌ Remover";
+            btnRemover.className = "remover-btn";
+            btnRemover.onclick = () => {
+              if (confirm("Deseja remover sua confirmação?")) {
+                remove(ref(db, `Apresentações/${key}`));
+                localStorage.removeItem("minhaChave");
+              }
+            };
+
+            div.appendChild(btnEditar);
+            div.appendChild(btnRemover);
+          }
+
+          listaConfirmados.appendChild(div);
         });
       } else {
         listaConfirmados.textContent = "Aguardando confirmações...";
       }
     });
 
-    // Tornar globais
     window.abrirModal = abrirModal;
     window.fecharModal = fecharModal;
-  </script>
-
-</body>
+  </script></body>
 </html>

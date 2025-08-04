@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Galeria Aghatta XV</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@400;700&display=swap');
 
@@ -16,30 +16,29 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       min-height: 100vh;
     }
 
     h1 {
       font-family: 'Great Vibes', cursive;
-      font-size: 2.5rem;
-      margin-bottom: 10px;
+      font-size: 1.5rem;
+      margin: 20px 10px 10px;
       text-align: center;
     }
 
     .galeria-container {
-      height: 85vh;
-      width: 90vw;
-      max-width: 700px;
+      height: 65vh;
+      width: 95vw;
       background-color: rgba(0, 0, 0, 0.5);
       border-radius: 18px;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.7), inset 0 0 20px rgba(255, 215, 0, 0.4);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.7), inset 0 0 10px rgba(255, 215, 0, 0.4);
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
     .galeria-container img {
@@ -54,10 +53,10 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 1.6rem;
+      font-size: 1.2rem;
       font-style: italic;
       text-align: center;
-      padding: 0 20px;
+      padding: 0 10px;
       opacity: 1;
       transition: opacity 2s ease-in-out;
       z-index: 2;
@@ -69,18 +68,18 @@
 
     .base-barra {
       position: absolute;
-      bottom: 2%;
+      bottom: 3%;
       left: 0;
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 12px;
+      padding: 0 8px;
       z-index: 3;
     }
 
     .botao-wrapper {
-      width: 140px;
+      width: 90px;
     }
 
     .botao-coroa {
@@ -91,7 +90,7 @@
     .botao-coroa img {
       width: 100%;
       display: block;
-      border-radius: 12px;
+      border-radius: 10px;
       pointer-events: none;
     }
 
@@ -100,22 +99,50 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 1.6rem;
+      font-size: 1rem;
       font-weight: bold;
       color: #fff;
-      text-shadow: 1px 1px 3px #000;
+      text-shadow: 1px 1px 2px #000;
       pointer-events: none;
     }
 
     #contador {
       background-color: rgba(255, 255, 255, 0.2);
-      padding: 4px 10px;
+      padding: 4px 8px;
       border-radius: 10px;
-      font-size: 1rem;
+      font-size: 0.8rem;
       font-weight: bold;
       color: #fff;
       text-align: center;
-      min-width: 110px;
+      min-width: 90px;
+    }
+
+    @media (min-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .frase {
+        font-size: 1.6rem;
+      }
+
+      .galeria-container {
+        height: 70vh;
+        max-width: 600px;
+      }
+
+      .botao-wrapper {
+        width: 120px;
+      }
+
+      .texto-botao {
+        font-size: 1.2rem;
+      }
+
+      #contador {
+        font-size: 1rem;
+        min-width: 100px;
+      }
     }
   </style>
 </head>
@@ -174,9 +201,11 @@
       foto.src = imagens[index];
       frase.textContent = frases[index];
       frase.classList.remove('fade-out');
+
       setTimeout(() => {
         frase.classList.add('fade-out');
       }, 3000);
+
       contador.textContent = `Imagem ${index + 1} de 15`;
     }
 
@@ -190,7 +219,6 @@
       mostrarImagem();
     }
 
-    // Primeira chamada
     mostrarImagem();
   </script>
 </body>

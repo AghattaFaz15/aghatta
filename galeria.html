@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Galeria Aghatta - Luz e Misericórdia</title>
+  <title>Galeria Aghatta</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -105,68 +105,47 @@
 
     .botoes {
       display: flex;
-      justify-content: center;
-      gap: 50px;
-      margin-top: -10px; /* SUBIU os botões */
-      position: relative;
-      z-index: 10;
-      flex-wrap: wrap;
-    }
-
-    .botao-wrapper {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 200px;
-      max-width: 90vw;
+      justify-content: space-between;
+      width: 90vw;
+      max-width: 700px;
+      margin-top: -10px;
+      padding-bottom: 15px;
     }
 
     .botao-coroa {
-      background: none;
+      background: url('coroa.png') no-repeat center center;
+      background-size: contain;
+      width: 150px;
+      height: 80px;
       border: none;
-      padding: 0;
-      cursor: pointer;
-      width: 100%;
       position: relative;
-      outline: none;
-      filter: drop-shadow(0 0 18px gold);
-      border-radius: 12px;
-      user-select: none;
+      cursor: pointer;
+      filter: drop-shadow(0 0 12px gold);
       transition: filter 0.3s ease;
     }
 
-    .botao-coroa img {
-      width: 100%;
-      display: block;
-      border-radius: 12px;
-      pointer-events: none;
-    }
-
-    .botao-coroa:hover,
-    .botao-coroa:focus-visible {
-      filter: drop-shadow(0 0 30px #ffd700);
-    }
-
-    .texto-botao {
+    .botao-coroa span {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       color: royalblue;
+      text-shadow: 0 0 5px #87cefa, 0 0 10px #1e90ff;
       user-select: none;
-      text-shadow: 0 0 6px #87cefa, 0 0 12px #1e90ff;
       pointer-events: none;
-      white-space: nowrap;
+    }
+
+    .botao-coroa:hover {
+      filter: drop-shadow(0 0 20px #ffd700);
     }
 
     @media (max-width: 480px) {
-      .botao-wrapper { width: 160px; }
       .frase-topo { font-size: 1.6rem; }
-      .texto-botao { font-size: 1.6rem; }
       .texto-sobreposto { font-size: 1.5rem; padding: 8px; }
+      .botao-coroa { width: 120px; height: 65px; }
+      .botao-coroa span { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -180,18 +159,12 @@
   </div>
 
   <div class="botoes">
-    <div class="botao-wrapper">
-      <button class="botao-coroa" id="btn-voltar">
-        <img src="coroa.png" alt="Voltar" />
-        <span class="texto-botao">Voltar</span>
-      </button>
-    </div>
-    <div class="botao-wrapper">
-      <button class="botao-coroa" id="btn-avancar">
-        <img src="coroa.png" alt="Avançar" />
-        <span class="texto-botao">Avançar</span>
-      </button>
-    </div>
+    <button class="botao-coroa" id="btn-voltar">
+      <span>Voltar</span>
+    </button>
+    <button class="botao-coroa" id="btn-avancar">
+      <span>Avançar</span>
+    </button>
   </div>
 
   <script>
@@ -219,7 +192,11 @@
     const texto = document.getElementById('texto-sobreposto');
     const contador = document.getElementById('contador');
 
+    let fraseTimeout;
+
     function atualizarImagem() {
+      clearTimeout(fraseTimeout); // limpa o anterior
+
       imgGaleria.classList.add('fade-out');
       texto.classList.remove('fade-out');
       texto.style.opacity = 1;
@@ -231,7 +208,7 @@
         imgGaleria.classList.remove('fade-out');
         imgGaleria.classList.add('zoom');
 
-        setTimeout(() => {
+        fraseTimeout = setTimeout(() => {
           texto.classList.add('fade-out');
         }, 3000);
       }, 500);
@@ -247,8 +224,8 @@
       atualizarImagem();
     });
 
-    // Garante fade da frase inicial também
-    setTimeout(() => {
+    // Primeira frase também desaparece
+    fraseTimeout = setTimeout(() => {
       texto.classList.add('fade-out');
     }, 3000);
   </script>

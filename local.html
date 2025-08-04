@@ -194,25 +194,17 @@
       50% { transform: translateY(-6px) rotate(4deg); }
     }
 
-    /* Link RSVP */
+    /* Mensagem abençoada no lugar do link RSVP */
     #linkRSVP {
-      font-size: 0.95rem;
+      font-size: 1rem;
       opacity: 0.85;
       margin-top: -0.5rem;
       text-align: center;
       color: #ffd700;
       user-select: none;
-    }
-    #linkRSVP a {
-      color: #ffd700;
-      text-decoration: underline;
-      font-weight: 700;
-      cursor: pointer;
-      transition: color 0.3s ease;
-    }
-    #linkRSVP a:hover {
-      color: #fff266;
-      text-shadow: 0 0 8px gold;
+      font-style: italic;
+      text-shadow: 0 0 6px gold;
+      margin-bottom: 1rem;
     }
 
     footer {
@@ -311,13 +303,12 @@
     </div>
 
     <div id="linkRSVP" aria-live="polite" aria-atomic="true">
-      Já confirmou sua presença?
-      <a href="icones.html" aria-label="Ir para confirmação de presença">Clique aqui</a>
+      Que o caminho até aqui seja abençoado e que o reencontro seja repleto de luz e paz.
     </div>
   </main>
 
   <footer>
-    Que o caminho até aqui seja abençoado e que o reencontro seja repleto de luz e paz.
+    <!-- Retirei para evitar repetição -->
   </footer>
 
   <script>

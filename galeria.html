@@ -38,6 +38,28 @@
       max-width: 95vw;
     }
 
+    .frase-imagem {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.6rem;
+      font-family: 'Great Vibes', cursive;
+      background: rgba(0, 0, 0, 0.6);
+      color: gold;
+      padding: 12px 20px;
+      border-radius: 14px;
+      text-align: center;
+      max-width: 90%;
+      opacity: 0;
+      transition: opacity 1s ease;
+      z-index: 2;
+    }
+
+    .frase-imagem.mostrar {
+      opacity: 1;
+    }
+
     .galeria-container {
       width: 90vw;
       max-width: 700px;
@@ -95,7 +117,7 @@
       display: flex;
       justify-content: center;
       gap: 40px;
-      margin: -90px auto 30px; /* Subiu mais as coroas */
+      margin: -90px auto 30px;
       position: relative;
       z-index: 10;
       flex-wrap: wrap;
@@ -122,6 +144,7 @@
       border-radius: 12px;
       user-select: none;
       transition: filter 0.3s ease;
+      animation: pulsar 2s infinite;
     }
 
     .botao-coroa img {
@@ -180,41 +203,29 @@
         transform: translateY(-400px) scale(1.2) rotate(360deg);
       }
     }
-
-    @media (max-width: 480px) {
-      .botao-wrapper {
-        width: 160px;
-      }
-      .frase-topo {
-        font-size: 1.6rem;
-        padding: 8px 14px;
-      }
-      .texto-botao {
-        font-size: 1.4rem;
-      }
-    }
   </style>
 </head>
 <body>
-  <div class="frase-topo" aria-live="polite" role="heading" aria-level="1">
+  <div class="frase-topo">
     Imagens que contam a misericórdia que me persegue e a Mão que me guia
   </div>
 
-  <div class="galeria-container" role="region" aria-label="Galeria de imagens de Aghatta" id="galeria-container">
+  <div class="galeria-container" id="galeria-container">
+    <div class="frase-imagem" id="frase"></div>
     <img src="imagem1.jpeg" alt="Imagem da galeria" class="imagem-galeria" id="galeria-img" />
     <div id="contador">Imagem 1 de 15</div>
   </div>
 
-  <div class="botoes" role="group" aria-label="Navegação da galeria">
+  <div class="botoes">
     <div class="botao-wrapper">
-      <button class="botao-coroa" id="btn-voltar" aria-label="Imagem anterior">
-        <img src="coroa.png" alt="" />
+      <button class="botao-coroa" id="btn-voltar">
+        <img src="coroa.png" alt="Voltar" />
         <span class="texto-botao">Voltar</span>
       </button>
     </div>
     <div class="botao-wrapper">
-      <button class="botao-coroa" id="btn-avancar" aria-label="Próxima imagem">
-        <img src="coroa.png" alt="" />
+      <button class="botao-coroa" id="btn-avancar">
+        <img src="coroa.png" alt="Passar" />
         <span class="texto-botao">Passar</span>
       </button>
     </div>
@@ -222,12 +233,29 @@
 
   <script>
     const imagens = Array.from({length: 15}, (_, i) => `imagem${i + 1}.jpeg`);
+    const frases = [
+      "E no primeiro sopro, o mundo sorriu mais bonito.",
+      "Dois passos de ternura e um universo se abriu nos olhos dela.",
+      "Três fios de cabelo ao vento e já era impossível não se apaixonar.",
+      "Quatro estações passaram, e todas floresceram nela.",
+      "Cinco dedos na mão, cinco razões pra abraçar o mundo com doçura.",
+      "Seis risos por minuto — cada um mais alto que o outro, ecoando alegria.",
+      "Aos sete, o mundo se tornava pequeno demais para tanta imaginação.",
+      "Oito pontas de estrela brilhavam em cada passo dela naquele ano.",
+      "Nove sonhos coloridos pendurados no céu da infância dela.",
+      "Dez dedos, dez desejos, e todos apontando pro céu.",
+      "Onze raios de sol nasceram no seu sorriso naquele dia comum.",
+      "Doze meses onde ela dançou entre a leveza e o futuro.",
+      "Treze passos rumo à juventude, e nenhum deles sem encanto.",
+      "Catorze promessas sussurradas pela eternidade, todas se cumprindo nela.",
+      "Quinze anos de luz… e o mundo inteiro parou para aplaudir."
+    ];
+
     let indice = 0;
     const imgGaleria = document.getElementById('galeria-img');
+    const fraseDiv = document.getElementById('frase');
     const contador = document.getElementById('contador');
     const galeriaContainer = document.getElementById('galeria-container');
-    const btnVoltar = document.getElementById('btn-voltar');
-    const btnAvancar = document.getElementById('btn-avancar');
 
     function criarBorboleta() {
       const borboleta = document.createElement('div');
@@ -242,29 +270,42 @@
     }
 
     function atualizarImagem() {
+      fraseDiv.classList.remove('mostrar');
       imgGaleria.classList.remove('zoom');
       imgGaleria.classList.add('fade-out');
+
       setTimeout(() => {
+        fraseDiv.textContent = frases[indice];
+        fraseDiv.classList.add('mostrar');
         imgGaleria.src = imagens[indice];
         contador.textContent = `Imagem ${indice + 1} de ${imagens.length}`;
         imgGaleria.classList.remove('fade-out');
         imgGaleria.classList.add('zoom');
         criarBorboleta();
-      }, 600);
+      }, 800);
+
+      setTimeout(() => {
+        fraseDiv.classList.remove('mostrar');
+      }, 3800);
     }
 
-    btnVoltar.addEventListener('click', () => {
+    document.getElementById('btn-voltar').addEventListener('click', () => {
       indice = (indice > 0) ? indice - 1 : imagens.length - 1;
       atualizarImagem();
     });
 
-    btnAvancar.addEventListener('click', () => {
+    document.getElementById('btn-avancar').addEventListener('click', () => {
       indice = (indice < imagens.length - 1) ? indice + 1 : 0;
       atualizarImagem();
     });
 
-    imgGaleria.classList.add('zoom');
-    criarBorboleta();
+    window.onload = () => {
+      fraseDiv.textContent = frases[indice];
+      fraseDiv.classList.add('mostrar');
+      setTimeout(() => fraseDiv.classList.remove('mostrar'), 4000);
+      imgGaleria.classList.add('zoom');
+      criarBorboleta();
+    }
   </script>
 </body>
 </html>

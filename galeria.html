@@ -70,7 +70,7 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      margin-bottom: 50px;
+      margin-bottom: 30px;
     }
 
     .imagem-galeria {
@@ -114,9 +114,9 @@
     .botoes {
       display: flex;
       justify-content: center;
-      gap: 50px;
-      margin-top: 10px;
-      margin-bottom: 30px;
+      gap: 40px;
+      margin-top: -10px;
+      margin-bottom: 20px;
       position: relative;
       z-index: 10;
       flex-wrap: wrap;
@@ -127,7 +127,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 160px;
+      width: 140px;
       max-width: 90vw;
     }
 
@@ -164,7 +164,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       color: royalblue;
       user-select: none;
       text-shadow: 0 0 6px #87cefa, 0 0 12px #1e90ff;
@@ -203,7 +203,7 @@
 
   <div class="galeria-container" id="galeria-container">
     <div class="frase-imagem" id="frase"></div>
-    <img src="imagem1.jpeg" alt="Imagem da galeria" class="imagem-galeria" id="galeria-img" />
+    <img src="imagem1.jpg" alt="Imagem da galeria" class="imagem-galeria" id="galeria-img" />
     <div id="contador">Imagem 1 de 15</div>
   </div>
 
@@ -223,7 +223,7 @@
   </div>
 
   <script>
-    const imagens = Array.from({length: 15}, (_, i) => `imagem${i + 1}.jpeg`);
+    const imagens = Array.from({length: 15}, (_, i) => `imagem${i + 1}.jpg`);
     const frases = [
       "E no primeiro sopro, o mundo sorriu mais bonito.",
       "Dois passos de ternura e um universo se abriu nos olhos dela.",

@@ -25,7 +25,7 @@
 
     .frase-topo {
       font-family: 'Great Vibes', cursive;
-      font-size: 2.2rem;
+      font-size: 1.6rem;
       color: gold;
       text-align: center;
       padding: 10px 15px;
@@ -41,7 +41,7 @@
       top: 40%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-family: 'Great Vibes', cursive;
       background: rgba(0, 0, 0, 0.6);
       color: gold;
@@ -70,7 +70,7 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
 
     .imagem-galeria {
@@ -94,11 +94,17 @@
       transform: scale(1.05);
     }
 
+    .base-barra {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      width: 100%;
+      max-width: 700px;
+      margin-bottom: 20px;
+    }
+
     #contador {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
       font-size: 1.3rem;
       color: gold;
       text-shadow: 0 0 5px gold;
@@ -106,20 +112,8 @@
       padding: 4px 12px;
       border-radius: 12px;
       user-select: none;
-      z-index: 10;
-      max-width: 90vw;
       text-align: center;
-    }
-
-    .botoes {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-top: 5px;
-      margin-bottom: 15px;
-      position: relative;
-      z-index: 10;
-      flex-wrap: wrap;
+      flex: 1;
     }
 
     .botao-wrapper {
@@ -127,8 +121,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 160px;
-      max-width: 90vw;
+      width: 140px;
     }
 
     .botao-coroa {
@@ -142,7 +135,6 @@
       filter: drop-shadow(0 0 18px gold);
       border-radius: 12px;
       user-select: none;
-      transition: filter 0.3s ease;
       animation: pulsar 2s infinite;
     }
 
@@ -164,7 +156,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       color: royalblue;
       user-select: none;
       text-shadow: 0 0 6px #87cefa, 0 0 12px #1e90ff;
@@ -204,20 +196,20 @@
   <div class="galeria-container" id="galeria-container">
     <div class="frase-imagem" id="frase"></div>
     <img src="imagem1.jpg" alt="Imagem da galeria" class="imagem-galeria" id="galeria-img" />
-    <div id="contador">Imagem 1 de 15</div>
   </div>
 
-  <div class="botoes">
+  <div class="base-barra">
     <div class="botao-wrapper">
       <button class="botao-coroa" id="btn-voltar">
         <img src="coroa.png" alt="Voltar" />
         <span class="texto-botao">Voltar</span>
       </button>
     </div>
+    <div id="contador">Imagem 1 de 15</div>
     <div class="botao-wrapper">
       <button class="botao-coroa" id="btn-avancar">
-        <img src="coroa.png" alt="Avançar" />
-        <span class="texto-botao">Avançar</span>
+        <img src="coroa.png" alt="Passar" />
+        <span class="texto-botao">Passar</span>
       </button>
     </div>
   </div>

@@ -6,9 +6,7 @@
   <title>Galeria Aghatta - Luz e Misericórdia</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet" />
   <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       background: url('aghatta.png') no-repeat center center fixed;
@@ -19,9 +17,7 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      padding: 15px 10px 50px;
-      overflow-x: hidden;
-      overflow-y: auto;
+      padding: 15px 10px;
     }
 
     .frase-topo {
@@ -55,9 +51,7 @@
       object-fit: contain;
       border-radius: 16px;
       filter: drop-shadow(0 0 12px gold);
-      user-select: none;
       transition: opacity 1.5s ease, transform 10s ease;
-      opacity: 1;
       position: relative;
       z-index: 1;
     }
@@ -113,7 +107,7 @@
       display: flex;
       justify-content: center;
       gap: 50px;
-      margin-top: 8px;
+      margin-top: -10px; /* SUBIU os botões */
       position: relative;
       z-index: 10;
       flex-wrap: wrap;
@@ -126,7 +120,6 @@
       align-items: center;
       width: 200px;
       max-width: 90vw;
-      margin-top: -50px;
     }
 
     .botao-coroa {
@@ -170,19 +163,10 @@
     }
 
     @media (max-width: 480px) {
-      .botao-wrapper {
-        width: 160px;
-      }
-      .frase-topo {
-        font-size: 1.6rem;
-      }
-      .texto-botao {
-        font-size: 1.6rem;
-      }
-      .texto-sobreposto {
-        font-size: 1.5rem;
-        padding: 8px;
-      }
+      .botao-wrapper { width: 160px; }
+      .frase-topo { font-size: 1.6rem; }
+      .texto-botao { font-size: 1.6rem; }
+      .texto-sobreposto { font-size: 1.5rem; padding: 8px; }
     }
   </style>
 </head>
@@ -236,7 +220,6 @@
     const contador = document.getElementById('contador');
 
     function atualizarImagem() {
-      imgGaleria.classList.remove('zoom');
       imgGaleria.classList.add('fade-out');
       texto.classList.remove('fade-out');
       texto.style.opacity = 1;
@@ -247,14 +230,11 @@
         contador.textContent = `Imagem ${indice + 1} de ${imagens.length}`;
         imgGaleria.classList.remove('fade-out');
         imgGaleria.classList.add('zoom');
-        texto.classList.remove('fade-out');
-        texto.style.opacity = 1;
 
         setTimeout(() => {
           texto.classList.add('fade-out');
         }, 3000);
-
-      }, 1500);
+      }, 500);
     }
 
     document.getElementById('btn-voltar').addEventListener('click', () => {
@@ -267,7 +247,7 @@
       atualizarImagem();
     });
 
-    imgGaleria.classList.add('zoom');
+    // Garante fade da frase inicial também
     setTimeout(() => {
       texto.classList.add('fade-out');
     }, 3000);

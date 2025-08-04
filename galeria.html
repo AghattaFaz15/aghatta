@@ -23,13 +23,13 @@
 
     .frase-topo {
       font-family: 'Great Vibes', cursive;
-      font-size: 1.8rem;
+      font-size: 2.4rem;
       color: gold;
       text-align: center;
       background: rgba(0, 10, 40, 0.7);
       border-radius: 12px;
       box-shadow: 0 0 15px gold;
-      padding: 10px 20px;
+      padding: 12px 22px;
       margin-bottom: 12px;
       max-width: 95vw;
     }
@@ -58,15 +58,22 @@
 
     #frase-do-ano {
       position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       color: gold;
       font-family: 'Great Vibes', cursive;
-      font-size: 2rem;
+      font-size: 2.1rem;
       text-align: center;
       text-shadow: 0 0 12px black;
-      padding: 0 12px;
+      padding: 20px;
       opacity: 0;
       transition: opacity 2s ease;
       z-index: 10;
+      background: rgba(10, 30, 80, 0.7);
+      border: 2px solid gold;
+      border-radius: 16px;
+      max-width: 85%;
     }
 
     #contador {
@@ -83,12 +90,13 @@
       display: flex;
       justify-content: center;
       gap: 20px;
-      margin-top: 2px;
+      margin-top: 4px;
     }
 
     .botao-wrapper {
       width: 140px;
       position: relative;
+      margin-top: -10px; /* sobe até o contador */
     }
 
     .botao-coroa {
@@ -120,13 +128,14 @@
 
     @media (max-width: 480px) {
       .frase-topo {
-        font-size: 1.3rem;
+        font-size: 1.8rem;
       }
       .texto-botao {
         font-size: 1.1rem;
       }
       #frase-do-ano {
-        font-size: 1.5rem;
+        font-size: 1.7rem;
+        padding: 16px;
       }
     }
   </style>

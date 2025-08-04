@@ -36,6 +36,12 @@
       margin-bottom: 15px;
       user-select: none;
       max-width: 95vw;
+      min-height: 80px;
+      transition: opacity 1s ease;
+    }
+
+    .frase-topo.fade-out {
+      opacity: 0;
     }
 
     .galeria-container {
@@ -76,10 +82,10 @@
 
     #contador {
       position: absolute;
-      bottom: 10px;
+      bottom: 6px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: gold;
       text-shadow: 0 0 5px gold;
       background: rgba(0, 0, 0, 0.4);
@@ -87,18 +93,14 @@
       border-radius: 10px;
       user-select: none;
       z-index: 10;
-      max-width: 90vw;
       text-align: center;
     }
 
     .botoes {
       display: flex;
       justify-content: center;
-      gap: 20px;
-      position: relative;
-      top: -30px;
-      z-index: 10;
-      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 5px;
     }
 
     .botao-wrapper {
@@ -107,7 +109,6 @@
       justify-content: center;
       align-items: center;
       width: 160px;
-      max-width: 90vw;
     }
 
     .botao-coroa {
@@ -120,8 +121,6 @@
       outline: none;
       filter: drop-shadow(0 0 18px gold);
       border-radius: 12px;
-      user-select: none;
-      transition: filter 0.3s ease;
     }
 
     .botao-coroa img {
@@ -129,11 +128,6 @@
       display: block;
       border-radius: 12px;
       pointer-events: none;
-    }
-
-    .botao-coroa:hover,
-    .botao-coroa:focus-visible {
-      filter: drop-shadow(0 0 30px #ffd700);
     }
 
     .texto-botao {
@@ -144,30 +138,29 @@
       font-family: 'Cinzel Decorative', cursive;
       font-size: 1.4rem;
       color: royalblue;
-      user-select: none;
       text-shadow: 0 0 6px #87cefa, 0 0 12px #1e90ff;
       pointer-events: none;
-      white-space: nowrap;
     }
 
     @media (max-width: 480px) {
       .botao-wrapper {
-        width: 130px;
+        width: 120px;
       }
       .frase-topo {
         font-size: 1.4rem;
+        padding: 8px 10px;
       }
       .texto-botao {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
       }
       #contador {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
       }
     }
   </style>
 </head>
 <body>
-  <div class="frase-topo">Imagens que contam a misericórdia que me persegue e a Mão que me guia</div>
+  <div class="frase-topo" id="frase">Imagens que contam a misericórdia que me persegue e a Mão que me guia</div>
 
   <div class="galeria-container">
     <img src="imagem1.jpeg" alt="Imagem da galeria" class="imagem-galeria" id="galeria-img" />
@@ -191,31 +184,52 @@
 
   <script>
     const imagens = Array.from({ length: 15 }, (_, i) => `imagem${i + 1}.jpeg`);
+    const frases = [
+      "E no primeiro sopro, o mundo sorriu mais bonito.",
+      "Dois passos de ternura e um universo se abriu nos olhos dela.",
+      "Três fios de cabelo ao vento e já era impossível não se apaixonar.",
+      "Quatro estações passaram, e todas floresceram nela.",
+      "Cinco dedos na mão, cinco razões pra abraçar o mundo com doçura.",
+      "Seis risos por minuto — cada um mais alto que o outro, ecoando alegria.",
+      "Aos sete, o mundo se tornava pequeno demais para tanta imaginação.",
+      "Oito pontas de estrela brilhavam em cada passo dela naquele ano.",
+      "Nove sonhos coloridos pendurados no céu da infância dela.",
+      "Dez dedos, dez desejos, e todos apontando pro céu.",
+      "Onze raios de sol nasceram no seu sorriso naquele dia comum.",
+      "Doze meses onde ela dançou entre a leveza e o futuro.",
+      "Treze passos rumo à juventude, e nenhum deles sem encanto.",
+      "Catorze promessas sussurradas pela eternidade, todas se cumprindo nela.",
+      "Quinze anos de Aghatta… e o mundo inteiro parou para aplaudir."
+    ];
+
     let indice = 0;
     const imgGaleria = document.getElementById('galeria-img');
     const contador = document.getElementById('contador');
-    const btnVoltar = document.getElementById('btn-voltar');
-    const btnAvancar = document.getElementById('btn-avancar');
+    const fraseTopo = document.getElementById('frase');
 
-    function atualizarImagem() {
+    function atualizarConteudo() {
       imgGaleria.classList.remove('zoom');
       imgGaleria.classList.add('fade-out');
+      fraseTopo.classList.add('fade-out');
+
       setTimeout(() => {
         imgGaleria.src = imagens[indice];
+        fraseTopo.textContent = frases[indice];
         contador.textContent = `Imagem ${indice + 1} de ${imagens.length}`;
         imgGaleria.classList.remove('fade-out');
+        fraseTopo.classList.remove('fade-out');
         imgGaleria.classList.add('zoom');
       }, 600);
     }
 
-    btnVoltar.addEventListener('click', () => {
+    document.getElementById('btn-voltar').addEventListener('click', () => {
       indice = (indice > 0) ? indice - 1 : imagens.length - 1;
-      atualizarImagem();
+      atualizarConteudo();
     });
 
-    btnAvancar.addEventListener('click', () => {
+    document.getElementById('btn-avancar').addEventListener('click', () => {
       indice = (indice < imagens.length - 1) ? indice + 1 : 0;
-      atualizarImagem();
+      atualizarConteudo();
     });
 
     imgGaleria.classList.add('zoom');

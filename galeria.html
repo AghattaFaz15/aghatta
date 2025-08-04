@@ -39,7 +39,9 @@
     .galeria-container {
       width: 90vw;
       max-width: 700px;
-      aspect-ratio: 2 / 3;
+      /* ampliando para quase toda altura disponível */
+      height: calc(100vh - 140px);
+      /* mantém proporção, mas permite esticar verticalmente */
       background-color: rgba(0, 0, 0, 0.5);
       border-radius: 18px;
       box-shadow: 0 0 30px rgba(255, 215, 0, 0.7), inset 0 0 20px rgba(255, 215, 0, 0.4);
@@ -96,7 +98,7 @@
 
     .base-barra {
       position: absolute;
-      bottom: 10px;
+      bottom: 5px; /* desceu um pouco as coroas */
       left: 0;
       width: 100%;
       display: flex;
@@ -107,15 +109,16 @@
     }
 
     #contador {
-      font-size: 1.2rem;
+      font-size: 1rem; /* diminuiu o texto do contador */
       color: gold;
       text-shadow: 0 0 5px gold;
       background: rgba(0, 0, 0, 0.6);
-      padding: 6px 12px;
+      padding: 4px 10px;
       border-radius: 12px;
       user-select: none;
       text-align: center;
       min-width: 130px;
+      line-height: 1.2;
     }
 
     .botao-wrapper {
@@ -123,7 +126,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 120px;
+      width: 140px; /* coroas maiores */
     }
 
     .botao-coroa {
@@ -134,22 +137,27 @@
       width: 100%;
       position: relative;
       outline: none;
-      filter: drop-shadow(0 0 18px gold);
+      filter: drop-shadow(0 0 24px gold);
       border-radius: 12px;
       user-select: none;
       animation: pulsar 2s infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .botao-coroa img {
       width: 100%;
+      max-width: 140px; /* coroas maiores */
       display: block;
       border-radius: 12px;
       pointer-events: none;
+      user-select: none;
     }
 
     .botao-coroa:hover,
     .botao-coroa:focus-visible {
-      filter: drop-shadow(0 0 30px #ffd700);
+      filter: drop-shadow(0 0 40px #ffd700);
     }
 
     .texto-botao {
@@ -158,12 +166,13 @@
       left: 50%;
       transform: translate(-50%, -50%);
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       color: royalblue;
       user-select: none;
       text-shadow: 0 0 6px #87cefa, 0 0 12px #1e90ff;
       pointer-events: none;
       white-space: nowrap;
+      font-weight: 700;
     }
 
     @keyframes pulsar {
@@ -201,16 +210,16 @@
     
     <div class="base-barra">
       <div class="botao-wrapper">
-        <button class="botao-coroa" id="btn-voltar">
+        <button class="botao-coroa" id="btn-voltar" type="button">
           <img src="coroa.png" alt="Voltar" />
           <span class="texto-botao">Voltar</span>
         </button>
       </div>
       <div id="contador">Imagem 1 de 15</div>
       <div class="botao-wrapper">
-        <button class="botao-coroa" id="btn-avancar">
-          <img src="coroa.png" alt="Passar" />
-          <span class="texto-botao">Passar</span>
+        <button class="botao-coroa" id="btn-avancar" type="button">
+          <img src="coroa.png" alt="Avançar" />
+          <span class="texto-botao">Avançar</span>
         </button>
       </div>
     </div>

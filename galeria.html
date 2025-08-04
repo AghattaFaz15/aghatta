@@ -2,46 +2,35 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+  <title>Galeria Aghatta XV</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Galeria Aghatta - Luz e Misericórdia</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet" />
   <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@400;700&display=swap');
+
     body {
-      background: url('aghatta.png') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Georgia', serif;
-      color: gold;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background: radial-gradient(ellipse at center, #0b1d3a 0%, #000 100%);
+      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: start;
+      justify-content: center;
       min-height: 100vh;
-      padding: 15px 10px 10px;
-      overflow-y: auto;
     }
 
-    .frase-topo {
+    h1 {
       font-family: 'Great Vibes', cursive;
-      font-size: 1.6rem;
-      color: gold;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
       text-align: center;
-      padding: 10px 15px;
-      background: rgba(0, 10, 40, 0.7);
-      border-radius: 12px;
-      box-shadow: 0 0 15px gold;
-      margin-bottom: 15px;
-      max-width: 95vw;
     }
 
     .galeria-container {
+      height: 85vh;
       width: 90vw;
       max-width: 700px;
-      /* ampliando para quase toda altura disponível */
-      height: calc(100vh - 140px);
-      /* mantém proporção, mas permite esticar verticalmente */
       background-color: rgba(0, 0, 0, 0.5);
       border-radius: 18px;
       box-shadow: 0 0 30px rgba(255, 215, 0, 0.7), inset 0 0 20px rgba(255, 215, 0, 0.4);
@@ -53,52 +42,34 @@
       margin-bottom: 20px;
     }
 
-    .imagem-galeria {
+    .galeria-container img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      border-radius: 16px;
-      filter: drop-shadow(0 0 12px gold);
-      user-select: none;
-      transition: opacity 1s ease, transform 10s ease;
-      opacity: 1;
-      position: relative;
-      z-index: 1;
+      object-fit: cover;
+      border-radius: 18px;
     }
 
-    .imagem-galeria.fade-out {
-      opacity: 0;
-    }
-
-    .imagem-galeria.zoom {
-      transform: scale(1.05);
-    }
-
-    .frase-imagem {
+    .frase {
       position: absolute;
-      top: 40%;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 2rem;
-      font-family: 'Great Vibes', cursive;
-      background: rgba(0, 0, 0, 0.6);
-      color: gold;
-      padding: 16px 24px;
-      border-radius: 16px;
+      font-size: 1.6rem;
+      font-style: italic;
       text-align: center;
-      max-width: 92%;
-      opacity: 0;
-      transition: opacity 2s ease;
+      padding: 0 20px;
+      opacity: 1;
+      transition: opacity 2s ease-in-out;
       z-index: 2;
     }
 
-    .frase-imagem.mostrar {
-      opacity: 1;
+    .frase.fade-out {
+      opacity: 0;
     }
 
     .base-barra {
       position: absolute;
-      bottom: 5px; /* desceu um pouco as coroas */
+      bottom: 2%;
       left: 0;
       width: 100%;
       display: flex;
@@ -108,56 +79,20 @@
       z-index: 3;
     }
 
-    #contador {
-      font-size: 1rem; /* diminuiu o texto do contador */
-      color: gold;
-      text-shadow: 0 0 5px gold;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 4px 10px;
-      border-radius: 12px;
-      user-select: none;
-      text-align: center;
-      min-width: 130px;
-      line-height: 1.2;
-    }
-
     .botao-wrapper {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 140px; /* coroas maiores */
+      width: 140px;
     }
 
     .botao-coroa {
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      width: 100%;
       position: relative;
-      outline: none;
-      filter: drop-shadow(0 0 24px gold);
-      border-radius: 12px;
-      user-select: none;
-      animation: pulsar 2s infinite;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      cursor: pointer;
     }
 
     .botao-coroa img {
       width: 100%;
-      max-width: 140px; /* coroas maiores */
       display: block;
       border-radius: 12px;
       pointer-events: none;
-      user-select: none;
-    }
-
-    .botao-coroa:hover,
-    .botao-coroa:focus-visible {
-      filter: drop-shadow(0 0 40px #ffd700);
     }
 
     .texto-botao {
@@ -165,68 +100,53 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-family: 'Cinzel Decorative', cursive;
-      font-size: 1.5rem;
-      color: royalblue;
-      user-select: none;
-      text-shadow: 0 0 6px #87cefa, 0 0 12px #1e90ff;
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 1px 1px 3px #000;
       pointer-events: none;
-      white-space: nowrap;
-      font-weight: 700;
     }
 
-    @keyframes pulsar {
-      0%, 100% { filter: drop-shadow(0 0 15px gold); }
-      50% { filter: drop-shadow(0 0 40px #fffacd); }
-    }
-
-    .borboleta {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      background: url('borboleta.png') no-repeat center center;
-      background-size: contain;
-      pointer-events: none;
-      animation: subirBorboleta 6s ease-in forwards;
-      opacity: 0;
-      z-index: 20;
-    }
-
-    @keyframes subirBorboleta {
-      0% { opacity: 0; transform: translateY(0) scale(0.5) rotate(0deg); }
-      10% { opacity: 1; }
-      100% { opacity: 0; transform: translateY(-400px) scale(1.2) rotate(360deg); }
+    #contador {
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 4px 10px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #fff;
+      text-align: center;
+      min-width: 110px;
     }
   </style>
 </head>
 <body>
-  <div class="frase-topo">
-    Imagens que contam a misericórdia que me persegue e a Mão que me guia
-  </div>
+  <h1>Imagens que contam a misericórdia que me persegue<br>e a Mão que me guia</h1>
 
-  <div class="galeria-container" id="galeria-container">
-    <div class="frase-imagem" id="frase"></div>
-    <img src="imagem1.jpg" alt="Imagem da galeria" class="imagem-galeria" id="galeria-img" />
-    
+  <div class="galeria-container">
+    <img id="foto" src="imagem1.jpg" alt="Foto da Aghatta" />
+    <div id="frase" class="frase"></div>
+
     <div class="base-barra">
       <div class="botao-wrapper">
-        <button class="botao-coroa" id="btn-voltar" type="button">
+        <div class="botao-coroa" onclick="voltar()">
           <img src="coroa.png" alt="Voltar" />
-          <span class="texto-botao">Voltar</span>
-        </button>
+          <div class="texto-botao">Voltar</div>
+        </div>
       </div>
+
       <div id="contador">Imagem 1 de 15</div>
+
       <div class="botao-wrapper">
-        <button class="botao-coroa" id="btn-avancar" type="button">
+        <div class="botao-coroa" onclick="avancar()">
           <img src="coroa.png" alt="Avançar" />
-          <span class="texto-botao">Avançar</span>
-        </button>
+          <div class="texto-botao">Avançar</div>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    const imagens = Array.from({length: 15}, (_, i) => `imagem${i + 1}.jpg`);
+    const imagens = Array.from({ length: 15 }, (_, i) => `imagem${i + 1}.jpg`);
     const frases = [
       "E no primeiro sopro, o mundo sorriu mais bonito.",
       "Dois passos de ternura e um universo se abriu nos olhos dela.",
@@ -242,64 +162,36 @@
       "Doze meses onde ela dançou entre a leveza e o futuro.",
       "Treze passos rumo à juventude, e nenhum deles sem encanto.",
       "Catorze promessas sussurradas pela eternidade, todas se cumprindo nela.",
-      "Quinze anos de luz… e o mundo inteiro parou para aplaudir."
+      "Quinze anos de Aghatta… e o mundo inteiro parou para aplaudir."
     ];
 
-    let indice = 0;
-    const imgGaleria = document.getElementById('galeria-img');
-    const fraseDiv = document.getElementById('frase');
+    let index = 0;
+    const foto = document.getElementById('foto');
+    const frase = document.getElementById('frase');
     const contador = document.getElementById('contador');
-    const galeriaContainer = document.getElementById('galeria-container');
 
-    function criarBorboleta() {
-      const borboleta = document.createElement('div');
-      borboleta.className = 'borboleta';
-      const rect = galeriaContainer.getBoundingClientRect();
-      const x = rect.left + Math.random() * rect.width;
-      const y = rect.bottom - 50;
-      borboleta.style.left = `${x}px`;
-      borboleta.style.top = `${y}px`;
-      document.body.appendChild(borboleta);
-      setTimeout(() => borboleta.remove(), 6000);
-    }
-
-    function atualizarImagem() {
-      fraseDiv.classList.remove('mostrar');
-      imgGaleria.classList.remove('zoom');
-      imgGaleria.classList.add('fade-out');
-
+    function mostrarImagem() {
+      foto.src = imagens[index];
+      frase.textContent = frases[index];
+      frase.classList.remove('fade-out');
       setTimeout(() => {
-        fraseDiv.textContent = frases[indice];
-        fraseDiv.classList.add('mostrar');
-        imgGaleria.src = imagens[indice];
-        contador.textContent = `Imagem ${indice + 1} de ${imagens.length}`;
-        imgGaleria.classList.remove('fade-out');
-        imgGaleria.classList.add('zoom');
-        criarBorboleta();
-      }, 1200);
-
-      setTimeout(() => {
-        fraseDiv.classList.remove('mostrar');
-      }, 5200);
+        frase.classList.add('fade-out');
+      }, 3000);
+      contador.textContent = `Imagem ${index + 1} de 15`;
     }
 
-    document.getElementById('btn-voltar').addEventListener('click', () => {
-      indice = (indice > 0) ? indice - 1 : imagens.length - 1;
-      atualizarImagem();
-    });
-
-    document.getElementById('btn-avancar').addEventListener('click', () => {
-      indice = (indice < imagens.length - 1) ? indice + 1 : 0;
-      atualizarImagem();
-    });
-
-    window.onload = () => {
-      fraseDiv.textContent = frases[indice];
-      fraseDiv.classList.add('mostrar');
-      setTimeout(() => fraseDiv.classList.remove('mostrar'), 5000);
-      imgGaleria.classList.add('zoom');
-      criarBorboleta();
+    function avancar() {
+      index = (index + 1) % imagens.length;
+      mostrarImagem();
     }
+
+    function voltar() {
+      index = (index - 1 + imagens.length) % imagens.length;
+      mostrarImagem();
+    }
+
+    // Primeira chamada
+    mostrarImagem();
   </script>
 </body>
 </html>
